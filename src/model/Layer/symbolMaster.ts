@@ -1,35 +1,33 @@
-import FileFormat from '@sketch-hq/sketch-file-format-ts';
-
+import { SketchFormat } from '../../index';
 import { getGroupLayout } from '../../helpers/layout';
-import Base, { LayerInitParams } from './Base';
+import Base, { BaseLayerParams } from './Base';
+import Color from '../Style/Color';
 import SymbolInstance from './symbolInstance';
 import uuid from '../../helpers/uuid';
-import { defaultStyle } from '../utils';
+import { defaultExportOptions, defaultRuleData } from '../utils';
+import { AnyLayer } from '../type';
 
-interface SymbolMasterInitParams
-  extends Omit<LayerInitParams, 'width' | 'height'> {
-  width?: number;
-  height?: number;
-}
+class SymbolMaster extends Base {
+  constructor(params: BaseLayerParams) {
+    super(params);
+    this.class = SketchFormat.ClassValue.SymbolMaster;
 
-class SymbolMaster extends Base<FileFormat.SymbolMaster> {
-  constructor({ x, y, width, height, id }: SymbolMasterInitParams) {
-    super({ id });
-    this.class = 'symbolMaster';
-    this.x = x || 0;
-    this.y = y || 0;
-    this.width = width;
-    this.height = height;
-    this._symbolID = uuid();
-    this._groupLayout = getGroupLayout();
+    this.symbolID = uuid();
+    this.groupLayout = getGroupLayout();
   }
-  private _symbolID: string;
-  overrideProperties: FileFormat.OverrideProperty[];
-  private _groupLayout: any;
-
-  setId(id: string) {
-    this._symbolID = id;
-  }
+  width: any;
+  height: any;
+  _groupLayout:
+    | SketchFormat.InferredGroupLayout
+    | SketchFormat.FreeformGroupLayout;
+  _symbolID: any;
+  backgroundColor: Color;
+  shouldBreakMaskChain: boolean;
+  nameIsFixed: boolean;
+  resizesContent: boolean;
+  symbolID: string;
+  overrideProperties: SketchFormat.OverrideProperty[];
+  groupLayout: any;
 
   getSymbolInstance({ x, y, width = null, height = null }) {
     // if no size will be requested, use the size of the master symbol
@@ -43,11 +41,11 @@ class SymbolMaster extends Base<FileFormat.SymbolMaster> {
       y,
       width,
       height,
-      symbolID: this._symbolID,
+      symbolID: this.symbolID,
     });
   }
 
-  addLayer(layer: any) {
+  addLayer(layer: AnyLayer) {
     //position child layers relatively to the symbol layer
     layer.x -= this.x;
     layer.y -= this.y;
@@ -81,53 +79,49 @@ class SymbolMaster extends Base<FileFormat.SymbolMaster> {
     this._groupLayout = getGroupLayout(layoutType);
   }
 
-  toJSON() {
-    const obj = super.toJSON();
-    const { width, height } = this.getSize();
+  toSketchJSON = (): SketchFormat.SymbolMaster => {
+    return {
+      _class: 'symbolMaster',
+      frame: this.frame.toSketchJSON(),
+      allowsOverrides: true,
 
-    obj.frame = {
-      _class: 'rect',
-      constrainProportions: false,
-      width,
-      height,
-      x: this.x,
-      y: this.y,
+      backgroundColor: this.backgroundColor.toSketchJson(),
+      booleanOperation: SketchFormat.BooleanOperation.NA,
+      changeIdentifier: 0,
+      do_objectID: this.id,
+      symbolID: this.symbolID,
+      exportOptions: defaultExportOptions,
+
+      hasClickThrough: true,
+      includeInCloudUpload: true,
+      hasBackgroundColor: false,
+      includeBackgroundColorInExport: true,
+      resizesContent: false,
+      includeBackgroundColorInInstance: false,
+      nameIsFixed: this.nameIsFixed,
+      shouldBreakMaskChain: this.shouldBreakMaskChain,
+      horizontalRulerData: defaultRuleData(),
+      verticalRulerData: defaultRuleData(),
+
+      resizingConstraint: 1,
+      resizingType: 1,
+
+      groupLayout: this.groupLayout,
+      isFixedToViewport: false,
+      sharedStyleID: '',
+
+      isFlippedHorizontal: false,
+      isFlippedVertical: false,
+      isLocked: this.isLocked,
+      isFlowHome: false,
+      name: this.name,
+      rotation: 0,
+      layerListExpandedType: SketchFormat.LayerListExpanded.Undecided,
+      overrideProperties: [],
+      layers: this.layers.map((l) => l.toSketchJSON()),
+      isVisible: true,
     };
-
-    obj.style = defaultStyle();
-
-    obj.horizontalRulerData = {
-      _class: 'rulerData',
-      base: 0,
-      guides: [],
-    };
-
-    obj.verticalRulerData = {
-      _class: 'rulerData',
-      base: 0,
-      guides: [],
-    };
-
-    obj.backgroundColor = {
-      _class: 'color',
-      alpha: 1,
-      blue: 1,
-      green: 1,
-      red: 1,
-    };
-
-    obj.hasClickThrough = true;
-    obj.includeInCloudUpload = true;
-    obj.hasBackgroundColor = false;
-    obj.includeBackgroundColorInExport = true;
-    obj.resizesContent = false;
-    obj.includeBackgroundColorInInstance = false;
-    obj.symbolID = this._symbolID;
-    obj.changeIdentifier = 0;
-    obj.groupLayout = this._groupLayout;
-
-    return obj;
-  }
+  };
 }
 
 export default SymbolMaster;

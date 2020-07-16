@@ -10,8 +10,8 @@ const parserToSymbol = (node: Element) => {
   const { left: x, top: y, width, height } = symbolNode.getBoundingClientRect();
   const symbol = new SymbolMaster({ x, y, width, height });
 
-  symbol.setId(name);
-  symbol.setName(name);
+  symbol.symbolID = name;
+  symbol.name = name;
 
   const parentAndChildren = [
     symbolNode,
@@ -23,19 +23,18 @@ const parserToSymbol = (node: Element) => {
       const layers = nodeToSketchLayers(node);
 
       return layers.map((layer) => {
-        console.log(layer);
         if (layer) {
           let name = '';
-          switch (layer.type) {
-            case 'Text':
+          switch (layer.class) {
+            case 'text':
               name = '文本';
               break;
-            case 'Rectangle':
+            case 'rectangle':
               name = 'BG';
               break;
           }
 
-          layer.setName(name);
+          layer.name = name;
           return layer;
         }
       });

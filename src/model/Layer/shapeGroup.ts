@@ -4,7 +4,7 @@ import { SketchFormat } from '../../index';
 class ShapeGroup extends Base {
   constructor(params: BaseLayerParams) {
     super(params);
-    this.class = 'shapeGroup';
+    this.class = SketchFormat.ClassValue.ShapeGroup;
   }
   rotation: number;
 

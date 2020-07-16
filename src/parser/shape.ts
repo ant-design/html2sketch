@@ -70,7 +70,7 @@ const transferToShape = (node: Element): Group | Rectangle => {
     y: top,
   });
 
-  rect.setName('rect');
+  rect.name = 'rect';
 
   const isImage =
     node.nodeName === 'IMG' && (node as HTMLImageElement).currentSrc;
@@ -176,7 +176,7 @@ const transferToShape = (node: Element): Group | Rectangle => {
     bottomRight: fixBorderRadius(borderBottomRightRadius, width, height),
   };
 
-  rect.setCornerRadius(cornerRadius);
+  rect.cornerRadius = cornerRadius;
 
   const backgroundImageResult = parseBackgroundImage(backgroundImage);
 
@@ -215,8 +215,8 @@ const transferToShape = (node: Element): Group | Rectangle => {
             height: actualImgSize.height,
           });
 
-          bm.setName('background-image');
-          rect.setHasClippingMask(true);
+          bm.name = 'background-image';
+          rect.hasClippingMask = true;
 
           const group = new Group({ x: left, y: top, width, height });
 

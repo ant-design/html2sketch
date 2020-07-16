@@ -9,7 +9,7 @@ const layerToSharedStyle = (
   return {
     _class: 'sharedStyle',
     do_objectID: id || uuid(),
-    name: layer._name,
+    name: layer.name,
     value: layer.style.toSketchJSON(),
   };
 };

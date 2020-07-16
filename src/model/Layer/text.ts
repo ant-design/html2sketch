@@ -13,7 +13,7 @@ class Text extends Base {
   constructor({ x, y, width, height, text, style, multiline }: TextInitParams) {
     super({ x, y, width, height });
     this.name = text;
-    this.class = 'text';
+    this.class = SketchFormat.ClassValue.Text;
     this.text = text;
     this.textStyle = new TextStyle(style);
     this.multiline = multiline;

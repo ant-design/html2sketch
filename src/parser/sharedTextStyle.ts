@@ -9,7 +9,7 @@ const parserTextStyle = (node: HTMLElement) => {
   const layer = nodeToSketchLayers(node);
 
   return layer
-    .filter((layer) => layer.type === 'Text')
+    .filter((layer) => layer.class === 'text')
     .map((layer) => {
       return {
         name: styleName,

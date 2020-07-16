@@ -1,6 +1,6 @@
 import { getGroupBCR } from '../helpers/bcr';
 import { getSVGString } from '../helpers/svg';
-import SVG from '../model/svg';
+import SVG from '../model/Layer/svg';
 import { SVGPathData } from 'svg-pathdata';
 
 /**
@@ -31,7 +31,7 @@ const transferToSvg = (node: Element) => {
     height: childrenBCR.height,
     rawSVGString: getSVGString(node),
   });
-  svg.setName(node.getAttribute('data-icon') || 'svg');
+  svg.name = node.getAttribute('data-icon') || 'svg';
   return svg;
 };
 export default transferToSvg;

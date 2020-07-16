@@ -1,4 +1,3 @@
-import { Svg, Group, Rectangle, Text } from '../model';
 import { defaultNodeStyle } from '../model/utils';
 
 import transferToSvg from '../parser/svg';
@@ -7,6 +6,7 @@ import transferToText from '../parser/text';
 
 import { isTextVisible } from '../helpers/visibility';
 import { isTextNode } from '../helpers/nodeType';
+import { AnyLayer } from '../model/type';
 
 /**
  * 是否是默认样式
@@ -42,9 +42,7 @@ export let getRelativeXY: (
  * @param {HTMLElement} node 节点
  * @param {HTMLElement} options? 配置项
  */
-const nodeToSketchLayers = (
-  node: Element
-): (Svg | Group | Rectangle | Text)[] => {
+const nodeToSketchLayers = (node: Element): AnyLayer[] => {
   const layers: any[] = [];
 
   const styles: CSSStyleDeclaration = getComputedStyle(node);

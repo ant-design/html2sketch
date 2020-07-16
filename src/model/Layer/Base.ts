@@ -30,7 +30,6 @@ class Base {
   style: Style;
   layers: AnyLayer[] = [];
   userInfo: any;
-
   id: string;
   name: string;
 
@@ -44,6 +43,20 @@ class Base {
 
   hasClippingMask = false;
   LayerListExpanded: SketchFormat.LayerListExpanded;
+
+  get x() {
+    return this.frame.x;
+  }
+  set x(x: number) {
+    this.frame.x = x;
+  }
+
+  get y() {
+    return this.frame.y;
+  }
+  set y(y: number) {
+    this.frame.y = y;
+  }
 
   setFixedWidthAndHeight() {
     this.setResizingConstraint(
@@ -85,7 +98,7 @@ class Base {
    * @param x X轴
    * @param y Y轴
    */
-  setPosition(x: number, y: number) {
+  setPosition({ x, y }: { x: number; y: number }) {
     this.frame.x = x;
     this.frame.y = y;
   }

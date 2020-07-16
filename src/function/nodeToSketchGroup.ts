@@ -2,6 +2,7 @@ import nodeToSketchLayers from './nodeToSketchLayers';
 import { isNodeVisible } from '../helpers/visibility';
 import { getName } from '../helpers/name';
 import { Group, Style } from '../model';
+import { AnyLayer } from '../model/type';
 
 /**
  * 获得可用的节点子级
@@ -19,7 +20,7 @@ const getChildNodeList = (node: Element) =>
       return zIndexA - zIndexB;
     });
 
-const nodeToSketchGroup = (node: Element, options?: any) => {
+const nodeToSketchGroup = (node: Element, options?: any): AnyLayer => {
   const bcr = node.getBoundingClientRect();
   const { left, top } = bcr;
   const width = bcr.right - bcr.left;
@@ -62,58 +63,38 @@ const nodeToSketchGroup = (node: Element, options?: any) => {
     .forEach((layer) => {
       // Layer positions are relative, and as we put the node position to the group,
       // we have to shift back the layers by that distance.
-      //@ts-ignore
+
       layer.x -= left;
-      //@ts-ignore
+
       layer.y -= top;
 
       group.addLayer(layer);
     });
 
   if (
-    group.getLayers().length === 1 &&
-    (group.getLayers()[0]._class === 'rectangle' ||
-      // group.getLayers()[0]._class === 'text' ||
-      group.getLayers()[0]._class === 'group')
+    group.layers.length === 1 &&
+    (group.layers[0].class === 'rectangle' ||
+      // group.layers[0].class === 'text' ||
+      group.layers[0].class === 'group')
   ) {
     console.log('该 group 只包含一个子级,丢弃...');
-    const layer = group.getLayers()[0];
+    const layer = group.layers[0];
     // 将父级的图层关系给到子集
     layer.x += group.x;
     layer.y += group.y;
     return layer;
   }
-  if (group.getLayers().length === 0) {
+  if (group.layers.length === 0) {
     console.log('该 group 是空的,丢弃...');
     return;
   }
 
   if (options && options.getGroupName) {
-    group.setName(options.getGroupName(node));
+    group.name = options.getGroupName(node);
   } else {
-    group.setName(getName(node.nodeName));
+    group.name = getName(node.nodeName);
   }
   return group;
-
-  // 操作 children
-  // const childNodeList = getChildNodeList(node);
-  //
-
-  // if (layers.length > 0) {
-  //   group.addLayers(layers);
-  // }
-  //
-  // // 处理 Group
-  //
-
-  //
-  // // 如果节点下面只有一个节点
-  // // 那么这个 group 就是多余的
-  //
-
-  // group.setPosition({ x: 0, y: 0 });
-  // console.log('转换为 Group 节点:', group);
-  // return group;
 };
 
 export default nodeToSketchGroup;

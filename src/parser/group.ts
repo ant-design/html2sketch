@@ -20,7 +20,7 @@ const transferToGroup = (node: Element) => {
   group.style = groupStyle;
 
   // Set the group name to the node's name, unless there is a name provider in the options
-  group.setName(getName(node.nodeName));
+  group.name = getName(node.nodeName);
 
   return group;
 };

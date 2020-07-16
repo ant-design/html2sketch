@@ -1,5 +1,3 @@
-import Bitmap from './Layer/Bitmap';
-
 export { default as Artboard } from './Layer/artboard';
 export { default as Document } from './Document';
 export { default as Rectangle } from './Layer/rectangle';
