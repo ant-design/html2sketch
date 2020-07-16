@@ -1,4 +1,4 @@
-import Group from '../model/Layer/group';
+import Group from '../model/Layer/Group';
 import Style from '../model/Style/Style';
 import { getName } from '../helpers/name';
 

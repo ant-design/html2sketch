@@ -1,4 +1,4 @@
-import Text from '../model/Layer/text';
+import Text from '../model/Layer/Text';
 import TextStyle from '../model/Style/TextStyle';
 import { fixWhiteSpace } from '../helpers/text';
 

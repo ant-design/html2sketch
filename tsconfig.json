@@ -2,8 +2,8 @@
   "include": ["src", "typings.d.ts"],
   "exclude": ["node_modules", "**/__tests__/*", "example"],
   "compilerOptions": {
-    "target": "es5",
-    "module": "commonjs",
+    "target": "es6",
+    "module": "ES2015",
     "outDir": "./lib",
     "sourceMap": true,
     "declaration": true,

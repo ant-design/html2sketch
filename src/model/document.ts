@@ -1,7 +1,7 @@
 import { SketchFormat } from '../index';
 import uuid from '../helpers/uuid';
-import Group from './Layer/group';
-import Page from './Layer/page';
+import Group from './Layer/Group';
+import Page from './Layer/Page';
 import Color from './Style/Color';
 import ColorAsset from './Style/ColorAsset';
 import layerToSharedStyle from '../parser/sharedLayerStyle';

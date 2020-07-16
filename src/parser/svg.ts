@@ -1,6 +1,6 @@
 import { getGroupBCR } from '../helpers/bcr';
 import { getSVGString } from '../helpers/svg';
-import SVG from '../model/Layer/svg';
+import SVG from '../model/Layer/Svg';
 import { SVGPathData } from 'svg-pathdata';
 
 /**

@@ -102,33 +102,6 @@ class Base {
     this.frame.x = x;
     this.frame.y = y;
   }
-
-  // toSketchJSON() {
-  //   if (!this.class) {
-  //     throw new Error('Class not set.');
-  //   }
-
-  //   return {
-  //     _class: this.class,
-  //     booleanOperation: SketchFormat.BooleanOperation.NA,
-  //     frame: this.frame.toSketchJSON(),
-  //     exportOptions: defaultExportOptions,
-  //     do_objectID: this.id,
-  //     isFlippedHorizontal: false,
-  //     isFlippedVertical: false,
-  //     isLocked: this.isLocked,
-  //     isVisible: true,
-  //     layerListExpandedType: 0,
-  //     name: this.name || this.class,
-  //     nameIsFixed: false,
-  //     resizingConstraint: this.resizingConstraint,
-  //     resizingType: 0,
-  //     rotation: 0,
-  //     shouldBreakMaskChain: false,
-  //     clippingMaskMode: 0,
-  //     hasClippingMask: this.hasClippingMask,
-  //   };
-  // }
 }
 
 export default Base;

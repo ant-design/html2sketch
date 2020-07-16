@@ -2,7 +2,7 @@ import { SketchFormat } from '../../index';
 import { getGroupLayout } from '../../helpers/layout';
 import Base, { BaseLayerParams } from './Base';
 import Color from '../Style/Color';
-import SymbolInstance from './symbolInstance';
+import SymbolInstance from './SymbolInstance';
 import uuid from '../../helpers/uuid';
 import { defaultExportOptions, defaultRuleData } from '../utils';
 import { AnyLayer } from '../type';

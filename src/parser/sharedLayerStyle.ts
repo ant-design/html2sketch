@@ -1,6 +1,6 @@
 import FileFormat from '@sketch-hq/sketch-file-format-ts';
 import uuid from '../helpers/uuid';
-import Group from '../model/Layer/group';
+import Group from '../model/Layer/Group';
 
 const layerToSharedStyle = (
   layer: Group,
