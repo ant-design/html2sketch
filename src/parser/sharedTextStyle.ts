@@ -13,7 +13,7 @@ const parserTextStyle = (node: HTMLElement) => {
     .map((layer) => {
       return {
         name: styleName,
-        style: layer._style,
+        style: layer.style,
       };
     });
 };

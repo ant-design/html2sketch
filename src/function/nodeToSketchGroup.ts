@@ -55,7 +55,7 @@ const nodeToSketchGroup = (node: Element, options?: any) => {
   const groupStyle = new Style();
 
   groupStyle.addOpacity(opacity);
-  group.setStyle(groupStyle);
+  group.style = groupStyle;
 
   layers
     .filter((l) => l)

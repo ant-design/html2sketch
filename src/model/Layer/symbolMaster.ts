@@ -1,10 +1,10 @@
 import FileFormat from '@sketch-hq/sketch-file-format-ts';
 
-import { getGroupLayout } from '../helpers/layout';
-import Base, { LayerInitParams } from './base';
+import { getGroupLayout } from '../../helpers/layout';
+import Base, { LayerInitParams } from './Base';
 import SymbolInstance from './symbolInstance';
-import uuid from '../helpers/uuid';
-import { defaultStyle } from './utils';
+import uuid from '../../helpers/uuid';
+import { defaultStyle } from '../utils';
 
 interface SymbolMasterInitParams
   extends Omit<LayerInitParams, 'width' | 'height'> {

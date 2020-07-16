@@ -1,7 +1,4 @@
-import Style from '../model/style';
-import Bitmap from '../model/bitmap';
-import Group from '../model/group';
-import Rectangle from '../model/rectangle';
+import { Style, Bitmap, Group, Rectangle } from '../model';
 
 import { shadowStringToObject, splitShadowString } from '../helpers/shadow';
 import {
@@ -169,7 +166,7 @@ const transferToShape = (node: Element): Group | Rectangle => {
     }
   }
 
-  rect.setStyle(style);
+  rect.style = style;
 
   //TODO borderRadius can be expressed in different formats and use various units - for simplicity we assume "X%"
   const cornerRadius = {

@@ -1,64 +1,109 @@
+import { SketchFormat } from '../index';
 import uuid from '../helpers/uuid';
-import Group from './group';
-import Page from './page';
-import { makeColorFromCSS } from '../helpers/color';
+import Group from './Layer/group';
+import Page from './Layer/page';
+import Color from './Style/Color';
+import ColorAsset from './Style/ColorAsset';
 import layerToSharedStyle from '../parser/sharedLayerStyle';
 
-function pageToPageReference(page: Page) {
-  return {
-    _class: 'MSJSONFileReference',
-    _ref_class: 'MSImmutablePage',
-    _ref: `pages/${page.getID()}`,
-  };
-}
-
+/**
+ * Sketch 文档对象
+ */
 class Document {
-  objectID: string;
-  private _colors: any[];
-  private _textStyles: any[];
-  private _layerStyles: any[];
-  private _pages: Page[];
+  id: string;
+  colors: Color[];
+  /**
+   * 色板
+   */
+  swatches: SketchFormat.Swatch[];
+  /**
+   * 颜色资产
+   */
+  colorAssets: ColorAsset[];
+  /**
+   * 文本样式
+   */
+  textStyles: SketchFormat.SharedStyle[];
+  /**
+   * 图层样式
+   */
+  layerStyles: SketchFormat.SharedStyle[];
+  /**
+   * 外部图层样式
+   */
+  foreignLayerStyles: SketchFormat.ForeignLayerStyle[];
+  /**
+   * 外部文本样式
+   */
+  foreignTextStyles: SketchFormat.ForeignTextStyle[];
+  /**
+   * 外部 Swatch
+   */
+  foreignSwatch: SketchFormat.ForeignSwatch[];
+  /**
+   * 外部 Symbol
+   */
+  foreignSymbol: SketchFormat.ForeignSymbol[];
+  /**
+   * 画板
+   */
+  pages: Page[];
 
-  name?: string;
+  /**
+   * 文件名
+   */
+  name: string;
   constructor() {
-    this.objectID = uuid();
-    this._colors = [];
-    this._textStyles = [];
-    this._layerStyles = [];
-    this._pages = [];
+    this.id = uuid();
+    this.colors = [];
+    this.textStyles = [];
+    this.layerStyles = [];
+    this.pages = [];
   }
 
   addPage(page: any) {
-    this._pages.push(page);
+    this.pages.push(page);
   }
 
   addTextStyle(textLayer: any, id: string) {
-    this._textStyles.push(layerToSharedStyle(textLayer, id));
+    this.textStyles.push(layerToSharedStyle(textLayer, id));
   }
 
   addLayerStyle(layer: Group, id: string) {
-    this._layerStyles.push(layerToSharedStyle(layer, id));
+    this.layerStyles.push(layerToSharedStyle(layer, id));
   }
 
-  addColor(color: any) {
-    this._colors.push(makeColorFromCSS(color));
+  addColor(color: Color) {
+    this.colors.push(color);
   }
-
-  toJSON() {
+  /**
+   * 转为 Sketch JSON对象
+   */
+  toSketchJSON(): SketchFormat.Document {
     return {
       _class: 'document',
-      do_objectID: this.objectID,
+      do_objectID: this.id,
+      colorSpace: SketchFormat.ColorSpace.Unmanaged,
+      foreignLayerStyles: this.foreignLayerStyles,
+      foreignTextStyles: this.foreignTextStyles,
+      foreignSymbols: [],
+      foreignSwatches: [],
       assets: {
+        do_objectID: uuid(),
         _class: 'assetCollection',
-        colors: this._colors,
+        exportPresets: [],
+        images: [],
+        gradients: [],
+        gradientAssets: [],
+        colors: this.colors.map((color) => color.toSketchJson()),
+        colorAssets: this.colorAssets.map((colorAsset) =>
+          colorAsset.toSketchJSON()
+        ),
       },
       currentPageIndex: 0,
-      enableLayerInteraction: true,
-      enableSliceInteraction: true,
-      foreignSymbols: [],
       layerStyles: {
         _class: 'sharedStyleContainer',
-        objects: this._layerStyles,
+        objects: this.layerStyles,
       },
       layerSymbols: {
         _class: 'symbolContainer',
@@ -66,11 +111,24 @@ class Document {
       },
       layerTextStyles: {
         _class: 'sharedTextStyleContainer',
-        objects: this._textStyles,
+        objects: this.textStyles,
       },
-      pages: this._pages.map(pageToPageReference),
+      pages: this.pages.map(this.pageToPageReference),
+      sharedSwatches: {
+        _class: 'swatchContainer',
+        objects: this.swatches,
+      },
     };
   }
+
+  /**
+   * 将 Page 转为参考对象
+   */
+  pageToPageReference = (page: Page): SketchFormat.FileRef => ({
+    _class: 'MSJSONFileReference',
+    _ref_class: 'MSImmutablePage',
+    _ref: `pages/${page.id}`,
+  });
 }
 
 export default Document;

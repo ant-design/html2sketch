@@ -1,6 +1,6 @@
 import FileFormat from '@sketch-hq/sketch-file-format-ts';
 import uuid from '../helpers/uuid';
-import Group from '../model/group';
+import Group from '../model/Layer/group';
 
 const layerToSharedStyle = (
   layer: Group,
@@ -10,7 +10,7 @@ const layerToSharedStyle = (
     _class: 'sharedStyle',
     do_objectID: id || uuid(),
     name: layer._name,
-    value: layer._style.toJSON(),
+    value: layer.style.toSketchJSON(),
   };
 };
 

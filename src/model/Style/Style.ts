@@ -1,13 +1,14 @@
 import FileFormat from '@sketch-hq/sketch-file-format-ts';
-import { makeImageFill } from '../helpers/image';
-import { makeColorFill, makeColorFromCSS } from '../helpers/color';
-import convertAngleToFromAndTo from '../helpers/convertAngleToFromAndTo';
+import { makeImageFill } from '../../helpers/image';
+import { makeColorFill, makeColorFromCSS } from '../../helpers/color';
+import convertAngleToFromAndTo from '../../helpers/convertAngleToFromAndTo';
 import {
   defaultBorderOptions,
   defaultColorControls,
   defaultContextSettings,
   defaultGradient,
-} from './utils';
+} from '../utils';
+import StyleBase from './Base';
 
 interface ShadowInput {
   color: string;
@@ -24,10 +25,14 @@ const defaultShadowInput: ShadowInput = {
   offsetY: 0,
   spread: 0,
 };
-class Style {
+/**
+ * 样式
+ */
+class Style extends StyleBase {
   private _borderOptions: FileFormat.BorderOptions = defaultBorderOptions;
   _fontFamily: string;
   constructor() {
+    super();
     this._fills = [];
     this._borders = [];
     this._shadows = [];
@@ -170,7 +175,10 @@ class Style {
     this._opacity = Number(opacity);
   }
 
-  toJSON(): FileFormat.Style {
+  /**
+   * 生成 Sketch JSON 对象
+   */
+  toSketchJSON = (): FileFormat.Style => {
     return {
       borderOptions: this._borderOptions,
       colorControls: defaultColorControls,
@@ -190,7 +198,7 @@ class Style {
         opacity: this._opacity,
       },
     };
-  }
+  };
 }
 
 export default Style;

@@ -1,5 +1,5 @@
-import Text from '../model/text';
-import TextStyle from '../model/textStyle';
+import Text from '../model/Layer/text';
+import TextStyle from '../model/Style/TextStyle';
 import { fixWhiteSpace } from '../helpers/text';
 
 /**

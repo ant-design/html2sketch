@@ -1,5 +1,5 @@
-import Group from '../model/group';
-import Style from '../model/style';
+import Group from '../model/Layer/group';
+import Style from '../model/Style/Style';
 import { getName } from '../helpers/name';
 
 const transferToGroup = (node: Element) => {
@@ -17,7 +17,7 @@ const transferToGroup = (node: Element) => {
   const groupStyle = new Style();
 
   groupStyle.addOpacity(opacity);
-  group.setStyle(groupStyle);
+  group.style = groupStyle;
 
   // Set the group name to the node's name, unless there is a name provider in the options
   group.setName(getName(node.nodeName));

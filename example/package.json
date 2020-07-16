@@ -2,11 +2,8 @@
   "private": true,
   "scripts": {
     "start": "umi dev",
-    "build": "umi build",
     "postinstall": "umi generate tmp",
-    "prettier": "prettier --write '**/*.{js,jsx,tsx,ts,less,md,json}'",
-    "test": "umi-test",
-    "test:coverage": "umi-test --coverage"
+    "prettier": "prettier --write '**/*.{js,jsx,tsx,ts,less,md,json}'"
   },
   "gitHooks": {
     "pre-commit": "lint-staged"
@@ -29,5 +26,8 @@
     "react-dom": "^16.12.0",
     "umi": "^3.2.10",
     "yorkie": "^2.0.0"
+  },
+  "devDependencies": {
+    "@types/color": "^3.0.1"
   }
 }

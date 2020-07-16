@@ -1,6 +1,6 @@
 import FileFormat from '@sketch-hq/sketch-file-format-ts';
-import { defaultStyle } from './utils';
-import Base, { LayerInitParams } from './base';
+import { defaultStyle } from '../utils';
+import Base, { LayerInitParams } from './Base';
 
 interface SymbolInstanceInitParams extends LayerInitParams {
   symbolID: string;

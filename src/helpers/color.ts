@@ -10,7 +10,12 @@ const safeToLower = (input: string | any) => {
   return input;
 };
 
-// Takes colors as CSS hex, name, rgb, rgba, hsl or hsla
+/**
+ * Takes colors as CSS hex, name, rgb, rgba, hsl or hsla
+ * @param input
+ * @param alpha
+ */
+
 export const makeColorFromCSS = (input: any, alpha = 1): FileFormat.Color => {
   const nullableColor = normalizeColor(safeToLower(input));
   const colorInt = nullableColor === null ? 0x00000000 : nullableColor;

@@ -1,6 +1,14 @@
 import FileFormat from '@sketch-hq/sketch-file-format-ts';
 import uuid from '../helpers/uuid';
 
+export const defaultExportOptions: FileFormat.ExportOptions = {
+  _class: 'exportOptions',
+  exportFormats: [],
+  includedLayerIds: [],
+  layerOptions: 0,
+  shouldTrim: false,
+};
+
 export const defaultBorderOptions: FileFormat.BorderOptions = {
   _class: 'borderOptions',
   lineCapStyle: FileFormat.LineCapStyle.Butt,
@@ -57,3 +65,13 @@ export const defaultNodeStyle: Partial<CSSStyleDeclaration> = {
   borderWidth: '0px',
   boxShadow: 'none',
 };
+
+export const sketchImage = (
+  url: string
+): FileFormat.FileRef | FileFormat.DataRef => ({
+  _class: 'MSJSONOriginalDataReference',
+  _ref_class: 'MSImageData',
+  _ref: `images/${uuid()}`,
+  //@ts-ignore
+  url,
+});

@@ -1,3 +1,5 @@
+import { SketchFormat } from '../index';
+
 export interface FrameInitParams {
   x?: number;
   y?: number;
@@ -7,7 +9,6 @@ export interface FrameInitParams {
 /**
  * @class
  * Frame 类型
- * @constructor
  */
 class Frame {
   x: number;
@@ -23,7 +24,10 @@ class Frame {
     this.height = height;
   }
 
-  toSketchJson = () => {
+  /**
+   * 转为 Sketch JSON对象
+   */
+  toSketchJSON = (): SketchFormat.Rect => {
     return {
       _class: 'rect',
       constrainProportions: false,
