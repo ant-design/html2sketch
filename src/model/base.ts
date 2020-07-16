@@ -1,5 +1,5 @@
 import FileFormat from '@sketch-hq/sketch-file-format-ts';
-import { generateID } from '@/common/utils';
+import uuid from '../helpers/uuid';
 import Style from './style';
 import {
   calculateResizingConstraintValue,
@@ -24,23 +24,9 @@ export interface LayerInitParams {
   height: number;
 }
 class Base<T extends FileFormat.AnyLayer> {
-  get y(): number {
-    return this._y;
-  }
-
-  set y(value: number) {
-    this._y = value;
-  }
-  get x(): number {
-    return this._x;
-  }
-
-  set x(value: number) {
-    this._x = value;
-  }
   constructor(data: Partial<LayerInitParams>) {
     this._layers = [];
-    this._objectID = data!.id || generateID();
+    this.objectID = data!.id || uuid();
     this._name = '';
     this._userInfo = null;
     this._style = new Style();
@@ -49,17 +35,19 @@ class Base<T extends FileFormat.AnyLayer> {
     this.setIsLocked(false);
   }
 
-  protected _width?: number;
-  protected _height?: number;
-  protected _x: number = 0;
-  protected _y: number = 0;
+  width?: number;
+  height?: number;
+  x: number = 0;
+  y: number = 0;
 
   public type: string = '';
   _style: Style;
   private _layers: any[];
   private _userInfo: any;
-  protected _class?: any;
-  private _objectID: string;
+  class?: string;
+
+  objectID: string;
+
   private _isLocked: boolean = false;
   _name: string;
   protected _resizingConstraint: any;
@@ -77,11 +65,11 @@ class Base<T extends FileFormat.AnyLayer> {
   }
 
   getID() {
-    return this._objectID;
+    return this.objectID;
   }
 
   set setObjectID(id: string) {
-    this._objectID = id;
+    this.objectID = id;
   }
 
   // scope defines which Sketch plugin will have access to provided data via Settings.setLayerSettingForKey
@@ -106,10 +94,6 @@ class Base<T extends FileFormat.AnyLayer> {
 
   setName(name: string) {
     this._name = name;
-  }
-
-  getClass() {
-    return this._class;
   }
 
   getLayers() {
@@ -137,7 +121,7 @@ class Base<T extends FileFormat.AnyLayer> {
   }
 
   toJSON(): T {
-    if (!this._class) {
+    if (!this.class) {
       throw new Error('Class not set.');
     }
 
@@ -154,8 +138,8 @@ class Base<T extends FileFormat.AnyLayer> {
       numberOfPoints: 0,
       points: [],
       sharedStyleID: '',
-      _class: this._class,
-      do_objectID: this._objectID,
+      _class: this.class,
+      do_objectID: this.objectID,
       exportOptions: {
         _class: 'exportOptions',
         exportFormats: [],
@@ -168,7 +152,7 @@ class Base<T extends FileFormat.AnyLayer> {
       isLocked: this._isLocked,
       isVisible: true,
       layerListExpandedType: 0,
-      name: this._name || this._class,
+      name: this._name || this.class,
       nameIsFixed: false,
       resizingConstraint: this._resizingConstraint,
       resizingType: 0,

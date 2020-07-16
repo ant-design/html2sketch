@@ -25,8 +25,7 @@ const nodeToSketchGroup = (node: Element, options?: any) => {
   const width = bcr.right - bcr.left;
   const height = bcr.bottom - bcr.top;
 
-  const layers =
-    nodeToSketchLayers(node, { ...options, layerOpacity: false }) || [];
+  const layers = nodeToSketchLayers(node) || [];
 
   // ---------- 处理父节点 ------ //
   if (node.nodeName !== 'svg') {

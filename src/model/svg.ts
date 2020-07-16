@@ -20,10 +20,10 @@ class Svg extends Base<SVG> {
   constructor({ x, y, width, height, rawSVGString, id }: SvgInitParams) {
     super({ id });
     this._rawSVGString = rawSVGString;
-    this._width = width;
-    this._height = height;
-    this._x = x || 0;
-    this._y = y || 0;
+    this.width = width;
+    this.height = height;
+    this.x = x || 0;
+    this.y = y || 0;
   }
 
   // @ts-ignore
@@ -33,10 +33,10 @@ class Svg extends Base<SVG> {
     return {
       _class: 'svg',
       rawSVGString: this._rawSVGString,
-      width: this._width,
-      height: this._height,
-      x: this._x,
-      y: this._y,
+      width: this.width,
+      height: this.height,
+      x: this.x,
+      y: this.y,
       resizingConstraint: this._resizingConstraint,
       hasClippingMask: this._hasClippingMask,
     };

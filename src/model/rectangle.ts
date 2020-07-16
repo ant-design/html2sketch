@@ -1,6 +1,6 @@
 import FileFormat from '@sketch-hq/sketch-file-format-ts';
-
 import Base, { LayerInitParams } from './base';
+import { CGPoint } from '..';
 
 type CornerRadius =
   | {
@@ -28,7 +28,7 @@ class Rectangle extends Base<FileFormat.Rectangle> {
     id,
   }: RectangleInitParams) {
     super({ id });
-    this._class = FileFormat.ClassValue.Rectangle;
+    this.class = FileFormat.ClassValue.Rectangle;
     this.type = 'Rectangle';
     this._width = width;
     this._height = height;
@@ -45,8 +45,8 @@ class Rectangle extends Base<FileFormat.Rectangle> {
   }
 
   setPosition({ x, y }: CGPoint) {
-    this._x = x;
-    this._y = y;
+    this.x = x;
+    this.y = y;
   }
   toJSON() {
     const rect = super.toJSON();
@@ -56,8 +56,8 @@ class Rectangle extends Base<FileFormat.Rectangle> {
       constrainProportions: false,
       height: this._height,
       width: this._width,
-      x: this._x,
-      y: this._y,
+      x: this.x,
+      y: this.y,
     };
 
     rect.isClosed = true;

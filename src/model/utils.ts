@@ -1,5 +1,5 @@
 import FileFormat from '@sketch-hq/sketch-file-format-ts';
-import { generateID } from '@/common/utils';
+import uuid from '../helpers/uuid';
 
 export const defaultBorderOptions: FileFormat.BorderOptions = {
   _class: 'borderOptions',
@@ -19,7 +19,7 @@ export const defaultColorControls: FileFormat.ColorControls = {
 };
 
 export const defaultStyle = (): FileFormat.Style => ({
-  do_objectID: generateID(),
+  do_objectID: uuid(),
   _class: FileFormat.ClassValue.Style,
   borderOptions: defaultBorderOptions,
   colorControls: defaultColorControls,

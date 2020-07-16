@@ -1,22 +1,20 @@
 import FileFormat from '@sketch-hq/sketch-file-format-ts';
 
 import Base, { LayerInitParams } from './base';
+import { CGPoint } from '..';
 
 class ShapeGroup extends Base<FileFormat.ShapeGroup> {
   constructor({ x, y, width, height, id }: LayerInitParams) {
     super({ id });
-    this._class = 'shapeGroup';
-    this._width = width;
-    this._height = height;
+    this.class = 'shapeGroup';
+    this.width = width;
+    this.height = height;
     this.setPosition({ x, y });
   }
 
-  protected readonly _width: number;
-  protected readonly _height: number;
-
   setPosition({ x, y }: CGPoint) {
-    this._x = x;
-    this._y = y;
+    this.x = x;
+    this.y = y;
   }
 
   toJSON() {
@@ -25,10 +23,10 @@ class ShapeGroup extends Base<FileFormat.ShapeGroup> {
     obj.frame = {
       _class: 'rect',
       constrainProportions: false,
-      height: this._height,
-      width: this._width,
-      x: this._x,
-      y: this._y,
+      height: this.height,
+      width: this.width,
+      x: this.x,
+      y: this.y,
     };
 
     obj.hasClickThrough = false;

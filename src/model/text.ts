@@ -28,7 +28,7 @@ class Text extends Base<FileFormat.Text> {
     id,
   }: TextInitParams) {
     super({ id });
-    this._class = 'text';
+    this.class = 'text';
     this.type = 'Text';
     this._x = x || 0;
     this._y = y || 0;

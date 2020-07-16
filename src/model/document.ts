@@ -1,4 +1,4 @@
-import { generateID } from '@/common/utils';
+import uuid from '../helpers/uuid';
 import Group from './group';
 import Page from './page';
 import { makeColorFromCSS } from '../helpers/color';
@@ -13,26 +13,19 @@ function pageToPageReference(page: Page) {
 }
 
 class Document {
-  private _objectID: string;
+  objectID: string;
   private _colors: any[];
   private _textStyles: any[];
   private _layerStyles: any[];
   private _pages: Page[];
-  private _name?: string;
+
+  name?: string;
   constructor() {
-    this._objectID = generateID();
+    this.objectID = uuid();
     this._colors = [];
     this._textStyles = [];
     this._layerStyles = [];
     this._pages = [];
-  }
-
-  setName(name: string) {
-    this._name = name;
-  }
-
-  setObjectID(id: string) {
-    this._objectID = id;
   }
 
   addPage(page: any) {
@@ -54,7 +47,7 @@ class Document {
   toJSON() {
     return {
       _class: 'document',
-      do_objectID: this._objectID,
+      do_objectID: this.objectID,
       assets: {
         _class: 'assetCollection',
         colors: this._colors,

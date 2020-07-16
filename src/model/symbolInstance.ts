@@ -9,11 +9,11 @@ class SymbolInstance extends Base<FileFormat.SymbolInstance> {
   private _symbolID: string;
   constructor({ x, y, width, height, symbolID, id }: SymbolInstanceInitParams) {
     super({ id });
-    this._class = 'symbolInstance';
-    this._x = x;
-    this._y = y;
-    this._width = width;
-    this._height = height;
+    this.class = 'symbolInstance';
+    this.x = x;
+    this.y = y;
+    this.width = width;
+    this.height = height;
     this._symbolID = symbolID;
   }
 
@@ -21,19 +21,16 @@ class SymbolInstance extends Base<FileFormat.SymbolInstance> {
     this._symbolID = id;
   }
 
-  protected readonly _width: number;
-  protected readonly _height: number;
-
   toJSON() {
     const obj = super.toJSON();
 
     obj.frame = {
       _class: 'rect',
       constrainProportions: false,
-      width: this._width,
-      height: this._height,
-      x: this._x,
-      y: this._y,
+      width: this.width,
+      height: this.height,
+      x: this.x,
+      y: this.y,
     };
 
     obj.style = defaultStyle();

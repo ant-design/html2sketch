@@ -1,5 +1,5 @@
-import Base, { BaseInitParams, LayerInitParams } from './base';
 import FileFormat from '@sketch-hq/sketch-file-format-ts';
+import Base, { LayerInitParams } from './base';
 import { defaultRuleData, defaultStyle } from './utils';
 
 interface PageInitParams
@@ -8,7 +8,7 @@ interface PageInitParams
 class Page extends Base<FileFormat.Page> {
   constructor({ width, height, id }: PageInitParams) {
     super({ id });
-    this._class = FileFormat.ClassValue.Page;
+    this.class = FileFormat.ClassValue.Page;
     this._width = width;
     this._height = height;
   }

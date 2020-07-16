@@ -43,11 +43,7 @@ export let getRelativeXY: (
  * @param {HTMLElement} options? 配置项
  */
 const nodeToSketchLayers = (
-  node: Element,
-  options?: {
-    skipSystemFonts: boolean;
-    layerOpacity: number;
-  }
+  node: Element
 ): (Svg | Group | Rectangle | Text)[] => {
   const layers: any[] = [];
 

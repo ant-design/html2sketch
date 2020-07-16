@@ -3,7 +3,7 @@ import FileFormat from '@sketch-hq/sketch-file-format-ts';
 import { getGroupLayout } from '../helpers/layout';
 import Base, { LayerInitParams } from './base';
 import SymbolInstance from './symbolInstance';
-import { generateID } from '@/common/utils';
+import uuid from '../helpers/uuid';
 import { defaultStyle } from './utils';
 
 interface SymbolMasterInitParams
@@ -15,12 +15,12 @@ interface SymbolMasterInitParams
 class SymbolMaster extends Base<FileFormat.SymbolMaster> {
   constructor({ x, y, width, height, id }: SymbolMasterInitParams) {
     super({ id });
-    this._class = 'symbolMaster';
-    this._x = x || 0;
-    this._y = y || 0;
-    this._width = width;
-    this._height = height;
-    this._symbolID = generateID();
+    this.class = 'symbolMaster';
+    this.x = x || 0;
+    this.y = y || 0;
+    this.width = width;
+    this.height = height;
+    this._symbolID = uuid();
     this._groupLayout = getGroupLayout();
   }
   private _symbolID: string;
@@ -49,21 +49,21 @@ class SymbolMaster extends Base<FileFormat.SymbolMaster> {
 
   addLayer(layer: any) {
     //position child layers relatively to the symbol layer
-    layer._x -= this._x;
-    layer._y -= this._y;
-
+    layer.x -= this.x;
+    layer.y -= this.y;
     super.addLayer(layer);
   }
 
   getSize() {
-    let width = this._width;
-    let height = this._height;
+    let width = this.width;
+    let height = this.height;
 
     // if width and height were not explicitly set, fit symbol size to its contents
-    if (this._width === null || this._height === null) {
+    if (this.width === null || this.height === null) {
+      //@ts-ignore
       this._layers.forEach((layer) => {
-        const layerWidth = layer._x + layer._width;
-        const layerHeight = layer._y + layer._height;
+        const layerWidth = layer.x + layer.width;
+        const layerHeight = layer.y + layer.height;
 
         if (width < layerWidth) {
           width = layerWidth;
@@ -90,8 +90,8 @@ class SymbolMaster extends Base<FileFormat.SymbolMaster> {
       constrainProportions: false,
       width,
       height,
-      x: this._x,
-      y: this._y,
+      x: this.x,
+      y: this.y,
     };
 
     obj.style = defaultStyle();

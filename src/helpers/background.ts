@@ -149,19 +149,23 @@ const getActualImageSize = (
     if (backgroundSizeWidth === 'auto' || backgroundSizeWidth === undefined) {
       backgroundSizeWidth = null;
     } else if (backgroundSizeWidth.endsWith('%')) {
-      backgroundSizeWidth =
-        (parseFloat(backgroundSizeWidth) / 100) * containerSize.width;
+      backgroundSizeWidth = (
+        (parseFloat(backgroundSizeWidth) / 100) *
+        containerSize.width
+      ).toString();
     } else if (backgroundSizeWidth.endsWith('px')) {
-      backgroundSizeWidth = parseFloat(backgroundSizeWidth);
+      backgroundSizeWidth = parseFloat(backgroundSizeWidth).toString();
     }
 
     if (backgroundSizeHeight === 'auto' || backgroundSizeHeight === undefined) {
       backgroundSizeHeight = null;
     } else if (backgroundSizeHeight.endsWith('%')) {
-      backgroundSizeHeight =
-        (parseFloat(backgroundSizeHeight) / 100) * containerSize.height;
+      backgroundSizeHeight = (
+        (parseFloat(backgroundSizeHeight) / 100) *
+        containerSize.height
+      ).toString();
     } else if (backgroundSizeHeight.endsWith('px')) {
-      backgroundSizeHeight = parseFloat(backgroundSizeHeight);
+      backgroundSizeHeight = parseFloat(backgroundSizeHeight).toString();
     }
 
     if (backgroundSizeWidth !== null && backgroundSizeHeight === null) {

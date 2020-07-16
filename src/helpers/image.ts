@@ -9,12 +9,13 @@ const ensureBase64DataURL = (url: any) => {
     const type = imageData[1];
     const data = decodeURIComponent(imageData[4]);
     const encodingMatch = imageData[3] && imageData[3].match(/^charset=(.*)/);
-    let buffer;
+    let buffer: any;
 
     if (encodingMatch) {
       // @ts-ignore
       buffer = Buffer.from(data, encodingMatch[1]);
     } else {
+      // @ts-ignore
       buffer = Buffer.from(data);
     }
 

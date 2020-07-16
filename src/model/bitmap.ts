@@ -1,6 +1,6 @@
 import FileFormat from '@sketch-hq/sketch-file-format-ts';
 import Base, { LayerInitParams } from './base';
-import { generateID } from '@/common/utils';
+import uuid from '../helpers/uuid';
 
 interface BitmapInitParams extends LayerInitParams {
   url: string;
@@ -8,15 +8,15 @@ interface BitmapInitParams extends LayerInitParams {
 class Bitmap extends Base<FileFormat.Bitmap> {
   constructor({ url, x, y, width, height, id }: BitmapInitParams) {
     super({ id });
-    this._class = 'bitmap';
-    this._url = url;
-    this._x = x;
-    this._y = y;
+    this.class = 'bitmap';
+    this.url = url;
+    this.x = x;
+    this.y = y;
     this._width = width;
     this._height = height;
   }
 
-  private readonly _url: string;
+  public url: string;
   protected readonly _width: number;
   protected readonly _height: number;
 
@@ -26,8 +26,8 @@ class Bitmap extends Base<FileFormat.Bitmap> {
     img.frame = {
       _class: 'rect',
       constrainProportions: false,
-      x: this._x,
-      y: this._y,
+      x: this.x,
+      y: this.y,
       height: this._height,
       width: this._width,
     };
@@ -35,7 +35,7 @@ class Bitmap extends Base<FileFormat.Bitmap> {
     img.image = {
       _class: 'MSJSONOriginalDataReference',
       _ref_class: 'MSImageData',
-      _ref: `images/${generateID()}`,
+      _ref: `images/${uuid()}`,
       // @ts-ignore
       url: this._url,
     };

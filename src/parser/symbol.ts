@@ -1,4 +1,4 @@
-import { nodeToSketchLayers, SVG, SymbolMaster, Text } from '../index';
+import { nodeToSketchLayers, SymbolMaster } from '../index';
 
 /**
  * 解析为 Symbol
