@@ -10,8 +10,6 @@ interface TextInitParams extends BaseInitParams {
   multiline: boolean;
 }
 class Text extends Base<FileFormat.Text> {
-  protected _x: number;
-  protected _y: number;
   protected _width: number;
   protected _height: number;
   private _text: string;
@@ -30,8 +28,8 @@ class Text extends Base<FileFormat.Text> {
     super({ id });
     this.class = 'text';
     this.type = 'Text';
-    this._x = x || 0;
-    this._y = y || 0;
+    this.x = x || 0;
+    this.y = y || 0;
     this._width = width;
     this._height = height;
     this._text = text;
@@ -49,8 +47,8 @@ class Text extends Base<FileFormat.Text> {
       constrainProportions: false,
       height: this._height,
       width: this._width,
-      x: this._x,
-      y: this._y,
+      x: this.x,
+      y: this.y,
     };
 
     // @ts-ignore

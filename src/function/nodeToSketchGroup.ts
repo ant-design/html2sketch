@@ -63,9 +63,9 @@ const nodeToSketchGroup = (node: Element, options?: any) => {
       // Layer positions are relative, and as we put the node position to the group,
       // we have to shift back the layers by that distance.
       //@ts-ignore
-      layer._x -= left;
+      layer.x -= left;
       //@ts-ignore
-      layer._y -= top;
+      layer.y -= top;
 
       group.addLayer(layer);
     });
@@ -79,8 +79,8 @@ const nodeToSketchGroup = (node: Element, options?: any) => {
     console.log('该 group 只包含一个子级,丢弃...');
     const layer = group.getLayers()[0];
     // 将父级的图层关系给到子集
-    layer._x += group.x;
-    layer._y += group.y;
+    layer.x += group.x;
+    layer.y += group.y;
     return layer;
   }
   if (group.getLayers().length === 0) {
