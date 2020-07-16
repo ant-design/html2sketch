@@ -1,0 +1,21 @@
+# build artifacts
+lib
+
+# npm
+node_modules
+.npm
+npm-debug.log
+
+# mac
+.DS_Store
+
+.idea
+
+dist
+
+package-lock.json
+src/resources/.umi
+src/resources/.umi-production
+/Resources
+.umi
+/src/resources/.umi/

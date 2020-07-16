@@ -1,0 +1,249 @@
+import Style from '../model/style';
+import Bitmap from '../model/bitmap';
+import Group from '../model/group';
+import Rectangle from '../model/rectangle';
+
+import { shadowStringToObject, splitShadowString } from '../helpers/shadow';
+import {
+  getActualImageSize,
+  parseBackgroundImage,
+} from '../helpers/background';
+import { defaultNodeStyle } from '../model/utils';
+
+function fixBorderRadius(borderRadius: string, width: number, height: number) {
+  const matches = borderRadius.match(/^([0-9.]+)(.+)$/);
+
+  // Sketch uses 'px' units for border radius, so we need to convert % to px
+  if (matches && matches[2] === '%') {
+    const baseVal = Math.max(width, height);
+    const percentageApplied = baseVal * (parseInt(matches[1], 10) / 100);
+
+    return Math.round(percentageApplied);
+  }
+  return parseInt(borderRadius, 10);
+}
+
+const transferToShape = (node: Element): Group | Rectangle => {
+  const bcr = node.getBoundingClientRect();
+  const style = new Style();
+
+  const { left, top } = bcr;
+  const width = bcr.right - bcr.left;
+  const height = bcr.bottom - bcr.top;
+
+  const styles: CSSStyleDeclaration = getComputedStyle(node);
+
+  const {
+    // 背景颜色
+    backgroundColor,
+    backgroundImage,
+    backgroundPositionX,
+    backgroundPositionY,
+    backgroundSize,
+    // 边框
+    borderColor,
+    borderWidth,
+    borderTopWidth,
+    borderRightWidth,
+    borderBottomWidth,
+    borderLeftWidth,
+    borderTopColor,
+    borderRightColor,
+    borderBottomColor,
+    borderLeftColor,
+    borderTopLeftRadius,
+    borderTopRightRadius,
+    borderBottomLeftRadius,
+    borderBottomRightRadius,
+    borderBottomStyle,
+    borderLeftStyle,
+    borderTopStyle,
+    borderRightStyle,
+    boxShadow,
+  } = styles;
+  if (backgroundColor) {
+    style.addColorFill(backgroundColor);
+  }
+
+  const rect: Rectangle | null = new Rectangle({
+    width,
+    height,
+
+    x: left,
+    y: top,
+  });
+
+  rect.setName('rect');
+
+  const isImage =
+    node.nodeName === 'IMG' && (node as HTMLImageElement).currentSrc;
+
+  if (isImage) {
+    const absoluteUrl = new URL(
+      (node as HTMLImageElement).currentSrc,
+      location.href
+    );
+
+    style.addImageFill(absoluteUrl.href);
+    rect.setFixedWidthAndHeight();
+  }
+
+  if (boxShadow !== defaultNodeStyle.boxShadow) {
+    const shadowStrings = splitShadowString(boxShadow);
+
+    shadowStrings.forEach((shadowString: string) => {
+      const shadowObject = shadowStringToObject(shadowString);
+
+      if (shadowObject!.inset) {
+        if (borderWidth.indexOf(' ') === -1) {
+          shadowObject!.spread += parseFloat(borderWidth);
+        }
+        style.addInnerShadow(shadowObject);
+      } else {
+        style.addShadow(shadowObject);
+      }
+    });
+  }
+
+  // support for one-side borders (using inner shadow because Sketch doesn't support that)
+  if (borderWidth.indexOf(' ') === -1) {
+    style.addBorder({
+      color: borderColor,
+      thickness: parseFloat(borderWidth),
+    });
+
+    // 如果是虚线
+    const isDashed =
+      borderBottomStyle === 'dashed' &&
+      borderLeftStyle === 'dashed' &&
+      borderTopStyle === 'dashed' &&
+      borderRightStyle === 'dashed';
+    if (isDashed) {
+      style.setBorderDashed({
+        dash: 3 * parseFloat(borderWidth),
+        spacing: 3 * parseFloat(borderWidth),
+      });
+    }
+    // 如果是点
+    const isDotted =
+      borderBottomStyle === 'dotted' &&
+      borderLeftStyle === 'dotted' &&
+      borderTopStyle === 'dotted' &&
+      borderRightStyle === 'dotted';
+
+    if (isDotted) {
+      style.setBorderDashed({
+        dash: parseFloat(borderWidth),
+        spacing: parseFloat(borderWidth),
+      });
+    }
+  } else {
+    const borderTopWidthFloat = parseFloat(borderTopWidth);
+    const borderRightWidthFloat = parseFloat(borderRightWidth);
+    const borderBottomWidthFloat = parseFloat(borderBottomWidth);
+    const borderLeftWidthFloat = parseFloat(borderLeftWidth);
+
+    if (borderTopWidthFloat !== 0) {
+      style.addInnerShadow({
+        color: borderTopColor,
+        offsetY: borderTopWidthFloat,
+      });
+    }
+    if (borderRightWidthFloat !== 0) {
+      style.addInnerShadow({
+        color: borderRightColor,
+        offsetX: -borderRightWidthFloat,
+      });
+    }
+    if (borderBottomWidthFloat !== 0) {
+      style.addInnerShadow({
+        color: borderBottomColor,
+        offsetY: -borderBottomWidthFloat,
+      });
+    }
+    if (borderLeftWidthFloat !== 0) {
+      style.addInnerShadow({
+        color: borderLeftColor,
+        offsetX: borderLeftWidthFloat,
+      });
+    }
+  }
+
+  rect.setStyle(style);
+
+  //TODO borderRadius can be expressed in different formats and use various units - for simplicity we assume "X%"
+  const cornerRadius = {
+    topLeft: fixBorderRadius(borderTopLeftRadius, width, height),
+    topRight: fixBorderRadius(borderTopRightRadius, width, height),
+    bottomLeft: fixBorderRadius(borderBottomLeftRadius, width, height),
+    bottomRight: fixBorderRadius(borderBottomRightRadius, width, height),
+  };
+
+  rect.setCornerRadius(cornerRadius);
+
+  const backgroundImageResult = parseBackgroundImage(backgroundImage);
+
+  if (backgroundImageResult) {
+    switch (backgroundImageResult.type) {
+      case 'Image': {
+        const img = new Image();
+
+        img.src = <string>backgroundImageResult.value;
+
+        // TODO add support for % values
+        const bitmapX = parseFloat(backgroundPositionX);
+        const bitmapY = parseFloat(backgroundPositionY);
+
+        const actualImgSize = getActualImageSize(
+          backgroundSize,
+          { width: img.width, height: img.height },
+          { width, height }
+        );
+
+        if (
+          bitmapX === 0 &&
+          bitmapY === 0 &&
+          actualImgSize.width === img.width &&
+          actualImgSize.height === img.height
+        ) {
+          // background image fits entirely inside the node, so we can represent it with a (cheaper) image fill
+          style.addImageFill(<string>backgroundImageResult.value);
+        } else {
+          // use a Group(Shape + Bitmap) to correctly represent clipping of the background image
+          const bm = new Bitmap({
+            url: <string>backgroundImageResult.value,
+            x: bitmapX,
+            y: bitmapY,
+            width: actualImgSize.width,
+            height: actualImgSize.height,
+          });
+
+          bm.setName('background-image');
+          rect.setHasClippingMask(true);
+
+          const group = new Group({ x: left, y: top, width, height });
+
+          // position is relative to the group
+          group.setPosition({ x: 0, y: 0 });
+          group.addLayer(group);
+          group.addLayer(bm);
+
+          return group;
+        }
+
+        break;
+      }
+      case 'LinearGradient':
+        style.addGradientFill(backgroundImageResult.value);
+        break;
+      default:
+        // Unsupported types:
+        // - radial gradient
+        // - multiple background-image
+        break;
+    }
+  }
+  return rect;
+};
+
+export default transferToShape;

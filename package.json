@@ -1,0 +1,40 @@
+{
+  "name": "html2sketch",
+  "version": "0.0.1",
+  "author": "arvinxx",
+  "description": "叮！你的设计已出炉~",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/arvinxx/html2sketch.git"
+  },
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "keywords": ["html", "sketch"], 
+
+  "scripts": {
+    "test": "jest --config jestconfig.json",
+    "build": "tsc",
+    "format": "prettier --write \"src/**/*.ts\" \"src/**/*.js\"",
+    "lint": "tslint -p tsconfig.json",
+    "prepare": "npm run build",
+    "prepublishOnly": "npm run test && npm run lint",
+    "preversion": "npm run lint",
+    "version": "npm run format && git add -A src",
+    "postversion": "git push && git push --tags"
+  },
+  "devDependencies": {
+    "@sketch-hq/sketch-file-format-ts": "^5.1.0",
+    "jest": "^24.8.0",
+    "prettier": "^1.18.2",
+    "ts-jest": "^24.0.2",
+    "tslint": "^5.18.0",
+    "tslint-config-prettier": "^1.18.0",
+    "typescript": "^3.9.6",
+    "color": "^3.1.2",
+    "normalize-css-color": "^1.0.2",
+    "svg-pathdata": "^5.0.5"
+  },
+  "files": [
+    "lib/**/*"
+  ]
+}
