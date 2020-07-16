@@ -121,7 +121,7 @@ function getUseReplacement(node) {
       Array.from(refNode.attributes).forEach((attr) =>
         resultNode.setAttribute(attr.name, attr.value)
       );
-      //@ts-ignore
+      //@ts-ignore 
       Array.from(refNode.cloneNode(true).children).forEach((child) =>
         resultNode.appendChild(child)
       );
