@@ -32,20 +32,20 @@ const defaultShadowInput: ShadowInput = {
  * 样式
  */
 class Style extends StyleBase {
-  private _borderOptions: FileFormat.BorderOptions = defaultBorderOptions;
-  _fontFamily: string;
   constructor() {
     super();
-    this._fontFamily = '';
   }
+
   /**
    * 填充
    **/
   fills: Fill[] = [];
+
   /**
    * 外阴影
    **/
   shadows: Shadow[] = [];
+
   /**
    * 内阴影
    **/
@@ -55,15 +55,21 @@ class Style extends StyleBase {
    * 描边
    **/
   borders: Border[] = [];
+  /**
+   * Sketch 专属的描边属性
+   **/
+  sketchBorderOptions: FileFormat.BorderOptions = defaultBorderOptions;
 
+  /**
+   * 透明度
+   **/
+  private _opacity: number = 1;
   get opacity() {
     return this._opacity;
   }
   set opacity(opacity: string | number) {
     this._opacity = Number(opacity);
   }
-
-  private _opacity: number = 1;
 
   /**
    * 添加颜色填充
@@ -120,26 +126,6 @@ class Style extends StyleBase {
     this.borders.push(border);
   }
 
-  setBorderDashed({
-    lineCapStyle,
-    lineJoinStyle,
-    dash,
-    spacing,
-  }: {
-    lineCapStyle?: FileFormat.LineCapStyle;
-    lineJoinStyle?: FileFormat.LineJoinStyle;
-    dash?: number;
-    spacing?: number;
-  } = {}) {
-    this._borderOptions = {
-      _class: 'borderOptions',
-      lineCapStyle: lineCapStyle || FileFormat.LineCapStyle.Butt,
-      lineJoinStyle: lineJoinStyle || FileFormat.LineJoinStyle.Miter,
-      dashPattern: [dash || 4, spacing || 4],
-      isEnabled: true,
-    };
-  }
-
   /**
    * 添加阴影
    **/
@@ -157,6 +143,9 @@ class Style extends StyleBase {
     this.shadows.push(shadow);
   }
 
+  /**
+   * 添加内阴影
+   **/
   addInnerShadow(params = defaultShadowInput) {
     const { color, blur, offsetX, offsetY, spread } = params;
 
@@ -172,6 +161,29 @@ class Style extends StyleBase {
   }
 
   /**
+   * 设置描边属性
+   **/
+  setBorderDashed({
+    lineCapStyle,
+    lineJoinStyle,
+    dash,
+    spacing,
+  }: {
+    lineCapStyle?: FileFormat.LineCapStyle;
+    lineJoinStyle?: FileFormat.LineJoinStyle;
+    dash?: number;
+    spacing?: number;
+  } = {}) {
+    this.sketchBorderOptions = {
+      _class: 'borderOptions',
+      lineCapStyle: lineCapStyle || FileFormat.LineCapStyle.Butt,
+      lineJoinStyle: lineJoinStyle || FileFormat.LineJoinStyle.Miter,
+      dashPattern: [dash || 4, spacing || 4],
+      isEnabled: true,
+    };
+  }
+
+  /**
    * 生成 Sketch JSON 对象
    */
   toSketchJSON = (): FileFormat.Style => {
@@ -182,7 +194,7 @@ class Style extends StyleBase {
       miterLimit: 10,
       startMarkerType: FileFormat.MarkerType.OpenArrow,
       windingRule: FileFormat.WindingRule.EvenOdd,
-      borderOptions: this._borderOptions,
+      borderOptions: this.sketchBorderOptions,
       colorControls: defaultColorControls,
       fills: this.fills.map((fill) => fill.toSketchJSON()),
       borders: this.borders.map((b) => b.toSketchJSON()),
