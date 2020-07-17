@@ -48,7 +48,6 @@ const transformToText = (node: Element): Text | Text[] | undefined => {
   const nodeBCR = node.getBoundingClientRect();
   let x = nodeBCR.x;
   let y = nodeBCR.y;
-  // let { x, y } = getRelativeXY(node, textAlign);
 
   // 处理内部Text节点
   const childNodeList = Array.from(node.childNodes);
@@ -115,6 +114,7 @@ const transformToText = (node: Element): Text | Text[] | undefined => {
         multiline: numberOfLines > 1,
       });
     });
+
   if (textNode.length === 0) {
     return;
   } else if (textNode.length === 1) {
