@@ -1,10 +1,10 @@
 import FileFormat from '@sketch-hq/sketch-file-format-ts';
 import { defaultContextSettings } from '../utils';
-import Color, { ColorType } from './Color';
+import Color, { ColorParam } from './Color';
 import StyleBase from './Base';
 
 export interface ShadowProps {
-  color?: ColorType;
+  color?: ColorParam;
   blurRadius?: number;
   offsetX?: number;
   offsetY?: number;

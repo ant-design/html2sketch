@@ -9,6 +9,7 @@ import {
 } from '../utils';
 import StyleBase from './Base';
 import Fill from './Fill';
+import Shadow from './Shadow';
 import { ColorParam } from './Color';
 
 interface ShadowInput {
@@ -35,13 +36,13 @@ class Style extends StyleBase {
   constructor() {
     super();
     this._borders = [];
-    this._shadows = [];
     this._innerShadows = [];
     this._opacity = 1;
     this._fontFamily = '';
   }
   private readonly _innerShadows: FileFormat.InnerShadow[];
   fills: Fill[] = [];
+  shadows: Shadow[] = [];
 
   get opacity() {
     return this._opacity;
@@ -51,7 +52,6 @@ class Style extends StyleBase {
   }
 
   private _opacity: number;
-  private readonly _shadows: FileFormat.Shadow[];
   private readonly _borders: FileFormat.Border[];
 
   /**
@@ -130,27 +130,33 @@ class Style extends StyleBase {
     };
   }
 
-  addShadow(
-    { color, blur, offsetX, offsetY, spread } = {
-      color: '#000',
-      blur: 1,
-      offsetX: 0,
-      offsetY: 0,
-      spread: 0,
-    }
-  ) {
-    const shadow: FileFormat.Shadow = {
-      _class: 'shadow',
-      isEnabled: true,
+  /**
+   * 添加阴影
+   **/
+  addShadow(params: {
+    color: ColorParam;
+    blur: number;
+    offsetX: number;
+    offsetY: number;
+    spread: number;
+  }) {
+    const {
+      color = '#000',
+      blur = 1,
+      offsetX = 0,
+      offsetY = 0,
+      spread = 0,
+    } = params;
+
+    const shadow = new Shadow({
       blurRadius: blur,
-      color: makeColorFromCSS(color),
-      contextSettings: defaultContextSettings,
+      color,
       offsetX,
       offsetY,
       spread,
-    };
+    });
 
-    this._shadows.push(shadow);
+    this.shadows.push(shadow);
   }
 
   addInnerShadow({
@@ -189,7 +195,7 @@ class Style extends StyleBase {
       colorControls: defaultColorControls,
       fills: this.fills.map((fill) => fill.toSketchJSON()),
       borders: this._borders,
-      shadows: this._shadows,
+      shadows: this.shadows.map((shadow) => shadow.toSketchJSON()),
       innerShadows: this._innerShadows,
       contextSettings: defaultContextSettings,
     };
