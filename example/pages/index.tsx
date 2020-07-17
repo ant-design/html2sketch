@@ -12,18 +12,17 @@ export default () => {
   };
 
   return (
-    <div>
-      <Row>
-        <Col span={12}>
-          <div id="test">
-            <Button type={'default'}>测试</Button>
-          </div>
-          <Button onClick={generate}>转换为 Group</Button>
-        </Col>
-        <Col span={12}>
-          <ReactJson src={json} />
-        </Col>
-      </Row>
-    </div>
+    <Row>
+      <Col span={12}>
+        <div id="test">
+          {/*<Button type={'dashed'}>测试</Button>*/}
+          <span>测试</span>
+        </div>
+        <Button onClick={generate}>转换为 Group</Button>
+      </Col>
+      <Col span={12}>
+        <ReactJson src={json} />
+      </Col>
+    </Row>
   );
 };
