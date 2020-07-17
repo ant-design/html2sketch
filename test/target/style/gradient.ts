@@ -41,7 +41,7 @@ export const lineGradient = {
   ],
 };
 
-export const radiusGradient = {
+export const ellipseGradient = {
   _class: 'gradient',
   elipseLength: 0,
   from: '{0, 0.50000000000000011}',
@@ -84,7 +84,7 @@ export const radiusGradient = {
   ],
 };
 
-export const cirlceGradient = {
+export const radiuseGradient = {
   _class: 'gradient',
   elipseLength: 0,
   from: '{0, 0.50000000000000011}',

@@ -125,7 +125,7 @@ class TextStyle {
             size: this.fontSize,
           },
         },
-        MSAttributedStringColorAttribute: this.color.toSketchJson(),
+        MSAttributedStringColorAttribute: this.color.toSketchJSON(),
         MSAttributedStringTextTransformAttribute: this.getTextTransform(),
         kerning: this.letterSpacing,
         underlineStyle: this.getUnderlineStyle(),

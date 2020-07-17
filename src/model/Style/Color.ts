@@ -124,7 +124,7 @@ class Color extends StyleBase {
    * 转为 Sketch JSON对象
    * @returns {SketchFormat.Color} color json
    */
-  toSketchJson = (): SketchFormat.Color => {
+  toSketchJSON = (): SketchFormat.Color => {
     return {
       _class: 'color',
       red: this.red / 255,

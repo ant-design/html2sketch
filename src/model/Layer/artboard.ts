@@ -53,7 +53,7 @@ class Artboard extends Base {
       _class: 'artboard',
       frame: this.frame.toSketchJSON(),
       style: this.style.toSketchJSON(),
-      backgroundColor: this.backgroundColor.toSketchJson(),
+      backgroundColor: this.backgroundColor.toSketchJSON(),
       booleanOperation: SketchFormat.BooleanOperation.NA,
       do_objectID: this.id,
       exportOptions: defaultExportOptions,

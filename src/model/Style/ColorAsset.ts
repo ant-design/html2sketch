@@ -17,7 +17,7 @@ class ColorAsset extends StyleBase {
   toSketchJSON(): SketchFormat.ColorAsset {
     return {
       _class: 'MSImmutableColorAsset',
-      color: this.color.toSketchJson(),
+      color: this.color.toSketchJSON(),
       do_objectID: this.id,
       name: this.name,
     };

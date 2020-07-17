@@ -65,7 +65,7 @@ class Shadow extends StyleBase {
       _class: FileFormat.ClassValue.Shadow,
       isEnabled: true,
       blurRadius,
-      color: color.toSketchJson(),
+      color: color.toSketchJSON(),
       contextSettings: defaultContextSettings,
       offsetX,
       offsetY,

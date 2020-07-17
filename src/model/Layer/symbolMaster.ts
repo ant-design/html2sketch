@@ -85,7 +85,7 @@ class SymbolMaster extends Base {
       frame: this.frame.toSketchJSON(),
       allowsOverrides: true,
 
-      backgroundColor: this.backgroundColor.toSketchJson(),
+      backgroundColor: this.backgroundColor.toSketchJSON(),
       booleanOperation: SketchFormat.BooleanOperation.NA,
       changeIdentifier: 0,
       do_objectID: this.id,

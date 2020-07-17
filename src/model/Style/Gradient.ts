@@ -66,7 +66,7 @@ class Gradient extends StyleBase {
    **/
   getSketchStop = (color: Color, index): SketchFormat.GradientStop => ({
     _class: 'gradientStop',
-    color: color.toSketchJson(),
+    color: color.toSketchJSON(),
     position: index,
   });
 }

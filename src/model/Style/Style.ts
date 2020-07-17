@@ -1,6 +1,5 @@
 import FileFormat from '@sketch-hq/sketch-file-format-ts';
-import { makeImageFill } from '../../helpers/image';
-import { makeColorFill, makeColorFromCSS } from '../../helpers/color';
+import { makeColorFromCSS } from '../../helpers/color';
 import convertAngleToFromAndTo from '../../helpers/convertAngleToFromAndTo';
 import {
   defaultBorderOptions,
@@ -9,7 +8,8 @@ import {
   defaultGradient,
 } from '../utils';
 import StyleBase from './Base';
-import { SketchFormat } from '../../index';
+import Fill from './Fill';
+import { ColorParam } from './Color';
 
 interface ShadowInput {
   color: string;
@@ -34,7 +34,6 @@ class Style extends StyleBase {
   _fontFamily: string;
   constructor() {
     super();
-    this._fills = [];
     this._borders = [];
     this._shadows = [];
     this._innerShadows = [];
@@ -42,7 +41,7 @@ class Style extends StyleBase {
     this._fontFamily = '';
   }
   private readonly _innerShadows: FileFormat.InnerShadow[];
-  private readonly _fills: FileFormat.Fill[];
+  fills: Fill[] = [];
 
   get opacity() {
     return this._opacity;
@@ -55,51 +54,46 @@ class Style extends StyleBase {
   private readonly _shadows: FileFormat.Shadow[];
   private readonly _borders: FileFormat.Border[];
 
-  addColorFill(color: string, opacity?: number) {
-    this._fills.push(makeColorFill(color, opacity));
+  /**
+   * 添加颜色填充
+   **/
+  addColorFill(color: ColorParam) {
+    const fill = new Fill({
+      type: FileFormat.FillType.Color,
+      color: color,
+    });
+    this.fills.push(fill);
   }
 
-  addGradientFill({ angle, stops }: any) {
+  /**
+   * 添加渐变填充
+   **/
+  addGradientFill(angle: string, stops?: ColorParam[]) {
     const { from, to } = convertAngleToFromAndTo(angle);
 
-    const fill: FileFormat.Fill = {
-      _class: 'fill',
-      isEnabled: true,
-      // Not sure why there is a color here
-      color: {
-        _class: 'color',
-        alpha: 1,
-        blue: 0.847,
-        green: 0.847,
-        red: 0.847,
-      },
-      fillType: 1,
+    const fill = new Fill({
+      type: FileFormat.FillType.Gradient,
       gradient: {
-        _class: 'gradient',
-        elipseLength: 0,
-        from: `{${from.x}, ${from.y}}`,
-        gradientType: 0,
-        stops: stops.map((stopColor: any, index: number) => ({
-          _class: 'gradientStop',
-          color: makeColorFromCSS(stopColor),
-          position: index,
-        })),
-        to: `{${to.x}, ${to.y}}`,
+        from,
+        to,
+        stops,
+        gradientType: FileFormat.GradientType.Linear,
       },
-      contextSettings: defaultContextSettings,
-      noiseIndex: 0,
-      noiseIntensity: 0,
-      patternFillType: 1,
-      patternTileScale: 1,
-    };
+    });
 
-    this._fills.push(fill);
+    this.fills.push(fill);
   }
 
+  /**
+   * 添加图片填充
+   **/
   addImageFill(image: string) {
-    const fill = makeImageFill(image);
+    const fill = new Fill({
+      type: FileFormat.FillType.Pattern,
+      image,
+    });
 
-    this._fills.push(fill);
+    this.fills.push(fill);
   }
 
   addBorder({ color, thickness }: { thickness: number; color: string }) {
@@ -193,15 +187,11 @@ class Style extends StyleBase {
       windingRule: FileFormat.WindingRule.EvenOdd,
       borderOptions: this._borderOptions,
       colorControls: defaultColorControls,
-      fills: this._fills,
+      fills: this.fills.map((fill) => fill.toSketchJSON()),
       borders: this._borders,
       shadows: this._shadows,
       innerShadows: this._innerShadows,
-      contextSettings: {
-        _class: 'graphicsContextSettings',
-        blendMode: SketchFormat.BlendMode.Normal,
-        opacity: this._opacity,
-      },
+      contextSettings: defaultContextSettings,
     };
   };
 }

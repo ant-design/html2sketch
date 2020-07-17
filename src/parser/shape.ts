@@ -231,7 +231,11 @@ const transferToShape = (node: Element): Group | Rectangle => {
         break;
       }
       case 'LinearGradient':
-        style.addGradientFill(backgroundImageResult.value);
+        const { angle, stops } = backgroundImageResult.value as {
+          angle: string;
+          stops;
+        };
+        style.addGradientFill(angle, stops);
         break;
       default:
         // Unsupported types:

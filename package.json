@@ -2,7 +2,7 @@
   "name": "html2sketch",
   "version": "0.0.2",
   "author": "arvinxx",
-  "description": "praser html to sketch json",
+  "description": "parser html to sketch json",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/arvinxx/html2sketch.git"

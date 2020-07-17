@@ -16,7 +16,7 @@ const transferToGroup = (node: Element) => {
   const group = new Group({ x, y, width, height });
   const groupStyle = new Style();
 
-  groupStyle.addOpacity(opacity);
+  groupStyle.opacity = opacity;
   group.style = groupStyle;
 
   // Set the group name to the node's name, unless there is a name provider in the options
