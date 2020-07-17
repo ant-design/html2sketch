@@ -1,19 +1,20 @@
 import FileFormat from '@sketch-hq/sketch-file-format-ts';
-import { makeColorFromCSS } from '../../helpers/color';
 import convertAngleToFromAndTo from '../../helpers/convertAngleToFromAndTo';
 import {
   defaultBorderOptions,
   defaultColorControls,
   defaultContextSettings,
-  defaultGradient,
 } from '../utils';
+import { ColorParam } from './Color';
 import StyleBase from './Base';
 import Fill from './Fill';
 import Shadow from './Shadow';
-import { ColorParam } from './Color';
+import InnerShadow from './InnerShadow';
+import Border from './Border';
+import { FillType } from '@sketch-hq/sketch-file-format-ts/dist/cjs/v3-types';
 
 interface ShadowInput {
-  color: string;
+  color: ColorParam;
   blur?: number;
   offsetX?: number;
   offsetY?: number;
@@ -35,14 +36,25 @@ class Style extends StyleBase {
   _fontFamily: string;
   constructor() {
     super();
-    this._borders = [];
-    this._innerShadows = [];
-    this._opacity = 1;
     this._fontFamily = '';
   }
-  private readonly _innerShadows: FileFormat.InnerShadow[];
+  /**
+   * 填充
+   **/
   fills: Fill[] = [];
+  /**
+   * 外阴影
+   **/
   shadows: Shadow[] = [];
+  /**
+   * 内阴影
+   **/
+  innerShadows: InnerShadow[] = [];
+
+  /**
+   * 描边
+   **/
+  borders: Border[] = [];
 
   get opacity() {
     return this._opacity;
@@ -51,8 +63,7 @@ class Style extends StyleBase {
     this._opacity = Number(opacity);
   }
 
-  private _opacity: number;
-  private readonly _borders: FileFormat.Border[];
+  private _opacity: number = 1;
 
   /**
    * 添加颜色填充
@@ -96,18 +107,17 @@ class Style extends StyleBase {
     this.fills.push(fill);
   }
 
-  addBorder({ color, thickness }: { thickness: number; color: string }) {
-    const broder: FileFormat.Border = {
-      _class: 'border',
-      isEnabled: true,
-      color: makeColorFromCSS(color),
-      fillType: FileFormat.FillType.Color,
-      position: 1,
+  /**
+   * 添加描边
+   **/
+  addBorder({ color, thickness }: { thickness: number; color: ColorParam }) {
+    const border = new Border({
+      type: FillType.Color,
+      color,
       thickness,
-      contextSettings: defaultContextSettings,
-      gradient: defaultGradient,
-    };
-    this._borders.push(broder);
+    });
+
+    this.borders.push(border);
   }
 
   setBorderDashed({
@@ -133,20 +143,8 @@ class Style extends StyleBase {
   /**
    * 添加阴影
    **/
-  addShadow(params: {
-    color: ColorParam;
-    blur: number;
-    offsetX: number;
-    offsetY: number;
-    spread: number;
-  }) {
-    const {
-      color = '#000',
-      blur = 1,
-      offsetX = 0,
-      offsetY = 0,
-      spread = 0,
-    } = params;
+  addShadow(params = defaultShadowInput) {
+    const { color, blur, offsetX, offsetY, spread } = params;
 
     const shadow = new Shadow({
       blurRadius: blur,
@@ -159,25 +157,18 @@ class Style extends StyleBase {
     this.shadows.push(shadow);
   }
 
-  addInnerShadow({
-    color,
-    blur = 0,
-    offsetX = 0,
-    offsetY = 0,
-    spread = 0,
-  } = defaultShadowInput) {
-    const shadow: FileFormat.InnerShadow = {
-      _class: 'innerShadow',
-      isEnabled: true,
+  addInnerShadow(params = defaultShadowInput) {
+    const { color, blur, offsetX, offsetY, spread } = params;
+
+    const shadow = new InnerShadow({
       blurRadius: blur,
-      color: makeColorFromCSS(color),
-      contextSettings: defaultContextSettings,
+      color,
       offsetX,
       offsetY,
       spread,
-    };
+    });
 
-    this._innerShadows.push(shadow);
+    this.innerShadows.push(shadow);
   }
 
   /**
@@ -194,9 +185,9 @@ class Style extends StyleBase {
       borderOptions: this._borderOptions,
       colorControls: defaultColorControls,
       fills: this.fills.map((fill) => fill.toSketchJSON()),
-      borders: this._borders,
+      borders: this.borders.map((b) => b.toSketchJSON()),
       shadows: this.shadows.map((shadow) => shadow.toSketchJSON()),
-      innerShadows: this._innerShadows,
+      innerShadows: this.innerShadows.map((i) => i.toSketchJSON()),
       contextSettings: defaultContextSettings,
     };
   };
