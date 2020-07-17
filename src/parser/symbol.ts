@@ -1,4 +1,5 @@
-import { nodeToSketchLayers, SymbolMaster } from '../index';
+import { SymbolMaster } from '../model';
+import { nodeToSketchLayers } from '../index';
 
 /**
  * 解析为 Symbol

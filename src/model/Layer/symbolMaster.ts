@@ -7,6 +7,9 @@ import uuid from '../../helpers/uuid';
 import { defaultExportOptions, defaultRuleData } from '../utils';
 import { AnyLayer } from '../utils';
 
+/**
+ * Sketch 的 Symbol 对象
+ **/
 class SymbolMaster extends Base {
   constructor(params: BaseLayerParams) {
     super(params);
@@ -17,18 +20,24 @@ class SymbolMaster extends Base {
   }
   width: any;
   height: any;
-  _groupLayout:
-    | SketchFormat.InferredGroupLayout
-    | SketchFormat.FreeformGroupLayout;
+
   _symbolID: any;
-  backgroundColor: Color;
+  /**
+   * 背景颜色
+   **/
+  backgroundColor: Color = new Color('#FFF');
   shouldBreakMaskChain: boolean;
   nameIsFixed: boolean;
   resizesContent: boolean;
   symbolID: string;
   overrideProperties: SketchFormat.OverrideProperty[];
-  groupLayout: any;
+  groupLayout:
+    | SketchFormat.InferredGroupLayout
+    | SketchFormat.FreeformGroupLayout;
 
+  /**
+   * 生成 Symbol 实例
+   **/
   getSymbolInstance({ x, y, width = null, height = null }) {
     // if no size will be requested, use the size of the master symbol
     const { width: masterWidth, height: masterHeight } = this.getSize();
@@ -76,7 +85,7 @@ class SymbolMaster extends Base {
   }
 
   setGroupLayout(layoutType) {
-    this._groupLayout = getGroupLayout(layoutType);
+    this.groupLayout = getGroupLayout(layoutType);
   }
 
   toSketchJSON = (): SketchFormat.SymbolMaster => {

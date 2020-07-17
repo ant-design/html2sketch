@@ -4,14 +4,14 @@ import Color from './Color';
 const SYSTEM_FONTS = [
   // Apple
   '-apple-system',
+  'system-ui',
   'BlinkMacSystemFont',
-
   // Microsoft
   'Segoe UI',
-
   // Android
   'Roboto',
 ];
+const APPLE_BROKEN_SYSTEM_FONT = '.AppleSystemUIFont';
 
 // INPUT: -apple-system, "Helvetica Neue", Helvetica, Arial, sans-serif
 // OUTPUT: Helvetica Neue
@@ -49,7 +49,7 @@ export interface TextStyleParams {
   color: string;
   fontSize: number;
   fontFamily: string;
-  fontWeight: number;
+  fontWeight: number | string;
   lineHeight?: number;
   letterSpacing?: number;
   textTransform: string;
@@ -69,21 +69,6 @@ export interface TextStyleParams {
  * 文本样式
  */
 class TextStyle {
-  color: Color;
-  /**
-   * 字体家族
-   **/
-  fontFamily: string;
-  fontSize: number;
-  lineHeight?: number;
-  letterSpacing?: number;
-  /**
-   * 字重
-   */
-  fontWeight: number;
-  textTransform?: string;
-  textAlign: string;
-  textDecoration?: string;
   constructor({
     color,
     fontSize,
@@ -101,40 +86,74 @@ class TextStyle {
     this.fontFamily = getFirstFont(fontFamily, skipSystemFonts);
     this.lineHeight = lineHeight;
     this.letterSpacing = letterSpacing;
-    this.fontWeight = fontWeight;
+    this.fontWeight = fontWeight.toString();
     this.textTransform = textTransform;
     this.textDecoration = textDecoration;
     this.textAlign = textAlign;
   }
+  color: Color;
 
   /**
-   * 转为 Sketch JSON对象
+   * 字体家族
+   **/
+  fontFamily: string;
+  /**
+   * 字体大小
+   **/
+  fontSize: number;
+  /**
+   * 行高
+   **/
+  lineHeight?: number;
+  /**
+   * 字宽
+   **/
+  letterSpacing?: number;
+  /**
+   * 字重
    */
-  toSketchJSON = (): SketchFormat.TextStyle => {
-    return {
-      _class: 'textStyle',
-      verticalAlignment: SketchFormat.TextVerticalAlignment.Top,
-      encodedAttributes: {
-        underlineStyle: this.getUnderlineStyle(),
-        MSAttributedStringColorAttribute: this.color.toSketchJSON(),
-        paragraphStyle: {
-          _class: 'paragraphStyle',
-          alignment: this.getSketchAlign(),
-          maximumLineHeight: this.lineHeight,
-          minimumLineHeight: this.lineHeight,
-        },
-        kerning: this.letterSpacing,
-        strikethroughStyle: this.getStrikeThroughStyle(),
-        MSAttributedStringFontAttribute: {
-          _class: 'fontDescriptor',
-          attributes: {
-            name: this.fontFamily,
-            size: this.fontSize,
-          },
-        },
-        MSAttributedStringTextTransformAttribute: this.getTextTransform(),
-      },
-    };
+  fontWeight: string;
+  /**
+   * 字体变换
+   *
+   * 例如全部大写等
+   **/
+  textTransform?: string;
+  /**
+   * 文本对齐
+   **/
+  textAlign: string;
+  /**
+   * 文本装饰
+   *
+   * 例如 下划线、删除线等
+   **/
+  textDecoration?: string;
+
+  /**
+   * 字体权重
+   **/
+  FONT_WEIGHTS = {
+    normal: 'Regular',
+    bold: 'Bold',
+    '100': 'UltraLight',
+    '200': 'Thin',
+    '300': 'Light',
+    '400': 'Regular',
+    '500': 'Medium',
+    '600': 'Semibold',
+    '700': 'Bold',
+    '800': 'Heavy',
+    '900': 'Black',
+  };
+
+  /**
+   * 字体类型
+   **/
+  FONT_STYLES = {
+    normal: false,
+    italic: true,
+    oblique: true,
   };
 
   /**
@@ -152,11 +171,12 @@ class TextStyle {
         return SketchFormat.TextHorizontalAlignment.Justified;
     }
   };
+
   /**
    * 取得 sketch 下的文本变化属性
    */
   getTextTransform = () => {
-    switch (this.textTransform) {
+    switch (this.textTransform.toLowerCase()) {
       case 'uppercase':
         return SketchFormat.TextTransform.Uppercase;
       case 'lowercase':
@@ -174,12 +194,84 @@ class TextStyle {
       return SketchFormat.UnderlineStyle.Underlined;
     else return SketchFormat.UnderlineStyle.None;
   };
+
   /**
    * 获取下划线参数
    */
   getStrikeThroughStyle = () => {
     if (this.textDecoration === 'line-through') return 1;
     else return 0;
+  };
+
+  /**
+   * 修正字体家族信息
+   **/
+  fixFontFamilyInfo = (
+    family: string,
+    weight?: string,
+    fontStyle?: string
+  ): string => {
+    const defaultFontFamily = 'PingFangSC';
+
+    const defaultFontWeight = this.FONT_WEIGHTS.normal;
+
+    let fontWeight = weight ? this.FONT_WEIGHTS[weight] : defaultFontWeight;
+    // Default to Helvetica if fonts are missing
+    let familyName: string =
+      // Must use two equals (==) for compatibility with Cocoascript
+      // @ts-ignore
+      defaultFontFamily === APPLE_BROKEN_SYSTEM_FONT
+        ? 'PingFangSC'
+        : defaultFontFamily;
+
+    let isItalic = false;
+
+    // let isCondensed = false;
+
+    if (family && family !== '-apple-system') {
+      familyName = family;
+    }
+
+    if (fontStyle) {
+      isItalic = this.FONT_STYLES[fontStyle] || false;
+    }
+
+    console.log('是否斜体:', isItalic);
+    // return `${familyName}-${fontWeight}`;
+    return `PingFangSC-${fontWeight}`;
+  };
+
+  /**
+   * 转为 Sketch JSON对象
+   */
+  toSketchJSON = (): SketchFormat.TextStyle => {
+    return {
+      _class: 'textStyle',
+      verticalAlignment: SketchFormat.TextVerticalAlignment.Top,
+      encodedAttributes: {
+        underlineStyle: this.getUnderlineStyle(),
+        MSAttributedStringTextTransformAttribute: this.getTextTransform(),
+        paragraphStyle: {
+          _class: 'paragraphStyle',
+          alignment: this.getSketchAlign(),
+          maximumLineHeight: this.lineHeight,
+          minimumLineHeight: this.lineHeight,
+        },
+        /**
+         * 字宽
+         **/
+        kerning: this.letterSpacing,
+        strikethroughStyle: this.getStrikeThroughStyle(),
+        MSAttributedStringFontAttribute: {
+          _class: 'fontDescriptor',
+          attributes: {
+            name: this.fixFontFamilyInfo(this.fontFamily, this.fontWeight),
+            size: this.fontSize,
+          },
+        },
+        MSAttributedStringColorAttribute: this.color.toSketchJSON(),
+      },
+    };
   };
 }
 

@@ -5,7 +5,7 @@ import { defaultRuleData, defaultExportOptions } from '../utils';
 import Color from '../Style/Color';
 
 /**
- * 画板
+ * 画板对象
  **/
 class Artboard extends Base {
   constructor(params: BaseLayerParams) {

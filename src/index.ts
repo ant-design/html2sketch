@@ -3,7 +3,7 @@ export { default as nodeToSketchGroup } from './function/nodeToSketchGroup';
 export { default as parserSharedTextStyle } from './parser/sharedTextStyle';
 export { default as parserSymbol } from './parser/symbol';
 
-export * from './model';
+export * as Model from './model';
 
 export interface CGPoint {
   x: number;

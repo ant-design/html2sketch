@@ -74,7 +74,7 @@ const nodeToSketchGroup = (node: Element, options?: any): AnyLayer => {
   if (
     group.layers.length === 1 &&
     (group.layers[0].class === 'rectangle' ||
-      // group.layers[0].class === 'text' ||
+      group.layers[0].class === 'text' ||
       group.layers[0].class === 'group')
   ) {
     console.log('该 group 只包含一个子级,丢弃...');
