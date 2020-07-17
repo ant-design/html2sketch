@@ -70,6 +70,9 @@ export interface TextStyleParams {
  */
 class TextStyle {
   color: Color;
+  /**
+   * 字体家族
+   **/
   fontFamily: string;
   fontSize: number;
   lineHeight?: number;
@@ -112,12 +115,16 @@ class TextStyle {
       _class: 'textStyle',
       verticalAlignment: SketchFormat.TextVerticalAlignment.Top,
       encodedAttributes: {
+        underlineStyle: this.getUnderlineStyle(),
+        MSAttributedStringColorAttribute: this.color.toSketchJSON(),
         paragraphStyle: {
           _class: 'paragraphStyle',
           alignment: this.getSketchAlign(),
           maximumLineHeight: this.lineHeight,
           minimumLineHeight: this.lineHeight,
         },
+        kerning: this.letterSpacing,
+        strikethroughStyle: this.getStrikeThroughStyle(),
         MSAttributedStringFontAttribute: {
           _class: 'fontDescriptor',
           attributes: {
@@ -125,11 +132,7 @@ class TextStyle {
             size: this.fontSize,
           },
         },
-        MSAttributedStringColorAttribute: this.color.toSketchJSON(),
         MSAttributedStringTextTransformAttribute: this.getTextTransform(),
-        kerning: this.letterSpacing,
-        underlineStyle: this.getUnderlineStyle(),
-        strikethroughStyle: this.getStrikeThroughStyle(),
       },
     };
   };

@@ -1,5 +1,4 @@
 import FileFormat from '@sketch-hq/sketch-file-format-ts';
-import convertAngleToFromAndTo from '../../helpers/convertAngleToFromAndTo';
 import {
   defaultBorderOptions,
   defaultColorControls,
@@ -86,7 +85,7 @@ class Style extends StyleBase {
    * 添加渐变填充
    **/
   addGradientFill(angle: string, stops?: ColorParam[]) {
-    const { from, to } = convertAngleToFromAndTo(angle);
+    const { from, to } = this.convertAngleToFromAndTo(angle);
 
     const fill = new Fill({
       type: FileFormat.FillType.Gradient,
@@ -100,6 +99,49 @@ class Style extends StyleBase {
 
     this.fills.push(fill);
   }
+
+  /**
+   * 将角度转为 sketch 中的 from 和 to
+   * @param {string} angle 角度
+   */
+  convertAngleToFromAndTo = (angle: string) => {
+    // default 180deg
+    const from = { x: 0.5, y: 0 };
+    const to = { x: 0.5, y: 1 };
+
+    // Learn math or find someone smarter to figure this out correctly
+    switch (angle) {
+      case 'to top':
+      case '360deg':
+      case '0deg':
+        from.y = 1;
+        to.y = 0;
+        break;
+      case 'to right':
+      case '90deg':
+        from.x = 0;
+        from.y = 0.5;
+        to.x = 1;
+        to.y = 0.5;
+        break;
+      case 'to left':
+      case '270deg':
+        from.x = 1;
+        from.y = 0.5;
+        to.x = 0;
+        to.y = 0.5;
+        break;
+      case 'to bottom':
+      case '180deg':
+      default:
+        break;
+    }
+
+    return {
+      from,
+      to,
+    };
+  };
 
   /**
    * 添加图片填充

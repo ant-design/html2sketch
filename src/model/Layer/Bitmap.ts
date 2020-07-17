@@ -5,7 +5,9 @@ import { sketchImage, defaultExportOptions } from '../utils';
 interface BitmapInitParams extends BaseLayerParams {
   url: string;
 }
-
+/**
+ * 画板
+ **/
 class Bitmap extends Base {
   constructor({ url, x, y, width, height }: BitmapInitParams) {
     super({ y, x, height, width });

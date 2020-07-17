@@ -1,21 +1,9 @@
 import Text from '../model/Layer/Text';
 import { TextStyleParams } from '../model/Style/TextStyle';
-import { fixWhiteSpace } from '../helpers/text';
 
 /**
- * @param {string} fontWeight font weight as provided by the browser
- * @return {number} normalized font weight
- */
-function parseFontWeight(fontWeight: string): number {
-  // Support 'bold' and 'normal' for Electron compatibility.
-  if (fontWeight === 'bold') {
-    return 700;
-  } else if (fontWeight === 'normal') {
-    return 400;
-  }
-  return parseInt(fontWeight, 10);
-}
-
+ * 将 Node 转为 Text 对象
+ **/
 const transformToText = (node: Element): Text | Text[] | undefined => {
   // 添加文本
   const styles: CSSStyleDeclaration = getComputedStyle(node);
@@ -45,7 +33,7 @@ const transformToText = (node: Element): Text | Text[] | undefined => {
     lineHeight: lineHeight !== 'normal' ? parseFloat(lineHeight) : undefined,
     letterSpacing:
       letterSpacing !== 'normal' ? parseFloat(letterSpacing) : undefined,
-    fontWeight: parseFontWeight(fontWeight),
+    fontWeight: Text.parseFontWeight(fontWeight),
     color,
     textTransform,
     textDecoration: textDecorationLine,
@@ -112,7 +100,10 @@ const transformToText = (node: Element): Text | Text[] | undefined => {
       const pt = parseFloat(paddingTop);
       y = y + pt;
 
-      const textValue = fixWhiteSpace(textNode.nodeValue || '', whiteSpace);
+      const textValue = Text.fixWhiteSpace(
+        textNode.nodeValue || '',
+        whiteSpace
+      );
 
       return new Text({
         x,

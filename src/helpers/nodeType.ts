@@ -13,7 +13,3 @@ export const isGroupNode = (node: Element): boolean => {
   const nodeName = node.nodeName.toLowerCase();
   return nodeName === 'div' || nodeName === 'span' || nodeName === 'th';
 };
-
-export const isAntDesignComponent = (node: Element): boolean => {
-  return node.className.includes('ant');
-};

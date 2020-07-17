@@ -4,6 +4,9 @@ import Base, { BaseLayerParams } from './Base';
 import { defaultRuleData, defaultExportOptions } from '../utils';
 import Color from '../Style/Color';
 
+/**
+ * 画板
+ **/
 class Artboard extends Base {
   constructor(params: BaseLayerParams) {
     super(params);

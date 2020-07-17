@@ -45,6 +45,11 @@ class Base {
   hasClippingMask = false;
   LayerListExpanded: SketchFormat.LayerListExpanded;
 
+  /**
+   * 锁定图层名称
+   **/
+  nameIsFixed = false;
+
   get x() {
     return this.frame.x;
   }
