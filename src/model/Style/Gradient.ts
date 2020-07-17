@@ -1,77 +1,74 @@
-import FileFormat from '@sketch-hq/sketch-file-format-ts';
-import { defaultContextSettings } from '../utils';
-import Color, { ColorType } from './Color';
+import Color, { ColorParam } from './Color';
 import StyleBase from './Base';
+import { SketchFormat, CGPoint } from '../../index';
 
 export interface GradientProps {
-  color?: ColorType;
-  blurRadius?: number;
-  offsetX?: number;
-  offsetY?: number;
-  spread?: number;
-  contextSettings?: FileFormat.GraphicsContextSettings;
+  type?: SketchFormat.GradientType;
+  to?: CGPoint;
+  from?: CGPoint;
+  stops?: ColorParam[];
   name?: string;
 }
 
+/**
+ * 渐变对象
+ **/
 class Gradient extends StyleBase {
   constructor(props: GradientProps) {
     super();
 
-    const { blurRadius, color, offsetX, offsetY, contextSettings } = props;
-    this.color = new Color(color);
-    this.blurRadius = blurRadius;
-    this.offsetX = offsetX;
-    this.offsetY = offsetY;
-    this.contextSettings = contextSettings;
-    this.name = `${this.color.hex} ${this.offsetX}px ${this.offsetY}px ${this.blurRadius}px`;
+    const { from, to, stops, type, name } = props;
+
+    this.from = from;
+    this.to = to;
+    this.stops = stops.map((color) => new Color(color));
+    this.type = type;
+    this.name = name || 'gradient';
   }
 
   /**
-   * 颜色
+   * 起点
    */
-  color: Color;
+  from: CGPoint;
   /**
-   * 模糊半径
+   * 色彩节点
    */
-  blurRadius: number;
+  stops: Color[];
   /**
-   * X 轴偏移
+   * 终点
    */
-  offsetX: number;
+  to: CGPoint;
+
   /**
-   * Y 轴偏移
-   */
-  offsetY: number;
-  /**
-   * 扩散效果
-   */
-  spread: number;
-  /**
-   * 渲染上下文
-   */
-  contextSettings: FileFormat.GraphicsContextSettings;
-  /**
-   * 是否启用
-   */
-  isEnabled: boolean;
+   * 渐变类型
+   **/
+  type: SketchFormat.GradientType;
 
   /**
    * 转为 Sketch JSON 对象
    * @returns {SketchFormat.Gradient}
    */
-  toSketchJSON = (): FileFormat.Gradient => {
-    const { offsetY, offsetX, blurRadius, color, spread } = this;
+  toSketchJSON = (): SketchFormat.Gradient => {
+    const { from, to, stops } = this;
+
     return {
-      _class: FileFormat.ClassValue.Gradient,
-      isEnabled: true,
-      blurRadius,
-      color: color.toSketchJson(),
-      contextSettings: defaultContextSettings,
-      offsetX,
-      offsetY,
-      spread,
+      _class: SketchFormat.ClassValue.Gradient,
+      elipseLength: 0, // 这个字段应该是废弃字段
+      from: `{${from.x}, ${from.y}}`,
+      gradientType: this.type,
+      to: `{${to.x}, ${to.y}}`,
+      stops: stops.map(this.getSketchStop),
     };
   };
+
+  /**
+   * 将 stop 数组转换为 Sketch 使用的对象
+   **/
+  getSketchStop = (color: Color, index): SketchFormat.GradientStop => ({
+    _class: 'gradientStop',
+    color: color.toSketchJson(),
+    position: index,
+  });
 }
 
 export default Gradient;
