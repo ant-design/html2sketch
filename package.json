@@ -14,9 +14,9 @@
     "sketch"
   ],
   "scripts": {
-    "test": "jest --config jestconfig.json",
     "dev": "tsc --watch",
     "build": "tsc",
+    "test": "jest --config jestconfig.json",
     "format": "prettier --write \"src/**/*.ts\" \"src/**/*.js\"",
     "lint": "tslint -p tsconfig.json",
     "prepare": "npm run build",

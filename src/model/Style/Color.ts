@@ -1,4 +1,4 @@
-import SketchFormat from '@sketch-hq/sketch-file-format-ts';
+import { SketchFormat } from '../../index';
 import ColorCls from 'color';
 import StyleBase from './Base';
 

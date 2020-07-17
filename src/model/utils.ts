@@ -1,49 +1,53 @@
 import FileFormat from '@sketch-hq/sketch-file-format-ts';
 import uuid from '../helpers/uuid';
 
+import { Group, Text, ShapeGroup, Bitmap, Rectangle } from './index';
+
+export type AnyLayer = Group | Text | Bitmap | ShapeGroup | Rectangle;
+
 export const defaultExportOptions: FileFormat.ExportOptions = {
   _class: 'exportOptions',
-  exportFormats: [],
   includedLayerIds: [],
   layerOptions: 0,
   shouldTrim: false,
+  exportFormats: [],
 };
 
+/**
+ * SKetch默认的圆角选项
+ **/
 export const defaultBorderOptions: FileFormat.BorderOptions = {
   _class: 'borderOptions',
+  isEnabled: true,
+  dashPattern: [],
   lineCapStyle: FileFormat.LineCapStyle.Butt,
   lineJoinStyle: FileFormat.LineJoinStyle.Miter,
-  dashPattern: [],
-  isEnabled: true,
 };
 
+/**
+ * SKetch默认的色彩控制
+ **/
 export const defaultColorControls: FileFormat.ColorControls = {
   _class: 'colorControls',
+  isEnabled: false,
   brightness: 0,
   contrast: 1,
   hue: 0,
-  isEnabled: false,
   saturation: 1,
 };
 
-export const defaultStyle = (): FileFormat.Style => ({
-  do_objectID: uuid(),
-  _class: FileFormat.ClassValue.Style,
-  borderOptions: defaultBorderOptions,
-  colorControls: defaultColorControls,
-  endMarkerType: FileFormat.MarkerType.OpenArrow,
-  startMarkerType: FileFormat.MarkerType.OpenArrow,
-  innerShadows: [],
-  windingRule: FileFormat.WindingRule.EvenOdd,
-  miterLimit: 10,
-});
-
+/**
+ * SKetch 默认规则数据
+ **/
 export const defaultRuleData = (): FileFormat.RulerData => ({
   _class: 'rulerData',
   base: 0,
   guides: [],
 });
 
+/**
+ * SKetch 默认blend 样式
+ **/
 export const defaultContextSettings: FileFormat.GraphicsContextSettings = {
   _class: 'graphicsContextSettings',
   blendMode: FileFormat.BlendMode.Normal,

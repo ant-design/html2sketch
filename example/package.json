@@ -20,10 +20,12 @@
     "@ant-design/pro-layout": "^5.0.12",
     "@umijs/preset-react": "1.x",
     "@umijs/test": "^3.2.10",
+    "html2sketch": "^0.0.2",
     "lint-staged": "^10.0.7",
     "prettier": "^1.19.1",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
+    "react-json-view": "^1.19.1",
     "umi": "^3.2.10",
     "yorkie": "^2.0.0"
   },

@@ -45,6 +45,7 @@ class Rectangle extends Base {
       hasConvertedToNewRoundCorners: true,
       needsConvertionToNewRoundCorners: false,
       fixedRadius: 0,
+      style: this.style.toSketchJSON(),
       edited: false,
       pointRadiusBehaviour: 1,
       points: this.getSketchPoints(),

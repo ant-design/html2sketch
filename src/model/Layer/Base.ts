@@ -1,11 +1,12 @@
 import { SketchFormat } from '../../index';
 import uuid from '../../helpers/uuid';
-import { Style, Frame } from '../index';
+import Frame from '../Frame';
+import Style from '../Style/Style';
 import {
   calculateResizingConstraintValue,
   RESIZING_CONSTRAINTS,
 } from '../../helpers/layout';
-import { AnyLayer } from '../type';
+import { AnyLayer } from '../utils';
 
 const DEFAULT_USER_INFO_SCOPE = 'html2sketch';
 

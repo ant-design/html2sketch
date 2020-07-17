@@ -5,7 +5,7 @@ import Color from '../Style/Color';
 import SymbolInstance from './SymbolInstance';
 import uuid from '../../helpers/uuid';
 import { defaultExportOptions, defaultRuleData } from '../utils';
-import { AnyLayer } from '../type';
+import { AnyLayer } from '../utils';
 
 class SymbolMaster extends Base {
   constructor(params: BaseLayerParams) {

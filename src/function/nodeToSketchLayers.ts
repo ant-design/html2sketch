@@ -6,7 +6,7 @@ import transferToText from '../parser/text';
 
 import { isTextVisible } from '../helpers/visibility';
 import { isTextNode } from '../helpers/nodeType';
-import { AnyLayer } from '../model/type';
+import { AnyLayer } from '../model/utils';
 
 /**
  * 是否是默认样式

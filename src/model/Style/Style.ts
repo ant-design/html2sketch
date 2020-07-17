@@ -9,6 +9,7 @@ import {
   defaultGradient,
 } from '../utils';
 import StyleBase from './Base';
+import { SketchFormat } from '../../index';
 
 interface ShadowInput {
   color: string;
@@ -42,6 +43,14 @@ class Style extends StyleBase {
   }
   private readonly _innerShadows: FileFormat.InnerShadow[];
   private readonly _fills: FileFormat.Fill[];
+
+  get opacity() {
+    return this._opacity;
+  }
+  set opacity(opacity: string | number) {
+    this._opacity = Number(opacity);
+  }
+
   private _opacity: number;
   private readonly _shadows: FileFormat.Shadow[];
   private readonly _borders: FileFormat.Border[];
@@ -171,30 +180,26 @@ class Style extends StyleBase {
     this._innerShadows.push(shadow);
   }
 
-  addOpacity(opacity: string | number) {
-    this._opacity = Number(opacity);
-  }
-
   /**
    * 生成 Sketch JSON 对象
    */
   toSketchJSON = (): FileFormat.Style => {
     return {
-      borderOptions: this._borderOptions,
-      colorControls: defaultColorControls,
+      _class: 'style',
       do_objectID: '',
       endMarkerType: FileFormat.MarkerType.OpenArrow,
+      miterLimit: 10,
       startMarkerType: FileFormat.MarkerType.OpenArrow,
       windingRule: FileFormat.WindingRule.EvenOdd,
-      _class: 'style',
+      borderOptions: this._borderOptions,
+      colorControls: defaultColorControls,
       fills: this._fills,
       borders: this._borders,
       shadows: this._shadows,
       innerShadows: this._innerShadows,
-      miterLimit: 10,
       contextSettings: {
         _class: 'graphicsContextSettings',
-        blendMode: 0,
+        blendMode: SketchFormat.BlendMode.Normal,
         opacity: this._opacity,
       },
     };

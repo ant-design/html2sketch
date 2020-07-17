@@ -3,7 +3,7 @@ import { defaultContextSettings } from '../utils';
 import Color, { ColorType } from './Color';
 import StyleBase from './Base';
 
-export interface ShadowProps {
+export interface GradientProps {
   color?: ColorType;
   blurRadius?: number;
   offsetX?: number;
@@ -13,8 +13,8 @@ export interface ShadowProps {
   name?: string;
 }
 
-class Shadow extends StyleBase {
-  constructor(props: ShadowProps) {
+class Gradient extends StyleBase {
+  constructor(props: GradientProps) {
     super();
 
     const { blurRadius, color, offsetX, offsetY, contextSettings } = props;
@@ -57,12 +57,12 @@ class Shadow extends StyleBase {
 
   /**
    * 转为 Sketch JSON 对象
-   * @returns {SketchFormat.Shadow}
+   * @returns {SketchFormat.Gradient}
    */
-  toSketchJSON = (): FileFormat.Shadow => {
+  toSketchJSON = (): FileFormat.Gradient => {
     const { offsetY, offsetX, blurRadius, color, spread } = this;
     return {
-      _class: FileFormat.ClassValue.Shadow,
+      _class: FileFormat.ClassValue.Gradient,
       isEnabled: true,
       blurRadius,
       color: color.toSketchJson(),
@@ -74,4 +74,4 @@ class Shadow extends StyleBase {
   };
 }
 
-export default Shadow;
+export default Gradient;

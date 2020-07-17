@@ -175,9 +175,8 @@ class TextStyle {
    * 获取下划线参数
    */
   getStrikeThroughStyle = () => {
-    if (this.textDecoration === 'line-through')
-      return SketchFormat.StrikeThroughStyle.StrikeThrough;
-    else return SketchFormat.StrikeThroughStyle.None;
+    if (this.textDecoration === 'line-through') return 1;
+    else return 0;
   };
 }
 

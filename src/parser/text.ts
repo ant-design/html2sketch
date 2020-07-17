@@ -1,5 +1,5 @@
 import Text from '../model/Layer/Text';
-import TextStyle from '../model/Style/TextStyle';
+import { TextStyleParams } from '../model/Style/TextStyle';
 import { fixWhiteSpace } from '../helpers/text';
 
 /**
@@ -39,7 +39,7 @@ const transformToText = (node: Element): Text | Text[] | undefined => {
     paddingRight,
   } = styles;
 
-  const textStyle = new TextStyle({
+  const textStyle: TextStyleParams = {
     fontFamily,
     fontSize: parseInt(fontSize, 10),
     lineHeight: lineHeight !== 'normal' ? parseFloat(lineHeight) : undefined,
@@ -54,7 +54,7 @@ const transformToText = (node: Element): Text | Text[] | undefined => {
         ? justifyContent
         : textAlign,
     skipSystemFonts: true,
-  });
+  };
 
   const rangeHelper = document.createRange();
   const nodeBCR = node.getBoundingClientRect();
