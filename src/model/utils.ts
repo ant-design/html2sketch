@@ -68,6 +68,7 @@ export const defaultNodeStyle: Partial<CSSStyleDeclaration> = {
   backgroundImage: 'none',
   borderWidth: '0px',
   boxShadow: 'none',
+  // verticalAlign: 'baseline',
 };
 
 export const sketchImage = (

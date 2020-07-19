@@ -71,6 +71,7 @@ const nodeToSketchGroup = (node: Element, options?: any): AnyLayer => {
       group.addLayer(layer);
     });
 
+  // 处理多余的层级
   if (
     group.layers.length === 1 &&
     (group.layers[0].class === 'rectangle' ||
@@ -84,6 +85,7 @@ const nodeToSketchGroup = (node: Element, options?: any): AnyLayer => {
     layer.y += group.y;
     return layer;
   }
+
   if (group.layers.length === 0) {
     console.log('该 group 是空的,丢弃...');
     return;

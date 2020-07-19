@@ -57,10 +57,14 @@ const transferToShape = (node: Element): Group | Rectangle => {
     borderTopStyle,
     borderRightStyle,
     boxShadow,
+    // 位置
+    verticalAlign,
   } = styles;
   if (backgroundColor) {
     style.addColorFill(backgroundColor);
   }
+
+  console.log('verticalAlign', verticalAlign);
 
   const rect: Rectangle | null = new Rectangle({
     width,
@@ -70,7 +74,7 @@ const transferToShape = (node: Element): Group | Rectangle => {
     y: top,
   });
 
-  rect.name = 'rect';
+  rect.name = node.className || 'rect';
 
   const isImage =
     node.nodeName === 'IMG' && (node as HTMLImageElement).currentSrc;

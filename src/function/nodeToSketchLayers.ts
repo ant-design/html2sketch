@@ -70,10 +70,26 @@ const nodeToSketchLayers = (node: Element): AnyLayer[] => {
 
   // 如果图层存在样式(阴影 边框等 返回 shape 节点
   if (isImage || isShape) {
+    // 判断一下是否有伪类
+    const beforeElt: CSSStyleDeclaration = getComputedStyle(node, ':before');
+    if (beforeElt.content === 'none') {
+      console.log('No before Pseudo');
+    } else {
+      console.log('有伪类');
+    }
+
     const shape = transferToShape(node);
     console.log('转换为 Rectangle: ', shape);
     layers.push(shape);
     // 添加后继续执行,不终止
+
+    const afterElt: CSSStyleDeclaration = getComputedStyle(node, ':after');
+
+    if (afterElt.content === 'none') {
+      console.log('No after Pseudo');
+    } else {
+      console.log('有伪类');
+    }
   }
 
   // 转换为 SVG

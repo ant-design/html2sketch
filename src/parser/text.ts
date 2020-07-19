@@ -78,7 +78,7 @@ const transformToText = (node: Element): Text | Text[] | undefined => {
       }
 
       // 如果是左对齐
-      if (textAlign === 'left') {
+      if (textAlign === 'left' || textAlign === 'start') {
         // 确认下 padding 的距离
         const pl = parseFloat(paddingLeft);
         x = x + pl;
