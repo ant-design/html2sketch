@@ -12,7 +12,7 @@ export default () => {
     setJSON(json);
   };
   const generateSymbol = () => {
-    const el = document.getElementById('test');
+    const el = document.getElementById('symbol');
     const json = parserSymbol(el).toSketchJSON();
 
     setJSON(json);
@@ -22,7 +22,9 @@ export default () => {
     <Row>
       <Col span={12}>
         <div id="test">
-          <Button type={'dashed'}>测试</Button>
+          <Button type={'dashed'} id="symbol">
+            测试
+          </Button>
         </div>
         <Button onClick={generate}>转换为 Group</Button>
         <Button onClick={generateSymbol}>转换为 Symbol</Button>

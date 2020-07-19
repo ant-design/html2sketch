@@ -1,5 +1,5 @@
 import { SketchFormat } from '../../index';
-import { getGroupLayout } from '../../helpers/layout';
+import { getGroupLayout, SMART_LAYOUT } from '../../helpers/layout';
 import Base, { BaseLayerParams } from './Base';
 import Color from '../Style/Color';
 import SymbolInstance from './SymbolInstance';
@@ -18,22 +18,31 @@ class SymbolMaster extends Base {
     this.symbolID = uuid();
     this.groupLayout = getGroupLayout();
   }
-  width: any;
-  height: any;
 
-  _symbolID: any;
   /**
    * 背景颜色
    **/
   backgroundColor: Color = new Color('#FFF');
+  /**
+   * 取消上层的 Mask
+   */
   shouldBreakMaskChain: boolean;
   nameIsFixed: boolean;
+  /**
+   * 是否缩放内容
+   */
   resizesContent: boolean;
   symbolID: string;
+  /**
+   * 覆盖层属性
+   */
   overrideProperties: SketchFormat.OverrideProperty[];
+  /**
+   * Symbol 布局
+   */
   groupLayout:
-    | SketchFormat.InferredGroupLayout
-    | SketchFormat.FreeformGroupLayout;
+    | SketchFormat.InferredGroupLayout // 水平或垂直布局
+    | SketchFormat.FreeformGroupLayout; // 自由布局
 
   /**
    * 生成 Symbol 实例
@@ -54,8 +63,12 @@ class SymbolMaster extends Base {
     });
   }
 
+  /**
+   * 添加图层
+   * @param layer
+   */
   addLayer(layer: AnyLayer) {
-    //position child layers relatively to the symbol layer
+    // position child layers relatively to the symbol layer
     layer.x -= this.x;
     layer.y -= this.y;
     super.addLayer(layer);
@@ -66,9 +79,8 @@ class SymbolMaster extends Base {
     let height = this.height;
 
     // if width and height were not explicitly set, fit symbol size to its contents
-    if (this.width === null || this.height === null) {
-      //@ts-ignore
-      this._layers.forEach((layer) => {
+    if (width === null || height === null) {
+      this.layers.forEach((layer) => {
         const layerWidth = layer.x + layer.width;
         const layerHeight = layer.y + layer.height;
 
@@ -84,7 +96,11 @@ class SymbolMaster extends Base {
     return { width, height };
   }
 
-  setGroupLayout(layoutType) {
+  /**
+   * 设置布局参数
+   * @param layoutType
+   */
+  setGroupLayout(layoutType: keyof typeof SMART_LAYOUT) {
     this.groupLayout = getGroupLayout(layoutType);
   }
 

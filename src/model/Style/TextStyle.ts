@@ -11,7 +11,6 @@ const SYSTEM_FONTS = [
   // Android
   'Roboto',
 ];
-const APPLE_BROKEN_SYSTEM_FONT = '.AppleSystemUIFont';
 
 // INPUT: -apple-system, "Helvetica Neue", Helvetica, Arial, sans-serif
 // OUTPUT: Helvetica Neue
@@ -211,26 +210,23 @@ class TextStyle {
     weight?: string,
     fontStyle?: string
   ): string => {
-    const defaultFontFamily = 'PingFangSC';
+    // const defaultFontFamily = 'PingFangSC';
+
+    console.log(family);
 
     const defaultFontWeight = this.FONT_WEIGHTS.normal;
 
     let fontWeight = weight ? this.FONT_WEIGHTS[weight] : defaultFontWeight;
-    // Default to Helvetica if fonts are missing
-    let familyName: string =
-      // Must use two equals (==) for compatibility with Cocoascript
-      // @ts-ignore
-      defaultFontFamily === APPLE_BROKEN_SYSTEM_FONT
-        ? 'PingFangSC'
-        : defaultFontFamily;
+    // Default to PingFangSC if fonts are missing
 
     let isItalic = false;
 
     // let isCondensed = false;
 
-    if (family && family !== '-apple-system') {
-      familyName = family;
-    }
+    // let familyName: string = defaultFontFamily;
+    // if (family && family !== '-apple-system') {
+    // familyName = family;
+    // }
 
     if (fontStyle) {
       isItalic = this.FONT_STYLES[fontStyle] || false;

@@ -34,7 +34,7 @@ class Base {
   id: string;
   name: string;
 
-  resizingConstraint: any;
+  resizingConstraint: RESIZING_CONSTRAINTS;
   isLocked = false;
   isVisible = true;
 
@@ -64,6 +64,19 @@ class Base {
     this.frame.y = y;
   }
 
+  get width() {
+    return this.frame.width;
+  }
+  set width(width: number) {
+    this.frame.width = width;
+  }
+
+  get height() {
+    return this.frame.height;
+  }
+  set height(height: number) {
+    this.frame.height = height;
+  }
   setFixedWidthAndHeight() {
     this.setResizingConstraint(
       RESIZING_CONSTRAINTS.WIDTH,
@@ -71,7 +84,11 @@ class Base {
     );
   }
 
-  setResizingConstraint(...constraints: any[]) {
+  /**
+   * 设置调整尺寸的相关参数
+   * @param constraints
+   */
+  setResizingConstraint(...constraints: RESIZING_CONSTRAINTS[]) {
     this.resizingConstraint = calculateResizingConstraintValue(...constraints);
   }
 

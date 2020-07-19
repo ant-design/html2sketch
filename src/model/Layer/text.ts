@@ -20,7 +20,7 @@ class Text extends Base {
     this.text = text;
     this.textStyle = new TextStyle(style);
     this.multiline = multiline;
-    this.setResizingConstraint(RESIZING_CONSTRAINTS.HEIGHT);
+    this.setResizingConstraint(RESIZING_CONSTRAINTS.NONE);
 
     // 1 - width is set to Fixed
     // 0 - width is set to Auto - this helps us avoid issues with browser setting too small width causing line to break
