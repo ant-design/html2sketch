@@ -34,7 +34,7 @@ class Base {
   id: string;
   name: string;
 
-  resizingConstraint: RESIZING_CONSTRAINTS;
+  resizingConstraint: RESIZING_CONSTRAINTS = RESIZING_CONSTRAINTS.NONE;
   isLocked = false;
   isVisible = true;
 

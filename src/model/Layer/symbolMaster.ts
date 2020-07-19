@@ -18,6 +18,8 @@ class SymbolMaster extends Base {
     this.symbolID = uuid();
     this.groupLayout = getGroupLayout();
   }
+  width: number;
+  height: number;
 
   /**
    * 背景颜色
