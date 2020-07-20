@@ -4,6 +4,8 @@ import { getName } from '../helpers/name';
 import { Group, Style } from '../model';
 import { AnyLayer } from '../model/utils';
 
+import { isExistPseudo } from '../helpers/shape';
+
 /**
  * 获得可用的节点子级
  */
@@ -86,7 +88,7 @@ const nodeToSketchGroup = (node: Element, options?: any): AnyLayer => {
     return layer;
   }
 
-  if (group.layers.length === 0) {
+  if (group.layers.length === 0 && !isExistPseudo(node)) {
     console.log('该 group 是空的,丢弃...');
     return;
   }

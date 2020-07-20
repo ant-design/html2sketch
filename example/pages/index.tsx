@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Row, Col, Radio } from 'antd';
+import { Button, Row, Col, Radio, Switch } from 'antd';
 import ReactJson from 'react-json-view';
 
 import { nodeToSketchGroup, parserSymbol } from '../../lib';
@@ -7,7 +7,11 @@ export default () => {
   const [json, setJSON] = useState({});
   const generate = () => {
     const el = document.getElementById('test');
-    const json = nodeToSketchGroup(el).toSketchJSON();
+    const switchObj = nodeToSketchGroup(el);
+
+    const json = switchObj.toSketchJSON();
+    json.name = 'Switch';
+    console.log(switchObj);
 
     setJSON(json);
   };
@@ -15,6 +19,7 @@ export default () => {
     const el = document.getElementById('symbol');
     const json = parserSymbol(el).toSketchJSON();
 
+    json.name = 'Switch';
     setJSON(json);
   };
 
@@ -22,7 +27,7 @@ export default () => {
     <Row>
       <Col span={12}>
         <div id="test">
-          <Radio id="symbol">123</Radio>
+          <Switch defaultChecked />
           {/* <Button type={'dashed'} id="symbol">
             测试
           </Button> */}
