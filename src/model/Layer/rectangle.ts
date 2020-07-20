@@ -52,7 +52,6 @@ class Rectangle extends Base {
       isClosed: true,
       booleanOperation: SketchFormat.BooleanOperation.NA,
       exportOptions: defaultExportOptions,
-      sharedStyleID: '',
       isVisible: true,
       isFixedToViewport: false,
       isFlippedHorizontal: false,

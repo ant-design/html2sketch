@@ -256,7 +256,7 @@ class TextStyle {
         /**
          * 字宽
          **/
-        kerning: this.letterSpacing,
+        kerning: this.letterSpacing || 0,
         strikethroughStyle: this.getStrikeThroughStyle(),
         MSAttributedStringFontAttribute: {
           _class: 'fontDescriptor',

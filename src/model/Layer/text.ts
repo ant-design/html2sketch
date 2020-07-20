@@ -60,12 +60,11 @@ class Text extends Base {
       resizingType: SketchFormat.ResizeType.Stretch,
       rotation: 0,
       shouldBreakMaskChain: false,
-      userInfo: this.userInfo,
+      userInfo: this.userInfo ? this.userInfo : undefined,
       exportOptions: defaultExportOptions,
       frame: this.frame.toSketchJSON(),
       clippingMaskMode: 0,
       hasClippingMask: this.hasClippingMask,
-      sharedStyleID: '',
       style: this.style.toSketchJSON(),
 
       attributedString: this.makeAttributedString(),

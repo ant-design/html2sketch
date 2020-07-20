@@ -17,7 +17,6 @@ class ShapeGroup extends Base {
       layers: this.layers.map((l) => l.toSketchJSON()),
       rotation: this.rotation,
       windingRule: SketchFormat.WindingRule.EvenOdd,
-      sharedStyleID: '',
       isVisible: true,
       isFixedToViewport: false,
       isFlippedHorizontal: false,

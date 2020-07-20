@@ -125,6 +125,26 @@ class Base {
     this.frame.x = x;
     this.frame.y = y;
   }
+
+  /**
+   * 获取所有子图层的尺寸
+   */
+  get childLayersSize() {
+    let width = 0;
+    let height = 0;
+    this.layers.forEach((layer) => {
+      const layerWidth = layer.width;
+      const layerHeight = layer.height;
+
+      if (width < layerWidth) {
+        width = layerWidth;
+      }
+      if (height < layerHeight) {
+        height = layerHeight;
+      }
+    });
+    return { width, height };
+  }
 }
 
 export default Base;

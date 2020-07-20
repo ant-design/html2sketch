@@ -22,7 +22,6 @@ class Page extends Base {
       exportOptions: defaultExportOptions,
       style: this.style.toSketchJSON(),
       isFixedToViewport: false,
-      sharedStyleID: '',
       do_objectID: this.id,
       isFlippedHorizontal: false,
       isFlippedVertical: false,

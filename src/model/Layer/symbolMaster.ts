@@ -38,7 +38,7 @@ class SymbolMaster extends Base {
   /**
    * 覆盖层属性
    */
-  overrideProperties: SketchFormat.OverrideProperty[];
+  overrideProperties: SketchFormat.OverrideProperty[] = [];
   /**
    * Symbol 布局
    */
@@ -80,7 +80,8 @@ class SymbolMaster extends Base {
     let width = this.width;
     let height = this.height;
 
-    // if width and height were not explicitly set, fit symbol size to its contents
+    // if width and height were not explicitly set,
+    // fit symbol size to its contents
     if (width === null || height === null) {
       this.layers.forEach((layer) => {
         const layerWidth = layer.x + layer.width;
@@ -105,6 +106,22 @@ class SymbolMaster extends Base {
   setGroupLayout(layoutType: keyof typeof SMART_LAYOUT) {
     this.groupLayout = getGroupLayout(layoutType);
   }
+
+  /**
+   * 添加 override 设置
+   */
+  addOverride = (
+    id: string,
+    type: 'image' | 'layerStyle' | 'stringValue',
+    canOverride: boolean = true
+  ) => {
+    const override: SketchFormat.OverrideProperty = {
+      _class: 'MSImmutableOverrideProperty',
+      canOverride,
+      overrideName: id + '_' + type,
+    };
+    this.overrideProperties.push(override);
+  };
 
   toSketchJSON = (): SketchFormat.SymbolMaster => {
     return {
@@ -144,7 +161,7 @@ class SymbolMaster extends Base {
       name: this.name,
       rotation: 0,
       layerListExpandedType: SketchFormat.LayerListExpanded.Undecided,
-      overrideProperties: [],
+      overrideProperties: this.overrideProperties,
       layers: this.layers.map((l) => l.toSketchJSON()),
       isVisible: true,
     };

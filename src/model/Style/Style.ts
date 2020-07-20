@@ -1,9 +1,5 @@
 import FileFormat from '@sketch-hq/sketch-file-format-ts';
-import {
-  defaultBorderOptions,
-  defaultColorControls,
-  defaultContextSettings,
-} from '../utils';
+import { defaultBorderOptions, defaultColorControls } from '../utils';
 import { ColorParam } from './Color';
 import StyleBase from './Base';
 import Fill from './Fill';
@@ -58,17 +54,6 @@ class Style extends StyleBase {
    * Sketch 专属的描边属性
    **/
   sketchBorderOptions: FileFormat.BorderOptions = defaultBorderOptions;
-
-  /**
-   * 透明度
-   **/
-  private _opacity: number = 1;
-  get opacity() {
-    return this._opacity;
-  }
-  set opacity(opacity: string | number) {
-    this._opacity = Number(opacity);
-  }
 
   /**
    * 添加颜色填充
@@ -231,7 +216,7 @@ class Style extends StyleBase {
   toSketchJSON = (): FileFormat.Style => {
     return {
       _class: 'style',
-      do_objectID: '',
+      do_objectID: this.id,
       endMarkerType: FileFormat.MarkerType.OpenArrow,
       miterLimit: 10,
       startMarkerType: FileFormat.MarkerType.OpenArrow,
@@ -242,7 +227,7 @@ class Style extends StyleBase {
       borders: this.borders.map((b) => b.toSketchJSON()),
       shadows: this.shadows.map((shadow) => shadow.toSketchJSON()),
       innerShadows: this.innerShadows.map((i) => i.toSketchJSON()),
-      contextSettings: defaultContextSettings,
+      contextSettings: this.getContextSettings(),
     };
   };
 }

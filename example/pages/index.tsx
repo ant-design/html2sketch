@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Button, Row, Col, Radio, Switch } from 'antd';
 import ReactJson from 'react-json-view';
+import { SwitchSymbol, RadioSymbol, ButtonSymbol } from './components';
 
 import { nodeToSketchGroup, parserSymbol } from '../../lib';
 export default () => {
@@ -10,30 +11,52 @@ export default () => {
     const switchObj = nodeToSketchGroup(el);
 
     const json = switchObj.toSketchJSON();
-    json.name = 'Switch';
-    console.log(switchObj);
 
     setJSON(json);
   };
-  const generateSymbol = () => {
-    const el = document.getElementById('symbol');
-    const json = parserSymbol(el).toSketchJSON();
+  /**
+   * 生成 symbol
+   */
+  const generateSymbol = (classname: string, options?) => {
+    const els = document.getElementsByClassName(classname);
+    const json = [];
 
-    json.name = 'Switch';
+    Array.from(els).forEach(el => {
+      console.log(el);
+
+      const switchObj = parserSymbol(el, options).toSketchJSON();
+      switchObj.name = el.getAttribute('symbolName') || 'ceee';
+
+      json.push(switchObj);
+    });
     setJSON(json);
   };
 
   return (
     <Row>
       <Col span={12}>
-        <div id="test">
-          <Switch defaultChecked />
-          {/* <Button type={'dashed'} id="symbol">
-            测试
-          </Button> */}
-        </div>
+        <SwitchSymbol></SwitchSymbol>
+        <RadioSymbol></RadioSymbol>
+        <ButtonSymbol></ButtonSymbol>
         <Button onClick={generate}>转换为 Group</Button>
-        <Button onClick={generateSymbol}>转换为 Symbol</Button>
+        <Button
+          onClick={() =>
+            generateSymbol('button', {
+              smartLayout: 'LEFT_TO_RIGHT',
+            })
+          }
+        >
+          转换为Button Symbol
+        </Button>
+        <Button
+          onClick={() =>
+            generateSymbol('switch', {
+              smartLayout: 'LEFT_TO_RIGHT',
+            })
+          }
+        >
+          转换为 Switch Symbol
+        </Button>
       </Col>
       <Col span={12}>
         <ReactJson src={json} />

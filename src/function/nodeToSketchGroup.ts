@@ -63,13 +63,6 @@ const nodeToSketchGroup = (node: Element, options?: any): AnyLayer => {
   layers
     .filter((l) => l)
     .forEach((layer) => {
-      // Layer positions are relative, and as we put the node position to the group,
-      // we have to shift back the layers by that distance.
-
-      layer.x -= left;
-
-      layer.y -= top;
-
       group.addLayer(layer);
     });
 
@@ -82,7 +75,7 @@ const nodeToSketchGroup = (node: Element, options?: any): AnyLayer => {
   ) {
     console.log('该 group 只包含一个子级,丢弃...');
     const layer = group.layers[0];
-    // 将父级的图层关系给到子集
+    // 将父级的图层关系还给子集
     layer.x += group.x;
     layer.y += group.y;
     return layer;

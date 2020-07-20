@@ -9,10 +9,12 @@ import { splitShadowString, shadowStringToObject } from '../helpers/shadow';
 const parsePseudo = (node: Element, pseudoElt: 'before' | 'after') => {
   // 判断一下是否有伪类
   const pseudoEl: CSSStyleDeclaration = getComputedStyle(node, ':' + pseudoElt);
-  if (pseudoEl.content === 'none') {
+  const { content, display } = pseudoEl;
+  if (content === 'none' || display === 'none') {
     console.log(`No ${pseudoElt} Pseudo`);
     return null;
   }
+
   console.log('有伪类');
   const bcr = node.getBoundingClientRect();
   const { left, top } = bcr;
