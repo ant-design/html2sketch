@@ -5,5 +5,7 @@ export default defineConfig({
     type: 'none',
   },
   outputPath: '../dist',
+  publicPath: '/html2sketch/',
+  base: '/html2sketch',
   routes: [{ path: '/', component: '@/pages/index' }],
 });
