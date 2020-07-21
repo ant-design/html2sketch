@@ -3,7 +3,9 @@
  */
 export const isTextNode = (node: Element): boolean => {
   return (
-    node.childNodes.length > 0 && node.childNodes[0].nodeName.includes('text')
+    node &&
+    node.childNodes!.length > 0 &&
+    node.childNodes[0].nodeName.includes('text')
   );
 };
 /**
