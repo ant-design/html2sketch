@@ -1,6 +1,6 @@
 {
   "include": ["src", "typings.d.ts"],
-  "exclude": ["node_modules", "**/__tests__/*", "example"],
+  "exclude": ["node_modules", "**/__test__/*", "example"],
   "compilerOptions": {
     "target": "es6",
     "module": "ES2015",

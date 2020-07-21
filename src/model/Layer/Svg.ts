@@ -1,15 +1,15 @@
-import { SVGPathData } from 'svg-pathdata';
+import { SVGPathData, SVGPathDataParser } from 'svg-pathdata';
 import {
   CommandA,
   CommandC,
   CommandL,
   CommandM,
   CommandS,
+  SVGCommand,
 } from 'svg-pathdata/lib/types';
 import Base, { BaseLayerParams } from './Base';
 import { SketchFormat } from '../../index';
 import { defaultExportOptions } from '../utils';
-import { convertToCubicBezier } from '../../helpers/svg';
 
 export type SVG = {
   _class: 'svg';
@@ -35,7 +35,7 @@ class Svg extends Base {
     this.class = 'svg';
     this.name = '路径';
     this.rawSVGString = path;
-    const { isClose, points } = convertToCubicBezier(path);
+    const { isClose, points } = Svg.convertToCubicBezier(path);
     this.isClosed = isClose;
     // @ts-ignore
     this.points = points;
@@ -44,6 +44,11 @@ class Svg extends Base {
    * 是否是闭合路径
    **/
   isClosed?: boolean;
+
+  /**
+   * 转为 Sketch String
+   * @deprecated
+   */
   toSketchString = (): SVG => {
     return {
       _class: 'svg',
@@ -55,7 +60,10 @@ class Svg extends Base {
   };
   points: SvgPoint[];
 
-  coverterPointsToSketchPoint = (
+  /**
+   * 将内部点转为 Sketch Point
+   */
+  convertPointsToSketchPoint = (
     point: SvgPoint,
     index: number
   ): SketchFormat.CurvePoint => {
@@ -114,6 +122,7 @@ class Svg extends Base {
       point: `{${point.x}, ${point.y}}`,
     };
   };
+
   /**
    * 转换为 Sketch ShapePath 对象
    **/
@@ -142,9 +151,80 @@ class Svg extends Base {
       edited: true,
       isClosed: this.isClosed,
       pointRadiusBehaviour: 1,
-      points: this.points
-        .map(this.coverterPointsToSketchPoint)
-        .filter((l) => l),
+      points: this.points.map(this.convertPointsToSketchPoint).filter((l) => l),
+    };
+  };
+
+  /**
+   * 将 Path 转为贝赛尔曲线
+   * @param path 路径
+   */
+  static convertToCubicBezier = (path: string) => {
+    const svgPathData = new SVGPathData(path);
+    const bounds = svgPathData.getBounds();
+    const frame = {
+      width: bounds.maxX - bounds.minX,
+      height: bounds.maxY - bounds.minY,
+    };
+    const { minX, minY } = bounds;
+
+    // 判断是否闭合
+    const isClose = svgPathData.commands.findIndex((i) => i.type === 1) > -1;
+
+    const newPath = svgPathData
+      .translate(-minX, -minY)
+      .aToC() // 将所有圆弧转为 curve
+      .normalizeHVZ() // 将 HVZ 转为直线
+      .normalizeST() // 将 smooth curve 转为curve
+      .transform(Svg.normalizationXY(frame.width, frame.height))
+      .toAbs()
+      .encode();
+    const points = new SVGPathDataParser().parse(newPath);
+
+    return {
+      points: points
+        .filter(
+          (i) =>
+            // 清理 Z
+            i.type !== SVGPathData.CLOSE_PATH
+        )
+        .map((i) => {
+          // @ts-ignore
+          const { relative, ...res } = i;
+
+          return res;
+        }),
+      frame,
+      isClose,
+    };
+  };
+
+  /**
+   * 将 svg path 点归一化处理
+   * @param width {number} 最大宽度
+   * @param height {number} 最大高度
+   */
+  static normalizationXY = (width: number, height: number) => {
+    return (command: SVGCommand) => {
+      switch (command.type) {
+        case SVGPathData.CLOSE_PATH:
+          break;
+        case SVGPathData.LINE_TO:
+        case SVGPathData.MOVE_TO:
+          command.x = command.x / width;
+          command.y = command.y / height;
+          break;
+
+        case SVGPathData.CURVE_TO:
+          command.x = command.x / width;
+          command.x1 = command.x1 / width;
+          command.x2 = command.x2 / width;
+          command.y = command.y / height;
+          command.y1 = command.y1 / height;
+          command.y2 = command.y2 / height;
+          break;
+      }
+      return command;
     };
   };
 }

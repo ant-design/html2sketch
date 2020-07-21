@@ -1,4 +1,4 @@
-import { getSVGString } from '../helpers/svg';
+// import { getSVGString } from '../helpers/svg';
 import SVG from '../model/Layer/Svg';
 import { SVGPathData } from 'svg-pathdata';
 
@@ -23,7 +23,7 @@ const transferToSvg = (node: Element) => {
     }
   });
 
-  console.log(getSVGString(node));
+  // console.log(getSVGString(node));
   const svg = new SVG({
     // x,
     // y,

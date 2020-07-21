@@ -1,4 +1,6 @@
-import uuid from '../../helpers/uuid';
+import murmurHash from 'murmur2js';
+import { Style } from '@/model';
+import { sortObjectKeys, uuid } from '../../helpers/utils';
 import { SketchFormat } from '../../index';
 
 class StyleBase {
@@ -25,6 +27,20 @@ class StyleBase {
       blendMode: SketchFormat.BlendMode.Normal,
       opacity: this._opacity,
     };
+  };
+
+  /**
+   * 给 style 进行 hash
+   * 便于判断是否是相同属性的样式
+   * @param obj
+   */
+  static hashStyle = (obj: Style) => {
+    if (!obj) {
+      return -1;
+    }
+
+    const { id, name, ...style } = obj; // 去掉 id 和 name 后进行 hash
+    murmurHash(JSON.stringify(sortObjectKeys(style)));
   };
 }
 
