@@ -37,6 +37,7 @@ class Svg extends Base {
     this.rawSVGString = rawSVGString;
     const { isClose, points } = convertToCubicBezier(rawSVGString);
     this.isClosed = isClose;
+    // @ts-ignore
     this.points = points;
   }
   /**

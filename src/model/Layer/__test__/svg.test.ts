@@ -1,4 +1,4 @@
-import { Style, Svg } from '../../src/model';
+import { Style, Svg } from '@/model';
 
 describe('Svg', () => {
   it('圆角矩形可正常转换', function () {

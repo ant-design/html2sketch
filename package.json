@@ -15,6 +15,7 @@
   ],
   "scripts": {
     "dev": "tsc --watch",
+    "dev:example": "APP_ROOT=example umi dev",
     "build": "tsc",
     "test": "jest",
     "format": "prettier --write \"src/**/*.ts\" \"src/**/*.js\"",
@@ -27,6 +28,16 @@
   },
   "devDependencies": {
     "@sketch-hq/sketch-file-format-ts": "5.1.1",
+    "@umijs/preset-react": "1.x",
+    "@umijs/test": "^3.2.10",
+    "copy-to-clipboard": "^3.3.1",
+    "lint-staged": "^10.0.7",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0",
+    "react-json-view": "^1.19.1",
+    "umi": "^3.2.10",
+    "uuid": "^8.2.0",
+    "yorkie": "^2.0.0",
     "@types/color": "^3.0.1",
     "@types/jest": "^26.0.4",
     "jest": "^24.8.0",
@@ -40,6 +51,7 @@
     "color": "^3.1.2",
     "murmur2js": "^1.0.0",
     "normalize-css-color": "^1.0.2",
+    "uuid": "^8.2.0",
     "svg-pathdata": "^5.0.5"
   },
   "files": [
