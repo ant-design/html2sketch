@@ -1,6 +1,5 @@
-import Bitmap from '../../src/model/Bitmap';
+import Bitmap from '../Bitmap';
 
-jest.mock('../../src/helpers/uuid', () => 'ds');
 describe('image', () => {
   it('123', () => {
     const bitmap = new Bitmap({
@@ -19,7 +18,7 @@ describe('image', () => {
       booleanOperation: -1,
       clippingMaskMode: 0,
       do_objectID: 'uuid',
-      edited: false,
+      clippingMask: '',
       exportOptions: {
         _class: 'exportOptions',
         exportFormats: [],
@@ -27,7 +26,7 @@ describe('image', () => {
         layerOptions: 0,
         shouldTrim: false,
       },
-      fixedRadius: 0,
+      fillReplacesImage: false,
       frame: {
         _class: 'rect',
         constrainProportions: false,
@@ -36,32 +35,25 @@ describe('image', () => {
         x: 0,
         y: 0,
       },
-      hasClickThrough: false,
       hasClippingMask: false,
-      hasConvertedToNewRoundCorners: false,
       image: {
         _class: 'MSJSONOriginalDataReference',
-        _ref: 'images/image',
+        _ref: 'images/uuid',
         _ref_class: 'MSImageData',
         url: 'foo.png',
       },
-      isClosed: false,
+      intendedDPI: 32,
       isFixedToViewport: false,
       isFlippedHorizontal: false,
       isFlippedVertical: false,
       isLocked: false,
       isVisible: true,
       layerListExpandedType: 0,
-      layers: [],
       name: 'bitmap',
       nameIsFixed: false,
-      needsConvertionToNewRoundCorners: false,
-      numberOfPoints: 0,
-      points: [],
       resizingConstraint: 63,
       resizingType: 0,
       rotation: 0,
-      sharedStyleID: '',
       shouldBreakMaskChain: false,
       style: {
         _class: 'style',
@@ -86,7 +78,7 @@ describe('image', () => {
           blendMode: 0,
           opacity: 1,
         },
-        do_ID: '',
+        do_objectID: 'uuid',
         endMarkerType: 0,
         fills: [],
         innerShadows: [],

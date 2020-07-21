@@ -3,11 +3,11 @@ import { Button, Row, Col, Card, Tabs, Divider, Space, message } from 'antd';
 import ReactJson from 'react-json-view';
 import { SwitchSymbol, RadioSymbol, ButtonSymbol } from '../components';
 import { FooterToolBar } from '@alipay/tech-ui';
-import { nodeToSketchGroup, parserSymbol } from 'html2sketch';
+// import { nodeToSketchGroup, parserSymbol } from 'html2sketch';
 import styles from './style.less';
 import copy from 'copy-to-clipboard';
 
-// import { nodeToSketchGroup, parserSymbol } from '../../lib';
+import { nodeToSketchGroup, parserSymbol } from '../../lib';
 
 const { TabPane } = Tabs;
 export default () => {
@@ -22,7 +22,7 @@ export default () => {
     const els = document.getElementsByClassName(classname);
     const json: JSON[] = [];
 
-    Array.from(els).forEach((el) => {
+    Array.from(els).forEach(el => {
       const smartLayout = el.getAttribute('smartLayout');
 
       const switchObj = parserSymbol(el, {
@@ -46,7 +46,7 @@ export default () => {
           <Card>
             <Tabs
               activeKey={activeKey}
-              onChange={(key) => {
+              onChange={key => {
                 setActiveKey(key);
               }}
               tabPosition={'left'}
@@ -91,7 +91,9 @@ export default () => {
               <ReactJson src={json || {}} />
             </Card>
           </Col>
-        ) : undefined}
+        ) : (
+          undefined
+        )}
       </Row>
     </div>
   );

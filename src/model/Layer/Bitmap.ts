@@ -18,7 +18,7 @@ class Bitmap extends Base {
   url: string;
 
   /**
-   * 转为 Sketch JSON对象
+   * 转为 Sketch JSON 对象
    */
   toSketchJSON = (): SketchFormat.Bitmap => ({
     _class: 'bitmap',
@@ -32,7 +32,6 @@ class Bitmap extends Base {
     intendedDPI: 32,
     fillReplacesImage: false,
     isFixedToViewport: false,
-    sharedStyleID: '',
     isFlippedHorizontal: false,
     isFlippedVertical: false,
     isLocked: this.isLocked,
@@ -46,7 +45,6 @@ class Bitmap extends Base {
     shouldBreakMaskChain: false,
     clippingMaskMode: 0,
     hasClippingMask: this.hasClippingMask,
-    userInfo: this.userInfo,
   });
 
   /**
