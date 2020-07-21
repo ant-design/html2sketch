@@ -70,7 +70,7 @@ export default () => {
                     setShowJSON(!showJSON);
                   }}
                 >
-                  显示 JSON
+                  {showJSON ? '隐藏' : '显示'} JSON
                 </Button>
               </Col>
               <Col>

@@ -49,9 +49,11 @@ export const ButtonSymbol: FC = () => {
                     suffix: danger ? '-Danger' : undefined,
                   })}
                   smartLayout={smartLayout}
+                  // @ts-ignore
                   type={type}
                   danger={danger}
                   disabled={type === 'disabled'}
+                  // @ts-ignore
                   size={size}
                 >
                   文本
