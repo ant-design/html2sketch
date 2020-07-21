@@ -1,7 +1,7 @@
 import Bitmap from '../Bitmap';
 
-describe('image', () => {
-  it('123', () => {
+describe('Bitmap 类', () => {
+  it('Bitmap 可正常生成 Sketch JSON', () => {
     const bitmap = new Bitmap({
       url: 'foo.png',
       x: 0,

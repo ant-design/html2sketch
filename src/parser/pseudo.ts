@@ -1,7 +1,5 @@
-import { Style, Rectangle } from '../model';
-import { parserBorderRadius } from '../helpers/shape';
+import { Style, Rectangle, Shadow } from '../model';
 import { defaultNodeStyle } from '../model/utils';
-import { splitShadowString, shadowStringToObject } from '../helpers/shadow';
 
 /**
  * 解析伪类
@@ -125,10 +123,10 @@ const parsePseudo = (node: Element, pseudoElt: 'before' | 'after') => {
   }
 
   if (boxShadow !== defaultNodeStyle.boxShadow) {
-    const shadowStrings = splitShadowString(boxShadow);
+    const shadowStrings = Shadow.splitShadowString(boxShadow);
 
     shadowStrings.forEach((shadowString: string) => {
-      const shadowObject = shadowStringToObject(shadowString);
+      const shadowObject = Shadow.shadowStringToObject(shadowString);
 
       if (shadowObject!.inset) {
         if (borderWidth.indexOf(' ') === -1) {
@@ -143,10 +141,18 @@ const parsePseudo = (node: Element, pseudoElt: 'before' | 'after') => {
   rect.style = style;
   //TODO borderRadius can be expressed in different formats and use various units - for simplicity we assume "X%"
   const cornerRadius = {
-    topLeft: parserBorderRadius(borderTopLeftRadius, width, height),
-    topRight: parserBorderRadius(borderTopRightRadius, width, height),
-    bottomLeft: parserBorderRadius(borderBottomLeftRadius, width, height),
-    bottomRight: parserBorderRadius(borderBottomRightRadius, width, height),
+    topLeft: Rectangle.parserBorderRadius(borderTopLeftRadius, width, height),
+    topRight: Rectangle.parserBorderRadius(borderTopRightRadius, width, height),
+    bottomLeft: Rectangle.parserBorderRadius(
+      borderBottomLeftRadius,
+      width,
+      height
+    ),
+    bottomRight: Rectangle.parserBorderRadius(
+      borderBottomRightRadius,
+      width,
+      height
+    ),
   };
 
   rect.cornerRadius = cornerRadius;

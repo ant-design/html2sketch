@@ -22,7 +22,7 @@ export type SVG = {
 type SvgPoint = CommandM | CommandL | CommandC | CommandS | CommandA;
 
 interface SvgInitParams extends BaseLayerParams {
-  rawSVGString: string;
+  path: string;
 }
 
 /**
@@ -30,12 +30,12 @@ interface SvgInitParams extends BaseLayerParams {
  */
 class Svg extends Base {
   rawSVGString: string;
-  constructor({ x, y, width, height, rawSVGString }: SvgInitParams) {
+  constructor({ x, y, width, height, path }: SvgInitParams) {
     super({ height, width, y, x });
     this.class = 'svg';
     this.name = '路径';
-    this.rawSVGString = rawSVGString;
-    const { isClose, points } = convertToCubicBezier(rawSVGString);
+    this.rawSVGString = path;
+    const { isClose, points } = convertToCubicBezier(path);
     this.isClosed = isClose;
     // @ts-ignore
     this.points = points;

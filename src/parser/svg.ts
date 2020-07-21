@@ -1,4 +1,3 @@
-import { getGroupBCR } from '../helpers/bcr';
 import { getSVGString } from '../helpers/svg';
 import SVG from '../model/Layer/Svg';
 import { SVGPathData } from 'svg-pathdata';
@@ -8,13 +7,15 @@ import { SVGPathData } from 'svg-pathdata';
  * @param {Element} node 节点
  */
 const transferToSvg = (node: Element) => {
-  // sketch ignores padding and centerging as defined by viewBox and preserveAspectRatio when
+  // sketch ignores padding and centering as defined by viewBox and preserveAspectRatio when
   // importing Svg, so instead of using BCR of the Svg, we are using BCR of its children
-  const childrenBCR = getGroupBCR(Array.from(node.children));
+  const childrenBCR = SVG.getChildNodesFrame(Array.from(node.children));
 
+  let pathData = '';
   Array.from(node.children).forEach((child) => {
     if (child.nodeName === 'path') {
       const path = child.getAttribute('d');
+      pathData = path;
       if (path) {
         const newPath = new SVGPathData(path).toRel().encode();
         child.setAttribute('d', newPath);
@@ -22,6 +23,7 @@ const transferToSvg = (node: Element) => {
     }
   });
 
+  console.log(getSVGString(node));
   const svg = new SVG({
     // x,
     // y,
@@ -29,7 +31,7 @@ const transferToSvg = (node: Element) => {
     y: childrenBCR.top,
     width: childrenBCR.width,
     height: childrenBCR.height,
-    rawSVGString: getSVGString(node),
+    path: pathData,
   });
   svg.name = node.getAttribute('data-icon') || 'svg';
   return svg;

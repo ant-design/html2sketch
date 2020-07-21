@@ -145,6 +145,92 @@ class Base {
     });
     return { width, height };
   }
+
+  /**
+   * 获取节点的子级的定界框
+   * @param nodes
+   */
+  static getChildNodesFrame = (nodes: Element[]) => {
+    // TODO: should probably also take into account children of each node
+
+    const groupBCR = nodes.reduce((result: any, node) => {
+      const bcr = node.getBoundingClientRect();
+      const { left, top, right, bottom } = bcr;
+      const width = bcr.right - bcr.left;
+      const height = bcr.bottom - bcr.top;
+
+      if (width === 0 && height === 0) {
+        return result;
+      }
+
+      if (!result) {
+        return { left, top, right, bottom };
+      }
+
+      if (left < result.left) {
+        result.left = left;
+      }
+
+      if (top < result.top) {
+        result.top = top;
+      }
+
+      if (right > result.right) {
+        result.right = right;
+      }
+
+      if (bottom > result.bottom) {
+        result.bottom = bottom;
+      }
+
+      return result;
+    }, null);
+
+    if (groupBCR === null) {
+      return {
+        left: 0,
+        top: 0,
+        right: 0,
+        bottom: 0,
+        width: 0,
+        height: 0,
+      };
+    }
+
+    return {
+      left: groupBCR.left,
+      top: groupBCR.top,
+      right: groupBCR.right,
+      bottom: groupBCR.bottom,
+      width: groupBCR.right - groupBCR.left,
+      height: groupBCR.bottom - groupBCR.top,
+    };
+  };
+
+
+
+  /**
+   * 解析 Border string 圆角
+   * @param borderRadius
+   * @param width
+   * @param height
+   */
+  static parserBorderRadius = (
+    borderRadius: string,
+    width: number,
+    height: number
+  ) => {
+    const matches = borderRadius.match(/^([0-9.]+)(.+)$/);
+
+    // Sketch uses 'px' units for border radius, so we need to convert % to px
+    if (matches && matches[2] === '%') {
+      const baseVal = Math.max(width, height);
+      const percentageApplied = baseVal * (parseInt(matches[1], 10) / 100);
+
+      return Math.round(percentageApplied);
+    }
+    return parseInt(borderRadius, 10);
+  };
 }
 
 export default Base;

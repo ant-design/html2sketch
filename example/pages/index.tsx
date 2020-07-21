@@ -1,34 +1,40 @@
 import React, { useState } from 'react';
 import { Button, Row, Col, Card, Tabs, Divider, Space, message } from 'antd';
 import ReactJson from 'react-json-view';
-import { SwitchSymbol, RadioSymbol, ButtonSymbol } from '../components';
-import { FooterToolBar } from '@alipay/tech-ui';
-// import { nodeToSketchGroup, parserSymbol } from 'html2sketch';
-import styles from './style.less';
-import copy from 'copy-to-clipboard';
+import {
+  SwitchSymbol,
+  RadioSymbol,
+  ButtonSymbol,
+  IconSymbol,
+} from '../components';
 
-import { nodeToSketchGroup, parserSymbol } from '../../lib';
+import copy from 'copy-to-clipboard';
+import styles from './style.less';
+import { parserSymbol } from '../../lib';
+import { SMART_LAYOUT } from '../../lib/helpers/layout';
 
 const { TabPane } = Tabs;
 export default () => {
   const [json, setJSON] = useState(undefined);
   const [showJSON, setShowJSON] = useState(false);
-  const [activeKey, setActiveKey] = useState('button');
+  const [activeKey, setActiveKey] = useState('icon');
 
   /**
    * 生成 symbol
    */
   const generateSymbol = (classname: string) => {
     const els = document.getElementsByClassName(classname);
-    const json: JSON[] = [];
+    const json: Object[] = [];
 
     Array.from(els).forEach(el => {
-      const smartLayout = el.getAttribute('smartLayout');
+      const smartLayout = el.getAttribute(
+        'smartLayout',
+      ) as keyof typeof SMART_LAYOUT;
 
       const switchObj = parserSymbol(el, {
         smartLayout: smartLayout ? smartLayout : undefined,
       }).toSketchJSON();
-      switchObj.name = el.getAttribute('symbolName') || 'ceee';
+      switchObj.name = el.getAttribute('symbolName') || 'symbol';
 
       json.push(switchObj);
     });
@@ -53,6 +59,9 @@ export default () => {
             >
               <TabPane key={'button'} tabKey={'button'} tab={'Button'}>
                 <ButtonSymbol />
+              </TabPane>
+              <TabPane key={'icon'} tabKey={'icon'} tab={'Icon'}>
+                <IconSymbol />
               </TabPane>
               <TabPane key={'switch'} tabKey={'switch'} tab={'Switch'}>
                 <SwitchSymbol />
