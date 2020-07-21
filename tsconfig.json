@@ -19,6 +19,9 @@
     "esModuleInterop": true,
     "lib": ["dom", "es2015", "es2016", "es2017"],
     "allowSyntheticDefaultImports": true,
-    "baseUrl": "./"
+    "baseUrl": ".",
+    "paths": {
+      "@/model": ["./src/model"]
+    }
   }
 }
