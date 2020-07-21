@@ -4,6 +4,9 @@ import Base, { BaseLayerParams } from './Base';
 import { defaultRuleData, defaultExportOptions } from '../utils';
 import Color from '../Style/Color';
 
+/**
+ * 画板对象
+ **/
 class Artboard extends Base {
   constructor(params: BaseLayerParams) {
     super(params);
@@ -53,7 +56,7 @@ class Artboard extends Base {
       _class: 'artboard',
       frame: this.frame.toSketchJSON(),
       style: this.style.toSketchJSON(),
-      backgroundColor: this.backgroundColor.toSketchJson(),
+      backgroundColor: this.backgroundColor.toSketchJSON(),
       booleanOperation: SketchFormat.BooleanOperation.NA,
       do_objectID: this.id,
       exportOptions: defaultExportOptions,

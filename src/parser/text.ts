@@ -1,21 +1,9 @@
 import Text from '../model/Layer/Text';
-import TextStyle from '../model/Style/TextStyle';
-import { fixWhiteSpace } from '../helpers/text';
+import { TextStyleParams } from '../model/Style/TextStyle';
 
 /**
- * @param {string} fontWeight font weight as provided by the browser
- * @return {number} normalized font weight
- */
-function parseFontWeight(fontWeight: string): number {
-  // Support 'bold' and 'normal' for Electron compatibility.
-  if (fontWeight === 'bold') {
-    return 700;
-  } else if (fontWeight === 'normal') {
-    return 400;
-  }
-  return parseInt(fontWeight, 10);
-}
-
+ * 将 Node 转为 Text 对象
+ **/
 const transformToText = (node: Element): Text | Text[] | undefined => {
   // 添加文本
   const styles: CSSStyleDeclaration = getComputedStyle(node);
@@ -39,13 +27,13 @@ const transformToText = (node: Element): Text | Text[] | undefined => {
     paddingRight,
   } = styles;
 
-  const textStyle = new TextStyle({
+  const textStyle: TextStyleParams = {
     fontFamily,
     fontSize: parseInt(fontSize, 10),
     lineHeight: lineHeight !== 'normal' ? parseFloat(lineHeight) : undefined,
     letterSpacing:
       letterSpacing !== 'normal' ? parseFloat(letterSpacing) : undefined,
-    fontWeight: parseFontWeight(fontWeight),
+    fontWeight: Text.parseFontWeight(fontWeight),
     color,
     textTransform,
     textDecoration: textDecorationLine,
@@ -54,13 +42,12 @@ const transformToText = (node: Element): Text | Text[] | undefined => {
         ? justifyContent
         : textAlign,
     skipSystemFonts: true,
-  });
+  };
 
   const rangeHelper = document.createRange();
   const nodeBCR = node.getBoundingClientRect();
   let x = nodeBCR.x;
   let y = nodeBCR.y;
-  // let { x, y } = getRelativeXY(node, textAlign);
 
   // 处理内部Text节点
   const childNodeList = Array.from(node.childNodes);
@@ -91,7 +78,7 @@ const transformToText = (node: Element): Text | Text[] | undefined => {
       }
 
       // 如果是左对齐
-      if (textAlign === 'left') {
+      if (textAlign === 'left' || textAlign === 'start') {
         // 确认下 padding 的距离
         const pl = parseFloat(paddingLeft);
         x = x + pl;
@@ -112,7 +99,10 @@ const transformToText = (node: Element): Text | Text[] | undefined => {
       const pt = parseFloat(paddingTop);
       y = y + pt;
 
-      const textValue = fixWhiteSpace(textNode.nodeValue || '', whiteSpace);
+      const textValue = Text.fixWhiteSpace(
+        textNode.nodeValue || '',
+        whiteSpace
+      );
 
       return new Text({
         x,
@@ -124,6 +114,7 @@ const transformToText = (node: Element): Text | Text[] | undefined => {
         multiline: numberOfLines > 1,
       });
     });
+
   if (textNode.length === 0) {
     return;
   } else if (textNode.length === 1) {

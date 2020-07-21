@@ -95,7 +95,7 @@ class Document {
         images: [],
         gradients: [],
         gradientAssets: [],
-        colors: this.colors.map((color) => color.toSketchJson()),
+        colors: this.colors.map((color) => color.toSketchJSON()),
         colorAssets: this.colorAssets.map((colorAsset) =>
           colorAsset.toSketchJSON()
         ),

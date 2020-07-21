@@ -1,8 +1,8 @@
 {
   "name": "html2sketch",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "author": "arvinxx",
-  "description": "praser html to sketch json",
+  "description": "parser html to sketch json",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/arvinxx/html2sketch.git"
@@ -14,9 +14,9 @@
     "sketch"
   ],
   "scripts": {
-    "test": "jest --config jestconfig.json",
     "dev": "tsc --watch",
     "build": "tsc",
+    "test": "jest",
     "format": "prettier --write \"src/**/*.ts\" \"src/**/*.js\"",
     "lint": "tslint -p tsconfig.json",
     "prepare": "npm run build",
@@ -38,6 +38,7 @@
   },
   "dependencies": {
     "color": "^3.1.2",
+    "murmur2js": "^1.0.0",
     "normalize-css-color": "^1.0.2",
     "svg-pathdata": "^5.0.5"
   },

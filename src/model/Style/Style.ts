@@ -1,17 +1,15 @@
 import FileFormat from '@sketch-hq/sketch-file-format-ts';
-import { makeImageFill } from '../../helpers/image';
-import { makeColorFill, makeColorFromCSS } from '../../helpers/color';
-import convertAngleToFromAndTo from '../../helpers/convertAngleToFromAndTo';
-import {
-  defaultBorderOptions,
-  defaultColorControls,
-  defaultContextSettings,
-  defaultGradient,
-} from '../utils';
+import { defaultBorderOptions, defaultColorControls } from '../utils';
+import { ColorParam } from './Color';
 import StyleBase from './Base';
+import Fill from './Fill';
+import Shadow from './Shadow';
+import InnerShadow from './InnerShadow';
+import Border from './Border';
+import { FillType } from '@sketch-hq/sketch-file-format-ts/dist/cjs/v3-types';
 
 interface ShadowInput {
-  color: string;
+  color: ColorParam;
   blur?: number;
   offsetX?: number;
   offsetY?: number;
@@ -29,84 +27,169 @@ const defaultShadowInput: ShadowInput = {
  * 样式
  */
 class Style extends StyleBase {
-  private _borderOptions: FileFormat.BorderOptions = defaultBorderOptions;
-  _fontFamily: string;
   constructor() {
     super();
-    this._fills = [];
-    this._borders = [];
-    this._shadows = [];
-    this._innerShadows = [];
-    this._opacity = 1;
-    this._fontFamily = '';
-  }
-  private readonly _innerShadows: FileFormat.InnerShadow[];
-  private readonly _fills: FileFormat.Fill[];
-  private _opacity: number;
-  private readonly _shadows: FileFormat.Shadow[];
-  private readonly _borders: FileFormat.Border[];
-
-  addColorFill(color: string, opacity?: number) {
-    this._fills.push(makeColorFill(color, opacity));
   }
 
-  addGradientFill({ angle, stops }: any) {
-    const { from, to } = convertAngleToFromAndTo(angle);
+  /**
+   * 填充
+   **/
+  fills: Fill[] = [];
 
-    const fill: FileFormat.Fill = {
-      _class: 'fill',
-      isEnabled: true,
-      // Not sure why there is a color here
-      color: {
-        _class: 'color',
-        alpha: 1,
-        blue: 0.847,
-        green: 0.847,
-        red: 0.847,
-      },
-      fillType: 1,
+  /**
+   * 外阴影
+   **/
+  shadows: Shadow[] = [];
+
+  /**
+   * 内阴影
+   **/
+  innerShadows: InnerShadow[] = [];
+
+  /**
+   * 描边
+   **/
+  borders: Border[] = [];
+  /**
+   * Sketch 专属的描边属性
+   **/
+  sketchBorderOptions: FileFormat.BorderOptions = defaultBorderOptions;
+
+  /**
+   * 添加颜色填充
+   **/
+  addColorFill(color: ColorParam) {
+    const fill = new Fill({
+      type: FileFormat.FillType.Color,
+      color: color,
+    });
+    this.fills.push(fill);
+  }
+
+  /**
+   * 添加渐变填充
+   **/
+  addGradientFill(angle: string, stops?: ColorParam[]) {
+    const { from, to } = this.convertAngleToFromAndTo(angle);
+
+    const fill = new Fill({
+      type: FileFormat.FillType.Gradient,
       gradient: {
-        _class: 'gradient',
-        elipseLength: 0,
-        from: `{${from.x}, ${from.y}}`,
-        gradientType: 0,
-        stops: stops.map((stopColor: any, index: number) => ({
-          _class: 'gradientStop',
-          color: makeColorFromCSS(stopColor),
-          position: index,
-        })),
-        to: `{${to.x}, ${to.y}}`,
+        from,
+        to,
+        stops,
+        gradientType: FileFormat.GradientType.Linear,
       },
-      contextSettings: defaultContextSettings,
-      noiseIndex: 0,
-      noiseIntensity: 0,
-      patternFillType: 1,
-      patternTileScale: 1,
-    };
+    });
 
-    this._fills.push(fill);
+    this.fills.push(fill);
   }
 
+  /**
+   * 将角度转为 sketch 中的 from 和 to
+   * @param {string} angle 角度
+   */
+  convertAngleToFromAndTo = (angle: string) => {
+    // default 180deg
+    const from = { x: 0.5, y: 0 };
+    const to = { x: 0.5, y: 1 };
+
+    // Learn math or find someone smarter to figure this out correctly
+    switch (angle) {
+      case 'to top':
+      case '360deg':
+      case '0deg':
+        from.y = 1;
+        to.y = 0;
+        break;
+      case 'to right':
+      case '90deg':
+        from.x = 0;
+        from.y = 0.5;
+        to.x = 1;
+        to.y = 0.5;
+        break;
+      case 'to left':
+      case '270deg':
+        from.x = 1;
+        from.y = 0.5;
+        to.x = 0;
+        to.y = 0.5;
+        break;
+      case 'to bottom':
+      case '180deg':
+      default:
+        break;
+    }
+
+    return {
+      from,
+      to,
+    };
+  };
+
+  /**
+   * 添加图片填充
+   **/
   addImageFill(image: string) {
-    const fill = makeImageFill(image);
+    const fill = new Fill({
+      type: FileFormat.FillType.Pattern,
+      image,
+    });
 
-    this._fills.push(fill);
+    this.fills.push(fill);
   }
 
-  addBorder({ color, thickness }: { thickness: number; color: string }) {
-    const broder: FileFormat.Border = {
-      _class: 'border',
-      isEnabled: true,
-      color: makeColorFromCSS(color),
-      fillType: FileFormat.FillType.Color,
-      position: 1,
+  /**
+   * 添加描边
+   **/
+  addBorder({ color, thickness }: { thickness: number; color: ColorParam }) {
+    const border = new Border({
+      type: FillType.Color,
+      color,
       thickness,
-      contextSettings: defaultContextSettings,
-      gradient: defaultGradient,
-    };
-    this._borders.push(broder);
+    });
+
+    this.borders.push(border);
   }
 
+  /**
+   * 添加阴影
+   **/
+  addShadow(params = defaultShadowInput) {
+    const { color, blur, offsetX, offsetY, spread } = params;
+
+    const shadow = new Shadow({
+      blurRadius: blur,
+      color,
+      offsetX,
+      offsetY,
+      spread,
+    });
+
+    this.shadows.push(shadow);
+  }
+
+  /**
+   * 添加内阴影
+   **/
+  addInnerShadow(params = defaultShadowInput) {
+    const { color, blur, offsetX, offsetY, spread } = params;
+
+    const shadow = new InnerShadow({
+      blurRadius: blur,
+      color,
+      offsetX,
+      offsetY,
+      spread,
+    });
+
+    this.innerShadows.push(shadow);
+  }
+
+  /**
+   * 设置描边属性
+   **/
   setBorderDashed({
     lineCapStyle,
     lineJoinStyle,
@@ -118,7 +201,7 @@ class Style extends StyleBase {
     dash?: number;
     spacing?: number;
   } = {}) {
-    this._borderOptions = {
+    this.sketchBorderOptions = {
       _class: 'borderOptions',
       lineCapStyle: lineCapStyle || FileFormat.LineCapStyle.Butt,
       lineJoinStyle: lineJoinStyle || FileFormat.LineJoinStyle.Miter,
@@ -127,76 +210,24 @@ class Style extends StyleBase {
     };
   }
 
-  addShadow(
-    { color, blur, offsetX, offsetY, spread } = {
-      color: '#000',
-      blur: 1,
-      offsetX: 0,
-      offsetY: 0,
-      spread: 0,
-    }
-  ) {
-    const shadow: FileFormat.Shadow = {
-      _class: 'shadow',
-      isEnabled: true,
-      blurRadius: blur,
-      color: makeColorFromCSS(color),
-      contextSettings: defaultContextSettings,
-      offsetX,
-      offsetY,
-      spread,
-    };
-
-    this._shadows.push(shadow);
-  }
-
-  addInnerShadow({
-    color,
-    blur = 0,
-    offsetX = 0,
-    offsetY = 0,
-    spread = 0,
-  } = defaultShadowInput) {
-    const shadow: FileFormat.InnerShadow = {
-      _class: 'innerShadow',
-      isEnabled: true,
-      blurRadius: blur,
-      color: makeColorFromCSS(color),
-      contextSettings: defaultContextSettings,
-      offsetX,
-      offsetY,
-      spread,
-    };
-
-    this._innerShadows.push(shadow);
-  }
-
-  addOpacity(opacity: string | number) {
-    this._opacity = Number(opacity);
-  }
-
   /**
    * 生成 Sketch JSON 对象
    */
   toSketchJSON = (): FileFormat.Style => {
     return {
-      borderOptions: this._borderOptions,
-      colorControls: defaultColorControls,
-      do_objectID: '',
+      _class: 'style',
+      do_objectID: this.id,
       endMarkerType: FileFormat.MarkerType.OpenArrow,
+      miterLimit: 10,
       startMarkerType: FileFormat.MarkerType.OpenArrow,
       windingRule: FileFormat.WindingRule.EvenOdd,
-      _class: 'style',
-      fills: this._fills,
-      borders: this._borders,
-      shadows: this._shadows,
-      innerShadows: this._innerShadows,
-      miterLimit: 10,
-      contextSettings: {
-        _class: 'graphicsContextSettings',
-        blendMode: 0,
-        opacity: this._opacity,
-      },
+      borderOptions: this.sketchBorderOptions,
+      colorControls: defaultColorControls,
+      fills: this.fills.map((fill) => fill.toSketchJSON()),
+      borders: this.borders.map((b) => b.toSketchJSON()),
+      shadows: this.shadows.map((shadow) => shadow.toSketchJSON()),
+      innerShadows: this.innerShadows.map((i) => i.toSketchJSON()),
+      contextSettings: this.getContextSettings(),
     };
   };
 }

@@ -1,4 +1,4 @@
-export { default as Artboard } from './Layer/artboard';
+export { default as Artboard } from './Layer/Artboard';
 export { default as Document } from './Document';
 export { default as Rectangle } from './Layer/Rectangle';
 export { default as Svg } from './Layer/Svg';
@@ -16,3 +16,9 @@ export { default as ColorAsset } from './Style/ColorAsset';
 export { default as Shadow } from './Style/Shadow';
 
 export { default as Frame } from './Frame';
+
+import { Group, Text, ShapeGroup, Bitmap, Rectangle } from './index';
+
+export type AnyLayer =
+  // | Svg
+  Group | Text | Bitmap | ShapeGroup | Rectangle;

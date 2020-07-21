@@ -1,12 +1,15 @@
 import { SketchFormat } from '../../index';
-import { getGroupLayout } from '../../helpers/layout';
+import { getGroupLayout, SMART_LAYOUT } from '../../helpers/layout';
 import Base, { BaseLayerParams } from './Base';
 import Color from '../Style/Color';
 import SymbolInstance from './SymbolInstance';
 import uuid from '../../helpers/uuid';
 import { defaultExportOptions, defaultRuleData } from '../utils';
-import { AnyLayer } from '../type';
+import { AnyLayer } from '../utils';
 
+/**
+ * Sketch 的 Symbol 对象
+ **/
 class SymbolMaster extends Base {
   constructor(params: BaseLayerParams) {
     super(params);
@@ -15,20 +18,37 @@ class SymbolMaster extends Base {
     this.symbolID = uuid();
     this.groupLayout = getGroupLayout();
   }
-  width: any;
-  height: any;
-  _groupLayout:
-    | SketchFormat.InferredGroupLayout
-    | SketchFormat.FreeformGroupLayout;
-  _symbolID: any;
-  backgroundColor: Color;
+  width: number;
+  height: number;
+
+  /**
+   * 背景颜色
+   **/
+  backgroundColor: Color = new Color('#FFF');
+  /**
+   * 取消上层的 Mask
+   */
   shouldBreakMaskChain: boolean;
   nameIsFixed: boolean;
+  /**
+   * 是否缩放内容
+   */
   resizesContent: boolean;
   symbolID: string;
-  overrideProperties: SketchFormat.OverrideProperty[];
-  groupLayout: any;
+  /**
+   * 覆盖层属性
+   */
+  overrideProperties: SketchFormat.OverrideProperty[] = [];
+  /**
+   * Symbol 布局
+   */
+  groupLayout:
+    | SketchFormat.InferredGroupLayout // 水平或垂直布局
+    | SketchFormat.FreeformGroupLayout; // 自由布局
 
+  /**
+   * 生成 Symbol 实例
+   **/
   getSymbolInstance({ x, y, width = null, height = null }) {
     // if no size will be requested, use the size of the master symbol
     const { width: masterWidth, height: masterHeight } = this.getSize();
@@ -45,8 +65,12 @@ class SymbolMaster extends Base {
     });
   }
 
+  /**
+   * 添加图层
+   * @param layer
+   */
   addLayer(layer: AnyLayer) {
-    //position child layers relatively to the symbol layer
+    // position child layers relatively to the symbol layer
     layer.x -= this.x;
     layer.y -= this.y;
     super.addLayer(layer);
@@ -56,10 +80,10 @@ class SymbolMaster extends Base {
     let width = this.width;
     let height = this.height;
 
-    // if width and height were not explicitly set, fit symbol size to its contents
-    if (this.width === null || this.height === null) {
-      //@ts-ignore
-      this._layers.forEach((layer) => {
+    // if width and height were not explicitly set,
+    // fit symbol size to its contents
+    if (width === null || height === null) {
+      this.layers.forEach((layer) => {
         const layerWidth = layer.x + layer.width;
         const layerHeight = layer.y + layer.height;
 
@@ -75,9 +99,29 @@ class SymbolMaster extends Base {
     return { width, height };
   }
 
-  setGroupLayout(layoutType) {
-    this._groupLayout = getGroupLayout(layoutType);
+  /**
+   * 设置布局参数
+   * @param layoutType
+   */
+  setGroupLayout(layoutType: keyof typeof SMART_LAYOUT) {
+    this.groupLayout = getGroupLayout(layoutType);
   }
+
+  /**
+   * 添加 override 设置
+   */
+  addOverride = (
+    id: string,
+    type: 'image' | 'layerStyle' | 'stringValue',
+    canOverride: boolean = true
+  ) => {
+    const override: SketchFormat.OverrideProperty = {
+      _class: 'MSImmutableOverrideProperty',
+      canOverride,
+      overrideName: id + '_' + type,
+    };
+    this.overrideProperties.push(override);
+  };
 
   toSketchJSON = (): SketchFormat.SymbolMaster => {
     return {
@@ -85,7 +129,7 @@ class SymbolMaster extends Base {
       frame: this.frame.toSketchJSON(),
       allowsOverrides: true,
 
-      backgroundColor: this.backgroundColor.toSketchJson(),
+      backgroundColor: this.backgroundColor.toSketchJSON(),
       booleanOperation: SketchFormat.BooleanOperation.NA,
       changeIdentifier: 0,
       do_objectID: this.id,
@@ -117,7 +161,7 @@ class SymbolMaster extends Base {
       name: this.name,
       rotation: 0,
       layerListExpandedType: SketchFormat.LayerListExpanded.Undecided,
-      overrideProperties: [],
+      overrideProperties: this.overrideProperties,
       layers: this.layers.map((l) => l.toSketchJSON()),
       isVisible: true,
     };

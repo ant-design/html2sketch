@@ -5,7 +5,9 @@ const containsAllItems = (needles: any[], haystack: string | any[]) =>
 /**
  * 计算 Resizing 变量
  */
-export const calculateResizingConstraintValue = (...args: any[]) => {
+export const calculateResizingConstraintValue = (
+  ...args: RESIZING_CONSTRAINTS[]
+) => {
   const noHeight = [
     RESIZING_CONSTRAINTS.TOP,
     RESIZING_CONSTRAINTS.BOTTOM,
@@ -31,16 +33,37 @@ export const calculateResizingConstraintValue = (...args: any[]) => {
     : RESIZING_CONSTRAINTS.NONE;
 };
 /**
- * 自动布局变量参数
+ * 调整尺寸变量基础参数
  */
 export enum RESIZING_CONSTRAINTS {
-  TOP = 31,
-  RIGHT = 62,
-  BOTTOM = 55,
-  LEFT = 59,
-  WIDTH = 61,
-  HEIGHT = 47,
+  /**
+   * 无
+   */
   NONE = 63,
+  /**
+   * 上
+   */
+  TOP = 31,
+  /**
+   * 右
+   */
+  RIGHT = 62,
+  /**
+   * 下
+   */
+  BOTTOM = 55,
+  /**
+   * 左
+   */
+  LEFT = 59,
+  /**
+   * 定宽度
+   */
+  WIDTH = 61,
+  /**
+   * 定高度
+   */
+  HEIGHT = 47,
 }
 
 //*智能布局参数
@@ -53,6 +76,10 @@ export const SMART_LAYOUT = {
   BOTTOM_TO_TOP: 'BOTTOM_TO_TOP',
 };
 
+/**
+ * 获取布局参数
+ * @param layoutType
+ */
 export const getGroupLayout = (
   layoutType?: keyof typeof SMART_LAYOUT
 ): FileFormat.InferredGroupLayout | FileFormat.FreeformGroupLayout => {

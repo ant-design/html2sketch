@@ -1,11 +1,23 @@
 import { SketchFormat } from '../../index';
 import Base, { BaseLayerParams } from './Base';
-import { defaultExportOptions } from '../utils';
-
+import { defaultExportOptions, AnyLayer } from '../utils';
+import { getGroupLayout } from '../../helpers/layout';
 class Group extends Base {
   constructor(params: BaseLayerParams) {
     super(params);
     this.class = SketchFormat.ClassValue.Group;
+  }
+
+  /**
+   * 添加图层
+   * @param layer
+   */
+  addLayer(layer: AnyLayer) {
+    // Layer positions are relative, and as we put the node position to the group,
+    // we have to shift back the layers by that distance.
+    layer.x -= this.x;
+    layer.y -= this.y;
+    super.addLayer(layer);
   }
 
   /**
@@ -14,28 +26,28 @@ class Group extends Base {
   toSketchJSON = (): SketchFormat.Group => {
     return {
       _class: 'group',
-      booleanOperation: SketchFormat.BooleanOperation.NA,
-      frame: this.frame.toSketchJSON(),
-      exportOptions: defaultExportOptions,
-      style: this.style.toSketchJSON(),
-      hasClickThrough: false,
-      isFixedToViewport: false,
-      sharedStyleID: '',
       do_objectID: this.id,
+      booleanOperation: SketchFormat.BooleanOperation.NA,
+      isFixedToViewport: false,
       isFlippedHorizontal: false,
       isFlippedVertical: false,
-      isLocked: this.isLocked,
       isVisible: true,
+      isLocked: this.isLocked,
       layerListExpandedType: 0,
       name: this.name || this.class,
       nameIsFixed: false,
       resizingConstraint: this.resizingConstraint,
-      resizingType: 0,
+      resizingType: SketchFormat.ResizeType.Stretch,
       rotation: 0,
       shouldBreakMaskChain: false,
-      layers: this.layers.map((layer) => layer.toSketchJSON()),
+      exportOptions: defaultExportOptions,
+      frame: this.frame.toSketchJSON(),
       clippingMaskMode: 0,
       hasClippingMask: this.hasClippingMask,
+      style: this.style.toSketchJSON(),
+      hasClickThrough: false,
+      groupLayout: getGroupLayout(),
+      layers: this.layers.map((layer) => layer.toSketchJSON()),
       userInfo: this.userInfo,
     };
   };

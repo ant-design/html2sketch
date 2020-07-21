@@ -2,6 +2,7 @@ export const getName = (nodeName: string) => {
   switch (nodeName) {
     case 'DIV':
     case 'SPAN':
+    case 'LABEL':
       return '编组';
     case 'TABLE':
       return '表格';

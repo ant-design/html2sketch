@@ -1,5 +1,6 @@
 import Base, { BaseLayerParams } from './Base';
 import { SketchFormat } from '../../index';
+import { defaultExportOptions } from '../utils';
 
 class ShapeGroup extends Base {
   constructor(params: BaseLayerParams) {
@@ -16,6 +17,22 @@ class ShapeGroup extends Base {
       layers: this.layers.map((l) => l.toSketchJSON()),
       rotation: this.rotation,
       windingRule: SketchFormat.WindingRule.EvenOdd,
+      isVisible: true,
+      isFixedToViewport: false,
+      isFlippedHorizontal: false,
+      isFlippedVertical: false,
+      layerListExpandedType: 0,
+      nameIsFixed: false,
+      resizingType: 0,
+      shouldBreakMaskChain: false,
+      clippingMaskMode: 0,
+      isLocked: false,
+      exportOptions: defaultExportOptions,
+      frame: this.frame.toSketchJSON(),
+      name: this.name,
+      style: this.style.toSketchJSON(),
+      resizingConstraint: this.resizingConstraint,
+      hasClickThrough: false,
     };
   }
 }

@@ -5,20 +5,8 @@ import {
   getActualImageSize,
   parseBackgroundImage,
 } from '../helpers/background';
+import { parserBorderRadius } from '../helpers/shape';
 import { defaultNodeStyle } from '../model/utils';
-
-function fixBorderRadius(borderRadius: string, width: number, height: number) {
-  const matches = borderRadius.match(/^([0-9.]+)(.+)$/);
-
-  // Sketch uses 'px' units for border radius, so we need to convert % to px
-  if (matches && matches[2] === '%') {
-    const baseVal = Math.max(width, height);
-    const percentageApplied = baseVal * (parseInt(matches[1], 10) / 100);
-
-    return Math.round(percentageApplied);
-  }
-  return parseInt(borderRadius, 10);
-}
 
 const transferToShape = (node: Element): Group | Rectangle => {
   const bcr = node.getBoundingClientRect();
@@ -57,10 +45,14 @@ const transferToShape = (node: Element): Group | Rectangle => {
     borderTopStyle,
     borderRightStyle,
     boxShadow,
+    // 位置
+    verticalAlign,
   } = styles;
   if (backgroundColor) {
     style.addColorFill(backgroundColor);
   }
+
+  console.log('verticalAlign', verticalAlign);
 
   const rect: Rectangle | null = new Rectangle({
     width,
@@ -70,7 +62,7 @@ const transferToShape = (node: Element): Group | Rectangle => {
     y: top,
   });
 
-  rect.name = 'rect';
+  rect.name = node.className || 'rect';
 
   const isImage =
     node.nodeName === 'IMG' && (node as HTMLImageElement).currentSrc;
@@ -170,10 +162,10 @@ const transferToShape = (node: Element): Group | Rectangle => {
 
   //TODO borderRadius can be expressed in different formats and use various units - for simplicity we assume "X%"
   const cornerRadius = {
-    topLeft: fixBorderRadius(borderTopLeftRadius, width, height),
-    topRight: fixBorderRadius(borderTopRightRadius, width, height),
-    bottomLeft: fixBorderRadius(borderBottomLeftRadius, width, height),
-    bottomRight: fixBorderRadius(borderBottomRightRadius, width, height),
+    topLeft: parserBorderRadius(borderTopLeftRadius, width, height),
+    topRight: parserBorderRadius(borderTopRightRadius, width, height),
+    bottomLeft: parserBorderRadius(borderBottomLeftRadius, width, height),
+    bottomRight: parserBorderRadius(borderBottomRightRadius, width, height),
   };
 
   rect.cornerRadius = cornerRadius;
@@ -231,7 +223,11 @@ const transferToShape = (node: Element): Group | Rectangle => {
         break;
       }
       case 'LinearGradient':
-        style.addGradientFill(backgroundImageResult.value);
+        const { angle, stops } = backgroundImageResult.value as {
+          angle: string;
+          stops;
+        };
+        style.addGradientFill(angle, stops);
         break;
       default:
         // Unsupported types:

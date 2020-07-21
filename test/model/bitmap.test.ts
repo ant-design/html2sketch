@@ -18,7 +18,7 @@ describe('image', () => {
       _class: 'bitmap',
       booleanOperation: -1,
       clippingMaskMode: 0,
-      do_objectID: 'imag1e',
+      do_objectID: 'uuid',
       edited: false,
       exportOptions: {
         _class: 'exportOptions',

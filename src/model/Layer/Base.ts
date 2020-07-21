@@ -1,11 +1,12 @@
 import { SketchFormat } from '../../index';
 import uuid from '../../helpers/uuid';
-import { Style, Frame } from '../index';
+import Frame from '../Frame';
+import Style from '../Style/Style';
 import {
   calculateResizingConstraintValue,
   RESIZING_CONSTRAINTS,
 } from '../../helpers/layout';
-import { AnyLayer } from '../type';
+import { AnyLayer } from '../utils';
 
 const DEFAULT_USER_INFO_SCOPE = 'html2sketch';
 
@@ -33,7 +34,7 @@ class Base {
   id: string;
   name: string;
 
-  resizingConstraint: any;
+  resizingConstraint: RESIZING_CONSTRAINTS = RESIZING_CONSTRAINTS.NONE;
   isLocked = false;
   isVisible = true;
 
@@ -43,6 +44,11 @@ class Base {
 
   hasClippingMask = false;
   LayerListExpanded: SketchFormat.LayerListExpanded;
+
+  /**
+   * 锁定图层名称
+   **/
+  nameIsFixed = false;
 
   get x() {
     return this.frame.x;
@@ -58,6 +64,19 @@ class Base {
     this.frame.y = y;
   }
 
+  get width() {
+    return this.frame.width;
+  }
+  set width(width: number) {
+    this.frame.width = width;
+  }
+
+  get height() {
+    return this.frame.height;
+  }
+  set height(height: number) {
+    this.frame.height = height;
+  }
   setFixedWidthAndHeight() {
     this.setResizingConstraint(
       RESIZING_CONSTRAINTS.WIDTH,
@@ -65,7 +84,11 @@ class Base {
     );
   }
 
-  setResizingConstraint(...constraints: any[]) {
+  /**
+   * 设置调整尺寸的相关参数
+   * @param constraints
+   */
+  setResizingConstraint(...constraints: RESIZING_CONSTRAINTS[]) {
     this.resizingConstraint = calculateResizingConstraintValue(...constraints);
   }
 
@@ -101,6 +124,26 @@ class Base {
   setPosition({ x, y }: { x: number; y: number }) {
     this.frame.x = x;
     this.frame.y = y;
+  }
+
+  /**
+   * 获取所有子图层的尺寸
+   */
+  get childLayersSize() {
+    let width = 0;
+    let height = 0;
+    this.layers.forEach((layer) => {
+      const layerWidth = layer.width;
+      const layerHeight = layer.height;
+
+      if (width < layerWidth) {
+        width = layerWidth;
+      }
+      if (height < layerHeight) {
+        height = layerHeight;
+      }
+    });
+    return { width, height };
   }
 }
 

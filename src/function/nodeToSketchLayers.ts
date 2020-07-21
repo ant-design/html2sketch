@@ -3,10 +3,12 @@ import { defaultNodeStyle } from '../model/utils';
 import transferToSvg from '../parser/svg';
 import transferToShape from '../parser/shape';
 import transferToText from '../parser/text';
+import praserPseudo from '../parser/pseudo';
 
 import { isTextVisible } from '../helpers/visibility';
 import { isTextNode } from '../helpers/nodeType';
-import { AnyLayer } from '../model/type';
+import { AnyLayer } from '../model/utils';
+import { isExistPseudo } from '../helpers/shape';
 
 /**
  * 是否是默认样式
@@ -69,11 +71,29 @@ const nodeToSketchLayers = (node: Element): AnyLayer[] => {
   const isText = isTextNode(node);
 
   // 如果图层存在样式(阴影 边框等 返回 shape 节点
-  if (isImage || isShape) {
-    const shape = transferToShape(node);
-    console.log('转换为 Rectangle: ', shape);
-    layers.push(shape);
-    // 添加后继续执行,不终止
+  if (isImage || isShape || isExistPseudo(node)) {
+    // 判断一下是否有伪类
+    const afterEl = praserPseudo(node, 'after');
+    console.log(afterEl);
+
+    if (afterEl) {
+      layers.push(afterEl);
+    }
+
+    if (isImage || isShape) {
+      // 添加后继续执行,不终止
+      const shape = transferToShape(node);
+      console.log('转换为 Rectangle: ', shape);
+      layers.push(shape);
+    }
+
+    // 判断一下是否有伪类
+    const beforeEl = praserPseudo(node, 'before');
+    console.log(beforeEl);
+
+    if (beforeEl) {
+      layers.push(beforeEl);
+    }
   }
 
   // 转换为 SVG

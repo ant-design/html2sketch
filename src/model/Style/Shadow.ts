@@ -1,10 +1,10 @@
 import FileFormat from '@sketch-hq/sketch-file-format-ts';
 import { defaultContextSettings } from '../utils';
-import Color, { ColorType } from './Color';
+import Color, { ColorParam } from './Color';
 import StyleBase from './Base';
 
 export interface ShadowProps {
-  color?: ColorType;
+  color?: ColorParam;
   blurRadius?: number;
   offsetX?: number;
   offsetY?: number;
@@ -59,13 +59,13 @@ class Shadow extends StyleBase {
    * 转为 Sketch JSON 对象
    * @returns {SketchFormat.Shadow}
    */
-  toSketchJson = (): FileFormat.Shadow => {
+  toSketchJSON = (): FileFormat.Shadow => {
     const { offsetY, offsetX, blurRadius, color, spread } = this;
     return {
       _class: FileFormat.ClassValue.Shadow,
       isEnabled: true,
       blurRadius,
-      color: color.toSketchJson(),
+      color: color.toSketchJSON(),
       contextSettings: defaultContextSettings,
       offsetX,
       offsetY,

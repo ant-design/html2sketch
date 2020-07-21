@@ -5,6 +5,9 @@ import { sketchImage, defaultExportOptions } from '../utils';
 interface BitmapInitParams extends BaseLayerParams {
   url: string;
 }
+/**
+ * 画板
+ **/
 class Bitmap extends Base {
   constructor({ url, x, y, width, height }: BitmapInitParams) {
     super({ y, x, height, width });
@@ -45,6 +48,17 @@ class Bitmap extends Base {
     hasClippingMask: this.hasClippingMask,
     userInfo: this.userInfo,
   });
+
+  /**
+   * 转换为 Sketch 引用 JSON 对象
+   **/
+  toSketchRefJSON = (): SketchFormat.FileRef => {
+    return {
+      _class: 'MSJSONFileReference',
+      _ref_class: 'MSImageData',
+      _ref: `images/${this.url}`,
+    };
+  };
 }
 
 export default Bitmap;

@@ -32,8 +32,6 @@ class SymbolInstance extends Base {
       resizingType: 1,
 
       isFixedToViewport: false,
-      sharedStyleID: '',
-
       isFlippedHorizontal: false,
       isFlippedVertical: false,
       isLocked: this.isLocked,
