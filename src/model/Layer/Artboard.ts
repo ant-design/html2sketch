@@ -12,6 +12,10 @@ class Artboard extends Base {
     super(params);
     this.class = SketchFormat.ClassValue.Artboard;
   }
+
+  /**
+   * 背景颜色值
+   */
   backgroundColor?: Color;
   /**
    * 是否包含颜色
@@ -51,6 +55,7 @@ class Artboard extends Base {
    * 是否忽略遮罩链
    */
   shouldBreakMaskChain: boolean;
+
   toSketchJSON = (): SketchFormat.Artboard => {
     return {
       _class: 'artboard',

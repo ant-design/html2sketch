@@ -70,7 +70,8 @@ class SymbolMaster extends Base {
    * @param layer
    */
   addLayer(layer: AnyLayer) {
-    // position child layers relatively to the symbol layer
+    // 在组里面的位置是相对位置关系
+    // 因此在添加图层的时候需要减掉父级的位置,得到算出相对位置
     layer.x -= this.x;
     layer.y -= this.y;
     super.addLayer(layer);
