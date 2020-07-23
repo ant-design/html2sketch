@@ -1,4 +1,4 @@
-import { SketchFormat } from '../../index';
+import SketchFormat from '@sketch-hq/sketch-file-format-ts';
 
 import Base, { BaseLayerParams } from './Base';
 import { defaultRuleData, defaultExportOptions } from '../utils';

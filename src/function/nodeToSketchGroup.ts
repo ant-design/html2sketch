@@ -2,7 +2,7 @@ import nodeToSketchLayers from './nodeToSketchLayers';
 import { isNodeVisible } from '../helpers/visibility';
 import { getName } from '../helpers/name';
 import { Group, Style } from '../model';
-import { AnyLayer } from '../model/utils';
+import { AnyLayer } from '../model/type';
 
 import { isExistPseudo } from '../helpers/shape';
 

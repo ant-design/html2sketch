@@ -1,4 +1,4 @@
-import { SketchFormat } from '../../index';
+import SketchFormat from '@sketch-hq/sketch-file-format-ts';
 import Color from './Color';
 
 const SYSTEM_FONTS = [

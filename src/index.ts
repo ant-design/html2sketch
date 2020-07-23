@@ -9,5 +9,3 @@ export interface CGPoint {
   x: number;
   y: number;
 }
-
-export { default as SketchFormat } from '@sketch-hq/sketch-file-format-ts';

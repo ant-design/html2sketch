@@ -1,10 +1,10 @@
-import { SketchFormat } from '../index';
+import SketchFormat from '@sketch-hq/sketch-file-format-ts';
 
 export interface FrameInitParams {
   x?: number;
   y?: number;
-  width: number;
-  height: number;
+  width?: number;
+  height?: number;
 }
 /**
  * @class
@@ -17,7 +17,7 @@ class Frame {
   height: number;
 
   constructor(params: FrameInitParams) {
-    const { height, width, x = 0, y = 0 } = params;
+    const { height = 0, width = 0, x = 0, y = 0 } = params;
     this.x = x;
     this.y = y;
     this.width = width;
@@ -25,7 +25,16 @@ class Frame {
   }
 
   /**
-   * 转为 Sketch JSON对象
+   * 转换为 JSON 对象
+   */
+  toJSON = () => ({
+    height: this.height,
+    width: this.width,
+    x: this.x,
+    y: this.y,
+  });
+  /**
+   * 转为 Sketch JSON 对象
    */
   toSketchJSON = (): SketchFormat.Rect => {
     return {

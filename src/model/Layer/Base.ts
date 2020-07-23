@@ -1,4 +1,3 @@
-import { SketchFormat } from '../../index';
 import uuid from '../../helpers/uuid';
 import Frame from '../Frame';
 import Style from '../Style/Style';
@@ -6,15 +5,20 @@ import {
   calculateResizingConstraintValue,
   RESIZING_CONSTRAINTS,
 } from '../../helpers/layout';
-import { AnyLayer } from '../utils';
+import { AnyLayer } from '../type';
+import SketchFormat from '@sketch-hq/sketch-file-format-ts';
 
 const DEFAULT_USER_INFO_SCOPE = 'html2sketch';
 
+export interface ToSketchJSON<T> {
+  toSketchJSON: () => T;
+}
+
 export interface BaseLayerParams {
-  x: number;
-  y: number;
-  width: number;
-  height: number;
+  x?: number;
+  y?: number;
+  width?: number;
+  height?: number;
 }
 class Base {
   constructor(params: BaseLayerParams) {
@@ -206,8 +210,6 @@ class Base {
       height: groupBCR.bottom - groupBCR.top,
     };
   };
-
-
 
   /**
    * 解析 Border string 圆角

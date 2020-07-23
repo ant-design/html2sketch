@@ -1,14 +1,28 @@
 import Base, { BaseLayerParams } from './Base';
-import { SketchFormat } from '../../index';
+import SketchFormat from '@sketch-hq/sketch-file-format-ts';
 import { defaultExportOptions } from '../utils';
+import { ShapePathType } from './ShapePath';
+import { AnyShape } from '../type';
 
+export interface ShapeGroupType {
+  shapes: ShapePathType[];
+  frame: { width: number; height: number };
+}
 class ShapeGroup extends Base {
   constructor(params: BaseLayerParams) {
     super(params);
     this.class = SketchFormat.ClassValue.ShapeGroup;
   }
-  rotation: number;
+  rotation: number = 0;
 
+  /**
+   * ShapeGroup 的 layers 必须是 AnyShape 类型
+   */
+  layers: AnyShape[] = [];
+
+  /**
+   * 转换为 Sketch 对象
+   */
   toSketchJSON(): SketchFormat.ShapeGroup {
     return {
       _class: 'shapeGroup',

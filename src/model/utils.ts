@@ -1,9 +1,6 @@
 import FileFormat from '@sketch-hq/sketch-file-format-ts';
 import uuid from '../helpers/uuid';
 
-import { Group, Text, ShapeGroup, Bitmap, Rectangle } from './index';
-
-export type AnyLayer = Group | Text | Bitmap | ShapeGroup | Rectangle;
 
 export const defaultExportOptions: FileFormat.ExportOptions = {
   _class: 'exportOptions',

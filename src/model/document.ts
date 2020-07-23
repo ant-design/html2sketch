@@ -1,4 +1,4 @@
-import { SketchFormat } from '../index';
+import SketchFormat from '@sketch-hq/sketch-file-format-ts';
 import uuid from '../helpers/uuid';
 import Group from './Layer/Group';
 import Page from './Layer/Page';

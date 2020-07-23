@@ -1,6 +1,6 @@
 import FileFormat from '@sketch-hq/sketch-file-format-ts';
 import Base, { BaseLayerParams } from './Base';
-import { SketchFormat } from '../..';
+import SketchFormat from '@sketch-hq/sketch-file-format-ts';
 import { defaultExportOptions } from '../utils';
 
 type CornerRadius =

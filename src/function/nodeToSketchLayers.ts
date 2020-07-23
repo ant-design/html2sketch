@@ -3,11 +3,11 @@ import { defaultNodeStyle } from '../model/utils';
 import transferToSvg from '../parser/svg';
 import transferToShape from '../parser/shape';
 import transferToText from '../parser/text';
-import praserPseudo from '../parser/pseudo';
+import parserPseudo from '../parser/pseudo';
 
 import { isTextVisible } from '../helpers/visibility';
 import { isTextNode } from '../helpers/nodeType';
-import { AnyLayer } from '../model/utils';
+import { AnyLayer } from '../model/type';
 import { isExistPseudo } from '../helpers/shape';
 
 /**
@@ -73,7 +73,7 @@ const nodeToSketchLayers = (node: Element): AnyLayer[] => {
   // 如果图层存在样式(阴影 边框等 返回 shape 节点
   if (isImage || isShape || isExistPseudo(node)) {
     // 判断一下是否有伪类
-    const afterEl = praserPseudo(node, 'after');
+    const afterEl = parserPseudo(node, 'after');
     console.log(afterEl);
 
     if (afterEl) {
@@ -88,7 +88,7 @@ const nodeToSketchLayers = (node: Element): AnyLayer[] => {
     }
 
     // 判断一下是否有伪类
-    const beforeEl = praserPseudo(node, 'before');
+    const beforeEl = parserPseudo(node, 'before');
     console.log(beforeEl);
 
     if (beforeEl) {

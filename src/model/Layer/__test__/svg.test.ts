@@ -1,4 +1,7 @@
-import { Style, Svg } from '../../index';
+import Svg from '../../Layer/Svg';
+import Style from '../../Style/Style';
+
+import { defaultExportOptions } from '../../utils';
 
 // 可复用的 shapeGroup 信息
 const shapeGroupData = {
@@ -10,40 +13,24 @@ const shapeGroupData = {
   isFlippedVertical: false,
   isLocked: false,
   isVisible: true,
-  layerListExpandedType: 2,
-  name: '路径',
+  layerListExpandedType: 0,
+  name: 'svg',
   nameIsFixed: false,
   resizingConstraint: 63,
   resizingType: 0,
-  rotation: 0,
   shouldBreakMaskChain: false,
-  exportOptions: {
-    _class: 'exportOptions',
-    includedLayerIds: [],
-    layerOptions: 0,
-    shouldTrim: false,
-    exportFormats: [
-      {
-        _class: 'exportFormat',
-        absoluteSize: 0,
-        fileFormat: 'svg',
-        name: '',
-        namingScheme: 0,
-        scale: 1,
-        visibleScaleType: 0,
-      },
-    ],
-  },
+  exportOptions: defaultExportOptions,
+  rotation: 0,
+
   frame: {
     _class: 'rect',
     constrainProportions: false,
-    height: 814.2161141764797,
-    width: 736.65234375,
+    height: 814.2161138351329,
+    width: 736.652344,
     x: 495,
     y: 44,
   },
   clippingMaskMode: 0,
-  hasClippingMask: false,
   style: new Style().toSketchJSON(),
   hasClickThrough: false,
   windingRule: 1,
@@ -80,103 +67,14 @@ const shapePathData = {
   pointRadiusBehaviour: 1,
 };
 
-describe('Svg 类', () => {
-  it('圆角矩形可正常转换', function () {
-    const svg = new Svg({
-      x: 0,
-      y: 0,
-      width: 100,
-      height: 100,
-      path:
-        'M872 474H152c-4.4 0-8 3.6-8 8v60c0 4.4 3.6 8 8 8h720c4.4 0 8-3.6 8-8v-60c0-4.4-3.6-8-8-8z',
-    });
+/**
+ * 复合对象 图形如下
+ * @see https://svg-path-visualizer.netlify.app/#M73.2226562%2C282.36788%20C517.988281%2C268.985067%20740.371094%2C312.330119%20740.371094%2C412.403036%20C740.371094%2C562.512411%20706.574547%2C689.414193%20665.761719%2C731.926473%20C585.929687%2C815.082723%20381.128906%2C824.973348%20240.128906%2C815.082723%20C193.160156%2C721.491578%20114.450521%2C640.427775%204%2C571.891317%20L73.2226562%2C282.36788%20Z%20M288.371094%2C399.757812%20L569.023438%2C399.757812%20L569.023438%2C629.085937%20L288.371094%2C629.085937%20L288.371094%2C399.757812%20Z%20M460%2C4%20L640.652344%2C4%20C695.880819%2C4%20740.652344%2C48.771525%20740.652344%2C104%20L740.652344%2C233.328125%20L740.652344%2C233.328125%20L460%2C233.328125%20L460%2C4%20Z%20M68%2C4%20L248.652344%2C4%20C303.880819%2C4%20348.652344%2C48.771525%20348.652344%2C104%20L348.652344%2C233.328125%20L348.652344%2C233.328125%20L68%2C233.328125
+ */
+const path =
+  'M73.2226562,282.36788 C517.988281,268.985067 740.371094,312.330119 740.371094,412.403036 C740.371094,562.512411 706.574547,689.414193 665.761719,731.926473 C585.929687,815.082723 381.128906,824.973348 240.128906,815.082723 C193.160156,721.491578 114.450521,640.427775 4,571.891317 L73.2226562,282.36788 Z M288.371094,399.757812 L569.023438,399.757812 L569.023438,629.085937 L288.371094,629.085937 L288.371094,399.757812 Z M460,4 L640.652344,4 C695.880819,4 740.652344,48.771525 740.652344,104 L740.652344,233.328125 L740.652344,233.328125 L460,233.328125 L460,4 Z M68,4 L248.652344,4 C303.880819,4 348.652344,48.771525 348.652344,104 L348.652344,233.328125 L348.652344,233.328125 L68,233.328125';
 
-    expect(svg.toSketchJSON()).toStrictEqual({
-      ...shapePathData,
-      points: [
-        {
-          _class: 'curvePoint',
-          cornerRadius: 0,
-          curveFrom: '{0.9891304347826086, 0}',
-          curveMode: 4,
-          curveTo: '{0.9951086956521739, 0}',
-          hasCurveFrom: false,
-          hasCurveTo: true,
-          point: '{0.9891304347826086, 0}',
-        },
-        {
-          _class: 'curvePoint',
-          cornerRadius: 0,
-          curveFrom: '{0.0048913043478260865, 0}',
-          curveMode: 4,
-          curveTo: '{0.010869565217391304, 0}',
-          hasCurveFrom: true,
-          hasCurveTo: false,
-          point: '{0.010869565217391304, 0}',
-        },
-        {
-          _class: 'curvePoint',
-          cornerRadius: 0,
-          curveFrom: '{0, 0.10526315789473684}',
-          curveMode: 4,
-          curveTo: '{0, 0.04736842105263158}',
-          hasCurveFrom: false,
-          hasCurveTo: true,
-          point: '{0, 0.10526315789473684}',
-        },
-        {
-          _class: 'curvePoint',
-          cornerRadius: 0,
-          curveFrom: '{0, 0.9526315789473684}',
-          curveMode: 4,
-          curveTo: '{0, 0.8947368421052632}',
-          hasCurveFrom: true,
-          hasCurveTo: false,
-          point: '{0, 0.8947368421052632}',
-        },
-        {
-          _class: 'curvePoint',
-          cornerRadius: 0,
-          curveFrom: '{0.010869565217391304, 1}',
-          curveMode: 4,
-          curveTo: '{0.004891304347826087, 1}',
-          hasCurveFrom: false,
-          hasCurveTo: true,
-          point: '{0.010869565217391304, 1}',
-        },
-        {
-          _class: 'curvePoint',
-          cornerRadius: 0,
-          curveFrom: '{0.995108695652174, 1}',
-          curveMode: 4,
-          curveTo: '{0.9891304347826088, 1}',
-          hasCurveFrom: true,
-          hasCurveTo: false,
-          point: '{0.9891304347826088, 1}',
-        },
-        {
-          _class: 'curvePoint',
-          cornerRadius: 0,
-          curveFrom: '{1, 0.8947368421052632}',
-          curveMode: 4,
-          curveTo: '{1, 0.9526315789473684}',
-          hasCurveFrom: false,
-          hasCurveTo: true,
-          point: '{1, 0.8947368421052632}',
-        },
-        {
-          _class: 'curvePoint',
-          cornerRadius: 0,
-          curveFrom: '{1, 0.04736842105263157}',
-          curveMode: 4,
-          curveTo: '{1, 0.10526315789473684}',
-          hasCurveFrom: true,
-          hasCurveTo: false,
-          point: '{1, 0.10526315789473684}',
-        },
-      ],
-    });
-  });
+describe('Svg 类', () => {
   it('StepBackwardOutlined 正常渲染', () => {
     const svg = new Svg({
       x: 0,
@@ -539,31 +437,30 @@ describe('Svg 类', () => {
     });
   });
 
-  it('包含所有类型点 可正常渲染', function () {
+  it('复合对象 可正常渲染', function() {
     const svg = new Svg({
-      x: 0,
-      y: 0,
-      width: 100,
-      height: 100,
-      path:
-        'M69.2226562,278.36788 C513.988281,264.985067 736.371094,308.330119 736.371094,408.403036 C736.371094,558.512411 702.574547,685.414193 661.761719,727.926473 C581.929687,811.082723 377.128906,820.973348 236.128906,811.082723 C189.160156,717.491578 110.450521,636.427775 0,567.891317 L69.2226562,278.36788 Z M284.371094,395.757812 L565.023438,395.757812 L565.023438,625.085937 L284.371094,625.085937 L284.371094,395.757812 Z M456,0 L636.652344,0 C691.880819,4.06554845e-15 736.652344,44.771525 736.652344,100 L736.652344,229.328125 L736.652344,229.328125 L456,229.328125 L456,0 Z',
+      path,
+      height: 814.2161138351329,
+      width: 736.652344,
+      x: 495,
+      y: 44,
     });
+
     expect(svg.toSketchJSON()).toStrictEqual({
       ...shapeGroupData,
       layers: [
+        // 不规则
         {
           ...shapePathData,
-          edited: true,
           frame: {
             _class: 'rect',
             constrainProportions: false,
-            height: 538.2161141764799,
-            width: 736.3710937499992,
-            x: 0,
+            x: 4,
+            height: 538.2161135860229,
+            width: 736.371094,
             y: 275.9999999999999,
           },
           isClosed: true,
-          pointRadiusBehaviour: 1,
           points: [
             {
               _class: 'curvePoint',
@@ -578,12 +475,12 @@ describe('Svg 类', () => {
             {
               _class: 'curvePoint',
               cornerRadius: 0,
-              curveFrom: '{0.99999999999999711, 0.52490515129525017}',
+              curveFrom: '{1, 0.52490515129525017}',
               curveMode: 2,
-              curveTo: '{0.99999999999999889, -0.032898195896168964}',
+              curveTo: '{1, -0.032898195896168964}',
               hasCurveFrom: true,
               hasCurveTo: true,
-              point: '{0.999999999999998, 0.24600347769954062}',
+              point: '{1, 0.24600347769954062}',
             },
             {
               _class: 'curvePoint',
@@ -617,29 +514,9 @@ describe('Svg 类', () => {
             },
           ],
         },
+        // 正方形
         {
-          _class: 'shapePath',
-          do_objectID: '9377A425-6FAD-4F9C-8633-13CB81421C3E',
-          booleanOperation: -1,
-          isFixedToViewport: false,
-          isFlippedHorizontal: false,
-          isFlippedVertical: false,
-          isLocked: false,
-          isVisible: true,
-          layerListExpandedType: 0,
-          name: '路径 2',
-          nameIsFixed: false,
-          resizingConstraint: 63,
-          resizingType: 0,
-          rotation: 0,
-          shouldBreakMaskChain: false,
-          exportOptions: {
-            _class: 'exportOptions',
-            includedLayerIds: [],
-            layerOptions: 0,
-            shouldTrim: false,
-            exportFormats: [],
-          },
+          ...shapePathData,
           frame: {
             _class: 'rect',
             constrainProportions: false,
@@ -648,156 +525,7 @@ describe('Svg 类', () => {
             x: 284.37109375,
             y: 395.7578124999999,
           },
-          clippingMaskMode: 0,
-          hasClippingMask: false,
-          style: {
-            _class: 'style',
-            do_objectID: '7BB21CDE-20F9-45C1-AC9A-87499252EAA3',
-            endMarkerType: 0,
-            miterLimit: 10,
-            startMarkerType: 0,
-            windingRule: 1,
-            blur: {
-              _class: 'blur',
-              isEnabled: false,
-              center: '{0.5, 0.5}',
-              motionAngle: 0,
-              radius: 10,
-              saturation: 1,
-              type: 0,
-            },
-            borderOptions: {
-              _class: 'borderOptions',
-              isEnabled: true,
-              dashPattern: [],
-              lineCapStyle: 0,
-              lineJoinStyle: 0,
-            },
-            borders: [
-              {
-                _class: 'border',
-                isEnabled: false,
-                fillType: 0,
-                color: {
-                  _class: 'color',
-                  alpha: 1,
-                  blue: 0.592,
-                  green: 0.592,
-                  red: 0.592,
-                },
-                contextSettings: {
-                  _class: 'graphicsContextSettings',
-                  blendMode: 0,
-                  opacity: 1,
-                },
-                gradient: {
-                  _class: 'gradient',
-                  elipseLength: 0,
-                  from: '{0.5, 0}',
-                  gradientType: 0,
-                  to: '{0.5, 1}',
-                  stops: [
-                    {
-                      _class: 'gradientStop',
-                      position: 0,
-                      color: {
-                        _class: 'color',
-                        alpha: 1,
-                        blue: 1,
-                        green: 1,
-                        red: 1,
-                      },
-                    },
-                    {
-                      _class: 'gradientStop',
-                      position: 1,
-                      color: {
-                        _class: 'color',
-                        alpha: 1,
-                        blue: 0,
-                        green: 0,
-                        red: 0,
-                      },
-                    },
-                  ],
-                },
-                position: 0,
-                thickness: 1,
-              },
-            ],
-            colorControls: {
-              _class: 'colorControls',
-              isEnabled: false,
-              brightness: 0,
-              contrast: 1,
-              hue: 0,
-              saturation: 1,
-            },
-            contextSettings: {
-              _class: 'graphicsContextSettings',
-              blendMode: 0,
-              opacity: 1,
-            },
-            fills: [
-              {
-                _class: 'fill',
-                isEnabled: true,
-                fillType: 0,
-                color: {
-                  _class: 'color',
-                  alpha: 1,
-                  blue: 0.847,
-                  green: 0.847,
-                  red: 0.847,
-                },
-                contextSettings: {
-                  _class: 'graphicsContextSettings',
-                  blendMode: 0,
-                  opacity: 1,
-                },
-                gradient: {
-                  _class: 'gradient',
-                  elipseLength: 0,
-                  from: '{0.5, 0}',
-                  gradientType: 0,
-                  to: '{0.5, 1}',
-                  stops: [
-                    {
-                      _class: 'gradientStop',
-                      position: 0,
-                      color: {
-                        _class: 'color',
-                        alpha: 1,
-                        blue: 1,
-                        green: 1,
-                        red: 1,
-                      },
-                    },
-                    {
-                      _class: 'gradientStop',
-                      position: 1,
-                      color: {
-                        _class: 'color',
-                        alpha: 1,
-                        blue: 0,
-                        green: 0,
-                        red: 0,
-                      },
-                    },
-                  ],
-                },
-                noiseIndex: 0,
-                noiseIntensity: 0,
-                patternFillType: 1,
-                patternTileScale: 1,
-              },
-            ],
-            innerShadows: [],
-            shadows: [],
-          },
-          edited: true,
           isClosed: true,
-          pointRadiusBehaviour: 1,
           points: [
             {
               _class: 'curvePoint',
@@ -812,58 +540,38 @@ describe('Svg 类', () => {
             {
               _class: 'curvePoint',
               cornerRadius: 0,
-              curveFrom: '{0.99999999999999978, 0}',
+              curveFrom: '{1, 0}',
               curveMode: 1,
-              curveTo: '{0.99999999999999978, 0}',
+              curveTo: '{1, 0}',
               hasCurveFrom: false,
               hasCurveTo: false,
-              point: '{0.99999999999999978, 0}',
+              point: '{1, 0}',
             },
             {
               _class: 'curvePoint',
               cornerRadius: 0,
-              curveFrom: '{0.99999999999999989, 1}',
+              curveFrom: '{1, 1}',
               curveMode: 1,
-              curveTo: '{0.99999999999999989, 1}',
+              curveTo: '{1, 1}',
               hasCurveFrom: false,
               hasCurveTo: false,
-              point: '{0.99999999999999989, 1}',
+              point: '{1, 1}',
             },
             {
               _class: 'curvePoint',
               cornerRadius: 0,
-              curveFrom: '{0, 1.0000000000000002}',
+              curveFrom: '{0, 1}',
               curveMode: 1,
-              curveTo: '{0, 1.0000000000000002}',
+              curveTo: '{0, 1}',
               hasCurveFrom: false,
               hasCurveTo: false,
-              point: '{0, 1.0000000000000002}',
+              point: '{0, 1}',
             },
           ],
         },
+        // 圆角矩形
         {
-          _class: 'shapePath',
-          do_objectID: 'D7905F85-3185-43F8-B9D4-24864D7CD8F0',
-          booleanOperation: -1,
-          isFixedToViewport: false,
-          isFlippedHorizontal: false,
-          isFlippedVertical: false,
-          isLocked: false,
-          isVisible: true,
-          layerListExpandedType: 0,
-          name: '路径 2',
-          nameIsFixed: false,
-          resizingConstraint: 63,
-          resizingType: 0,
-          rotation: 0,
-          shouldBreakMaskChain: false,
-          exportOptions: {
-            _class: 'exportOptions',
-            includedLayerIds: [],
-            layerOptions: 0,
-            shouldTrim: false,
-            exportFormats: [],
-          },
+          ...shapePathData,
           frame: {
             _class: 'rect',
             constrainProportions: false,
@@ -872,154 +580,6 @@ describe('Svg 类', () => {
             x: 456,
             y: 0,
           },
-          clippingMaskMode: 0,
-          hasClippingMask: false,
-          style: {
-            _class: 'style',
-            do_objectID: '4A4D4595-DCD4-48A3-BBCA-7849EFD771AC',
-            endMarkerType: 0,
-            miterLimit: 10,
-            startMarkerType: 0,
-            windingRule: 1,
-            blur: {
-              _class: 'blur',
-              isEnabled: false,
-              center: '{0.5, 0.5}',
-              motionAngle: 0,
-              radius: 10,
-              saturation: 1,
-              type: 0,
-            },
-            borderOptions: {
-              _class: 'borderOptions',
-              isEnabled: true,
-              dashPattern: [],
-              lineCapStyle: 0,
-              lineJoinStyle: 0,
-            },
-            borders: [
-              {
-                _class: 'border',
-                isEnabled: true,
-                fillType: 0,
-                color: {
-                  _class: 'color',
-                  alpha: 1,
-                  blue: 0.592,
-                  green: 0.592,
-                  red: 0.592,
-                },
-                contextSettings: {
-                  _class: 'graphicsContextSettings',
-                  blendMode: 0,
-                  opacity: 1,
-                },
-                gradient: {
-                  _class: 'gradient',
-                  elipseLength: 0,
-                  from: '{0.5, 0}',
-                  gradientType: 0,
-                  to: '{0.5, 1}',
-                  stops: [
-                    {
-                      _class: 'gradientStop',
-                      position: 0,
-                      color: {
-                        _class: 'color',
-                        alpha: 1,
-                        blue: 1,
-                        green: 1,
-                        red: 1,
-                      },
-                    },
-                    {
-                      _class: 'gradientStop',
-                      position: 1,
-                      color: {
-                        _class: 'color',
-                        alpha: 1,
-                        blue: 0,
-                        green: 0,
-                        red: 0,
-                      },
-                    },
-                  ],
-                },
-                position: 0,
-                thickness: 1,
-              },
-            ],
-            colorControls: {
-              _class: 'colorControls',
-              isEnabled: false,
-              brightness: 0,
-              contrast: 1,
-              hue: 0,
-              saturation: 1,
-            },
-            contextSettings: {
-              _class: 'graphicsContextSettings',
-              blendMode: 0,
-              opacity: 1,
-            },
-            fills: [
-              {
-                _class: 'fill',
-                isEnabled: false,
-                fillType: 0,
-                color: {
-                  _class: 'color',
-                  alpha: 1,
-                  blue: 0.847,
-                  green: 0.847,
-                  red: 0.847,
-                },
-                contextSettings: {
-                  _class: 'graphicsContextSettings',
-                  blendMode: 0,
-                  opacity: 1,
-                },
-                gradient: {
-                  _class: 'gradient',
-                  elipseLength: 0,
-                  from: '{0.5, 0}',
-                  gradientType: 0,
-                  to: '{0.5, 1}',
-                  stops: [
-                    {
-                      _class: 'gradientStop',
-                      position: 0,
-                      color: {
-                        _class: 'color',
-                        alpha: 1,
-                        blue: 1,
-                        green: 1,
-                        red: 1,
-                      },
-                    },
-                    {
-                      _class: 'gradientStop',
-                      position: 1,
-                      color: {
-                        _class: 'color',
-                        alpha: 1,
-                        blue: 0,
-                        green: 0,
-                        red: 0,
-                      },
-                    },
-                  ],
-                },
-                noiseIndex: 0,
-                noiseIntensity: 0,
-                patternFillType: 1,
-                patternTileScale: 1,
-              },
-            ],
-            innerShadows: [],
-            shadows: [],
-          },
-          edited: true,
           isClosed: true,
           pointRadiusBehaviour: 1,
           points: [
@@ -1046,12 +606,12 @@ describe('Svg 类', () => {
             {
               _class: 'curvePoint',
               cornerRadius: 0,
-              curveFrom: '{1, 0.99999999999999978}',
+              curveFrom: '{1, 1}',
               curveMode: 1,
-              curveTo: '{1, 0.99999999999999978}',
+              curveTo: '{1, 1}',
               hasCurveFrom: false,
               hasCurveTo: false,
-              point: '{1, 0.99999999999999978}',
+              point: '{1, 1}',
             },
             {
               _class: 'curvePoint',
@@ -1065,29 +625,9 @@ describe('Svg 类', () => {
             },
           ],
         },
+        // 开放矩形
         {
-          _class: 'shapePath',
-          do_objectID: '984788AA-960F-4A91-AAED-1C580FE53269',
-          booleanOperation: -1,
-          isFixedToViewport: false,
-          isFlippedHorizontal: false,
-          isFlippedVertical: false,
-          isLocked: false,
-          isVisible: true,
-          layerListExpandedType: 0,
-          name: '路径 2备份',
-          nameIsFixed: false,
-          resizingConstraint: 63,
-          resizingType: 0,
-          rotation: 0,
-          shouldBreakMaskChain: false,
-          exportOptions: {
-            _class: 'exportOptions',
-            includedLayerIds: [],
-            layerOptions: 0,
-            shouldTrim: false,
-            exportFormats: [],
-          },
+          ...shapePathData,
           frame: {
             _class: 'rect',
             constrainProportions: false,
@@ -1096,154 +636,6 @@ describe('Svg 类', () => {
             x: 64.00000000000006,
             y: 0,
           },
-          clippingMaskMode: 0,
-          hasClippingMask: false,
-          style: {
-            _class: 'style',
-            do_objectID: '60DA1701-E83E-4A3A-9198-297253600CFA',
-            endMarkerType: 0,
-            miterLimit: 10,
-            startMarkerType: 0,
-            windingRule: 1,
-            blur: {
-              _class: 'blur',
-              isEnabled: false,
-              center: '{0.5, 0.5}',
-              motionAngle: 0,
-              radius: 10,
-              saturation: 1,
-              type: 0,
-            },
-            borderOptions: {
-              _class: 'borderOptions',
-              isEnabled: true,
-              dashPattern: [],
-              lineCapStyle: 0,
-              lineJoinStyle: 0,
-            },
-            borders: [
-              {
-                _class: 'border',
-                isEnabled: false,
-                fillType: 0,
-                color: {
-                  _class: 'color',
-                  alpha: 1,
-                  blue: 0.592,
-                  green: 0.592,
-                  red: 0.592,
-                },
-                contextSettings: {
-                  _class: 'graphicsContextSettings',
-                  blendMode: 0,
-                  opacity: 1,
-                },
-                gradient: {
-                  _class: 'gradient',
-                  elipseLength: 0,
-                  from: '{0.5, 0}',
-                  gradientType: 0,
-                  to: '{0.5, 1}',
-                  stops: [
-                    {
-                      _class: 'gradientStop',
-                      position: 0,
-                      color: {
-                        _class: 'color',
-                        alpha: 1,
-                        blue: 1,
-                        green: 1,
-                        red: 1,
-                      },
-                    },
-                    {
-                      _class: 'gradientStop',
-                      position: 1,
-                      color: {
-                        _class: 'color',
-                        alpha: 1,
-                        blue: 0,
-                        green: 0,
-                        red: 0,
-                      },
-                    },
-                  ],
-                },
-                position: 0,
-                thickness: 1,
-              },
-            ],
-            colorControls: {
-              _class: 'colorControls',
-              isEnabled: false,
-              brightness: 0,
-              contrast: 1,
-              hue: 0,
-              saturation: 1,
-            },
-            contextSettings: {
-              _class: 'graphicsContextSettings',
-              blendMode: 0,
-              opacity: 1,
-            },
-            fills: [
-              {
-                _class: 'fill',
-                isEnabled: true,
-                fillType: 0,
-                color: {
-                  _class: 'color',
-                  alpha: 1,
-                  blue: 0.847,
-                  green: 0.847,
-                  red: 0.847,
-                },
-                contextSettings: {
-                  _class: 'graphicsContextSettings',
-                  blendMode: 0,
-                  opacity: 1,
-                },
-                gradient: {
-                  _class: 'gradient',
-                  elipseLength: 0,
-                  from: '{0.5, 0}',
-                  gradientType: 0,
-                  to: '{0.5, 1}',
-                  stops: [
-                    {
-                      _class: 'gradientStop',
-                      position: 0,
-                      color: {
-                        _class: 'color',
-                        alpha: 1,
-                        blue: 1,
-                        green: 1,
-                        red: 1,
-                      },
-                    },
-                    {
-                      _class: 'gradientStop',
-                      position: 1,
-                      color: {
-                        _class: 'color',
-                        alpha: 1,
-                        blue: 0,
-                        green: 0,
-                        red: 0,
-                      },
-                    },
-                  ],
-                },
-                noiseIndex: 0,
-                noiseIntensity: 0,
-                patternFillType: 1,
-                patternTileScale: 1,
-              },
-            ],
-            innerShadows: [],
-            shadows: [],
-          },
-          edited: true,
           isClosed: false,
           pointRadiusBehaviour: 1,
           points: [
@@ -1270,12 +662,12 @@ describe('Svg 类', () => {
             {
               _class: 'curvePoint',
               cornerRadius: 0,
-              curveFrom: '{1, 0.99999999999999978}',
+              curveFrom: '{1, 1}',
               curveMode: 1,
-              curveTo: '{1, 0.99999999999999978}',
+              curveTo: '{1, 1}',
               hasCurveFrom: false,
               hasCurveTo: false,
-              point: '{1, 0.99999999999999978}',
+              point: '{1, 1}',
             },
             {
               _class: 'curvePoint',
@@ -1290,6 +682,225 @@ describe('Svg 类', () => {
           ],
         },
       ],
+    });
+  });
+
+  describe('convertToCubicBezier', function() {
+    it('复合对象转换正常', function() {
+      const points = Svg.svgPathToShapeGroup(path);
+
+      expect(points).toStrictEqual({
+        frame: { width: 736.652344, height: 814.2161138351329 },
+        shapes: [
+          // 不规则
+          {
+            frame: {
+              height: 538.2161135860229,
+              width: 736.371094,
+              x: 4,
+              y: 818.2161138351329,
+            },
+            isClose: true,
+            points: [
+              {
+                type: 2,
+                x: 0.09400512426958466,
+                y: 0.004399496208155765,
+              },
+              {
+                type: 32,
+                x: 1,
+                x1: 0.6980017075466572,
+                x2: 1,
+                y: 0.24600347780135365,
+                y1: -0.020465632616830685,
+                y2: 0.060069027914235316,
+              },
+              {
+                type: 32,
+                x: 0.8986796526806632,
+                x1: 1,
+                x2: 0.954103919510996,
+                y: 0.8396747353768307,
+                y1: 0.5249051517030365,
+                y2: 0.7606873566513045,
+              },
+              {
+                type: 32,
+                x: 0.32066563710063284,
+                x1: 0.7902668800304646,
+                x2: 0.5121451793435009,
+                y: 0.9941781920755667,
+                y1: 0.9941781920755667,
+                y2: 1.0125548715363522,
+              },
+              {
+                type: 32,
+                x: 0,
+                x1: 0.25688156086148595,
+                x2: 0.14999301561394532,
+                y: 0.54233106252817,
+                y1: 0.8202868078573917,
+                y2: 0.6696710961502698,
+              },
+              {
+                type: 16,
+                x: 0.09400512426958466,
+                y: 0.004399496208155765,
+              },
+            ],
+          },
+          // 正方形
+          {
+            frame: {
+              height: 229.32812499999994,
+              width: 280.652344,
+              x: 288.371094,
+              y: 629.085937,
+            },
+            isClose: true,
+            points: [
+              {
+                type: 2,
+                x: 0,
+                y: 0,
+              },
+              {
+                type: 16,
+                x: 1,
+                y: 0,
+              },
+              {
+                type: 16,
+                x: 1,
+                y: 1,
+              },
+              {
+                type: 16,
+                x: 0,
+                y: 1,
+              },
+              {
+                type: 16,
+                x: 0,
+                y: 0,
+              },
+            ],
+          },
+          // 圆角矩形
+
+          {
+            frame: {
+              height: 229.328125,
+              width: 280.65234399999997,
+              x: 460,
+              y: 233.328125,
+            },
+            isClose: true,
+            points: [
+              {
+                type: 2,
+                x: 0,
+                y: 0,
+              },
+              {
+                type: 16,
+                x: 0.6436872802316591,
+                y: 0,
+              },
+              {
+                type: 32,
+                x: 1,
+                x1: 0.8404733615907374,
+                x2: 1,
+                y: 0.4360564147986646,
+                y1: 0,
+                y2: 0.1952291067656878,
+              },
+              {
+                type: 16,
+                x: 1,
+                y: 1,
+              },
+              {
+                type: 16,
+                x: 1,
+                y: 1,
+              },
+              {
+                type: 16,
+                x: 0,
+                y: 1,
+              },
+              {
+                type: 16,
+                x: 0,
+                y: 0,
+              },
+            ],
+          },
+          // 开放矩形
+          {
+            frame: {
+              height: 229.328125,
+              width: 280.652344,
+              x: 68,
+              y: 233.328125,
+            },
+            isClose: false,
+            points: [
+              {
+                type: 2,
+                x: 0,
+                y: 0,
+              },
+              {
+                type: 16,
+                x: 0.6436872802316591,
+                y: 0,
+              },
+              {
+                type: 32,
+                x: 1,
+                x1: 0.8404733615907372,
+                x2: 1,
+                y: 0.4360564147986646,
+                y1: 0,
+                y2: 0.1952291067656878,
+              },
+              {
+                type: 16,
+                x: 1,
+                y: 1,
+              },
+              {
+                type: 16,
+                x: 1,
+                y: 1,
+              },
+              {
+                type: 16,
+                x: 0,
+                y: 1,
+              },
+            ],
+          },
+        ],
+      });
+    });
+
+    it('path不正确时报错', function() {
+      const path = 'Z';
+      const t = () => {
+        try {
+          Svg.svgPathToShapeGroup(path);
+        } catch (e) {
+          throw e;
+        }
+      };
+      expect(t).toThrow(
+        'Error Path!\nData:Z\nPlease check whether the path is correct.'
+      );
     });
   });
 });

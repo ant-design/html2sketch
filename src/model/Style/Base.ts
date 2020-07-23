@@ -1,7 +1,7 @@
 import murmurHash from 'murmur2js';
 import { Style } from '@/model';
 import { sortObjectKeys, uuid } from '../../helpers/utils';
-import { SketchFormat } from '../../index';
+import SketchFormat from '@sketch-hq/sketch-file-format-ts';
 
 class StyleBase {
   constructor() {

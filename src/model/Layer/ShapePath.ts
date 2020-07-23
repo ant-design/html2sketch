@@ -1,5 +1,5 @@
 import Base, { BaseLayerParams } from './Base';
-import { SketchFormat } from '../../index';
+import SketchFormat from '@sketch-hq/sketch-file-format-ts';
 import { defaultExportOptions } from '../utils';
 import { BezierPoint, StartPoint } from './Svg';
 import { SVGPathData } from 'svg-pathdata';
@@ -71,7 +71,10 @@ class ShapePath extends Base {
       edited: true,
       isClosed: this.isClosed,
       points: this.points.map(this.bezierPointToSketchPoint).filter((p) => p),
-      pointRadiusBehaviour: SketchFormat.PointsRadiusBehaviour.Disabled,
+      /**
+       * 默认使用圆角
+       */
+      pointRadiusBehaviour: SketchFormat.PointsRadiusBehaviour.Rounded,
     };
   }
 
@@ -143,11 +146,21 @@ class ShapePath extends Base {
    * @param path 路径
    */
   static svgPathToShapePath(path: string): ShapePathType {
+    // 将 多个 svg 通过 M 符号进行分割 | TODO 要看下是否还有其他方式来区分对象
+    let pathStr = path.split(/([Mm])/).filter((s) => s);
+    // 只允许解析一条 path
+    if (pathStr.length !== 2) {
+      throw Error(
+        `Error Path!\nData:${path}\nPlease check whether the path is correct.Only allow one path shape`
+      );
+    }
     const svgPathData = new SVGPathData(path);
     const bounds = svgPathData.getBounds();
     const frame = {
       width: bounds.maxX - bounds.minX,
       height: bounds.maxY - bounds.minY,
+      x: bounds.minX,
+      y: bounds.maxY,
     };
     const { minX, minY } = bounds;
 
@@ -160,7 +173,7 @@ class ShapePath extends Base {
       .normalizeHVZ() // 将 HVZ 转为直线
       .normalizeST() // 将 smooth curve 转为curve
       .toAbs()
-      .transform(this.normalizationXY(frame.width, frame.height));
+      .transform(ShapePath.normalizationXY(frame.width, frame.height));
 
     return {
       points: shapePath.commands

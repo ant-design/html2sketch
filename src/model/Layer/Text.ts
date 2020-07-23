@@ -1,6 +1,6 @@
 import Base, { BaseLayerParams } from './Base';
 import { RESIZING_CONSTRAINTS } from '../../helpers/layout';
-import { SketchFormat } from '../../index';
+import SketchFormat from '@sketch-hq/sketch-file-format-ts';
 import { defaultExportOptions } from '../utils';
 import TextStyle, { TextStyleParams } from '../Style/TextStyle';
 
