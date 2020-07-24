@@ -51,11 +51,11 @@ class Svg extends ShapeGroup {
     this.class = 'svg';
 
     this.name = 'svg';
-
     this.rawSVGString = path;
-    const { shapes, frame: innerFrame } = Svg.svgPathToShapeGroup(path);
-    const boundingAspectRatio = width / height;
 
+    const { shapes, frame: innerFrame } = Svg.svgPathToShapeGroup(path);
+
+    const boundingAspectRatio = width / height;
     const boxAspectRatio = innerFrame.width / height;
 
     let scale = 1;

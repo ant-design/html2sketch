@@ -127,9 +127,16 @@ class ShapePath extends Base {
         : // 不然就是直的
           SketchFormat.CurveMode.Straight;
 
-    // 如果是闭合路径
-    // 过滤最后一个点
-    if (this.isClosed && index === this.points.length - 1) return;
+    const firstPoint = this.points[0];
+    if (
+      // 如果是闭合路径
+      this.isClosed &&
+      // 且最后一个点和起点点一样
+      index === this.points.length - 1 &&
+      (point.x === firstPoint.x && point.y === firstPoint.y)
+    )
+      // 则过滤最后一个点
+      return;
 
     return {
       _class: 'curvePoint',
