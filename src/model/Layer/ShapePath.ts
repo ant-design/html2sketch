@@ -111,19 +111,21 @@ class ShapePath extends Base {
     }
 
     // 如果下一个点是 Curve 点
-    if (
-      point.type === SVGPathData.LINE_TO &&
-      nextPoint.type === SVGPathData.CURVE_TO
-    ) {
+    if (nextPoint.type === SVGPathData.CURVE_TO) {
       hasCurveFrom = true;
       curveFromPoint = { x: nextPoint.x1, y: nextPoint.y1 };
     }
 
     // 确认曲线模式
     const curveMode =
-      hasCurveFrom || hasCurveTo
+      // 既有前 也有后 就不对称
+      hasCurveFrom && hasCurveTo
+        ? SketchFormat.CurveMode.Asymmetric
+        : // 否则 有前或有后 就是弯的
+        hasCurveFrom || hasCurveTo
         ? SketchFormat.CurveMode.Disconnected
-        : SketchFormat.CurveMode.Straight;
+        : // 不然就是直的
+          SketchFormat.CurveMode.Straight;
 
     // 如果是闭合路径
     // 过滤最后一个点

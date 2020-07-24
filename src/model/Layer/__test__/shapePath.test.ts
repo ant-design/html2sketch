@@ -20,6 +20,11 @@ describe('ShapePath', () => {
       const shapePath = new ShapePath({ isClose, points, ...frame });
       expect(shapePath.toSketchJSON()).toStrictEqual(rect.sketchJSON);
     });
+    it('不规则图形compPath转换正常', function () {
+      const { frame, isClose, points } = compPath.shapePath;
+      const shapePath = new ShapePath({ isClose, points, ...frame });
+      expect(shapePath.toSketchJSON()).toStrictEqual(compPath.sketchJSON);
+    });
     it('带圆角的矩形 rectRound2 转换正常', function () {
       const { frame, isClose, points } = singleRoundRect.shapePath;
       const shapePath = new ShapePath({ isClose, points, ...frame });
@@ -32,7 +37,6 @@ describe('ShapePath', () => {
 
       const shapePath = new ShapePath({ isClose, points, ...frame });
 
-      console.log(shapePath.toSketchJSON());
       expect(shapePath.toSketchJSON()).toStrictEqual(unclosedRect.sketchJSON);
     });
   });
@@ -52,7 +56,7 @@ describe('ShapePath', () => {
         expect(points).toStrictEqual(singleRoundRect.shapePath);
       });
 
-      it('不规则图形转换正常', function () {
+      it('不规则图形compPath转换正常', function () {
         const points = ShapePath.svgPathToShapePath(compPath.path);
         expect(points).toStrictEqual(compPath.shapePath);
       });
@@ -65,7 +69,7 @@ describe('ShapePath', () => {
     describe('错误处理', function () {
       it('只能转化一个shape', function () {
         const path =
-          'M872 474H152c-4.4 0-8 3.6-8 8v60c0 4.4 3.6 8 8 8h720c4.4 0 8-3.6 8-8v-60c0-4.4-3.6-8-8-8z M872 474H152c-4.4 0-8 3.6-8 8v60c0 4.4 3.6 8 8 8h720c4.4 0 8-3.6 8-8v-60c0-4.4-3.6-8-8-8z';
+          'M872 474H152 z M872 474H152c-4.4 0-8 3.6-8 8v60c0 4.4 3.6 8 8 8h720c4.4 0 8-3.6 8-8v-60c0-4.4-3.6-8-8-8z';
         const t = () => {
           try {
             ShapePath.svgPathToShapePath(path);
@@ -73,7 +77,20 @@ describe('ShapePath', () => {
             throw e;
           }
         };
-
+        expect(t).toThrow(
+          `Error Path!\nData:${path}\nPlease check whether the path is correct.`
+        );
+      });
+      it('如果没有 M 则报错', function () {
+        const path =
+          'H152c-4.4 0-8 3.6-8 8v60c0 4.4 3.6 8 8 8h720c4.4 0 8-3.6 8-8v-60c0-4.4-3.6-8-8-8z';
+        const t = () => {
+          try {
+            ShapePath.svgPathToShapePath(path);
+          } catch (e) {
+            throw e;
+          }
+        };
         expect(t).toThrow(
           `Error Path!\nData:${path}\nPlease check whether the path is correct.`
         );

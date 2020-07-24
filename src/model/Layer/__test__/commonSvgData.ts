@@ -9,37 +9,6 @@ interface TestSvgData {
   shapePath: ShapePathType;
   sketchJSON: SketchFormat.ShapePath;
 }
-// 可复用的 shapeGroup 信息
-const shapeGroupData = {
-  _class: 'shapeGroup',
-  do_objectID: 'uuid',
-  booleanOperation: -1,
-  isFixedToViewport: false,
-  isFlippedHorizontal: false,
-  isFlippedVertical: false,
-  isLocked: false,
-  isVisible: true,
-  layerListExpandedType: 0,
-  name: 'svg',
-  nameIsFixed: false,
-  resizingConstraint: 63,
-  resizingType: 0,
-  shouldBreakMaskChain: false,
-  exportOptions: defaultExportOptions,
-  rotation: 0,
-  frame: {
-    _class: 'rect',
-    constrainProportions: false,
-    height: 814.2161138351329,
-    width: 736.652344,
-    x: -90,
-    y: 4,
-  },
-  clippingMaskMode: 0,
-  style: new Style().toSketchJSON(),
-  hasClickThrough: false,
-  windingRule: 1,
-};
 
 // 可复用的 shapePath 信息
 const shapePathData = {
@@ -62,6 +31,15 @@ const shapePathData = {
   style: new Style().toSketchJSON(),
   edited: true,
   pointRadiusBehaviour: 1,
+};
+
+/**
+ * SVG 图形如下
+ * @see https://svg-path-visualizer.netlify.app/#M73.2226562%2C282.36788%20C517.988281%2C268.985067%20740.371094%2C312.330119%20740.371094%2C412.403036%20C740.371094%2C562.512411%20706.574547%2C689.414193%20665.761719%2C731.926473%20C585.929687%2C815.082723%20381.128906%2C824.973348%20240.128906%2C815.082723%20C193.160156%2C721.491578%20114.450521%2C640.427775%204%2C571.891317%20L73.2226562%2C282.36788%20Z%20M288.371094%2C399.757812%20L569.023438%2C399.757812%20L569.023438%2C629.085937%20L288.371094%2C629.085937%20L288.371094%2C399.757812%20Z%20M460%2C4%20L640.652344%2C4%20C695.880819%2C4%20740.652344%2C48.771525%20740.652344%2C104%20L740.652344%2C233.328125%20L460%2C233.328125%20L460%2C4%20Z%20M68%2C4%20L248.652344%2C4%20C303.880819%2C4%20348.652344%2C48.771525%20348.652344%2C104%20L348.652344%2C233.328125%20L68%2C233.328125
+ */
+export const svgPath = {
+  path:
+    'M73.2226562,282.36788 C517.988281,268.985067 740.371094,312.330119 740.371094,412.403036 C740.371094,562.512411 706.574547,689.414193 665.761719,731.926473 C585.929687,815.082723 381.128906,824.973348 240.128906,815.082723 C193.160156,721.491578 114.450521,640.427775 4,571.891317 L73.2226562,282.36788 Z M288.371094,399.757812 L569.023438,399.757812 L569.023438,629.085937 L288.371094,629.085937 L288.371094,399.757812 Z M460,4 L640.652344,4 C695.880819,4 740.652344,48.771525 740.652344,104 L740.652344,233.328125 L460,233.328125 L460,4 Z M68,4 L248.652344,4 C303.880819,4 348.652344,48.771525 348.652344,104 L348.652344,233.328125 L68,233.328125',
 };
 
 /**
@@ -145,7 +123,7 @@ export const compPath: TestSvgData = {
       {
         _class: 'curvePoint',
         cornerRadius: 0,
-        curveFrom: '{0.69800170754665725, -0.020465632616830577}',
+        curveFrom: '{0.6980017075466572, -0.020465632616830685}',
         curveMode: 4,
         curveTo: '{0.09400512426958466, 0.004399496208155765}',
         hasCurveFrom: true,
@@ -155,7 +133,7 @@ export const compPath: TestSvgData = {
       {
         _class: 'curvePoint',
         cornerRadius: 0,
-        curveFrom: '{1, 0.52490515170303653}',
+        curveFrom: '{1, 0.5249051517030365}',
         curveMode: 3,
         curveTo: '{1, 0.060069027914235316}',
         hasCurveFrom: true,
@@ -165,7 +143,7 @@ export const compPath: TestSvgData = {
       {
         _class: 'curvePoint',
         cornerRadius: 0,
-        curveFrom: '{0.79026688003046464, 0.99417819207556657}',
+        curveFrom: '{0.7902668800304646, 0.9941781920755667}',
         curveMode: 3,
         curveTo: '{0.954103919510996, 0.7606873566513045}',
         hasCurveFrom: true,
@@ -175,8 +153,8 @@ export const compPath: TestSvgData = {
       {
         _class: 'curvePoint',
         cornerRadius: 0,
-        curveFrom: '{0.25688156086148595, 0.82028680785739161}',
-        curveMode: 4,
+        curveFrom: '{0.25688156086148595, 0.8202868078573917}',
+        curveMode: 3,
         curveTo: '{0.5121451793435009, 1.0125548715363522}',
         hasCurveFrom: true,
         hasCurveTo: true,
