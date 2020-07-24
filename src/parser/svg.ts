@@ -15,15 +15,15 @@ const transferToSvg = (node: Element) => {
   Array.from(node.children).forEach((child) => {
     if (child.nodeName === 'path') {
       const path = child.getAttribute('d');
-      pathData = path;
       if (path) {
-        const newPath = new SVGPathData(path).toRel().encode();
+        const newPath = new SVGPathData(path).toAbs().encode();
+        pathData = newPath;
         child.setAttribute('d', newPath);
       }
     }
   });
 
-  // console.log(getSVGString(node));
+  console.log(pathData);
   const svg = new SVG({
     // x,
     // y,

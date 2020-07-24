@@ -54,17 +54,47 @@ class Svg extends ShapeGroup {
 
     this.rawSVGString = path;
     const { shapes, frame: innerFrame } = Svg.svgPathToShapeGroup(path);
+    const boundingAspectRatio = width / height;
+
+    const boxAspectRatio = innerFrame.width / height;
+
+    let scale = 1;
+    // 确定缩放比例
+    // 如果外框长宽比大于 shape
+    if (boundingAspectRatio > boxAspectRatio) {
+      scale = height / innerFrame.height;
+    }
+    if (boundingAspectRatio < boxAspectRatio) {
+      scale = width / innerFrame.width;
+    }
 
     this.layers = shapes.map((shape) => {
       const { points, isClose, frame } = shape;
+      const shapeAspectRadio = frame.width / frame.height;
+
+      // 确定缩放后的长宽
+      let realWidth = width;
+      let reaHeight = height;
+      if (boundingAspectRatio > boxAspectRatio) {
+        scale = height / innerFrame.height;
+        reaHeight = frame.height * scale;
+        realWidth = shapeAspectRadio * reaHeight;
+      }
+      if (boundingAspectRatio < boxAspectRatio) {
+        scale = width / innerFrame.width;
+        realWidth = frame.width * scale;
+        reaHeight = realWidth / shapeAspectRadio;
+      }
+
       return new ShapePath({
         points,
         isClose,
-        ...frame,
+        width: realWidth,
+        height: reaHeight,
         // 需要计算与 innerFrame 的相对坐标
         // https://www.yuque.com/design-engineering/sketch-dev/hsbz8m#OPWbw
-        x: frame.x - innerFrame.x,
-        y: frame.y - innerFrame.y,
+        x: (frame.x - innerFrame.x) * scale,
+        y: (frame.y - innerFrame.y) * scale,
       });
     });
   }
@@ -115,7 +145,17 @@ class Svg extends ShapeGroup {
       y: bounds.minY,
     };
     // 解析每个路径中的shape
-    const shapes = paths.map(ShapePath.svgPathToShapePath);
+    const shapes = paths.map(ShapePath.svgPathToShapePath).filter((shape) => {
+      // 需要对 shape 进行清理,如果只有两个点,起点和终点,直接过滤
+      for (let i = 0; i < shape.points.length; i++) {
+        const point = shape.points[i];
+        if (isNaN(point.x) || isNaN(point.y)) {
+          return false;
+        }
+      }
+
+      return true;
+    });
 
     return {
       shapes,
