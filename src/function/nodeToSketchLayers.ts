@@ -1,6 +1,6 @@
 import { defaultNodeStyle } from '../model/utils';
 
-import transferToSvg from '../parser/svg';
+import parserToSvg from '../parser/svg';
 import transferToShape from '../parser/shape';
 import transferToText from '../parser/text';
 import parserPseudo from '../parser/pseudo';
@@ -98,7 +98,7 @@ const nodeToSketchLayers = (node: Element): AnyLayer[] => {
 
   // 转换为 SVG
   if (isSVG) {
-    const svg = transferToSvg(node);
+    const svg = parserToSvg(node);
     console.log('转换为 Svg: ', svg);
     layers.push(svg);
 

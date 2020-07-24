@@ -55,6 +55,7 @@ class ShapePath extends Base {
    */
   booleanOperation: SketchFormat.BooleanOperation =
     SketchFormat.BooleanOperation.NA;
+
   /**
    * 转为 Sketch JSON 文件
    */
@@ -104,11 +105,14 @@ class ShapePath extends Base {
     let curveFromPoint: { x: number; y: number } = point;
     let curveToPoint: { x: number; y: number } = point;
 
+    // 判断 CurveTo
     // 如果自身点是 Curve 点
     if (thisPoint.type === SVGPathData.CURVE_TO) {
       curveToPoint = { x: thisPoint.x2, y: thisPoint.y2 };
       hasCurveTo = true;
     }
+
+    // 判断 CurveFrom
 
     // 如果下一个点是 Curve 点
     if (nextPoint.type === SVGPathData.CURVE_TO) {
@@ -117,15 +121,13 @@ class ShapePath extends Base {
     }
 
     // 确认曲线模式
-    const curveMode =
-      // 既有前 也有后 就不对称
-      hasCurveFrom && hasCurveTo
-        ? SketchFormat.CurveMode.Asymmetric
-        : // 否则 有前或有后 就是弯的
-        hasCurveFrom || hasCurveTo
-        ? SketchFormat.CurveMode.Disconnected
-        : // 不然就是直的
-          SketchFormat.CurveMode.Straight;
+    const curveMode = this.judgeCurveMode({
+      hasCurveFrom,
+      hasCurveTo,
+      curveFromPoint,
+      curveToPoint,
+      thisPoint,
+    });
 
     const firstPoint = this.points[0];
     if (
@@ -133,7 +135,8 @@ class ShapePath extends Base {
       this.isClosed &&
       // 且最后一个点和起点点一样
       index === this.points.length - 1 &&
-      (point.x === firstPoint.x && point.y === firstPoint.y)
+      (point.x.toFixed(8) === firstPoint.x.toFixed(8) &&
+        point.y.toFixed(8) === firstPoint.y.toFixed(8))
     )
       // 则过滤最后一个点
       return;
@@ -148,6 +151,58 @@ class ShapePath extends Base {
       hasCurveTo,
       point: `{${point.x}, ${point.y}}`,
     };
+  };
+
+  /**
+   * 判断点是否在同一条线上
+   * @param q 当前点
+   * @param p1 上一个点
+   * @param p2 下一个点
+   */
+  private judgeIsOnSameLine = (
+    q: BezierPoint,
+    p1: BezierPoint,
+    p2: BezierPoint
+  ) => {
+    return (
+      q.x >= Math.min(p1.x, p2.x) &&
+      q.x <= Math.max(p1.x, p2.x) &&
+      (q.y >= Math.min(p1.y, p2.y) && q.y <= Math.max(p1.y, p2.y))
+    );
+  };
+
+  /**
+   * 判断曲线模型
+   * @param hasCurveFrom 是否有前置曲线
+   * @param hasCurveTo 是否有后置曲线
+   * @param curveFromPoint 前置曲线点
+   * @param curveToPoint 后置曲线点
+   * @param thisPoint 自己这个点
+   */
+  private judgeCurveMode = ({
+    hasCurveFrom,
+    hasCurveTo,
+    curveFromPoint,
+    curveToPoint,
+    thisPoint,
+  }): SketchFormat.CurveMode => {
+    // 既有前 也有后
+    if (hasCurveFrom && hasCurveTo) {
+      // 则是曲线
+      // 再判断是否在同一条直线上
+      if (this.judgeIsOnSameLine(thisPoint, curveFromPoint, curveToPoint)) {
+        // 是的话则是不对称
+        return SketchFormat.CurveMode.Asymmetric;
+      }
+      // 否则就是分离
+      else return SketchFormat.CurveMode.Disconnected;
+    } else if (hasCurveFrom || hasCurveTo) {
+      // 否则 有前或有后 就是弯的
+      return SketchFormat.CurveMode.Disconnected;
+    }
+
+    // 不然就是直的
+    else return SketchFormat.CurveMode.Straight;
   };
 
   /**

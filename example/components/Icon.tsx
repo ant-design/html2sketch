@@ -754,7 +754,6 @@ const IconSymbol: FC = () => {
       {/*<RestOutlined />*/}
       {/*<RobotOutlined />*/}
       {/*<RocketOutlined />*/}
-
       {/*<SafetyCertificateOutlined />*/}
       {/*<SafetyOutlined />*/}
       {/*<ScanOutlined />*/}
@@ -803,8 +802,11 @@ const IconSymbol: FC = () => {
       {/*<VideoCameraOutlined />*/}
       {/*<WalletOutlined />*/}
       {/*<WifiOutlined />*/}
+      {/*<BorderlessTableOutlined />*/}
       {/*<WomanOutlined />*/}
-
+      {/*<BehanceOutlined />*/}
+      {/*<DropboxOutlined />*/}
+      {/*<DeploymentUnitOutlined />*/}
       {/* 有错误的 SVG */}
       {/*<UpCircleOutlined />*/}
       {/*<DownCircleOutlined />*/}
@@ -834,11 +836,8 @@ const IconSymbol: FC = () => {
       {/*<YoutubeOutlined />*/}
       {/*<CodepenCircleOutlined />*/}
       {/*<AliyunOutlined />*/}
-      {/*<BehanceOutlined />*/}
-      <DropboxOutlined />
       {/*<LinkedinOutlined />*/}
       {/*<AimOutlined />*/}
-      {/*  <BorderlessTableOutlined />*/}
       {/*<BugOutlined />*/}
       {/*<CloudDownloadOutlined />*/}
       {/*<CloudServerOutlined />*/}
@@ -847,7 +846,6 @@ const IconSymbol: FC = () => {
       {/*  <CommentOutlined />*/}
       {/*  <ConsoleSqlOutlined />*/}
       {/*<EyeInvisibleOutlined />*/}
-      {/*<DeploymentUnitOutlined /> 报错*/}
       {/*  <FileGifOutlined />*/}
       {/*<DeliveredProcedureOutlined />*/}
       {/*<FieldTimeOutlined />*/}
@@ -866,7 +864,6 @@ const IconSymbol: FC = () => {
       {/*<VerifiedOutlined />*/}
       {/*<VideoCameraAddOutlined />*/}
       {/*<WhatsAppOutlined />*/}
-
       {/*</Col>*/}
     </Row>
   );

@@ -6,6 +6,7 @@ import { BaseLayerParams } from './Base';
 
 import ShapeGroup, { ShapeGroupType } from './ShapeGroup';
 import ShapePath from './ShapePath';
+import { getUseReplacement, inlineStyles } from '../../helpers/svg';
 
 export type SVG = {
   _class: 'svg';
@@ -40,18 +41,19 @@ export type BezierPoint = StartPoint | CurvePoint | LinePoint;
 
 interface SvgInitParams extends BaseLayerParams {
   path: string;
+  svgString?: string;
 }
 
 /**
  * SVG 对象
  */
 class Svg extends ShapeGroup {
-  constructor({ x, y, width, height, path }: SvgInitParams) {
+  constructor({ x, y, width, height, path, svgString }: SvgInitParams) {
     super({ height, width, y, x });
     this.class = 'svg';
 
     this.name = 'svg';
-    this.rawSVGString = path;
+    this.rawSVGString = svgString;
 
     const { shapes, frame: innerFrame } = Svg.svgPathToShapeGroup(path);
 
@@ -161,6 +163,44 @@ class Svg extends ShapeGroup {
       shapes,
       frame: groupFrame,
     };
+  };
+
+  /**
+   * 将 Svg Node 转为 SvgString
+   * @param svgNode
+   */
+  static getSVGString = (svgNode: Element): string => {
+    // NOTE: this code modifies the original node by inlining all styles
+    // this is not ideal and probably fixable
+    const queue = Array.from(svgNode.children);
+
+    while (queue.length) {
+      const node = queue.pop();
+
+      if (
+        !(node instanceof SVGElement) ||
+        node instanceof SVGDefsElement ||
+        node instanceof SVGTitleElement
+      ) {
+        continue;
+      }
+
+      if (node instanceof SVGUseElement) {
+        const replacement = getUseReplacement(node);
+
+        if (replacement) {
+          node.parentNode!.replaceChild(replacement, node);
+          queue.push(replacement);
+        }
+        continue;
+      }
+
+      inlineStyles(node);
+
+      Array.from(node.children).forEach((child) => queue.push(child));
+    }
+
+    return svgNode.outerHTML;
   };
 }
 

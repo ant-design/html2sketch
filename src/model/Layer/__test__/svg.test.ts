@@ -2,6 +2,7 @@ import SketchFormat from '@sketch-hq/sketch-file-format-ts';
 import Svg from '../../Layer/Svg';
 import Style from '../../Style/Style';
 import { defaultExportOptions } from '../../utils';
+
 import {
   svgPath,
   rect,
@@ -9,6 +10,7 @@ import {
   singleRoundRect,
   unclosedRect,
   dropboxSvgPath,
+  behanceSvg,
 } from './commonSvgData';
 
 // 可复用的 shapeGroup 信息
@@ -89,6 +91,17 @@ describe('Svg 类', () => {
         path: dropboxSvgPath.path,
       });
       expect(svg.toSketchJSON()).toStrictEqual(dropboxSvgPath.sketchJSON);
+    });
+    it('behance 转换正常', function() {
+      const svg = new Svg({
+        height: 56.01562500000003,
+        width: 89.22991071428572,
+        x: 123,
+        y: 18.01116071428572,
+        path: behanceSvg.path,
+      });
+
+      expect(svg.toSketchJSON()).toStrictEqual(behanceSvg.sketchJSON);
     });
   });
   describe('convertToCubicBezier', function() {

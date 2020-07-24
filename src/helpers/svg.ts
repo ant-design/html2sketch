@@ -82,7 +82,7 @@ const SVG_STYLE_PROPERTIES = [
   ['writing-mode', 'horizontal-tb'],
 ];
 
-function inlineStyles(node) {
+export function inlineStyles(node) {
   const styles = getComputedStyle(node);
 
   SVG_STYLE_PROPERTIES.forEach((prop) => {
@@ -100,7 +100,7 @@ function inlineStyles(node) {
   });
 }
 
-function getUseReplacement(node) {
+export function getUseReplacement(node) {
   const href = node.href.baseVal;
   // TODO this will only work for internal references
   let refNode = null;
@@ -131,38 +131,4 @@ function getUseReplacement(node) {
   }
 
   return resultNode;
-}
-
-// NOTE: this code modifies the original node by inlining all styles
-// this is not ideal and probably fixable
-export function getSVGString(svgNode: Element): string {
-  const queue = Array.from(svgNode.children);
-
-  while (queue.length) {
-    const node = queue.pop();
-
-    if (
-      !(node instanceof SVGElement) ||
-      node instanceof SVGDefsElement ||
-      node instanceof SVGTitleElement
-    ) {
-      continue;
-    }
-
-    if (node instanceof SVGUseElement) {
-      const replacement = getUseReplacement(node);
-
-      if (replacement) {
-        node.parentNode!.replaceChild(replacement, node);
-        queue.push(replacement);
-      }
-      continue;
-    }
-
-    inlineStyles(node);
-
-    Array.from(node.children).forEach((child) => queue.push(child));
-  }
-
-  return svgNode.outerHTML;
 }
