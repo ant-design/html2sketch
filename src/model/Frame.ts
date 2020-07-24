@@ -1,10 +1,12 @@
 import SketchFormat from '@sketch-hq/sketch-file-format-ts';
 
-export interface FrameInitParams {
-  x?: number;
-  y?: number;
-  width?: number;
-  height?: number;
+export interface FrameInitParams extends Partial<FrameType> {}
+
+export interface FrameType {
+  x: number;
+  y: number;
+  width: number;
+  height: number;
 }
 /**
  * @class

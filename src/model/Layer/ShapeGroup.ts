@@ -3,10 +3,11 @@ import SketchFormat from '@sketch-hq/sketch-file-format-ts';
 import { defaultExportOptions } from '../utils';
 import { ShapePathType } from './ShapePath';
 import { AnyShape } from '../type';
+import { FrameType } from '../Frame';
 
 export interface ShapeGroupType {
   shapes: ShapePathType[];
-  frame: { width: number; height: number };
+  frame: FrameType;
 }
 class ShapeGroup extends Base {
   constructor(params: BaseLayerParams) {

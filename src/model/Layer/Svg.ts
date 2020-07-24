@@ -53,15 +53,20 @@ class Svg extends ShapeGroup {
     this.name = 'svg';
 
     this.rawSVGString = path;
-    const { shapes, frame: groupFrame } = Svg.svgPathToShapeGroup(path);
+    const { shapes, frame: innerFrame } = Svg.svgPathToShapeGroup(path);
 
     this.layers = shapes.map((shape) => {
       const { points, isClose, frame } = shape;
-      return new ShapePath({ points, isClose, ...frame });
+      return new ShapePath({
+        points,
+        isClose,
+        ...frame,
+        // 需要计算与 innerFrame 的相对坐标
+        // https://www.yuque.com/design-engineering/sketch-dev/hsbz8m#OPWbw
+        x: frame.x - innerFrame.x,
+        y: frame.y - innerFrame.y,
+      });
     });
-
-    this.frame.width = groupFrame.width;
-    this.frame.height = groupFrame.height;
   }
 
   /**
@@ -106,6 +111,8 @@ class Svg extends ShapeGroup {
     const groupFrame = {
       width: bounds.maxX - bounds.minX,
       height: bounds.maxY - bounds.minY,
+      x: bounds.minX,
+      y: bounds.minY,
     };
     // 解析每个路径中的shape
     const shapes = paths.map(ShapePath.svgPathToShapePath);

@@ -3,7 +3,7 @@ import SketchFormat from '@sketch-hq/sketch-file-format-ts';
 import { defaultExportOptions } from '../utils';
 import { BezierPoint, StartPoint } from './Svg';
 import { SVGPathData } from 'svg-pathdata';
-import { SVGCommand } from 'svg-pathdata/lib/types';
+import { CommandC, CommandL, SVGCommand } from 'svg-pathdata/lib/types';
 
 export interface ShapePathType {
   points: BezierPoint[];
@@ -90,6 +90,7 @@ class ShapePath extends Base {
     point: BezierPoint,
     index: number
   ): SketchFormat.CurvePoint => {
+    // 初始化 //
     let curveMode = SketchFormat.CurveMode.Straight;
 
     let hasCurveFrom = false;
@@ -108,7 +109,10 @@ class ShapePath extends Base {
       thisPoint = this.points[this.points.length - 1];
     }
 
-    // 解析曲线模式
+    console.log('thisPoint:', index, 'type:', thisPoint.type);
+    console.log('prevPoint:', prevIndex, 'type:', prevPoint.type);
+    console.log('nextPoint:', nextIndex, 'type:', nextPoint.type);
+    // 判断曲线模式 //
     if (
       prevPoint.type !== thisPoint.type ||
       nextPoint.type !== thisPoint.type
@@ -165,12 +169,14 @@ class ShapePath extends Base {
       width: bounds.maxX - bounds.minX,
       height: bounds.maxY - bounds.minY,
       x: bounds.minX,
-      y: bounds.maxY,
+      y: bounds.minY,
     };
     const { minX, minY } = bounds;
 
     // 判断是否闭合
-    const isClose = svgPathData.commands.findIndex((i) => i.type === 1) > -1;
+    const isClose =
+      svgPathData.commands.findIndex((i) => i.type === SVGPathData.CLOSE_PATH) >
+      -1;
 
     const shapePath = svgPathData
       .translate(-minX, -minY)
@@ -180,34 +186,26 @@ class ShapePath extends Base {
       .toAbs()
       .transform(ShapePath.normalizationXY(frame.width, frame.height));
 
-    return {
-      points: shapePath.commands
-        .filter((i, index) => {
-          // 清理 Z 结尾类
-          if (i.type === SVGPathData.CLOSE_PATH) {
+    const points = (shapePath.commands as (CommandC | CommandL)[])
+      .filter((i, index) => {
+        // 对最后一个点进行处理
+        if (index === shapePath.commands.length - 1) {
+          const startP = shapePath.commands[0] as StartPoint;
+          if (i.x === startP.x && i.y === startP.y) {
             return false;
           }
+        }
+        return true;
+      })
+      .map((i) => {
+        // @ts-ignore
+        const { relative, ...res } = i;
 
-          // 如果最后一个点和起点重合
-          // 过滤
-          if (index === shapePath.commands.length - 1) {
-            const startP = shapePath.commands[0] as StartPoint;
+        return res as BezierPoint;
+      });
 
-            if (
-              (i as BezierPoint).x === startP.x &&
-              (i as BezierPoint).y === startP.y
-            ) {
-              return false;
-            }
-          }
-          return true;
-        })
-        .map((i) => {
-          // @ts-ignore
-          const { relative, ...res } = i;
-
-          return res as BezierPoint;
-        }),
+    return {
+      points: points,
       frame,
       isClose,
     };
