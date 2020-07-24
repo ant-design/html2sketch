@@ -426,29 +426,27 @@ import {
 
 // import styles from './style.less';
 
-export const IconSymbol: FC = () => {
+const IconSymbol: FC = () => {
   return (
     <Row>
-      <CaretUpOutlined
-        className="icon"
-        symbolName={'1.General/2.Icons/1.CaretUpOutlined'}
-      />
-      <StepBackwardOutlined
-        className="icon"
-        symbolName={'1.General/2.Icons/2.StepBackwardOutlined'}
-      />
-      <MailOutlined
-        className="icon"
-        symbolName={'1.General/2.Icons/2.MailOutlined'}
-      />
-
-      {/*<Col>*/}
-      {/*  <StepBackwardOutlined />*/}
-      {/*  <StepForwardOutlined />*/}
-      {/*  <FastBackwardOutlined />*/}
-      {/*  <FastForwardOutlined />*/}
-      {/*  <ShrinkOutlined />*/}
-      {/*  <ArrowsAltOutlined />*/}
+      {/*<CaretUpOutlined*/}
+      {/*  className="icon"*/}
+      {/*  symbolName={'1.General/2.Icons/1.CaretUpOutlined'}*/}
+      {/*/>*/}
+      {/*  className="icon"*/}
+      {/*  symbolName={'1.General/2.Icons/2.MailOutlined'}*/}
+      {/*/>*/}
+      {/*<StepBackwardOutlined*/}
+      {/*  className="icon"*/}
+      {/*  symbolName={'1.General/2.Icons/2.StepBackwardOutlined'}*/}
+      {/*/>*/}
+      {/*<StepForwardOutlined*/}
+      {/*  className="icon"*/}
+      {/*  symbolName={'1.General/2.Icons/2.StepBackwardOutlined'}*/}
+      {/*/>*/}
+      {/*<StepForwardOutlined />*/}
+      {/*<ShrinkOutlined />*/}
+      {/*<ArrowsAltOutlined />*/}
       {/*  <DownOutlined />*/}
       {/*  <UpOutlined />*/}
       {/*  <LeftOutlined />*/}
@@ -457,20 +455,24 @@ export const IconSymbol: FC = () => {
       {/*  <CaretDownOutlined />*/}
       {/*  <CaretLeftOutlined />*/}
       {/*  <CaretRightOutlined />*/}
-      {/*  <UpCircleOutlined />*/}
-      {/*  <DownCircleOutlined />*/}
-      {/*  <LeftCircleOutlined />*/}
-      {/*  <RightCircleOutlined />*/}
-      {/*  <DoubleRightOutlined />*/}
-      {/*  <DoubleLeftOutlined />*/}
-      {/*  <VerticalLeftOutlined />*/}
-      {/*  <VerticalRightOutlined />*/}
-      {/*  <VerticalAlignTopOutlined />*/}
-      {/*  <VerticalAlignMiddleOutlined />*/}
-      {/*  <VerticalAlignBottomOutlined />*/}
-      {/*  <ForwardOutlined />*/}
-      {/*  <BackwardOutlined />*/}
-      {/*  <RollbackOutlined />*/}
+      {/*<VerticalAlignTopOutlined />*/}
+      {/*<RollbackOutlined />*/}
+      {/* 有错误的 SVG */}
+      {/*<FastBackwardOutlined />*/}
+      {/*<FastForwardOutlined />*/}
+      {/*<UpCircleOutlined />*/}
+      {/*<DownCircleOutlined />*/}
+      {/*<LeftCircleOutlined />*/}
+      {/*<RightCircleOutlined />*/}
+      {/* 待测试的 SVG*/}
+      <DoubleRightOutlined />
+      <DoubleLeftOutlined />
+      <VerticalLeftOutlined />
+      <VerticalRightOutlined />
+      <VerticalAlignMiddleOutlined />
+      <VerticalAlignBottomOutlined />
+      <ForwardOutlined />
+      <BackwardOutlined />
       {/*  <EnterOutlined />*/}
       {/*  <RetweetOutlined />*/}
       {/*  <SwapOutlined />*/}
@@ -765,7 +767,7 @@ export const IconSymbol: FC = () => {
       {/*  <LoadingOutlined />*/}
       {/*  <LockOutlined />*/}
       {/*  <MacCommandOutlined />*/}
-      <MailOutlined />
+      {/*<MailOutlined />*/}
       {/*  <ManOutlined />*/}
       {/*  <MedicineBoxOutlined />*/}
       {/*  <MehOutlined />*/}
@@ -867,3 +869,4 @@ export const IconSymbol: FC = () => {
     </Row>
   );
 };
+export default IconSymbol;

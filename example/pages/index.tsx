@@ -10,7 +10,7 @@ import {
 
 import copy from 'copy-to-clipboard';
 import styles from './style.less';
-import { parserSymbol } from '../../lib';
+import { parserSymbol, parserSvg } from '../../lib';
 import { SMART_LAYOUT } from '../../lib/helpers/layout';
 
 const { TabPane } = Tabs;
@@ -26,7 +26,7 @@ export default () => {
     const els = document.getElementsByClassName(classname);
     const json: Object[] = [];
 
-    Array.from(els).forEach(el => {
+    Array.from(els).forEach((el) => {
       const smartLayout = el.getAttribute(
         'smartLayout',
       ) as keyof typeof SMART_LAYOUT;
@@ -45,6 +45,21 @@ export default () => {
     setJSON(json);
   };
 
+  const generateSvg = () => {
+    const els = document.getElementsByTagName('svg');
+
+    const json: Object[] = [];
+
+    Array.from(els).map((el) => {
+      const svg = parserSvg(el).toSketchJSON();
+      console.log(svg);
+      json.push(svg);
+    });
+    copy(JSON.stringify(json));
+    message.success('转换成功🎉已复制到剪切板');
+
+    setJSON(json);
+  };
   return (
     <div className={styles.container}>
       <Row gutter={[0, 24]}>
@@ -52,7 +67,7 @@ export default () => {
           <Card>
             <Tabs
               activeKey={activeKey}
-              onChange={key => {
+              onChange={(key) => {
                 setActiveKey(key);
               }}
               tabPosition={'left'}
@@ -83,6 +98,9 @@ export default () => {
                 </Button>
               </Col>
               <Col>
+                <Button type={'primary'} onClick={() => generateSvg()}>
+                  解析 Svg
+                </Button>{' '}
                 <Button
                   type={'primary'}
                   onClick={() => generateSymbol(activeKey)}
@@ -100,9 +118,7 @@ export default () => {
               <ReactJson src={json || {}} />
             </Card>
           </Col>
-        ) : (
-          undefined
-        )}
+        ) : undefined}
       </Row>
     </div>
   );
