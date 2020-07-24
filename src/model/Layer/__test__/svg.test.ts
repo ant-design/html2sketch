@@ -21,14 +21,13 @@ const shapeGroupData = {
   shouldBreakMaskChain: false,
   exportOptions: defaultExportOptions,
   rotation: 0,
-
   frame: {
     _class: 'rect',
     constrainProportions: false,
     height: 814.2161138351329,
     width: 736.652344,
-    x: 495,
-    y: 44,
+    x: -90,
+    y: 4,
   },
   clippingMaskMode: 0,
   style: new Style().toSketchJSON(),
@@ -61,7 +60,6 @@ const shapePathData = {
     exportFormats: [],
   },
   clippingMaskMode: 0,
-  hasClippingMask: false,
   style: new Style().toSketchJSON(),
   edited: true,
   pointRadiusBehaviour: 1,
@@ -437,13 +435,13 @@ describe('Svg 类', () => {
     });
   });
 
-  it('复合对象 可正常渲染', function() {
+  it('复合对象 可正常渲染', function () {
     const svg = new Svg({
       path,
       height: 814.2161138351329,
       width: 736.652344,
-      x: 495,
-      y: 44,
+      x: -90,
+      y: 4,
     });
 
     expect(svg.toSketchJSON()).toStrictEqual({
@@ -455,62 +453,62 @@ describe('Svg 类', () => {
           frame: {
             _class: 'rect',
             constrainProportions: false,
-            x: 4,
             height: 538.2161135860229,
             width: 736.371094,
-            y: 275.9999999999999,
+            x: 0,
+            y: 276.0000002491099,
           },
           isClosed: true,
           points: [
             {
               _class: 'curvePoint',
               cornerRadius: 0,
-              curveFrom: '{0.094005124369400256, 0.0043994959069016838}',
-              curveMode: 1,
-              curveTo: '{0.094005124369400256, 0.0043994959069016838}',
-              hasCurveFrom: false,
-              hasCurveTo: false,
-              point: '{0.094005124369400256, 0.0043994959069016838}',
-            },
-            {
-              _class: 'curvePoint',
-              cornerRadius: 0,
-              curveFrom: '{1, 0.52490515129525017}',
-              curveMode: 2,
-              curveTo: '{1, -0.032898195896168964}',
-              hasCurveFrom: true,
-              hasCurveTo: true,
-              point: '{1, 0.24600347769954062}',
-            },
-            {
-              _class: 'curvePoint',
-              cornerRadius: 0,
-              curveFrom: '{0.79026688097776743, 0.99417819208195324}',
-              curveMode: 3,
-              curveTo: '{0.95410391916489801, 0.76068735592081083}',
-              hasCurveFrom: true,
-              hasCurveTo: true,
-              point: '{0.89867965264626304, 0.83967473555271732}',
-            },
-            {
-              _class: 'curvePoint',
-              cornerRadius: 0,
-              curveFrom: '{0.22498952315779944, 0.73334111371835886}',
+              curveFrom: '{0.69800170754665725, -0.020465632616830577}',
               curveMode: 4,
-              curveTo: '{0.51214517985687136, 1.0125548715225787}',
+              curveTo: '{0.09400512426958466, 0.004399496208155765}',
               hasCurveFrom: true,
-              hasCurveTo: true,
-              point: '{0.32066563754899907, 0.99417819208195346}',
+              hasCurveTo: false,
+              point: '{0.09400512426958466, 0.004399496208155765}',
             },
             {
               _class: 'curvePoint',
               cornerRadius: 0,
-              curveFrom: '{-2.8248226739488335e-17, 0.54233106256576424}',
-              curveMode: 1,
-              curveTo: '{-2.8248226739488335e-17, 0.54233106256576424}',
+              curveFrom: '{1, 0.52490515170303653}',
+              curveMode: 3,
+              curveTo: '{1, 0.060069027914235316}',
+              hasCurveFrom: true,
+              hasCurveTo: true,
+              point: '{1, 0.24600347780135365}',
+            },
+            {
+              _class: 'curvePoint',
+              cornerRadius: 0,
+              curveFrom: '{0.79026688003046464, 0.99417819207556657}',
+              curveMode: 3,
+              curveTo: '{0.954103919510996, 0.7606873566513045}',
+              hasCurveFrom: true,
+              hasCurveTo: true,
+              point: '{0.8986796526806632, 0.8396747353768307}',
+            },
+            {
+              _class: 'curvePoint',
+              cornerRadius: 0,
+              curveFrom: '{0.25688156086148595, 0.82028680785739161}',
+              curveMode: 4,
+              curveTo: '{0.5121451793435009, 1.0125548715363522}',
+              hasCurveFrom: true,
+              hasCurveTo: true,
+              point: '{0.32066563710063284, 0.9941781920755667}',
+            },
+            {
+              _class: 'curvePoint',
+              cornerRadius: 0,
+              curveFrom: '{0, 0.54233106252817}',
+              curveMode: 4,
+              curveTo: '{0.14999301561394532, 0.6696710961502698}',
               hasCurveFrom: false,
-              hasCurveTo: false,
-              point: '{-2.8248226739488335e-17, 0.54233106256576424}',
+              hasCurveTo: true,
+              point: '{0, 0.54233106252817}',
             },
           ],
         },
@@ -520,8 +518,8 @@ describe('Svg 类', () => {
           frame: {
             _class: 'rect',
             constrainProportions: false,
-            height: 229.328125,
-            width: 280.65234375,
+            height: 229.32812499999994,
+            width: 280.652344,
             x: 284.37109375,
             y: 395.7578124999999,
           },
@@ -576,7 +574,7 @@ describe('Svg 类', () => {
             _class: 'rect',
             constrainProportions: false,
             height: 229.328125,
-            width: 280.6523437499999,
+            width: 280.65234399999997,
             x: 456,
             y: 0,
           },
@@ -595,13 +593,33 @@ describe('Svg 类', () => {
             },
             {
               _class: 'curvePoint',
-              cornerRadius: 100,
-              curveFrom: '{1.2499999999999998, 0.24999999999999989}',
+              cornerRadius: 0,
+              curveFrom: '{0.8404733615907374, 0}',
+              curveMode: 4,
+              curveTo: '{0.6436872802316591, 0}',
+              hasCurveFrom: true,
+              hasCurveTo: false,
+              point: '{0.6436872802316591, 0}',
+            },
+            {
+              _class: 'curvePoint',
+              cornerRadius: 0,
+              curveFrom: '{1, 0.4360564147986646}',
+              curveMode: 4,
+              curveTo: '{1, 0.1952291067656878}',
+              hasCurveFrom: false,
+              hasCurveTo: true,
+              point: '{1, 0.4360564147986646}',
+            },
+            {
+              _class: 'curvePoint',
+              cornerRadius: 0,
+              curveFrom: '{1, 1}',
               curveMode: 1,
-              curveTo: '{0.75000000000000011, -0.25}',
+              curveTo: '{1, 1}',
               hasCurveFrom: false,
               hasCurveTo: false,
-              point: '{1, 0}',
+              point: '{1, 1}',
             },
             {
               _class: 'curvePoint',
@@ -632,8 +650,8 @@ describe('Svg 类', () => {
             _class: 'rect',
             constrainProportions: false,
             height: 229.328125,
-            width: 280.6523437499999,
-            x: 64.00000000000006,
+            width: 280.652344,
+            x: 64,
             y: 0,
           },
           isClosed: false,
@@ -651,13 +669,33 @@ describe('Svg 类', () => {
             },
             {
               _class: 'curvePoint',
-              cornerRadius: 100,
-              curveFrom: '{1.2499999999999998, 0.24999999999999989}',
+              cornerRadius: 0,
+              curveFrom: '{0.8404733615907372, 0}',
+              curveMode: 4,
+              curveTo: '{0.6436872802316591, 0}',
+              hasCurveFrom: true,
+              hasCurveTo: false,
+              point: '{0.6436872802316591, 0}',
+            },
+            {
+              _class: 'curvePoint',
+              cornerRadius: 0,
+              curveFrom: '{1, 0.4360564147986646}',
+              curveMode: 4,
+              curveTo: '{1, 0.1952291067656878}',
+              hasCurveFrom: false,
+              hasCurveTo: true,
+              point: '{1, 0.4360564147986646}',
+            },
+            {
+              _class: 'curvePoint',
+              cornerRadius: 0,
+              curveFrom: '{1, 1}',
               curveMode: 1,
-              curveTo: '{0.75000000000000011, -0.25}',
+              curveTo: '{1, 1}',
               hasCurveFrom: false,
               hasCurveTo: false,
-              point: '{1, 0}',
+              point: '{1, 1}',
             },
             {
               _class: 'curvePoint',
@@ -685,8 +723,8 @@ describe('Svg 类', () => {
     });
   });
 
-  describe('convertToCubicBezier', function() {
-    it('复合对象转换正常', function() {
+  describe('convertToCubicBezier', function () {
+    it('复合对象转换正常', function () {
       const points = Svg.svgPathToShapeGroup(path);
 
       expect(points).toStrictEqual({
@@ -889,7 +927,7 @@ describe('Svg 类', () => {
       });
     });
 
-    it('path不正确时报错', function() {
+    it('path不正确时报错', function () {
       const path = 'Z';
       const t = () => {
         try {

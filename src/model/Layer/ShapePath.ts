@@ -45,12 +45,17 @@ class ShapePath extends Base {
   isClosed: boolean;
 
   /**
+   * 单个 ShapePath 的布尔类型
+   */
+  booleanOperation: SketchFormat.BooleanOperation =
+    SketchFormat.BooleanOperation.NA;
+  /**
    * 转为 Sketch JSON 文件
    */
   toSketchJSON(): SketchFormat.ShapePath {
     return {
       _class: 'shapePath',
-      booleanOperation: SketchFormat.BooleanOperation.NA,
+      booleanOperation: this.booleanOperation,
       do_objectID: this.id,
       rotation: this.rotation,
       isVisible: true,

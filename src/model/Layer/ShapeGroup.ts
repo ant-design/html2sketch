@@ -13,6 +13,10 @@ class ShapeGroup extends Base {
     super(params);
     this.class = SketchFormat.ClassValue.ShapeGroup;
   }
+
+  /**
+   * 旋转角度
+   */
   rotation: number = 0;
 
   /**
@@ -20,6 +24,23 @@ class ShapeGroup extends Base {
    */
   layers: AnyShape[] = [];
 
+  /**
+   * 填充规则
+   * @see https://www.yuque.com/arvinxx/fontend/7ad6671c-d309-40fc-a0a8-55888f508289
+   */
+  windingRule = SketchFormat.WindingRule.EvenOdd; // 默认采用奇偶环绕规则
+
+  /**
+   * 添加图层
+   * @param layer
+   */
+  addLayer(layer: AnyShape) {
+    // 在组里面的位置是相对位置关系
+    // 因此在添加图层的时候需要减掉父级的位置,得到算出相对位置
+    layer.x -= this.x;
+    layer.y -= this.y;
+    super.addLayer(layer);
+  }
   /**
    * 转换为 Sketch 对象
    */
@@ -30,7 +51,7 @@ class ShapeGroup extends Base {
       do_objectID: this.id,
       layers: this.layers.map((l) => l.toSketchJSON()),
       rotation: this.rotation,
-      windingRule: SketchFormat.WindingRule.EvenOdd,
+      windingRule: this.windingRule,
       isVisible: true,
       isFixedToViewport: false,
       isFlippedHorizontal: false,
