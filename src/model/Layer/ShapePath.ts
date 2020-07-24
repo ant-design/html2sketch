@@ -10,6 +10,12 @@ export interface ShapePathType {
   frame: { width: number; height: number; x?: number; y?: number };
   isClose: boolean;
 }
+
+interface ContextPoints {
+  thisPoint: BezierPoint;
+  nextPoint: BezierPoint;
+  prevPoint: BezierPoint;
+}
 export interface ShapePathInitParams extends BaseLayerParams {
   isClose: boolean;
   points: BezierPoint[];
@@ -90,35 +96,13 @@ class ShapePath extends Base {
     point: BezierPoint,
     index: number
   ): SketchFormat.CurvePoint => {
-    // 初始化 //
-    let curveMode = SketchFormat.CurveMode.Straight;
+    const { nextPoint, thisPoint } = this.getContextPoints(index);
 
     let hasCurveFrom = false;
     let hasCurveTo = false;
 
-    const prevIndex = index - 1 > -1 ? index - 1 : this.points.length - 1;
-    const nextIndex = index + 1 < this.points.length ? index + 1 : 0;
-    const prevPoint = this.points[prevIndex];
-    const nextPoint = this.points[nextIndex];
-
-    let thisPoint = point;
-    let curveFromPoint: { x: number; y: number } = thisPoint;
-    let curveToPoint: { x: number; y: number } = thisPoint;
-
-    if (point.type === SVGPathData.MOVE_TO && index === 0) {
-      thisPoint = this.points[this.points.length - 1];
-    }
-
-    console.log('thisPoint:', index, 'type:', thisPoint.type);
-    console.log('prevPoint:', prevIndex, 'type:', prevPoint.type);
-    console.log('nextPoint:', nextIndex, 'type:', nextPoint.type);
-    // 判断曲线模式 //
-    if (
-      prevPoint.type !== thisPoint.type ||
-      nextPoint.type !== thisPoint.type
-    ) {
-      curveMode = SketchFormat.CurveMode.Disconnected;
-    }
+    let curveFromPoint: { x: number; y: number } = point;
+    let curveToPoint: { x: number; y: number } = point;
 
     // 如果自身点是 Curve 点
     if (thisPoint.type === SVGPathData.CURVE_TO) {
@@ -135,9 +119,16 @@ class ShapePath extends Base {
       curveFromPoint = { x: nextPoint.x1, y: nextPoint.y1 };
     }
 
-    if (index === this.points.length - 1)
-      // 返回最后一个对象
-      return;
+    // 确认曲线模式
+    const curveMode =
+      hasCurveFrom || hasCurveTo
+        ? SketchFormat.CurveMode.Disconnected
+        : SketchFormat.CurveMode.Straight;
+
+    // 如果是闭合路径
+    // 过滤最后一个点
+    if (this.isClosed && index === this.points.length - 1) return;
+
     return {
       _class: 'curvePoint',
       cornerRadius: 0,
@@ -147,6 +138,39 @@ class ShapePath extends Base {
       hasCurveFrom,
       hasCurveTo,
       point: `{${point.x}, ${point.y}}`,
+    };
+  };
+
+  /**
+   * 获取上下文的点
+   * @param index
+   */
+  private getContextPoints = (index: number): ContextPoints => {
+    let thisIndex = index;
+    const lastIndex = this.points.length - 1;
+    let prevIndex = index - 1;
+    let nextIndex = index + 1;
+    // 如果是第一个点
+    if (index === 0) {
+      thisIndex = lastIndex;
+      prevIndex = lastIndex - 1;
+      nextIndex = 1;
+    }
+    // 第二个点的情况下
+    else if (index === 1) {
+      // 前一个点是最后一个点
+      prevIndex = lastIndex;
+    }
+    // 最后一个点的情况下
+    else if (index === lastIndex) {
+      // 下一个点是第二个点
+      nextIndex = 1;
+    }
+
+    return {
+      thisPoint: this.points[thisIndex],
+      nextPoint: this.points[nextIndex],
+      prevPoint: this.points[prevIndex],
     };
   };
 
