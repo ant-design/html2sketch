@@ -6,16 +6,19 @@ import { SVGPathData } from 'svg-pathdata';
 import Frame from '../../Frame';
 import { getGroupLayout } from '../../../helpers/layout';
 import { SvgShape } from '../Svg';
+import { writeFileSync } from 'fs';
+import { join } from 'path';
 
-interface TesPathData {
+interface TestPathData {
   path: string;
   shapePath: ShapePathType;
   sketchJSON: SketchFormat.ShapePath;
 }
 
 interface TestSvgData {
-  shapes: SvgShape[];
+  svgString: string;
   sketchJSON: SketchFormat.ShapeGroup | SketchFormat.Group;
+  shapes?: SvgShape[];
 }
 
 // 可复用的 shapePath 数据
@@ -89,6 +92,18 @@ export const groupData = {
   groupLayout: { _class: 'MSImmutableFreeformGroupLayout' },
 };
 
+/**
+ * 打印出 JSON 数据到路径中
+ * @param json
+ * @param name
+ */
+export const outputJSONData = (json, name?: string) => {
+  writeFileSync(
+    join(__dirname, `./json/${name ? name : 'json'}.json`),
+    JSON.stringify(json)
+  );
+};
+
 // ----------- Path 类 ------------- //
 
 /**
@@ -96,7 +111,7 @@ export const groupData = {
  * Path: M73.2226562,282.36788 C517.988281,268.985067 740.371094,312.330119 740.371094,412.403036 C740.371094,562.512411 706.574547,689.414193 665.761719,731.926473 C585.929687,815.082723 381.128906,824.973348 240.128906,815.082723 C193.160156,721.491578 114.450521,640.427775 4,571.891317 L73.2226562,282.36788 Z
  * @see https://svg-path-visualizer.netlify.app/#M73.2226562%2C282.36788%20C517.988281%2C268.985067%20740.371094%2C312.330119%20740.371094%2C412.403036%20C740.371094%2C562.512411%20706.574547%2C689.414193%20665.761719%2C731.926473%20C585.929687%2C815.082723%20381.128906%2C824.973348%20240.128906%2C815.082723%20C193.160156%2C721.491578%20114.450521%2C640.427775%204%2C571.891317%20L73.2226562%2C282.36788%20Z
  */
-export const compPath: TesPathData = {
+export const compPath: TestPathData = {
   path:
     'M73.2226562,282.36788 C517.988281,268.985067 740.371094,312.330119 740.371094,412.403036 C740.371094,562.512411 706.574547,689.414193 665.761719,731.926473 C585.929687,815.082723 381.128906,824.973348 240.128906,815.082723 C193.160156,721.491578 114.450521,640.427775 4,571.891317 L73.2226562,282.36788 Z',
   shapePath: {
@@ -225,7 +240,7 @@ export const compPath: TesPathData = {
  * 一个带圆角的矩形
  * @see https://svg-path-visualizer.netlify.app/#M460%2C4%20L640.652344%2C4%20C695.880819%2C4%20740.652344%2C48.771525%20740.652344%2C104%20L740.652344%2C233.328125%20L460%2C233.328125%20L460%2C4%20Z
  */
-export const singleRoundRect: TesPathData = {
+export const singleRoundRect: TestPathData = {
   path:
     'M460,4 L640.652344,4 C695.880819,4 740.652344,48.771525 740.652344,104 L740.652344,233.328125 L460,233.328125 L460,4 Z',
   shapePath: {
@@ -344,7 +359,7 @@ export const singleRoundRect: TesPathData = {
  * Path: M288.371094,399.757812 L569.023438,399.757812 L569.023438,629.085937 L288.371094,629.085937 L288.371094,399.757812 Z
  * @see https://svg-path-visualizer.netlify.app/#M288.371094%2C399.757812%20L569.023438%2C399.757812%20L569.023438%2C629.085937%20L288.371094%2C629.085937%20L288.371094%2C399.757812%20Z
  */
-export const rect: TesPathData = {
+export const rect: TestPathData = {
   path:
     'M288.371094,399.757812 L569.023438,399.757812 L569.023438,629.085937 L288.371094,629.085937 L288.371094,399.757812 Z',
   shapePath: {
@@ -443,7 +458,7 @@ export const rect: TesPathData = {
  * path: 'M872 474H152c-4.4 0-8 3.6-8 8v60c0 4.4 3.6 8 8 8h720c4.4 0 8-3.6 8-8v-60c0-4.4-3.6-8-8-8z'
  * @see https://svg-path-visualizer.netlify.app/#M872%20474H152c-4.4%200-8%203.6-8%208v60c0%204.4%203.6%208%208%208h720c4.4%200%208-3.6%208-8v-60c0-4.4-3.6-8-8-8z
  */
-export const roundRect: TesPathData = {
+export const roundRect: TestPathData = {
   path:
     'M872 474H152c-4.4 0-8 3.6-8 8v60c0 4.4 3.6 8 8 8h720c4.4 0 8-3.6 8-8v-60c0-4.4-3.6-8-8-8z ',
   shapePath: {
@@ -608,7 +623,7 @@ export const roundRect: TesPathData = {
  * 一个开放矩形
  * @see https://svg-path-visualizer.netlify.app/#M68%2C4%20L248.652344%2C4%20C303.880819%2C4%20348.652344%2C48.771525%20348.652344%2C104%20L348.652344%2C233.328125%20L68%2C233.328125
  */
-export const unclosedRect: TesPathData = {
+export const unclosedRect: TestPathData = {
   path:
     'M68,4 L248.652344,4 C303.880819,4 348.652344,48.771525 348.652344,104 L348.652344,233.328125 L68,233.328125',
   shapePath: {
@@ -717,13 +732,328 @@ export const unclosedRect: TesPathData = {
   },
 };
 
+/**
+ * 上箭头
+ */
+export const upArrow: TestPathData = {
+  path:
+    'M518.5 360.3a7.95 7.95 0 00-12.9 0l-178 246c-3.8 5.3 0 12.7 6.5 12.7H381c10.2 0 19.9-4.9 25.9-13.2L512 460.4l105.2 145.4c6 8.3 15.6 13.2 25.9 13.2H690c6.5 0 10.3-7.4 6.5-12.7l-178-246z',
+  shapePath: {
+    frame: {
+      height: 86.61830357142858,
+      width: 120.209374131087,
+      x: 92.07165222017079,
+      y: 99.20758928571426,
+    },
+    isClose: true,
+    points: [
+      {
+        type: 2,
+        x: 0.5173421906682137,
+        y: 0.012604540006713702,
+      },
+      {
+        type: 32,
+        x: 0.49999999999999994,
+        x1: 0.5133248399992646,
+        x2: 0.5068719500712158,
+        y: -7.796914110299981e-17,
+        y1: 0.004690048149804349,
+        y2: -7.796914110299981e-17,
+      },
+      {
+        type: 32,
+        x: 0.48265780933178615,
+        x1: 0.493128049928784,
+        x2: 0.48667516000073524,
+        y: 0.012604540006713698,
+        y1: -7.796914110299981e-17,
+        y2: 0.004690048149804346,
+      },
+      {
+        type: 16,
+        x: 0.004067121123714938,
+        y: 0.951527165280577,
+      },
+      {
+        type: 32,
+        x: 0.021543747378504056,
+        x1: -0.00614998345600793,
+        x2: 0.004067121123714938,
+        y: 1,
+        y1: 0.9717559860689977,
+        y2: 1,
+      },
+      {
+        type: 16,
+        x: 0.14764432758613624,
+        y: 1,
+      },
+      {
+        type: 32,
+        x: 0.21728196143214212,
+        x1: 0.17506918724749762,
+        x2: 0.201149691043106,
+        y: 0.9496187859609146,
+        y1: 1,
+        y2: 0.9812978826673093,
+      },
+      {
+        type: 16,
+        x: 0.4998655644134246,
+        y: 0.3946620798031108,
+      },
+      {
+        type: 16,
+        x: 0.7827180385678576,
+        y: 0.9496187859609145,
+      },
+      {
+        type: 32,
+        x: 0.8523556724138635,
+        x1: 0.7988503089568938,
+        x2: 0.8246619415793516,
+        y: 1,
+        y1: 0.9812978826673091,
+        y2: 1,
+      },
+      {
+        type: 16,
+        x: 0.9784562526214958,
+        y: 1,
+      },
+      {
+        type: 32,
+        x: 0.9959328788762849,
+        x1: 0.9959328788762849,
+        x2: 1.0061499834560077,
+        y: 0.951527165280577,
+        y1: 1,
+        y2: 0.9717559860689976,
+      },
+      {
+        type: 16,
+        x: 0.5173421906682137,
+        y: 0.012604540006713702,
+      },
+    ],
+  },
+  sketchJSON: {
+    _class: 'shapePath',
+    ...shapePathData,
+    frame: new Frame({
+      width: 371.92533073817987,
+      height: 262.00241998455107,
+      x: 326.0873346309101,
+      y: 356.99758001544893,
+    }).toSketchJSON(),
+    isClosed: true,
+    pointRadiusBehaviour: 1,
+    points: [
+      {
+        _class: 'curvePoint',
+        cornerRadius: 0,
+        curveFrom: '{0.5133248399992646, 0.004690048149804349}',
+        curveMode: 4,
+        curveTo: '{0.5173421906682137, 0.012604540006713702}',
+        hasCurveFrom: true,
+        hasCurveTo: false,
+        point: '{0.5173421906682137, 0.012604540006713702}',
+      },
+      {
+        _class: 'curvePoint',
+        cornerRadius: 0,
+        curveFrom: '{0.493128049928784, -7.796914110299981e-17}',
+        curveMode: 3,
+        curveTo: '{0.5068719500712158, -7.796914110299981e-17}',
+        hasCurveFrom: true,
+        hasCurveTo: true,
+        point: '{0.49999999999999994, -7.796914110299981e-17}',
+      },
+      {
+        _class: 'curvePoint',
+        cornerRadius: 0,
+        curveFrom: '{0.48265780933178615, 0.012604540006713698}',
+        curveMode: 4,
+        curveTo: '{0.48667516000073524, 0.004690048149804346}',
+        hasCurveFrom: false,
+        hasCurveTo: true,
+        point: '{0.48265780933178615, 0.012604540006713698}',
+      },
+      {
+        _class: 'curvePoint',
+        cornerRadius: 0,
+        curveFrom: '{-0.00614998345600793, 0.9717559860689977}',
+        curveMode: 4,
+        curveTo: '{0.004067121123714938, 0.951527165280577}',
+        hasCurveFrom: true,
+        hasCurveTo: false,
+        point: '{0.004067121123714938, 0.951527165280577}',
+      },
+      {
+        _class: 'curvePoint',
+        cornerRadius: 0,
+        curveFrom: '{0.021543747378504056, 1}',
+        curveMode: 4,
+        curveTo: '{0.004067121123714938, 1}',
+        hasCurveFrom: false,
+        hasCurveTo: true,
+        point: '{0.021543747378504056, 1}',
+      },
+      {
+        _class: 'curvePoint',
+        cornerRadius: 0,
+        curveFrom: '{0.17506918724749762, 1}',
+        curveMode: 4,
+        curveTo: '{0.14764432758613624, 1}',
+        hasCurveFrom: true,
+        hasCurveTo: false,
+        point: '{0.14764432758613624, 1}',
+      },
+      {
+        _class: 'curvePoint',
+        cornerRadius: 0,
+        curveFrom: '{0.21728196143214212, 0.9496187859609146}',
+        curveMode: 4,
+        curveTo: '{0.201149691043106, 0.9812978826673093}',
+        hasCurveFrom: false,
+        hasCurveTo: true,
+        point: '{0.21728196143214212, 0.9496187859609146}',
+      },
+      {
+        _class: 'curvePoint',
+        cornerRadius: 0,
+        curveFrom: '{0.4998655644134246, 0.3946620798031108}',
+        curveMode: 1,
+        curveTo: '{0.4998655644134246, 0.3946620798031108}',
+        hasCurveFrom: false,
+        hasCurveTo: false,
+        point: '{0.4998655644134246, 0.3946620798031108}',
+      },
+      {
+        _class: 'curvePoint',
+        cornerRadius: 0,
+        curveFrom: '{0.7988503089568938, 0.9812978826673091}',
+        curveMode: 4,
+        curveTo: '{0.7827180385678576, 0.9496187859609145}',
+        hasCurveFrom: true,
+        hasCurveTo: false,
+        point: '{0.7827180385678576, 0.9496187859609145}',
+      },
+      {
+        _class: 'curvePoint',
+        cornerRadius: 0,
+        curveFrom: '{0.8523556724138635, 1}',
+        curveMode: 4,
+        curveTo: '{0.8246619415793516, 1}',
+        hasCurveFrom: false,
+        hasCurveTo: true,
+        point: '{0.8523556724138635, 1}',
+      },
+      {
+        _class: 'curvePoint',
+        cornerRadius: 0,
+        curveFrom: '{0.9959328788762849, 1}',
+        curveMode: 4,
+        curveTo: '{0.9784562526214958, 1}',
+        hasCurveFrom: true,
+        hasCurveTo: false,
+        point: '{0.9784562526214958, 1}',
+      },
+      {
+        _class: 'curvePoint',
+        cornerRadius: 0,
+        curveFrom: '{0.9959328788762849, 0.951527165280577}',
+        curveMode: 4,
+        curveTo: '{1.0061499834560077, 0.9717559860689976}',
+        hasCurveFrom: false,
+        hasCurveTo: true,
+        point: '{0.9959328788762849, 0.951527165280577}',
+      },
+    ],
+  },
+};
+
+export const plus: TestPathData = {
+  path: 'M482 152h60q8 0 8 8v704q0 8-8 8h-60q-8 0-8-8V160q0-8 8-8z',
+  shapePath: {
+    frame: { height: 720, width: 76, x: 474, y: 151.99999999999997 },
+    isClose: true,
+    points: [
+      {
+        type: 2,
+        x: 0.10526315789473684,
+        y: 3.947459643111668e-17,
+      },
+      {
+        type: 16,
+        x: 0.8947368421052632,
+        y: 3.947459643111668e-17,
+      },
+      {
+        type: 32,
+        x: 1,
+        x1: 0.9649122807017543,
+        x2: 1,
+        y: 0.011111111111111151,
+        y1: 3.947459643111668e-17,
+        y2: 0.003703703703703743,
+      },
+      {
+        type: 16,
+        x: 1,
+        y: 0.9888888888888889,
+      },
+      {
+        type: 32,
+        x: 0.8947368421052632,
+        x1: 1,
+        x2: 0.9649122807017543,
+        y: 1,
+        y1: 0.9962962962962963,
+        y2: 1,
+      },
+      {
+        type: 16,
+        x: 0.10526315789473684,
+        y: 1,
+      },
+      {
+        type: 32,
+        x: 0,
+        x1: 0.03508771929824562,
+        x2: 0,
+        y: 0.9888888888888889,
+        y1: 1,
+        y2: 0.9962962962962963,
+      },
+      {
+        type: 16,
+        x: 0,
+        y: 0.011111111111111151,
+      },
+      {
+        type: 32,
+        x: 0.10526315789473684,
+        x1: 0,
+        x2: 0.03508771929824561,
+        y: 3.947459643111668e-17,
+        y1: 0.0037037037037037437,
+        y2: 3.947459643111668e-17,
+      },
+    ],
+  },
+};
 // ----------- Svg 类 -------------- //
 
 /**
  * SVG 图形如下
+ * Path: M73.2226562,282.36788 C517.988281,268.985067 740.371094,312.330119 740.371094,412.403036 C740.371094,562.512411 706.574547,689.414193 665.761719,731.926473 C585.929687,815.082723 381.128906,824.973348 240.128906,815.082723 C193.160156,721.491578 114.450521,640.427775 4,571.891317 L73.2226562,282.36788 Z M288.371094,399.757812 L569.023438,399.757812 L569.023438,629.085937 L288.371094,629.085937 L288.371094,399.757812 Z M460,4 L640.652344,4 C695.880819,4 740.652344,48.771525 740.652344,104 L740.652344,233.328125 L460,233.328125 L460,4 Z M68,4 L248.652344,4 C303.880819,4 348.652344,48.771525 348.652344,104 L348.652344,233.328125 L68,233.328125
  * @see https://svg-path-visualizer.netlify.app/#M73.2226562%2C282.36788%20C517.988281%2C268.985067%20740.371094%2C312.330119%20740.371094%2C412.403036%20C740.371094%2C562.512411%20706.574547%2C689.414193%20665.761719%2C731.926473%20C585.929687%2C815.082723%20381.128906%2C824.973348%20240.128906%2C815.082723%20C193.160156%2C721.491578%20114.450521%2C640.427775%204%2C571.891317%20L73.2226562%2C282.36788%20Z%20M288.371094%2C399.757812%20L569.023438%2C399.757812%20L569.023438%2C629.085937%20L288.371094%2C629.085937%20L288.371094%2C399.757812%20Z%20M460%2C4%20L640.652344%2C4%20C695.880819%2C4%20740.652344%2C48.771525%20740.652344%2C104%20L740.652344%2C233.328125%20L460%2C233.328125%20L460%2C4%20Z%20M68%2C4%20L248.652344%2C4%20C303.880819%2C4%20348.652344%2C48.771525%20348.652344%2C104%20L348.652344%2C233.328125%20L68%2C233.328125
  */
 export const svgPath: TestSvgData = {
+  svgString:
+    '<svg viewBox="64 64 736.652344 814.2161138351329" focusable="false" class="" data-icon="up-circle" width="300px" height="300px" fill="#aaa" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"  xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M73.2226562,282.36788 C517.988281,268.985067 740.371094,312.330119 740.371094,412.403036 C740.371094,562.512411 706.574547,689.414193 665.761719,731.926473 C585.929687,815.082723 381.128906,824.973348 240.128906,815.082723 C193.160156,721.491578 114.450521,640.427775 4,571.891317 L73.2226562,282.36788 Z M288.371094,399.757812 L569.023438,399.757812 L569.023438,629.085937 L288.371094,629.085937 L288.371094,399.757812 Z M460,4 L640.652344,4 C695.880819,4 740.652344,48.771525 740.652344,104 L740.652344,233.328125 L460,233.328125 L460,4 Z M68,4 L248.652344,4 C303.880819,4 348.652344,48.771525 348.652344,104 L348.652344,233.328125 L68,233.328125"></path></svg>',
   shapes: [
     {
       path:
@@ -768,6 +1098,8 @@ export const svgPath: TestSvgData = {
  * Dropbox Svg 路径
  */
 export const dropboxSvgPath: TestSvgData = {
+  svgString:
+    '<svg viewBox="64 64 896 896" focusable="false" class="" data-icon="dropbox" width="1em" height="1em" fill="currentColor" aria-hidden="true"><path d="M64 556.9L328.2 730.4L512.5 577L246.8 412.7zM960 266.59999999999997zM960 266.59999999999997L696.8 95L512.5 248.5L777.7 412.7L512.5 577L696.8 730.4L960 558.8L777.7 412.7zM513 609.8L328.2 763.3L248.79999999999998 711.8V769.5999999999999L513 928L776.7 769.6V711.8000000000001L697.8000000000001 763.3000000000001zM328.2 95L64 265.1L246.8 412.70000000000005L512.5 248.50000000000006zM64 556.9z" style="fill: rgba(0, 0, 0, 0.65); color: rgba(0, 0, 0, 0.65); font-family: -apple-system, system-ui, &quot;Segoe UI&quot;, Roboto, &quot;Helvetica Neue&quot;, Arial, &quot;Noto Sans&quot;, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;, &quot;Noto Color Emoji&quot;; font-size: 14px; font-variant: tabular-nums; text-decoration: none solid rgba(0, 0, 0, 0.65); text-rendering: optimizelegibility;"></path></svg>',
   shapes: [
     {
       path:
@@ -777,11 +1109,11 @@ export const dropboxSvgPath: TestSvgData = {
   sketchJSON: {
     ...shapeGroupData,
     _class: 'shapeGroup',
-    name: 'svg',
+    name: 'shapeGroup',
     frame: {
       _class: 'rect',
       constrainProportions: false,
-      height: 100,
+      height: 92.96875,
       width: 100,
       x: 520,
       y: 349,
@@ -813,32 +1145,32 @@ export const dropboxSvgPath: TestSvgData = {
           {
             _class: 'curvePoint',
             cornerRadius: 0,
-            curveFrom: '{0.5890746934225195, 1}',
+            curveFrom: '{0.5890746934225194, 1}',
             curveMode: 1,
-            curveTo: '{0.5890746934225195, 1}',
+            curveTo: '{0.5890746934225194, 1}',
             hasCurveFrom: false,
             hasCurveTo: false,
-            point: '{0.5890746934225195, 1}',
+            point: '{0.5890746934225194, 1}',
           },
           {
             _class: 'curvePoint',
             cornerRadius: 0,
-            curveFrom: '{1, 0.5171545483160215}',
+            curveFrom: '{1, 0.5171545483160216}',
             curveMode: 1,
-            curveTo: '{1, 0.5171545483160215}',
+            curveTo: '{1, 0.5171545483160216}',
             hasCurveFrom: false,
             hasCurveTo: false,
-            point: '{1, 0.5171545483160215}',
+            point: '{1, 0.5171545483160216}',
           },
           {
             _class: 'curvePoint',
             cornerRadius: 0,
-            curveFrom: '{0.40758082497212933, 0}',
+            curveFrom: '{0.4075808249721293, 0}',
             curveMode: 1,
-            curveTo: '{0.40758082497212933, 0}',
+            curveTo: '{0.4075808249721293, 0}',
             hasCurveFrom: false,
             hasCurveTo: false,
-            point: '{0.40758082497212933, 0}',
+            point: '{0.4075808249721293, 0}',
           },
         ],
       },
@@ -849,7 +1181,7 @@ export const dropboxSvgPath: TestSvgData = {
           _class: 'rect',
           constrainProportions: false,
           height: 70.91517857142857,
-          width: 49.94419642857143,
+          width: 49.94419642857142,
           x: 50.05580357142858,
           y: 0,
         },
@@ -868,52 +1200,52 @@ export const dropboxSvgPath: TestSvgData = {
           {
             _class: 'curvePoint',
             cornerRadius: 0,
-            curveFrom: '{0.4118435754189943, 0}',
+            curveFrom: '{0.41184357541899436, 0}',
             curveMode: 1,
-            curveTo: '{0.4118435754189943, 0}',
+            curveTo: '{0.41184357541899436, 0}',
             hasCurveFrom: false,
             hasCurveTo: false,
-            point: '{0.4118435754189943, 0}',
+            point: '{0.41184357541899436, 0}',
           },
           {
             _class: 'curvePoint',
             cornerRadius: 0,
-            curveFrom: '{0, 0.24158010701920052}',
+            curveFrom: '{0, 0.24158010701920055}',
             curveMode: 1,
-            curveTo: '{0, 0.24158010701920052}',
+            curveTo: '{0, 0.24158010701920055}',
             hasCurveFrom: false,
             hasCurveTo: false,
-            point: '{0, 0.24158010701920052}',
+            point: '{0, 0.24158010701920055}',
           },
           {
             _class: 'curvePoint',
             cornerRadius: 0,
-            curveFrom: '{0.5926256983240225, 0.5}',
+            curveFrom: '{0.5926256983240223, 0.5}',
             curveMode: 1,
-            curveTo: '{0.5926256983240225, 0.5}',
+            curveTo: '{0.5926256983240223, 0.5}',
             hasCurveFrom: false,
             hasCurveTo: false,
-            point: '{0.5926256983240225, 0.5}',
+            point: '{0.5926256983240223, 0.5}',
           },
           {
             _class: 'curvePoint',
             cornerRadius: 0,
-            curveFrom: '{0, 0.7585772741580107}',
+            curveFrom: '{0, 0.7585772741580108}',
             curveMode: 1,
-            curveTo: '{0, 0.7585772741580107}',
+            curveTo: '{0, 0.7585772741580108}',
             hasCurveFrom: false,
             hasCurveTo: false,
-            point: '{0, 0.7585772741580107}',
+            point: '{0, 0.7585772741580108}',
           },
           {
             _class: 'curvePoint',
             cornerRadius: 0,
-            curveFrom: '{0.4118435754189943, 1}',
+            curveFrom: '{0.41184357541899436, 1}',
             curveMode: 1,
-            curveTo: '{0.4118435754189943, 1}',
+            curveTo: '{0.41184357541899436, 1}',
             hasCurveFrom: false,
             hasCurveTo: false,
-            point: '{0.4118435754189943, 1}',
+            point: '{0.41184357541899436, 1}',
           },
           {
             _class: 'curvePoint',
@@ -928,12 +1260,12 @@ export const dropboxSvgPath: TestSvgData = {
           {
             _class: 'curvePoint',
             cornerRadius: 0,
-            curveFrom: '{0.5926256983240225, 0.5}',
+            curveFrom: '{0.5926256983240223, 0.5}',
             curveMode: 1,
-            curveTo: '{0.5926256983240225, 0.5}',
+            curveTo: '{0.5926256983240223, 0.5}',
             hasCurveFrom: false,
             hasCurveTo: false,
-            point: '{0.5926256983240225, 0.5}',
+            point: '{0.5926256983240223, 0.5}',
           },
         ],
       },
@@ -944,7 +1276,7 @@ export const dropboxSvgPath: TestSvgData = {
           _class: 'rect',
           constrainProportions: false,
           height: 35.51339285714286,
-          width: 58.91741071428573,
+          width: 58.91741071428572,
           x: 20.625,
           y: 57.45535714285714,
         },
@@ -963,32 +1295,32 @@ export const dropboxSvgPath: TestSvgData = {
           {
             _class: 'curvePoint',
             cornerRadius: 0,
-            curveFrom: '{0.15040727410494412, 0.48240100565681954}',
+            curveFrom: '{0.1504072741049441, 0.4824010056568196}',
             curveMode: 1,
-            curveTo: '{0.15040727410494412, 0.48240100565681954}',
+            curveTo: '{0.1504072741049441, 0.4824010056568196}',
             hasCurveFrom: false,
             hasCurveTo: false,
-            point: '{0.15040727410494412, 0.48240100565681954}',
+            point: '{0.1504072741049441, 0.4824010056568196}',
           },
           {
             _class: 'curvePoint',
             cornerRadius: 0,
-            curveFrom: '{0, 0.3205531112507856}',
+            curveFrom: '{0, 0.32055311125078556}',
             curveMode: 1,
-            curveTo: '{0, 0.3205531112507856}',
+            curveTo: '{0, 0.32055311125078556}',
             hasCurveFrom: false,
             hasCurveTo: false,
-            point: '{0, 0.3205531112507856}',
+            point: '{0, 0.32055311125078556}',
           },
           {
             _class: 'curvePoint',
             cornerRadius: 0,
-            curveFrom: '{0, 0.5021998742928974}',
+            curveFrom: '{0, 0.5021998742928976}',
             curveMode: 1,
-            curveTo: '{0, 0.5021998742928974}',
+            curveTo: '{0, 0.5021998742928976}',
             hasCurveFrom: false,
             hasCurveTo: false,
-            point: '{0, 0.5021998742928974}',
+            point: '{0, 0.5021998742928976}',
           },
           {
             _class: 'curvePoint',
@@ -1003,32 +1335,32 @@ export const dropboxSvgPath: TestSvgData = {
           {
             _class: 'curvePoint',
             cornerRadius: 0,
-            curveFrom: '{1, 0.5021998742928977}',
+            curveFrom: '{1, 0.5021998742928979}',
             curveMode: 1,
-            curveTo: '{1, 0.5021998742928977}',
+            curveTo: '{1, 0.5021998742928979}',
             hasCurveFrom: false,
             hasCurveTo: false,
-            point: '{1, 0.5021998742928977}',
+            point: '{1, 0.5021998742928979}',
           },
           {
             _class: 'curvePoint',
             cornerRadius: 0,
-            curveFrom: '{1, 0.320553111250786}',
+            curveFrom: '{1, 0.32055311125078595}',
             curveMode: 1,
-            curveTo: '{1, 0.320553111250786}',
+            curveTo: '{1, 0.32055311125078595}',
             hasCurveFrom: false,
             hasCurveTo: false,
-            point: '{1, 0.320553111250786}',
+            point: '{1, 0.32055311125078595}',
           },
           {
             _class: 'curvePoint',
             cornerRadius: 0,
-            curveFrom: '{0.8505398749763213, 0.4824010056568199}',
+            curveFrom: '{0.8505398749763213, 0.48240100565682004}',
             curveMode: 1,
-            curveTo: '{0.8505398749763213, 0.4824010056568199}',
+            curveTo: '{0.8505398749763213, 0.48240100565682004}',
             hasCurveFrom: false,
             hasCurveTo: false,
-            point: '{0.8505398749763213, 0.4824010056568199}',
+            point: '{0.8505398749763213, 0.48240100565682004}',
           },
         ],
       },
@@ -1048,12 +1380,12 @@ export const dropboxSvgPath: TestSvgData = {
           {
             _class: 'curvePoint',
             cornerRadius: 0,
-            curveFrom: '{0.5890746934225195, 0}',
+            curveFrom: '{0.5890746934225194, 0}',
             curveMode: 1,
-            curveTo: '{0.5890746934225195, 0}',
+            curveTo: '{0.5890746934225194, 0}',
             hasCurveFrom: false,
             hasCurveTo: false,
-            point: '{0.5890746934225195, 0}',
+            point: '{0.5890746934225194, 0}',
           },
           {
             _class: 'curvePoint',
@@ -1068,12 +1400,12 @@ export const dropboxSvgPath: TestSvgData = {
           {
             _class: 'curvePoint',
             cornerRadius: 0,
-            curveFrom: '{0.40758082497212933, 1}',
+            curveFrom: '{0.4075808249721293, 1}',
             curveMode: 1,
-            curveTo: '{0.40758082497212933, 1}',
+            curveTo: '{0.4075808249721293, 1}',
             hasCurveFrom: false,
             hasCurveTo: false,
-            point: '{0.40758082497212933, 1}',
+            point: '{0.4075808249721293, 1}',
           },
           {
             _class: 'curvePoint',
@@ -1095,6 +1427,8 @@ export const dropboxSvgPath: TestSvgData = {
  * Behance Svg 路径
  */
 export const behanceSvg: TestSvgData = {
+  svgString:
+    '<svg viewBox="64 64 896 896" focusable="false" class="" data-icon="behance" width="1em" height="1em" fill="currentColor" aria-hidden="true"><path d="M634 294.3H833.5V342.7H634zM434.1 485.8C478.20000000000005 464.7 501.3 432.6 501.3 383C501.3 284.9 428.3 261.1 344 261.1H112V753.5H350.5C439.9 753.5 523.8 710.5 523.8 610.5C523.8 548.7 494.59999999999997 503 434.09999999999997 485.8zM220.2 345.1H321.7C360.8 345.1 395.9 356 395.9 401.40000000000003C395.9 443.20000000000005 368.59999999999997 460.00000000000006 329.9 460.00000000000006H220.2V345.1zM335.7 669.9000000000001H220.1V534.3H338C385.6 534.3 415.7 554.1999999999999 415.7 604.5999999999999C415.7 654.1999999999999 379.8 669.8999999999999 335.7 669.8999999999999zM911.5 580.4000000000001C911.5 474.9000000000001 849.8 387.0000000000001 738.2 387.0000000000001C629.7 387.0000000000001 555.9000000000001 468.7000000000001 555.9000000000001 575.8000000000002C555.9000000000001 686.8000000000002 625.8000000000001 763.0000000000002 738.2 763.0000000000002C823.3000000000001 763.0000000000002 878.4000000000001 724.7000000000003 904.9000000000001 643.0000000000002H818.6000000000001C809.2000000000002 673.5000000000002 771.0000000000001 689.5000000000002 741.3000000000002 689.5000000000002C683.9000000000002 689.5000000000002 653.9000000000002 655.9000000000002 653.9000000000002 598.8000000000002H910.8000000000002C911.1000000000001 592.9000000000002 911.5000000000002 586.7000000000002 911.5000000000002 580.4000000000002zM653.9 537C657 490.1 688.3 460.8 735.1 460.8C784.3000000000001 460.8 808.9 489.7 813.2 537H653.9z" style="fill: rgba(0, 0, 0, 0.65); color: rgba(0, 0, 0, 0.65); font-family: -apple-system, system-ui, &quot;Segoe UI&quot;, Roboto, &quot;Helvetica Neue&quot;, Arial, &quot;Noto Sans&quot;, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;, &quot;Noto Color Emoji&quot;; font-size: 14px; font-variant: tabular-nums; text-decoration: none solid rgba(0, 0, 0, 0.65); text-rendering: optimizelegibility;"></path></svg>',
   shapes: [
     {
       path:
@@ -1104,7 +1438,7 @@ export const behanceSvg: TestSvgData = {
   sketchJSON: {
     ...shapeGroupData,
     _class: 'shapeGroup',
-    name: 'svg',
+    name: 'shapeGroup',
     frame: {
       _class: 'rect',
       constrainProportions: false,
@@ -1120,8 +1454,8 @@ export const behanceSvg: TestSvgData = {
         frame: {
           _class: 'rect',
           constrainProportions: false,
-          height: 5.401785714285711,
-          width: 22.265624999999996,
+          height: 5.401785714285712,
+          width: 22.265624999999993,
           x: 58.25892857142856,
           y: 3.705357142857141,
         },
@@ -1185,17 +1519,17 @@ export const behanceSvg: TestSvgData = {
           {
             _class: 'curvePoint',
             cornerRadius: 0,
-            curveFrom: '{0.8892666342884897, 0.413484971567831}',
+            curveFrom: '{0.8892666342884896, 0.413484971567831}',
             curveMode: 4,
             curveTo: '{0.929091792132103, 0.49126726238830215}',
             hasCurveFrom: true,
             hasCurveTo: true,
-            point: '{0.7821758135017, 0.456336311941511}',
+            point: '{0.7821758135017, 0.4563363119415109}',
           },
           {
             _class: 'curvePoint',
             cornerRadius: 0,
-            curveFrom: '{0.9453618261291891, 0.04833468724614126}',
+            curveFrom: '{0.9453618261291891, 0.048334687246141254}',
             curveMode: 3,
             curveTo: '{0.9453618261291891, 0.3482940698619009}',
             hasCurveFrom: true,
@@ -1207,7 +1541,7 @@ export const behanceSvg: TestSvgData = {
             cornerRadius: 0,
             curveFrom: '{0.5633802816901409, 0}',
             curveMode: 4,
-            curveTo: '{0.7680913064594465, 0}',
+            curveTo: '{0.7680913064594463, 0}',
             hasCurveFrom: false,
             hasCurveTo: true,
             point: '{0.5633802816901409, 0}',
@@ -1235,7 +1569,7 @@ export const behanceSvg: TestSvgData = {
           {
             _class: 'curvePoint',
             cornerRadius: 0,
-            curveFrom: '{0.7962603205439535, 1}',
+            curveFrom: '{0.7962603205439533, 1}',
             curveMode: 4,
             curveTo: '{0.5791646430305974, 1}',
             hasCurveFrom: true,
@@ -1245,12 +1579,12 @@ export const behanceSvg: TestSvgData = {
           {
             _class: 'curvePoint',
             cornerRadius: 0,
-            curveFrom: '{1, 0.5840779853777417}',
+            curveFrom: '{1, 0.5840779853777418}',
             curveMode: 3,
-            curveTo: '{1, 0.912672623883022}',
+            curveTo: '{1, 0.9126726238830218}',
             hasCurveFrom: true,
             hasCurveTo: true,
-            point: '{1, 0.7095857026807474}',
+            point: '{1, 0.7095857026807473}',
           },
         ],
       },
@@ -1260,8 +1594,8 @@ export const behanceSvg: TestSvgData = {
         frame: {
           _class: 'rect',
           constrainProportions: false,
-          height: 12.823660714285715,
-          width: 19.609374999999996,
+          height: 12.823660714285717,
+          width: 19.609374999999993,
           x: 12.075892857142854,
           y: 9.374999999999998,
         },
@@ -1280,7 +1614,7 @@ export const behanceSvg: TestSvgData = {
           {
             _class: 'curvePoint',
             cornerRadius: 0,
-            curveFrom: '{0.8002276607854298, 0}',
+            curveFrom: '{0.80022766078543, 0}',
             curveMode: 4,
             curveTo: '{0.5776892430278885, 0}',
             hasCurveFrom: true,
@@ -1290,22 +1624,22 @@ export const behanceSvg: TestSvgData = {
           {
             _class: 'curvePoint',
             cornerRadius: 0,
-            curveFrom: '{1, 0.8537859007832898}',
+            curveFrom: '{1, 0.8537859007832895}',
             curveMode: 3,
-            curveTo: '{1, 0.09486510008703197}',
+            curveTo: '{1, 0.09486510008703194}',
             hasCurveFrom: true,
             hasCurveTo: true,
-            point: '{1, 0.48999129677980846}',
+            point: '{1, 0.4899912967798084}',
           },
           {
             _class: 'curvePoint',
             cornerRadius: 0,
-            curveFrom: '{0.624359704040979, 1}',
+            curveFrom: '{0.6243597040409788, 1}',
             curveMode: 4,
             curveTo: '{0.844621513944223, 1}',
             hasCurveFrom: false,
             hasCurveTo: true,
-            point: '{0.624359704040979, 1}',
+            point: '{0.6243597040409788, 1}',
           },
           {
             _class: 'curvePoint',
@@ -1335,12 +1669,12 @@ export const behanceSvg: TestSvgData = {
           {
             _class: 'curvePoint',
             cornerRadius: 0,
-            curveFrom: '{0.591002044989775, 1}',
+            curveFrom: '{0.5910020449897749, 1}',
             curveMode: 4,
-            curveTo: '{0.8164621676891617, 0.9999999999999983}',
+            curveTo: '{0.8164621676891618, 0.9999999999999981}',
             hasCurveFrom: false,
             hasCurveTo: true,
-            point: '{0.591002044989775, 1}',
+            point: '{0.5910020449897749, 1}',
           },
           {
             _class: 'curvePoint',
@@ -1365,22 +1699,22 @@ export const behanceSvg: TestSvgData = {
           {
             _class: 'curvePoint',
             cornerRadius: 0,
-            curveFrom: '{0.846114519427403, 0}',
+            curveFrom: '{0.8461145194274028, 0}',
             curveMode: 4,
-            curveTo: '{0.6027607361963191, 0}',
+            curveTo: '{0.602760736196319, 0}',
             hasCurveFrom: true,
             hasCurveTo: false,
-            point: '{0.6027607361963191, 0}',
+            point: '{0.602760736196319, 0}',
           },
           {
             _class: 'curvePoint',
             cornerRadius: 0,
             curveFrom: '{1, 0.8842182890855447}',
             curveMode: 3,
-            curveTo: '{1, 0.1467551622418876}',
+            curveTo: '{1, 0.14675516224188753}',
             hasCurveFrom: true,
             hasCurveTo: true,
-            point: '{1, 0.5184365781710906}',
+            point: '{1, 0.5184365781710903}',
           },
         ],
       },
@@ -1390,7 +1724,7 @@ export const behanceSvg: TestSvgData = {
         frame: {
           _class: 'rect',
           constrainProportions: false,
-          height: 41.964285714285715,
+          height: 41.96428571428572,
           width: 39.68750000000001,
           x: 49.542410714285715,
           y: 14.051339285714294,
@@ -1400,7 +1734,7 @@ export const behanceSvg: TestSvgData = {
           {
             _class: 'curvePoint',
             cornerRadius: 0,
-            curveFrom: '{0.9999999999999993, 0.2337765957446807}',
+            curveFrom: '{0.9999999999999993, 0.23377659574468068}',
             curveMode: 3,
             curveTo: '{1, 0.5311170212765957}',
             hasCurveFrom: true,
@@ -1410,9 +1744,9 @@ export const behanceSvg: TestSvgData = {
           {
             _class: 'curvePoint',
             cornerRadius: 0,
-            curveFrom: '{0.20753655793025852, 0}',
+            curveFrom: '{0.20753655793025858, 0}',
             curveMode: 3,
-            curveTo: '{0.8264904386951624, 0}',
+            curveTo: '{0.8264904386951626, 0}',
             hasCurveFrom: true,
             hasCurveTo: true,
             point: '{0.5126546681664789, 0}',
@@ -1420,9 +1754,9 @@ export const behanceSvg: TestSvgData = {
           {
             _class: 'curvePoint',
             cornerRadius: 0,
-            curveFrom: '{0, 0.7973404255319149}',
+            curveFrom: '{0, 0.7973404255319148}',
             curveMode: 3,
-            curveTo: '{0, 0.2172872340425531}',
+            curveTo: '{0, 0.21728723404255307}',
             hasCurveFrom: true,
             hasCurveTo: true,
             point: '{0, 0.5021276595744681}',
@@ -1432,7 +1766,7 @@ export const behanceSvg: TestSvgData = {
             cornerRadius: 0,
             curveFrom: '{0.7519685039370075, 1}',
             curveMode: 3,
-            curveTo: '{0.19656917885264327, 1}',
+            curveTo: '{0.1965691788526432, 1}',
             hasCurveFrom: true,
             hasCurveTo: true,
             point: '{0.5126546681664789, 1}',
@@ -1440,52 +1774,52 @@ export const behanceSvg: TestSvgData = {
           {
             _class: 'curvePoint',
             cornerRadius: 0,
-            curveFrom: '{0.9814398200224969, 0.6808510638297873}',
+            curveFrom: '{0.981439820022497, 0.6808510638297872}',
             curveMode: 4,
-            curveTo: '{0.9069178852643416, 0.8981382978723406}',
+            curveTo: '{0.9069178852643416, 0.8981382978723405}',
             hasCurveFrom: false,
             hasCurveTo: true,
-            point: '{0.9814398200224969, 0.6808510638297873}',
+            point: '{0.981439820022497, 0.6808510638297872}',
           },
           {
             _class: 'curvePoint',
             cornerRadius: 0,
-            curveFrom: '{0.7123172103487063, 0.761968085106383}',
+            curveFrom: '{0.7123172103487062, 0.761968085106383}',
             curveMode: 4,
-            curveTo: '{0.7387514060742406, 0.6808510638297873}',
+            curveTo: '{0.7387514060742405, 0.6808510638297872}',
             hasCurveFrom: true,
             hasCurveTo: false,
-            point: '{0.7387514060742406, 0.6808510638297873}',
+            point: '{0.7387514060742405, 0.6808510638297872}',
           },
           {
             _class: 'curvePoint',
             cornerRadius: 0,
-            curveFrom: '{0.35995500562429716, 0.8045212765957448}',
+            curveFrom: '{0.35995500562429705, 0.8045212765957447}',
             curveMode: 3,
-            curveTo: '{0.6048931383577051, 0.8045212765957448}',
+            curveTo: '{0.6048931383577051, 0.8045212765957447}',
             hasCurveFrom: true,
             hasCurveTo: true,
-            point: '{0.5213723284589427, 0.8045212765957448}',
+            point: '{0.5213723284589425, 0.8045212765957447}',
           },
           {
             _class: 'curvePoint',
             cornerRadius: 0,
-            curveFrom: '{0.2755905511811026, 0.5632978723404255}',
+            curveFrom: '{0.2755905511811025, 0.5632978723404255}',
             curveMode: 4,
-            curveTo: '{0.2755905511811026, 0.7151595744680851}',
+            curveTo: '{0.2755905511811025, 0.7151595744680852}',
             hasCurveFrom: false,
             hasCurveTo: true,
-            point: '{0.2755905511811026, 0.5632978723404255}',
+            point: '{0.2755905511811025, 0.5632978723404255}',
           },
           {
             _class: 'curvePoint',
             cornerRadius: 0,
-            curveFrom: '{0.9988751406074238, 0.5476063829787234}',
+            curveFrom: '{0.998875140607424, 0.5476063829787234}',
             curveMode: 4,
-            curveTo: '{0.998031496062992, 0.5632978723404255}',
+            curveTo: '{0.9980314960629921, 0.5632978723404255}',
             hasCurveFrom: true,
             hasCurveTo: false,
-            point: '{0.998031496062992, 0.5632978723404255}',
+            point: '{0.9980314960629921, 0.5632978723404255}',
           },
         ],
       },
@@ -1495,8 +1829,8 @@ export const behanceSvg: TestSvgData = {
         frame: {
           _class: 'rect',
           constrainProportions: false,
-          height: 8.504464285714283,
-          width: 17.77901785714286,
+          height: 8.504464285714281,
+          width: 17.779017857142854,
           x: 60.4799107142857,
           y: 22.287946428571423,
         },
@@ -1505,7 +1839,7 @@ export const behanceSvg: TestSvgData = {
           {
             _class: 'curvePoint',
             cornerRadius: 0,
-            curveFrom: '{0.019460138104206035, 0.3845144356955383}',
+            curveFrom: '{0.019460138104206076, 0.38451443569553817}',
             curveMode: 4,
             curveTo: '{0, 1}',
             hasCurveFrom: true,
@@ -1515,19 +1849,19 @@ export const behanceSvg: TestSvgData = {
           {
             _class: 'curvePoint',
             cornerRadius: 0,
-            curveFrom: '{0.8185812931575646, 0}',
+            curveFrom: '{0.818581293157565, 0}',
             curveMode: 3,
-            curveTo: '{0.21594475831763943, 0}',
+            curveTo: '{0.21594475831763976, 0}',
             hasCurveFrom: true,
             hasCurveTo: true,
-            point: '{0.509730069052103, 0}',
+            point: '{0.5097300690521034, 0}',
           },
           {
             _class: 'curvePoint',
             cornerRadius: 0,
             curveFrom: '{1, 1}',
             curveMode: 4,
-            curveTo: '{0.9730069052102946, 0.3792650918635168}',
+            curveTo: '{0.9730069052102945, 0.37926509186351665}',
             hasCurveFrom: false,
             hasCurveTo: true,
             point: '{1, 1}',
@@ -1539,9 +1873,239 @@ export const behanceSvg: TestSvgData = {
 };
 
 /**
+ * plus Svg 路径
+ * path
+ */
+export const plusSvg: TestSvgData = {
+  svgString:
+    '<svg viewBox="64 64 896 896" focusable="false" class="" data-icon="plus" width="30px" height="30px" fill="currentColor" aria-hidden="true"><defs><style></style></defs><path d="M482 152h60q8 0 8 8v704q0 8-8 8h-60q-8 0-8-8V160q0-8 8-8z"></path><path d="M176 474h672q8 0 8 8v60q0 8-8 8H176q-8 0-8-8v-60q0-8 8-8z"></path></svg>',
+  shapes: [
+    {
+      path:
+        'M518.5 360.3a7.95 7.95 0 00-12.9 0l-178 246c-3.8 5.3 0 12.7 6.5 12.7H381c10.2 0 19.9-4.9 25.9-13.2L512 460.4l105.2 145.4c6 8.3 15.6 13.2 25.9 13.2H690c6.5 0 10.3-7.4 6.5-12.7l-178-246z',
+    },
+    {
+      path:
+        'M512 64C264.6 64 64 264.6 64 512s200.6 448 448 448 448-200.6 448-448S759.4 64 512 64zm0 820c-205.4 0-372-166.6-372-372s166.6-372 372-372 372 166.6 372 372-166.6 372-372 372z',
+    },
+  ],
+  sketchJSON: {
+    ...groupData,
+    _class: 'group',
+    name: 'svg',
+    frame: {
+      _class: 'rect',
+      constrainProportions: false,
+      height: 25,
+      width: 24,
+      x: 164,
+      y: 22,
+    },
+    groupLayout: getGroupLayout(),
+    layers: [
+      {
+        ...shapePathData,
+        _class: 'shapePath',
+        frame: {
+          _class: 'rect',
+          constrainProportions: false,
+          height: 24.10714285714286,
+          width: 2.544642857142857,
+          x: 10.24553571428571,
+          y: 0,
+        },
+        isClosed: true,
+        pointRadiusBehaviour: 1,
+        points: [
+          {
+            _class: 'curvePoint',
+            cornerRadius: 0,
+            curveFrom: '{0.10526315789473684, 0}',
+            curveMode: 4,
+            curveTo: '{0.035087719298245862, 0}',
+            hasCurveFrom: false,
+            hasCurveTo: true,
+            point: '{0.10526315789473684, 0}',
+          },
+          {
+            _class: 'curvePoint',
+            cornerRadius: 0,
+            curveFrom: '{0.96491228070175483, 0}',
+            curveMode: 4,
+            curveTo: '{0.89473684210526316, 0}',
+            hasCurveFrom: true,
+            hasCurveTo: false,
+            point: '{0.89473684210526316, 0}',
+          },
+          {
+            _class: 'curvePoint',
+            cornerRadius: 0,
+            curveFrom: '{1, 0.011111111111111112}',
+            curveMode: 4,
+            curveTo: '{1, 0.0037037037037036904}',
+            hasCurveFrom: false,
+            hasCurveTo: true,
+            point: '{1, 0.011111111111111112}',
+          },
+          {
+            _class: 'curvePoint',
+            cornerRadius: 0,
+            curveFrom: '{1, 0.99629629629629635}',
+            curveMode: 4,
+            curveTo: '{1, 0.98888888888888893}',
+            hasCurveFrom: true,
+            hasCurveTo: false,
+            point: '{1, 0.98888888888888893}',
+          },
+          {
+            _class: 'curvePoint',
+            cornerRadius: 0,
+            curveFrom: '{0.89473684210526316, 1}',
+            curveMode: 4,
+            curveTo: '{0.96491228070175483, 1}',
+            hasCurveFrom: false,
+            hasCurveTo: true,
+            point: '{0.89473684210526316, 1}',
+          },
+          {
+            _class: 'curvePoint',
+            cornerRadius: 0,
+            curveFrom: '{0.035087719298245862, 1}',
+            curveMode: 4,
+            curveTo: '{0.10526315789473684, 1}',
+            hasCurveFrom: true,
+            hasCurveTo: false,
+            point: '{0.10526315789473684, 1}',
+          },
+          {
+            _class: 'curvePoint',
+            cornerRadius: 0,
+            curveFrom: '{0, 0.98888888888888893}',
+            curveMode: 4,
+            curveTo: '{0, 0.99629629629629635}',
+            hasCurveFrom: false,
+            hasCurveTo: true,
+            point: '{0, 0.98888888888888893}',
+          },
+          {
+            _class: 'curvePoint',
+            cornerRadius: 0,
+            curveFrom: '{0, 0.0037037037037036904}',
+            curveMode: 4,
+            curveTo: '{0, 0.011111111111111112}',
+            hasCurveFrom: true,
+            hasCurveTo: false,
+            point: '{0, 0.011111111111111112}',
+          },
+        ],
+      },
+      {
+        ...shapePathData,
+        _class: 'shapePath',
+        frame: {
+          _class: 'rect',
+          constrainProportions: false,
+          height: 2.544642857142857,
+          width: 23.03571428571428,
+          x: 0,
+          y: 10.78125,
+        },
+
+        isClosed: true,
+        pointRadiusBehaviour: 1,
+        points: [
+          {
+            _class: 'curvePoint',
+            cornerRadius: 0,
+            curveFrom: '{0.011627906976744186, 0}',
+            curveMode: 4,
+            curveTo: '{0.0038759689922480481, 0}',
+            hasCurveFrom: false,
+            hasCurveTo: true,
+            point: '{0.011627906976744186, 0}',
+          },
+          {
+            _class: 'curvePoint',
+            cornerRadius: 0,
+            curveFrom: '{0.99612403100775204, 0}',
+            curveMode: 4,
+            curveTo: '{0.98837209302325579, 0}',
+            hasCurveFrom: true,
+            hasCurveTo: false,
+            point: '{0.98837209302325579, 0}',
+          },
+          {
+            _class: 'curvePoint',
+            cornerRadius: 0,
+            curveFrom: '{1, 0.10526315789473684}',
+            curveMode: 4,
+            curveTo: '{1, 0.035087719298245862}',
+            hasCurveFrom: false,
+            hasCurveTo: true,
+            point: '{1, 0.10526315789473684}',
+          },
+          {
+            _class: 'curvePoint',
+            cornerRadius: 0,
+            curveFrom: '{1, 0.96491228070175483}',
+            curveMode: 4,
+            curveTo: '{1, 0.89473684210526316}',
+            hasCurveFrom: true,
+            hasCurveTo: false,
+            point: '{1, 0.89473684210526316}',
+          },
+          {
+            _class: 'curvePoint',
+            cornerRadius: 0,
+            curveFrom: '{0.98837209302325579, 1}',
+            curveMode: 4,
+            curveTo: '{0.99612403100775204, 1}',
+            hasCurveFrom: false,
+            hasCurveTo: true,
+            point: '{0.98837209302325579, 1}',
+          },
+          {
+            _class: 'curvePoint',
+            cornerRadius: 0,
+            curveFrom: '{0.0038759689922480481, 1}',
+            curveMode: 4,
+            curveTo: '{0.011627906976744186, 1}',
+            hasCurveFrom: true,
+            hasCurveTo: false,
+            point: '{0.011627906976744186, 1}',
+          },
+          {
+            _class: 'curvePoint',
+            cornerRadius: 0,
+            curveFrom: '{0, 0.89473684210526316}',
+            curveMode: 4,
+            curveTo: '{0, 0.96491228070175483}',
+            hasCurveFrom: false,
+            hasCurveTo: true,
+            point: '{0, 0.89473684210526316}',
+          },
+          {
+            _class: 'curvePoint',
+            cornerRadius: 0,
+            curveFrom: '{0, 0.035087719298245862}',
+            curveMode: 4,
+            curveTo: '{0, 0.10526315789473684}',
+            hasCurveFrom: true,
+            hasCurveTo: false,
+            point: '{0, 0.10526315789473684}',
+          },
+        ],
+      },
+    ],
+  },
+};
+
+/**
  * 多条 Svg 路径
  */
 export const upCircleSvg: TestSvgData = {
+  svgString:
+    '<svg viewBox="64 64 896 896" focusable="false" class="" data-icon="up-circle" width="1em" height="1em" fill="currentColor" aria-hidden="true"><path d="M518.5 360.3A7.95 7.95 0 0 0 505.6 360.3L327.6 606.3C323.8 611.5999999999999 327.6 619 334.1 619H381C391.2 619 400.9 614.1 406.9 605.8L512 460.4L617.2 605.8C623.2 614.0999999999999 632.8000000000001 619 643.1 619H690C696.5 619 700.3 611.6 696.5 606.3L518.5 360.29999999999995z" style="fill: rgba(0, 0, 0, 0.65); color: rgba(0, 0, 0, 0.65); font-family: -apple-system, system-ui, &quot;Segoe UI&quot;, Roboto, &quot;Helvetica Neue&quot;, Arial, &quot;Noto Sans&quot;, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;, &quot;Noto Color Emoji&quot;; font-size: 14px; font-variant: tabular-nums; text-decoration: none solid rgba(0, 0, 0, 0.65); text-rendering: optimizelegibility;"></path><path d="M512 64C264.6 64 64 264.6 64 512S264.6 960 512 960S960 759.4 960 512S759.4 64 512 64zM512 884C306.6 884 140 717.4 140 512S306.6 140 512 140S884 306.6 884 512S717.4 884 512 884z" style="fill: rgba(0, 0, 0, 0.65); color: rgba(0, 0, 0, 0.65); font-family: -apple-system, system-ui, &quot;Segoe UI&quot;, Roboto, &quot;Helvetica Neue&quot;, Arial, &quot;Noto Sans&quot;, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;, &quot;Noto Color Emoji&quot;; font-size: 14px; font-variant: tabular-nums; text-decoration: none solid rgba(0, 0, 0, 0.65); text-rendering: optimizelegibility;"></path></svg>',
   shapes: [
     {
       path:
@@ -1566,117 +2130,136 @@ export const upCircleSvg: TestSvgData = {
     },
     layers: [
       {
-        ...shapePathData,
         _class: 'shapePath',
-        frame: {
-          _class: 'rect',
-          constrainProportions: false,
-          height: 86.61830357142858,
-          width: 120.209374131087,
-          x: 92.07165222017079,
-          y: 99.20758928571426,
-        },
+        ...shapePathData,
+        frame: new Frame({
+          height: 87.72402454839879,
+          width: 124.5285705596584,
+          x: 87.75245579159936,
+          y: 98.10186830874403,
+        }).toSketchJSON(),
         isClosed: true,
+        pointRadiusBehaviour: 1,
         points: [
           {
             _class: 'curvePoint',
             cornerRadius: 0,
-            curveFrom: '{0.50000000000000011, 2.1972716992967918e-16}',
+            curveFrom: '{0.5133248399992647, 0.0046900481498044575}',
+            curveMode: 4,
+            curveTo: '{0.5173421906682139, 0.01260454000671376}',
+            hasCurveFrom: true,
+            hasCurveTo: false,
+            point: '{0.5173421906682139, 0.01260454000671376}',
+          },
+          {
+            _class: 'curvePoint',
+            cornerRadius: 0,
+            curveFrom: '{0.49312804992878423, 7.593516350900852e-17}',
+            curveMode: 3,
+            curveTo: '{0.5068719500712159, 7.593516350900852e-17}',
+            hasCurveFrom: true,
+            hasCurveTo: true,
+            point: '{0.5000000000000001, 7.593516350900852e-17}',
+          },
+          {
+            _class: 'curvePoint',
+            cornerRadius: 0,
+            curveFrom: '{0.48265780933178626, 0.012604540006713768}',
+            curveMode: 4,
+            curveTo: '{0.4866751600007354, 0.004690048149804467}',
+            hasCurveFrom: false,
+            hasCurveTo: true,
+            point: '{0.48265780933178626, 0.012604540006713768}',
+          },
+          {
+            _class: 'curvePoint',
+            cornerRadius: 0,
+            curveFrom: '{-0.006149983456007975, 0.9717559860689975}',
+            curveMode: 4,
+            curveTo: '{0.004067121123714912, 0.951527165280577}',
+            hasCurveFrom: true,
+            hasCurveTo: false,
+            point: '{0.004067121123714912, 0.951527165280577}',
+          },
+          {
+            _class: 'curvePoint',
+            cornerRadius: 0,
+            curveFrom: '{0.021543747378504084, 1}',
+            curveMode: 4,
+            curveTo: '{0.004067121123714912, 1}',
+            hasCurveFrom: false,
+            hasCurveTo: true,
+            point: '{0.021543747378504084, 1}',
+          },
+          {
+            _class: 'curvePoint',
+            cornerRadius: 0,
+            curveFrom: '{0.17506918724749762, 1}',
+            curveMode: 4,
+            curveTo: '{0.14764432758613624, 1}',
+            hasCurveFrom: true,
+            hasCurveTo: false,
+            point: '{0.14764432758613624, 1}',
+          },
+          {
+            _class: 'curvePoint',
+            cornerRadius: 0,
+            curveFrom: '{0.21728196143214212, 0.9496187859609146}',
+            curveMode: 4,
+            curveTo: '{0.20114969104310593, 0.9812978826673096}',
+            hasCurveFrom: false,
+            hasCurveTo: true,
+            point: '{0.21728196143214212, 0.9496187859609146}',
+          },
+          {
+            _class: 'curvePoint',
+            cornerRadius: 0,
+            curveFrom: '{0.4998655644134248, 0.394662079803111}',
             curveMode: 1,
-            curveTo: '{0.50000000000000011, 2.1972716992967918e-16}',
+            curveTo: '{0.4998655644134248, 0.394662079803111}',
             hasCurveFrom: false,
             hasCurveTo: false,
-            point: '{0.50000000000000011, 2.1972716992967918e-16}',
+            point: '{0.4998655644134248, 0.394662079803111}',
           },
           {
             _class: 'curvePoint',
             cornerRadius: 0,
-            curveFrom: '{-0.0063709561278230261, 0.97139543873212175}',
+            curveFrom: '{0.7988503089568941, 0.9812978826673089}',
             curveMode: 4,
-            curveTo: '{0.0042132552763889282, 0.95090838809431755}',
+            curveTo: '{0.7827180385678578, 0.9496187859609146}',
             hasCurveFrom: true,
             hasCurveTo: false,
-            point: '{0.0042132552763889282, 0.95090838809431755}',
+            point: '{0.7827180385678578, 0.9496187859609146}',
           },
           {
             _class: 'curvePoint',
             cornerRadius: 0,
-            curveFrom: '{0.022317827415172482, 1}',
+            curveFrom: '{0.8523556724138638, 1}',
             curveMode: 4,
-            curveTo: '{0.0042132552763889282, 1}',
+            curveTo: '{0.8246619415793519, 1}',
             hasCurveFrom: false,
             hasCurveTo: true,
-            point: '{0.022317827415172482, 1}',
+            point: '{0.8523556724138638, 1}',
           },
           {
             _class: 'curvePoint',
             cornerRadius: 0,
-            curveFrom: '{0.14542891795890062, 1}',
+            curveFrom: '{0.9959328788762851, 1}',
             curveMode: 4,
-            curveTo: '{0.11701866629496338, 1}',
+            curveTo: '{0.978456252621496, 1}',
             hasCurveFrom: true,
             hasCurveTo: false,
-            point: '{0.11701866629496338, 1}',
+            point: '{0.978456252621496, 1}',
           },
           {
             _class: 'curvePoint',
             cornerRadius: 0,
-            curveFrom: '{0.18915842297103933, 0.94897564746810958}',
+            curveFrom: '{0.9959328788762851, 0.951527165280577}',
             curveMode: 4,
-            curveTo: '{0.17244651022754681, 0.98105914186316201}',
+            curveTo: '{1.006149983456008, 0.9717559860689978}',
             hasCurveFrom: false,
             hasCurveTo: true,
-            point: '{0.18915842297103933, 0.94897564746810958}',
-          },
-          {
-            _class: 'curvePoint',
-            cornerRadius: 0,
-            curveFrom: '{0.48189542786121653, 0.38693467336683418}',
-            curveMode: 1,
-            curveTo: '{0.48189542786121653, 0.38693467336683418}',
-            hasCurveFrom: false,
-            hasCurveTo: false,
-            point: '{0.48189542786121653, 0.38693467336683418}',
-          },
-          {
-            _class: 'curvePoint',
-            cornerRadius: 0,
-            curveFrom: '{0.79162287737394454, 0.98105914186316157}',
-            curveMode: 4,
-            curveTo: '{0.77491096463045206, 0.94897564746810958}',
-            hasCurveFrom: true,
-            hasCurveTo: false,
-            point: '{0.77491096463045206, 0.94897564746810958}',
-          },
-          {
-            _class: 'curvePoint',
-            cornerRadius: 0,
-            curveFrom: '{0.84705072130652792, 1}',
-            curveMode: 4,
-            curveTo: '{0.81836193776353261, 1}',
-            hasCurveFrom: false,
-            hasCurveTo: true,
-            point: '{0.84705072130652792, 1}',
-          },
-          {
-            _class: 'curvePoint',
-            cornerRadius: 0,
-            curveFrom: '{0.99578674472361128, 1}',
-            curveMode: 4,
-            curveTo: '{0.9776821725848277, 1}',
-            hasCurveFrom: true,
-            hasCurveTo: false,
-            point: '{0.9776821725848277, 1}',
-          },
-          {
-            _class: 'curvePoint',
-            cornerRadius: 0,
-            curveFrom: '{0.99578674472361128, 0.95090838809431755}',
-            curveMode: 4,
-            curveTo: '{1.0063709561278231, 0.9713954387321222}',
-            hasCurveFrom: false,
-            hasCurveTo: true,
-            point: '{0.99578674472361128, 0.95090838809431755}',
+            point: '{0.9959328788762851, 0.951527165280577}',
           },
         ],
       },
@@ -1708,7 +2291,7 @@ export const upCircleSvg: TestSvgData = {
               {
                 _class: 'curvePoint',
                 cornerRadius: 0,
-                curveFrom: '{0.2238839285714286, 0}',
+                curveFrom: '{0.22388392857142855, 0}',
                 curveMode: 3,
                 curveTo: '{0.7761160714285714, 0}',
                 hasCurveFrom: true,
@@ -1718,9 +2301,9 @@ export const upCircleSvg: TestSvgData = {
               {
                 _class: 'curvePoint',
                 cornerRadius: 0,
-                curveFrom: '{0, 0.7761160714285714}',
+                curveFrom: '{0, 0.7761160714285715}',
                 curveMode: 3,
-                curveTo: '{0, 0.2238839285714286}',
+                curveTo: '{0, 0.22388392857142855}',
                 hasCurveFrom: true,
                 hasCurveTo: true,
                 point: '{0, 0.5}',
@@ -1728,7 +2311,7 @@ export const upCircleSvg: TestSvgData = {
               {
                 _class: 'curvePoint',
                 cornerRadius: 0,
-                curveFrom: '{0.7761160714285714, 1}',
+                curveFrom: '{0.7761160714285715, 1}',
                 curveMode: 3,
                 curveTo: '{0.22388392857142855, 1}',
                 hasCurveFrom: true,
@@ -1753,8 +2336,8 @@ export const upCircleSvg: TestSvgData = {
             frame: {
               _class: 'rect',
               constrainProportions: false,
-              height: 249.1071428571428,
-              width: 249.1071428571428,
+              height: 249.10714285714283,
+              width: 249.10714285714283,
               x: 25.44642857142857,
               y: 25.44642857142857,
             },
@@ -1763,42 +2346,42 @@ export const upCircleSvg: TestSvgData = {
               {
                 _class: 'curvePoint',
                 cornerRadius: 0,
-                curveFrom: '{0.22392473118279568, 1}',
+                curveFrom: '{0.2239247311827957, 1}',
                 curveMode: 3,
                 curveTo: '{0.7760752688172042, 1}',
                 hasCurveFrom: true,
                 hasCurveTo: true,
-                point: '{0.5, 1}',
+                point: '{0.5000000000000001, 1}',
               },
               {
                 _class: 'curvePoint',
                 cornerRadius: 0,
-                curveFrom: '{0, 0.22392473118279574}',
+                curveFrom: '{0, 0.22392473118279582}',
                 curveMode: 3,
                 curveTo: '{0, 0.7760752688172042}',
                 hasCurveFrom: true,
                 hasCurveTo: true,
-                point: '{0, 0.5}',
+                point: '{0, 0.5000000000000001}',
               },
               {
                 _class: 'curvePoint',
                 cornerRadius: 0,
-                curveFrom: '{0.7760752688172042, 0}',
+                curveFrom: '{0.7760752688172043, 0}',
                 curveMode: 3,
-                curveTo: '{0.22392473118279568, 0}',
+                curveTo: '{0.2239247311827957, 0}',
                 hasCurveFrom: true,
                 hasCurveTo: true,
-                point: '{0.5, 0}',
+                point: '{0.5000000000000001, 0}',
               },
               {
                 _class: 'curvePoint',
                 cornerRadius: 0,
-                curveFrom: '{1, 0.7760752688172042}',
+                curveFrom: '{1, 0.7760752688172043}',
                 curveMode: 3,
-                curveTo: '{1, 0.22392473118279568}',
+                curveTo: '{1, 0.2239247311827957}',
                 hasCurveFrom: true,
                 hasCurveTo: true,
-                point: '{1, 0.5}',
+                point: '{1, 0.5000000000000001}',
               },
             ],
           },

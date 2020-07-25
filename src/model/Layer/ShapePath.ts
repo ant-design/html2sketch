@@ -270,6 +270,7 @@ class ShapePath extends Base {
       .translate(-minX, -minY)
       .aToC() // 将所有圆弧转为 curve
       .normalizeHVZ() // 将 HVZ 转为直线
+      .qtToC() // 将 q t 转为curve
       .normalizeST() // 将 smooth curve 转为curve
       .toAbs()
       .transform(ShapePath.normalizationXY(frame.width, frame.height));

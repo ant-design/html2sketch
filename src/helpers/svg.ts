@@ -93,7 +93,9 @@ export function inlineStyles(node) {
 
     if (
       propCurrentValue !== propDefaultValue &&
-      propCurrentValue !== propAttributeValue
+      propCurrentValue !== propAttributeValue &&
+      // 不用 d 属性
+      propName !== 'd'
     ) {
       node.style[propName] = propCurrentValue;
     }

@@ -53,9 +53,11 @@
   },
   "dependencies": {
     "color": "^3.1.2",
+    "lodash": "^4.17.19",
     "murmur2js": "^1.0.0",
-    "uuid": "^8.2.0",
-    "svg-pathdata": "^5.0.5"
+    "svg-pathdata": "^5.0.5",
+    "svgson": "^4.1.0",
+    "uuid": "^8.2.0"
   },
   "files": [
     "lib/**/*"

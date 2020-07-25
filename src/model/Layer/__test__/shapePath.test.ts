@@ -5,6 +5,8 @@ import {
   compPath,
   roundRect,
   unclosedRect,
+  upArrow,
+  plus,
 } from './commonSvgData';
 
 describe('ShapePath', () => {
@@ -39,14 +41,28 @@ describe('ShapePath', () => {
 
       expect(shapePath.toSketchJSON()).toStrictEqual(unclosedRect.sketchJSON);
     });
+
+    it('upArrow 转换正常', function() {
+      const { frame, isClose, points } = upArrow.shapePath;
+
+      const shapePath = new ShapePath({ isClose, points, ...frame });
+      expect(shapePath.toSketchJSON()).toStrictEqual(upArrow.sketchJSON);
+    });
+
+    it('plus 转换正常', function() {
+      const { frame, isClose, points } = plus.shapePath;
+
+      const shapePath = new ShapePath({ isClose, points, ...frame });
+      expect(shapePath.toSketchJSON()).toStrictEqual(plus.sketchJSON);
+    });
   });
 
   describe('svgPathToShapePath', () => {
     describe('转换正常', () => {
-      // it('doubleRightOutlined 转换正常', function() {
-      //   const t = ShapePath.svgPathToShapePath(doubleRightOutlined.path);
-      //   expect(t).toStrictEqual(doubleRightOutlined.shapePath);
-      // });
+      it('upArrow 转换正常', function() {
+        const t = ShapePath.svgPathToShapePath(upArrow.path);
+        expect(t).toStrictEqual(upArrow.shapePath);
+      });
       it('正常转换圆角矩形', function() {
         const t = ShapePath.svgPathToShapePath(roundRect.path);
         expect(t).toStrictEqual(roundRect.shapePath);
@@ -68,6 +84,11 @@ describe('ShapePath', () => {
       it('不闭合矩形转换正常', function() {
         const points = ShapePath.svgPathToShapePath(unclosedRect.path);
         expect(points).toStrictEqual(unclosedRect.shapePath);
+      });
+
+      it('plus 转换正常', function() {
+        const points = ShapePath.svgPathToShapePath(plus.path);
+        expect(points).toStrictEqual(plus.shapePath);
       });
     });
     describe('错误处理', function() {

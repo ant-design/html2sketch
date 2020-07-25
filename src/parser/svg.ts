@@ -10,28 +10,26 @@ const parserToSvg = (node: SVGElement) => {
   // importing Svg, so instead of using BCR of the Svg, we are using BCR of its children
   const childrenBCR = SVG.getChildNodesFrame(Array.from(node.children));
 
-  let pathData = '';
   Array.from(node.children).forEach((child) => {
     if (child.nodeName === 'path') {
       const path = child.getAttribute('d');
       if (path) {
         const newPath = new SVGPathData(path).toAbs().encode();
-        pathData = newPath;
         child.setAttribute('d', newPath);
       }
     }
   });
 
   const svgString = SVG.getSVGString(node);
-
+  console.log(svgString);
   const svg = new SVG({
     x: childrenBCR.left,
     y: childrenBCR.top,
     width: childrenBCR.width,
     height: childrenBCR.height,
     svgString,
-    shapes: [{ path: pathData }],
   });
+
   svg.name = node.getAttribute('data-icon') || 'svg';
   return svg;
 };

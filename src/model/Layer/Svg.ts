@@ -1,16 +1,15 @@
 import SketchFormat from '@sketch-hq/sketch-file-format-ts';
-
+import * as svgson from 'svgson';
 import { SVGPathData } from 'svg-pathdata';
 
-import { BaseLayerParams } from './Base';
-
-import ShapeGroup, { ShapeGroupType } from './ShapeGroup';
+import Base, { BaseLayerParams } from './Base';
 import ShapePath from './ShapePath';
+import ShapeGroup, { ShapeGroupType } from './ShapeGroup';
+import { FrameType } from '../Frame';
+
 import { getUseReplacement, inlineStyles } from '../../helpers/svg';
 import { defaultExportOptions } from '../utils';
 import { getGroupLayout } from '../../helpers/layout';
-import { FrameType } from '../Frame';
-import { Style } from '../index';
 
 export type SVG = {
   _class: 'svg';
@@ -54,60 +53,93 @@ export interface SvgShape {
   windingRule?: SketchFormat.WindingRule;
 }
 
-interface SvgInitParams extends BaseLayerParams {
-  shapes: SvgShape[];
-  svgString?: string;
+interface SvgInitParams extends Partial<BaseLayerParams> {
+  svgString: string;
 }
 
 /**
  * SVG 对象
  */
-class Svg extends ShapeGroup {
-  constructor({ x, y, width, height, shapes, svgString }: SvgInitParams) {
+class Svg extends Base {
+  constructor({ x, y, width, height, svgString }: SvgInitParams) {
     super({ height, width, y, x });
     this.class = 'svg';
-
-    this.shapes = shapes;
     this.name = 'svg';
     this.rawSVGString = svgString;
 
-    // 只有一条路径的话
-    if (shapes.length === 0) return;
-    if (shapes.length === 1) {
-      const { path } = shapes[0];
-      const shapeGroup = Svg.pathToShapeGroup(path);
+    // --------- 处理 Svg String 变成 Svg Shape ---------- //
+    const { children } = svgson.parseSync(svgString);
+    // ------ 处理 Svg 的 Frame ------- //
 
-      this.layers = this.shapeGroupDataToLayers(shapeGroup);
-    }
-    // 多条路径的话
-    else {
-      shapes.forEach((shape) => {
-        const { path } = shape;
-        const shapeGroupType = Svg.pathToShapeGroup(path);
+    // ------ 将 Svg 的子节点转换成内部格式 ------ //
+    let shapes: SvgShape[] = children
+      .map((node) => {
+        const { attributes, name } = node;
+        switch (name) {
+          case 'path':
+            return {
+              path: attributes.d,
+              style: attributes.style,
+            };
+        }
+      })
+      .filter((n) => n);
+    const fullPathString = shapes.reduce((prev, current) => {
+      return { path: prev.path + current.path };
+    }).path;
 
-        const shapePaths = this.shapeGroupDataToLayers(shapeGroupType);
+    // 计算定界框的缩放尺寸
+    const shapeGroupFrame = Svg.getSvgPathGroupFrame(fullPathString);
+    const scaleShapeGroupToFrame = Svg.calcFrameScale(
+      shapeGroupFrame,
+      this.frame.toJSON()
+    );
+    // ------ 进行统一的坐标和尺寸变换 -------- //
+    shapes = shapes.map((s) => ({
+      ...s,
+      path: new SVGPathData(s.path)
+        // 将 shapeGroup 的坐标设为 0,0
+        .translate(-shapeGroupFrame.x, -shapeGroupFrame.y)
+        // 将 shapeGroup 与给定定界框 match 变成符合外部画板的尺寸
+        .scale(scaleShapeGroupToFrame, scaleShapeGroupToFrame)
+        .encode(),
+    }));
 
-        const shapeGroup = new ShapeGroup(shapeGroupType.frame);
-        shapeGroup.addLayers(shapePaths);
+    this.shapes = shapes;
 
-        this.addLayer(shapeGroup);
-      });
-    }
+    // ----- 对处理后的 shape 进行图形解析 ------ //
+
+    shapes.forEach((shape) => {
+      const { path } = shape;
+
+      const shapeGroupType = Svg.pathToShapeGroup(path);
+
+      const shapePaths = this.shapeGroupDataToLayers(shapeGroupType);
+
+      const shapeGroup = new ShapeGroup(shapeGroupType.frame);
+      shapeGroup.addLayers(shapePaths);
+
+      this.addLayer(shapeGroup);
+    });
   }
+
   /**
    * 添加图层
    * @param layer
    */
-  // @ts-ignore
   addLayer(layer: ShapeGroup) {
     // 在组里面的位置是相对位置关系
     // 因此在添加图层的时候需要减掉父级的位置,得到算出相对位置
     layer.x -= this.x;
     layer.y -= this.y;
-    this.layers.push(layer);
+    super.addLayer(layer);
   }
-  // @ts-ignore
-  layers: (ShapeGroup | ShapePath)[] = [];
+
+  /**
+   * Svg 包含的图层对象
+   * 每一个对象都是 ShapeGroup 类型
+   */
+  layers: ShapeGroup[] = [];
 
   shapes: SvgShape[];
 
@@ -134,8 +166,8 @@ class Svg extends ShapeGroup {
    * @param svgPath 路径
    */
   static pathToShapeGroup = (svgPath: string): ShapeGroupType => {
+    // ------ 第一步: 获取有效的 Path 数组 ---------- //
     // 将 多个 svg 通过 M 符号进行分割
-    // TODO 要看下是否还有其他方式来区分对象
     let pathStr = svgPath.split(/([Mm])/).filter((s) => s);
     if (pathStr.length % 2 !== 0) {
       throw Error(
@@ -147,6 +179,9 @@ class Svg extends ShapeGroup {
       const p = pathStr[i] + pathStr[i + 1];
       paths.push(p.trim());
     }
+
+    // ------ 第二步: 获取这组Path的 frame ---------- //
+
     // 获取 shapeGroup 的 frame
     const shapeGroup = new SVGPathData(svgPath);
     const bounds = shapeGroup.getBounds();
@@ -156,6 +191,7 @@ class Svg extends ShapeGroup {
       x: bounds.minX,
       y: bounds.minY,
     };
+
     // 解析每个路径中的shape
     const shapes = paths.map(ShapePath.svgPathToShapePath).filter((shape) => {
       // 需要对 shape 进行清理,如果只有两个点,起点和终点,直接过滤
@@ -180,27 +216,38 @@ class Svg extends ShapeGroup {
    * @param shapeGroup
    */
   shapeGroupDataToLayers = (shapeGroup: ShapeGroupType) => {
-    const { frame: innerFrame, shapes } = shapeGroup;
-
-    const scale = Svg.calcFrameScale(innerFrame, this.frame.toJSON());
+    const { shapes } = shapeGroup;
 
     return shapes.map((shape) => {
       const { points, isClose, frame } = shape;
-
-      // 确定缩放后的长宽
 
       return new ShapePath({
         points,
         isClose,
 
-        width: frame.width * scale,
-        height: frame.height * scale,
+        width: frame.width,
+        height: frame.height,
         // 需要计算与 innerFrame 的相对坐标
         // https://www.yuque.com/design-engineering/sketch-dev/hsbz8m#OPWbw
-        x: (frame.x - innerFrame.x) * scale,
-        y: (frame.y - innerFrame.y) * scale,
+        x: frame.x,
+        y: frame.y,
       });
     });
+  };
+
+  /**
+   * 获取 svgPath 的内部定界框
+   * @param svgPath svg 的path路径
+   */
+  static getSvgPathGroupFrame = (svgPath: string) => {
+    const shapeGroup = new SVGPathData(svgPath);
+    const bounds = shapeGroup.getBounds();
+    return {
+      width: bounds.maxX - bounds.minX,
+      height: bounds.maxY - bounds.minY,
+      x: bounds.minX,
+      y: bounds.minY,
+    };
   };
 
   /**
@@ -209,14 +256,13 @@ class Svg extends ShapeGroup {
   static calcFrameScale = (originFrame: FrameType, targetFrame: FrameType) => {
     const targetAspectRatio = targetFrame.width / targetFrame.height;
     const originAspectRatio = originFrame.width / originFrame.height;
-
-    let scale = 1;
     // 确定缩放比例
+
     // 如果目标长宽比大于自身的
     // scale 是高度比
-    if (targetAspectRatio > originAspectRatio) {
-      scale = targetFrame.height / originFrame.height;
-    }
+    let scale = targetFrame.height / originFrame.height;
+
+    // 否则是 scale 是长度比
     if (targetAspectRatio < originAspectRatio) {
       scale = targetFrame.width / originFrame.width;
     }
@@ -263,13 +309,17 @@ class Svg extends ShapeGroup {
   };
 
   /**
-   * 转换为 Sketch
+   * 转换为 Sketch 对象
+   * 会自动识别ShapeGroup 中是否只包含一个对象
+   * 从而清理无用的 ShapeGroup
    */
-  // @ts-ignore
   toSketchJSON(): SketchFormat.Group | SketchFormat.ShapeGroup {
-    if (this.shapes.length <= 1)
-      return super.toSketchJSON() as SketchFormat.ShapeGroup;
-    else {
+    if (this.layers.length === 1) {
+      const layer = this.layers[0];
+      layer.x = this.x;
+      layer.y = this.y;
+      return layer.toSketchJSON() as SketchFormat.ShapeGroup;
+    } else
       return {
         _class: 'group',
         do_objectID: this.id,
@@ -293,9 +343,12 @@ class Svg extends ShapeGroup {
         style: this.style.toSketchJSON(),
         hasClickThrough: false,
         groupLayout: getGroupLayout(),
-        layers: this.layers.map((layer) => layer.toSketchJSON()),
+        layers: this.layers.map((layer) => {
+          layer.x += this.x;
+          layer.y += this.y;
+          return layer.toSketchJSON();
+        }),
       };
-    }
   }
 }
 

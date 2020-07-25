@@ -1,4 +1,5 @@
-import FileFormat from '@sketch-hq/sketch-file-format-ts';
+import SketchFormat from '@sketch-hq/sketch-file-format-ts';
+
 import { defaultBorderOptions, defaultColorControls } from '../utils';
 import { ColorParam } from './Color';
 import StyleBase from './Base';
@@ -6,8 +7,6 @@ import Fill from './Fill';
 import Shadow from './Shadow';
 import InnerShadow from './InnerShadow';
 import Border from './Border';
-import { FillType } from '@sketch-hq/sketch-file-format-ts/dist/cjs/v3-types';
-import { sortObjectKeys } from '../../helpers/utils';
 
 interface ShadowInput {
   color: ColorParam;
@@ -54,14 +53,14 @@ class Style extends StyleBase {
   /**
    * Sketch 专属的描边属性
    **/
-  sketchBorderOptions: FileFormat.BorderOptions = defaultBorderOptions;
+  sketchBorderOptions: SketchFormat.BorderOptions = defaultBorderOptions;
 
   /**
    * 添加颜色填充
    **/
   addColorFill(color: ColorParam) {
     const fill = new Fill({
-      type: FileFormat.FillType.Color,
+      type: SketchFormat.FillType.Color,
       color: color,
     });
     this.fills.push(fill);
@@ -74,12 +73,12 @@ class Style extends StyleBase {
     const { from, to } = this.convertAngleToFromAndTo(angle);
 
     const fill = new Fill({
-      type: FileFormat.FillType.Gradient,
+      type: SketchFormat.FillType.Gradient,
       gradient: {
         from,
         to,
         stops,
-        gradientType: FileFormat.GradientType.Linear,
+        gradientType: SketchFormat.GradientType.Linear,
       },
     });
 
@@ -134,7 +133,7 @@ class Style extends StyleBase {
    **/
   addImageFill(image: string) {
     const fill = new Fill({
-      type: FileFormat.FillType.Pattern,
+      type: SketchFormat.FillType.Pattern,
       image,
     });
 
@@ -146,7 +145,7 @@ class Style extends StyleBase {
    **/
   addBorder({ color, thickness }: { thickness: number; color: ColorParam }) {
     const border = new Border({
-      type: FillType.Color,
+      type: SketchFormat.FillType.Color,
       color,
       thickness,
     });
@@ -197,15 +196,15 @@ class Style extends StyleBase {
     dash,
     spacing,
   }: {
-    lineCapStyle?: FileFormat.LineCapStyle;
-    lineJoinStyle?: FileFormat.LineJoinStyle;
+    lineCapStyle?: SketchFormat.LineCapStyle;
+    lineJoinStyle?: SketchFormat.LineJoinStyle;
     dash?: number;
     spacing?: number;
   } = {}) {
     this.sketchBorderOptions = {
       _class: 'borderOptions',
-      lineCapStyle: lineCapStyle || FileFormat.LineCapStyle.Butt,
-      lineJoinStyle: lineJoinStyle || FileFormat.LineJoinStyle.Miter,
+      lineCapStyle: lineCapStyle || SketchFormat.LineCapStyle.Butt,
+      lineJoinStyle: lineJoinStyle || SketchFormat.LineJoinStyle.Miter,
       dashPattern: [dash || 4, spacing || 4],
       isEnabled: true,
     };
@@ -214,14 +213,14 @@ class Style extends StyleBase {
   /**
    * 生成 Sketch JSON 对象
    */
-  toSketchJSON(): FileFormat.Style {
+  toSketchJSON(): SketchFormat.Style {
     return {
       _class: 'style',
       do_objectID: this.id,
-      endMarkerType: FileFormat.MarkerType.OpenArrow,
+      endMarkerType: SketchFormat.MarkerType.OpenArrow,
       miterLimit: 10,
-      startMarkerType: FileFormat.MarkerType.OpenArrow,
-      windingRule: FileFormat.WindingRule.EvenOdd,
+      startMarkerType: SketchFormat.MarkerType.OpenArrow,
+      windingRule: SketchFormat.WindingRule.EvenOdd,
       borderOptions: this.sketchBorderOptions,
       colorControls: defaultColorControls,
       fills: this.fills.map((fill) => fill.toSketchJSON()),
@@ -241,8 +240,10 @@ class Style extends StyleBase {
    * 获取 style 的 hash
    */
   get hash() {
-    const { id, name, ...style } = obj; // 去掉 id 和 name 后进行 hash
-    return murmurHash(JSON.stringify(sortObjectKeys(style)));
+    // const { id, name, ...style } = obj; // 去掉 id 和 name 后进行 hash
+    // return murmurHash(JSON.stringify(sortObjectKeys(style)));
+
+    return '';
   }
 }
 
