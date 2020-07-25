@@ -1,12 +1,19 @@
 import Base, { BaseLayerParams } from './Base';
 import SketchFormat from '@sketch-hq/sketch-file-format-ts';
 import { defaultExportOptions } from '../utils';
-import { ShapePathType } from './ShapePath';
-import { AnyShape } from '../type';
+import ShapePath, { ShapePathType } from './ShapePath';
 import { FrameType } from '../Frame';
-
+/**
+ * Shape Group 包含的信息
+ */
 export interface ShapeGroupType {
+  /**
+   * 包含的 ShapePath
+   */
   shapes: ShapePathType[];
+  /**
+   * ShapeGroup的 Frame
+   */
   frame: FrameType;
 }
 class ShapeGroup extends Base {
@@ -23,7 +30,7 @@ class ShapeGroup extends Base {
   /**
    * ShapeGroup 的 layers 必须是 AnyShape 类型
    */
-  layers: AnyShape[] = [];
+  layers: ShapePath[] = [];
 
   /**
    * 填充规则
@@ -35,41 +42,60 @@ class ShapeGroup extends Base {
    * 添加图层
    * @param layer
    */
-  addLayer(layer: AnyShape) {
+  addLayer(layer: ShapePath) {
     // 在组里面的位置是相对位置关系
     // 因此在添加图层的时候需要减掉父级的位置,得到算出相对位置
     layer.x -= this.x;
     layer.y -= this.y;
     super.addLayer(layer);
   }
+
+  /**
+   * 批量添加图层
+   * @param layers
+   */
+  addLayers(layers: ShapePath[]) {
+    // 在组里面的位置是相对位置关系
+    // 因此在添加图层的时候需要减掉父级的位置,得到算出相对位置
+    for (const layer of layers) {
+      this.addLayer(layer);
+    }
+  }
   /**
    * 转换为 Sketch 对象
    */
-  toSketchJSON(): SketchFormat.ShapeGroup {
-    return {
-      _class: 'shapeGroup',
-      booleanOperation: SketchFormat.BooleanOperation.NA,
-      do_objectID: this.id,
-      layers: this.layers.map((l) => l.toSketchJSON()),
-      rotation: this.rotation,
-      windingRule: this.windingRule,
-      isVisible: true,
-      isFixedToViewport: false,
-      isFlippedHorizontal: false,
-      isFlippedVertical: false,
-      layerListExpandedType: 0,
-      nameIsFixed: false,
-      resizingType: 0,
-      shouldBreakMaskChain: false,
-      clippingMaskMode: 0,
-      isLocked: false,
-      exportOptions: defaultExportOptions,
-      frame: this.frame.toSketchJSON(),
-      name: this.name,
-      style: this.style.toSketchJSON(),
-      resizingConstraint: this.resizingConstraint,
-      hasClickThrough: false,
-    };
+  toSketchJSON(): SketchFormat.ShapeGroup | SketchFormat.ShapePath {
+    if (this.layers.length === 1) {
+      const layer = this.layers[0];
+      // 恢复 layer 的绝对坐标
+      layer.x += this.x;
+      layer.y += this.y;
+      return layer.toSketchJSON();
+    } else
+      return {
+        _class: 'shapeGroup',
+        booleanOperation: SketchFormat.BooleanOperation.NA,
+        do_objectID: this.id,
+        layers: this.layers.map((l) => l.toSketchJSON()),
+        rotation: this.rotation,
+        windingRule: this.windingRule,
+        isVisible: true,
+        isFixedToViewport: false,
+        isFlippedHorizontal: false,
+        isFlippedVertical: false,
+        layerListExpandedType: 0,
+        nameIsFixed: false,
+        resizingType: 0,
+        shouldBreakMaskChain: false,
+        clippingMaskMode: 0,
+        isLocked: false,
+        exportOptions: defaultExportOptions,
+        frame: this.frame.toSketchJSON(),
+        name: this.name || this.class,
+        style: this.style.toSketchJSON(),
+        resizingConstraint: this.resizingConstraint,
+        hasClickThrough: false,
+      };
   }
 }
 

@@ -133,6 +133,15 @@ class Color extends StyleBase {
       alpha: this.alpha,
     };
   };
+
+  toJSON(): ColorType {
+    return {
+      r: this.red,
+      g: this.green,
+      b: this.blue,
+      a: this.alpha,
+    };
+  }
 }
 
 export default Color;

@@ -1,4 +1,4 @@
-import uuid from '../../helpers/uuid';
+import { uuid } from '../../helpers/utils';
 import Frame from '../Frame';
 import Style from '../Style/Style';
 import {

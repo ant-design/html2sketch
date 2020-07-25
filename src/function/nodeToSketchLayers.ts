@@ -98,7 +98,7 @@ const nodeToSketchLayers = (node: Element): AnyLayer[] => {
 
   // 转换为 SVG
   if (isSVG) {
-    const svg = parserToSvg(node);
+    const svg = parserToSvg(node as SVGElement);
     console.log('转换为 Svg: ', svg);
     layers.push(svg);
 

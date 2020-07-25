@@ -7,6 +7,7 @@ import Shadow from './Shadow';
 import InnerShadow from './InnerShadow';
 import Border from './Border';
 import { FillType } from '@sketch-hq/sketch-file-format-ts/dist/cjs/v3-types';
+import { sortObjectKeys } from '../../helpers/utils';
 
 interface ShadowInput {
   color: ColorParam;
@@ -213,7 +214,7 @@ class Style extends StyleBase {
   /**
    * 生成 Sketch JSON 对象
    */
-  toSketchJSON = (): FileFormat.Style => {
+  toSketchJSON(): FileFormat.Style {
     return {
       _class: 'style',
       do_objectID: this.id,
@@ -229,7 +230,20 @@ class Style extends StyleBase {
       innerShadows: this.innerShadows.map((i) => i.toSketchJSON()),
       contextSettings: this.getContextSettings(),
     };
-  };
+  }
+
+  toJSON() {
+    return {
+      fills: this.fills.map((f) => f.toJSON()),
+    };
+  }
+  /**
+   * 获取 style 的 hash
+   */
+  get hash() {
+    const { id, name, ...style } = obj; // 去掉 id 和 name 后进行 hash
+    return murmurHash(JSON.stringify(sortObjectKeys(style)));
+  }
 }
 
 export default Style;

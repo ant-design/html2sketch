@@ -100,6 +100,15 @@ class Fill extends StyleBase {
       patternTileScale: this.patternTileScale,
     };
   };
+  /**
+   * 转为 JSON
+   */
+  toJSON() {
+    return {
+      type: this.type,
+      color: this.color.toJSON(),
+    };
+  }
 }
 
 export default Fill;

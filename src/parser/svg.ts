@@ -30,7 +30,7 @@ const parserToSvg = (node: SVGElement) => {
     width: childrenBCR.width,
     height: childrenBCR.height,
     svgString,
-    path: pathData,
+    shapes: [{ path: pathData }],
   });
   svg.name = node.getAttribute('data-icon') || 'svg';
   return svg;

@@ -5,14 +5,16 @@ import { sketchImage, defaultExportOptions } from '../utils';
 interface BitmapInitParams extends BaseLayerParams {
   url: string;
 }
+
 /**
- * 画板
+ * 图片处理
  **/
 class Bitmap extends Base {
   constructor({ url, x, y, width, height }: BitmapInitParams) {
     super({ y, x, height, width });
     this.class = SketchFormat.ClassValue.Bitmap;
-    this.url = url;
+    this.url =
+      url.indexOf('data:') === 0 ? Bitmap.ensureBase64DataURL(url) : url;
   }
 
   url: string;
@@ -56,6 +58,34 @@ class Bitmap extends Base {
       _ref_class: 'MSImageData',
       _ref: `images/${this.url}`,
     };
+  };
+
+  /**
+   * 获取成内嵌的 DataURL
+   * @param url 网址
+   */
+  static ensureBase64DataURL = (url: string) => {
+    const imageData = url.match(/data:(.+?)(;(.+))?,(.+)/i);
+
+    if (imageData && imageData[3] !== 'base64') {
+      // Solve for an NSURL bug that can't handle plaintext data: URLs
+      const type = imageData[1];
+      const data = decodeURIComponent(imageData[4]);
+      const encodingMatch = imageData[3] && imageData[3].match(/^charset=(.*)/);
+      let buffer: any;
+
+      if (encodingMatch) {
+        // @ts-ignore
+        buffer = Buffer.from(data, encodingMatch[1]);
+      } else {
+        // @ts-ignore
+        buffer = Buffer.from(data);
+      }
+
+      return `data:${type};base64,${buffer.toString('base64')}`;
+    }
+
+    return url;
   };
 }
 
