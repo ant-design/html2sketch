@@ -95,7 +95,8 @@ export function inlineStyles(node) {
       propCurrentValue !== propDefaultValue &&
       propCurrentValue !== propAttributeValue &&
       // 不用 d 属性
-      propName !== 'd'
+      propName !== 'd' &&
+      propName !== 'font-family'
     ) {
       node.style[propName] = propCurrentValue;
     }

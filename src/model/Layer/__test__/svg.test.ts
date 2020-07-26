@@ -74,6 +74,7 @@ describe('Svg 类', () => {
       expect(svg.toSketchJSON()).toStrictEqual(upCircleSvg.sketchJSON);
     });
   });
+
   describe('convertToCubicBezier', function() {
     it('svgPath转换正常', function() {
       const points = Svg.pathToShapeGroup(svgPath.shapes[0].path);
@@ -163,4 +164,5 @@ describe('Svg 类', () => {
       expect(scale).toBe(0.5);
     });
   });
+  describe('', function() {});
 });

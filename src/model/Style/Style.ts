@@ -245,6 +245,37 @@ class Style extends StyleBase {
 
     return '';
   }
+
+  /**
+   * 从样式字符串获得样式的 JSON 对象
+   * @param style
+   */
+  static parserStyleString = (style: string) => {
+    if (!style || style == '') {
+      return;
+    }
+    const Arr = style
+      .replace(/&quot;/g, '"') // 替换引号
+      .split(';')
+      .filter((item) => item !== '');
+    let str = '';
+    Arr.forEach((item) => {
+      let test = '';
+      item
+        .trim()
+        .split(':')
+        .forEach((item2) => {
+          test += '"' + item2.trim() + '":';
+        });
+      str += test + ',';
+    });
+    str = str.replace(/:,/g, ',');
+    str = str.substring(0, str.lastIndexOf(','));
+    str = '{' + str + '}';
+
+    const obj = JSON.parse(str);
+    return obj;
+  };
 }
 
 export default Style;
