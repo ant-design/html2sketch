@@ -2,8 +2,8 @@
   "include": ["src", "typings.d.ts"],
   "exclude": ["node_modules", "**/__test__/*", "example"],
   "compilerOptions": {
-    "target": "esnext",
-    "module": "esnext",
+    "target": "es5",
+    "module": "commonjs",
     "outDir": "./lib",
     "sourceMap": true,
     "declaration": true,
@@ -21,9 +21,6 @@
 
     "lib": ["dom", "es2015", "es2016", "es2017"],
     "allowSyntheticDefaultImports": true,
-    "baseUrl": ".",
-    "paths": {
-      "@/model": ["./src/model"]
-    }
+    "baseUrl": "."
   }
 }

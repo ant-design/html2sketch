@@ -124,14 +124,16 @@ class Svg extends Base {
 
       const shapeGroup = new ShapeGroup(shapeGroupType.frame);
 
-      const styleObj = Style.parserStyleString(styleString);
-
-      const { fill } = styleObj;
-      const style = new Style();
-      if (fill) {
-        style.addColorFill(styleObj.fill);
+      // 添加样式
+      if (styleString) {
+        const styleObj = Style.parserStyleString(styleString);
+        const { fill } = styleObj;
+        const style = new Style();
+        if (fill) {
+          style.addColorFill(styleObj.fill);
+        }
+        shapeGroup.style = style;
       }
-      shapeGroup.style = style;
       shapeGroup.addLayers(shapePaths);
 
       this.addLayer(shapeGroup);

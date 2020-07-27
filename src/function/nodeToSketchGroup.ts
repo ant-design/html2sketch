@@ -22,6 +22,11 @@ const getChildNodeList = (node: Element) =>
       return zIndexA - zIndexB;
     });
 
+/**
+ * 将一个节点和其包含的所有子级转为 Group 对象
+ * @param node
+ * @param options
+ */
 export const nodeToSketchGroup = (node: Element, options?: any): AnyLayer => {
   const bcr = node.getBoundingClientRect();
   const { left, top } = bcr;
@@ -33,9 +38,8 @@ export const nodeToSketchGroup = (node: Element, options?: any): AnyLayer => {
   // ---------- 处理父节点 ------ //
   if (node.nodeName !== 'svg') {
     const childNodeList = getChildNodeList(node);
-    // const childNodeList = getChildNodeList(node);
-    // Recursively collect child groups for child nodes
 
+    // Recursively collect child groups for child nodes
     childNodeList.forEach((childNode) => {
       layers.push(nodeToSketchGroup(childNode, options));
 

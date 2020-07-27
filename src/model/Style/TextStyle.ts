@@ -206,20 +206,18 @@ class TextStyle {
    * 修正字体家族信息
    **/
   fixFontFamilyInfo = (
-    family: string,
+    _family: string,
     weight?: string,
-    fontStyle?: string
+    _fontStyle?: string
   ): string => {
     // const defaultFontFamily = 'PingFangSC';
-
-    console.log(family);
 
     const defaultFontWeight = this.FONT_WEIGHTS.normal;
 
     let fontWeight = weight ? this.FONT_WEIGHTS[weight] : defaultFontWeight;
     // Default to PingFangSC if fonts are missing
 
-    let isItalic = false;
+    // let isItalic = false;
 
     // let isCondensed = false;
 
@@ -228,11 +226,11 @@ class TextStyle {
     // familyName = family;
     // }
 
-    if (fontStyle) {
-      isItalic = this.FONT_STYLES[fontStyle] || false;
-    }
+    // if (fontStyle) {
+    //   isItalic = this.FONT_STYLES[fontStyle] || false;
+    // }
 
-    console.log('是否斜体:', isItalic);
+    // console.log('是否斜体:', isItalic);
     // return `${familyName}-${fontWeight}`;
     return `PingFangSC-${fontWeight}`;
   };
