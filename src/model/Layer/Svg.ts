@@ -11,7 +11,6 @@ import { getUseReplacement, inlineStyles } from '../../helpers/svg';
 import { defaultExportOptions } from '../utils';
 import { getGroupLayout } from '../../helpers/layout';
 import { Style } from '../Style/Style';
-import { CGPoint } from '../../type';
 
 export type SVG = {
   _class: 'svg';

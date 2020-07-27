@@ -3,7 +3,6 @@ import Base, { BaseLayerParams } from './Base';
 import { defaultExportOptions } from '../utils';
 import { getGroupLayout } from '../../helpers/layout';
 import { AnyLayer } from '../type';
-import Svg from './Svg';
 
 class Group extends Base {
   constructor(params: BaseLayerParams) {

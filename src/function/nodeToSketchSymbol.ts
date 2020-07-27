@@ -3,7 +3,7 @@ import nodeToSketchLayers from './nodeToSketchLayers';
 import transferToGroup from '../parser/group';
 import { SMART_LAYOUT } from '../helpers/layout';
 import { orderNodeList } from '../helpers/hierarchy';
-import Svg from '../model/Layer/Svg';
+
 /**
  * 解析为 Symbol
  */
