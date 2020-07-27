@@ -8,6 +8,7 @@
     "sourceMap": true,
     "declaration": true,
     "downlevelIteration": true,
+    "importHelpers": true,
     "resolveJsonModule": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
@@ -17,6 +18,7 @@
     "strict": false,
     "moduleResolution": "node",
     "esModuleInterop": true,
+
     "lib": ["dom", "es2015", "es2016", "es2017"],
     "allowSyntheticDefaultImports": true,
     "baseUrl": ".",

@@ -1,5 +1,6 @@
 // import { Group, Text, ShapeGroup, Bitmap, Rectangle, ShapePath } from './index';
 import Group from '../model/Layer/Group';
+import Svg from '../model/Layer/Svg';
 import ShapePath from '../model/Layer/ShapePath';
 import Text from '../model/Layer/Text';
 import Bitmap from '../model/Layer/Bitmap';
@@ -16,7 +17,8 @@ export type AnyLayer =
   | Bitmap
   | ShapeGroup
   | Rectangle
-  | ShapePath;
+  | ShapePath
+  | Svg;
 
 /**
  * 任意可成为 Shape 的对象 其可以作为 ShapeGroup 的子成员

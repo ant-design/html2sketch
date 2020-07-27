@@ -2,7 +2,7 @@ import SketchFormat from '@sketch-hq/sketch-file-format-ts';
 
 import Color, { ColorParam } from './Color';
 import StyleBase from './Base';
-import { CGPoint } from '../../index';
+import { CGPoint } from '../../type';
 import { defaultContextSettings } from '../utils';
 import Gradient from './Gradient';
 import Image from './Image';

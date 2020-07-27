@@ -1,6 +1,7 @@
 import React, { FC } from 'react';
 import { Button, Space, Row, Col } from 'antd';
 import { generateSymbolName } from '../utils/symbolName';
+import { StepForwardOutlined, UpCircleOutlined } from '@ant-design/icons';
 
 /**
  *
@@ -13,6 +14,8 @@ export const ButtonSymbol: FC = () => {
     { type: 'disabled' },
     { type: 'dashed' },
     { type: 'ghost' },
+    { type: 'default', icon: <StepForwardOutlined /> },
+    { type: 'primary', icon: <UpCircleOutlined /> },
     { type: 'text' },
     { type: 'link' },
     { type: 'primary', danger: true },
@@ -33,10 +36,11 @@ export const ButtonSymbol: FC = () => {
         <Col span={24}>
           <Space>
             {list.map((button, index) => {
-              const { type, size, danger } = button;
+              const { type, size, danger, icon } = button;
               return (
                 <Button
                   className="button"
+                  icon={icon}
                   symbolName={generateSymbolName({
                     type,
                     size,

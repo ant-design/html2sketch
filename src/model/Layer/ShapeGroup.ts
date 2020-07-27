@@ -67,9 +67,11 @@ class ShapeGroup extends Base {
   toSketchJSON(): SketchFormat.ShapeGroup | SketchFormat.ShapePath {
     if (this.layers.length === 1) {
       const layer = this.layers[0];
-      // 恢复 layer 的绝对坐标
+      // 恢复 layer 的相对坐标关系
       layer.x += this.x;
       layer.y += this.y;
+      // 下传 style 样式
+      layer.style = this.style;
       return layer.toSketchJSON();
     } else
       return {

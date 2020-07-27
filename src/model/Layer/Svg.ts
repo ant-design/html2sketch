@@ -10,6 +10,8 @@ import { FrameType } from '../Frame';
 import { getUseReplacement, inlineStyles } from '../../helpers/svg';
 import { defaultExportOptions } from '../utils';
 import { getGroupLayout } from '../../helpers/layout';
+import { Style } from '../Style/Style';
+import { CGPoint } from '../../type';
 
 export type SVG = {
   _class: 'svg';
@@ -62,7 +64,12 @@ interface SvgInitParams extends Partial<BaseLayerParams> {
  */
 class Svg extends Base {
   constructor({ x, y, width, height, svgString }: SvgInitParams) {
-    super({ height, width, y, x });
+    super({
+      height,
+      width,
+      y,
+      x,
+    });
     this.class = 'svg';
     this.name = 'svg';
     this.rawSVGString = svgString;
@@ -110,13 +117,22 @@ class Svg extends Base {
     // ----- 对处理后的 shape 进行图形解析 ------ //
 
     shapes.forEach((shape) => {
-      const { path } = shape;
+      const { path, style: styleString } = shape;
 
       const shapeGroupType = Svg.pathToShapeGroup(path);
 
       const shapePaths = this.shapeGroupDataToLayers(shapeGroupType);
 
       const shapeGroup = new ShapeGroup(shapeGroupType.frame);
+
+      const styleObj = Style.parserStyleString(styleString);
+
+      const { fill } = styleObj;
+      const style = new Style();
+      if (fill) {
+        style.addColorFill(styleObj.fill);
+      }
+      shapeGroup.style = style;
       shapeGroup.addLayers(shapePaths);
 
       this.addLayer(shapeGroup);

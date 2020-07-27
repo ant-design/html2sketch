@@ -74,7 +74,6 @@ const nodeToSketchLayers = (node: Element): AnyLayer[] => {
   if (isImage || isShape || isExistPseudo(node)) {
     // 判断一下是否有伪类
     const afterEl = parserPseudo(node, 'after');
-    console.log(afterEl);
 
     if (afterEl) {
       layers.push(afterEl);
@@ -89,7 +88,6 @@ const nodeToSketchLayers = (node: Element): AnyLayer[] => {
 
     // 判断一下是否有伪类
     const beforeEl = parserPseudo(node, 'before');
-    console.log(beforeEl);
 
     if (beforeEl) {
       layers.push(beforeEl);

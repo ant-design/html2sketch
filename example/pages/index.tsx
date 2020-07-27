@@ -6,18 +6,19 @@ import {
   RadioSymbol,
   ButtonSymbol,
   IconSymbol,
+  Test,
 } from '../components';
 
 import copy from 'copy-to-clipboard';
 import styles from './style.less';
-import { parserSymbol, parserSvg } from '../../lib';
+import { nodeToSketchSymbol, svgNodeToSvg } from '../../lib';
 import { SMART_LAYOUT } from '../../lib/helpers/layout';
 
 const { TabPane } = Tabs;
 export default () => {
   const [json, setJSON] = useState(undefined);
   const [showJSON, setShowJSON] = useState(false);
-  const [activeKey, setActiveKey] = useState('icon');
+  const [activeKey, setActiveKey] = useState('test');
 
   /**
    * 生成 symbol
@@ -31,7 +32,7 @@ export default () => {
         'smartLayout',
       ) as keyof typeof SMART_LAYOUT;
 
-      const switchObj = parserSymbol(el, {
+      const switchObj = nodeToSketchSymbol(el, {
         smartLayout: smartLayout ? smartLayout : undefined,
       }).toSketchJSON();
       switchObj.name = el.getAttribute('symbolName') || 'symbol';
@@ -51,7 +52,7 @@ export default () => {
     const json: Object[] = [];
 
     Array.from(els).map((el) => {
-      const svg = parserSvg(el).toSketchJSON();
+      const svg = svgNodeToSvg(el).toSketchJSON();
       console.log(svg);
       json.push(svg);
     });
@@ -72,6 +73,9 @@ export default () => {
               }}
               tabPosition={'left'}
             >
+              <TabPane key={'test'} tabKey={'test'} tab={'Test'}>
+                <Test />
+              </TabPane>
               <TabPane key={'button'} tabKey={'button'} tab={'Button'}>
                 <ButtonSymbol />
               </TabPane>
@@ -98,15 +102,15 @@ export default () => {
                 </Button>
               </Col>
               <Col>
-                <Button type={'primary'} onClick={() => generateSvg()}>
-                  解析 Svg
-                </Button>{' '}
-                <Button
-                  type={'primary'}
-                  onClick={() => generateSymbol(activeKey)}
-                >
-                  转换为Symbol
-                </Button>
+                <Space>
+                  <Button onClick={() => generateSvg()}>解析 Svg</Button>
+                  <Button
+                    type={'primary'}
+                    onClick={() => generateSymbol(activeKey)}
+                  >
+                    转换为Symbol
+                  </Button>
+                </Space>
               </Col>
             </Row>
           </Card>

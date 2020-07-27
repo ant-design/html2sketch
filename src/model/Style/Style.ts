@@ -16,6 +16,10 @@ interface ShadowInput {
   spread?: number;
 }
 
+export interface StyleType {
+  fill: string;
+}
+
 const defaultShadowInput: ShadowInput = {
   color: '#000',
   blur: 0,
@@ -26,7 +30,7 @@ const defaultShadowInput: ShadowInput = {
 /**
  * 样式
  */
-class Style extends StyleBase {
+export class Style extends StyleBase {
   constructor() {
     super();
   }
@@ -250,7 +254,7 @@ class Style extends StyleBase {
    * 从样式字符串获得样式的 JSON 对象
    * @param style
    */
-  static parserStyleString = (style: string) => {
+  static parserStyleString = (style: string): StyleType => {
     if (!style || style == '') {
       return;
     }
@@ -273,8 +277,7 @@ class Style extends StyleBase {
     str = str.substring(0, str.lastIndexOf(','));
     str = '{' + str + '}';
 
-    const obj = JSON.parse(str);
-    return obj;
+    return JSON.parse(str);
   };
 }
 

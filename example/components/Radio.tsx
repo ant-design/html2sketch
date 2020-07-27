@@ -9,12 +9,12 @@ export const RadioSymbol: FC = () => {
     <>
       <div>
         <Space>
-          <Radio
+          <div
             className="radio"
             symbolName="10.Radio单选框/1.Default默认/1.Off关"
           >
-            内容
-          </Radio>
+            <Radio>内容</Radio>
+          </div>
         </Space>
       </div>
     </>

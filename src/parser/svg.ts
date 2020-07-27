@@ -21,7 +21,6 @@ const parserToSvg = (node: SVGElement) => {
   });
 
   const svgString = SVG.getSVGString(node);
-  console.log(svgString);
   const svg = new SVG({
     x: childrenBCR.left,
     y: childrenBCR.top,

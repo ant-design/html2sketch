@@ -1,8 +1,9 @@
 import { SymbolMaster, Style } from '../model';
-import { nodeToSketchLayers } from '../index';
-import transferToGroup from './group';
+import nodeToSketchLayers from './nodeToSketchLayers';
+import transferToGroup from '../parser/group';
 import { SMART_LAYOUT } from '../helpers/layout';
 import { orderNodeList } from '../helpers/hierarchy';
+import Svg from '../model/Layer/Svg';
 /**
  * 解析为 Symbol
  */
@@ -56,6 +57,13 @@ const parserToSymbol = (
       switch (layer.class) {
         case 'text':
           symbol.addOverride(layer.id, 'stringValue');
+          break;
+        case 'svg':
+          // 由于
+          layer.layers.forEach((shapeGroup) => {
+            shapeGroup.x += group.x;
+            shapeGroup.y += group.y;
+          });
       }
       group.addLayer(layer);
     });
