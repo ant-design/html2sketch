@@ -7,7 +7,7 @@ import { orderNodeList } from '../helpers/hierarchy';
 /**
  * 解析为 Symbol
  */
-const parserToSymbol = (
+export const nodeToSketchSymbol = (
   node: Element,
   options?: { smartLayout: keyof typeof SMART_LAYOUT }
 ) => {
@@ -84,5 +84,3 @@ const parserToSymbol = (
 
   return symbol;
 };
-
-export default parserToSymbol;

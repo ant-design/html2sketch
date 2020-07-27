@@ -22,7 +22,7 @@ const getChildNodeList = (node: Element) =>
       return zIndexA - zIndexB;
     });
 
-const nodeToSketchGroup = (node: Element, options?: any): AnyLayer => {
+export const nodeToSketchGroup = (node: Element, options?: any): AnyLayer => {
   const bcr = node.getBoundingClientRect();
   const { left, top } = bcr;
   const width = bcr.right - bcr.left;
@@ -93,5 +93,3 @@ const nodeToSketchGroup = (node: Element, options?: any): AnyLayer => {
   }
   return group;
 };
-
-export default nodeToSketchGroup;

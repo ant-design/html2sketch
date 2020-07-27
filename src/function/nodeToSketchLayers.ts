@@ -44,7 +44,7 @@ export let getRelativeXY: (
  * @param {HTMLElement} node 节点
  * @param {HTMLElement} options? 配置项
  */
-const nodeToSketchLayers = (node: Element): AnyLayer[] => {
+export const nodeToSketchLayers = (node: Element): AnyLayer[] => {
   const layers: any[] = [];
 
   const styles: CSSStyleDeclaration = getComputedStyle(node);
