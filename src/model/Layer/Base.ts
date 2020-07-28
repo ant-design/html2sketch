@@ -10,10 +10,6 @@ import SketchFormat from '@sketch-hq/sketch-file-format-ts';
 
 const DEFAULT_USER_INFO_SCOPE = 'html2sketch';
 
-export interface ToSketchJSON<T> {
-  toSketchJSON: () => T;
-}
-
 export interface BaseLayerParams {
   x?: number;
   y?: number;
