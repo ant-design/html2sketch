@@ -2,9 +2,9 @@
   "include": ["src", "typings.d.ts"],
   "exclude": ["node_modules", "**/__test__/*", "example"],
   "compilerOptions": {
-    "target": "es5",
-    "module": "commonjs",
-    "outDir": "./lib",
+    "target": "ES2015",
+    "module": "ES2020",
+    "outDir": "./lib/esm",
     "sourceMap": true,
     "declaration": true,
     "downlevelIteration": true,
@@ -16,6 +16,7 @@
     "experimentalDecorators": true,
     "newLine": "lf",
     "strict": false,
+    "jsx": "react",
     "moduleResolution": "node",
     "esModuleInterop": true,
 
