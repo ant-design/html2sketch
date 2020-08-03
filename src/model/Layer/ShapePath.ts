@@ -135,8 +135,8 @@ class ShapePath extends Base {
       this.isClosed &&
       // 且最后一个点和起点点一样
       index === this.points.length - 1 &&
-      (point.x.toFixed(8) === firstPoint.x.toFixed(8) &&
-        point.y.toFixed(8) === firstPoint.y.toFixed(8))
+      point.x.toFixed(8) === firstPoint.x.toFixed(8) &&
+      point.y.toFixed(8) === firstPoint.y.toFixed(8)
     )
       // 则过滤最后一个点
       return;
@@ -167,7 +167,8 @@ class ShapePath extends Base {
     return (
       q.x >= Math.min(p1.x, p2.x) &&
       q.x <= Math.max(p1.x, p2.x) &&
-      (q.y >= Math.min(p1.y, p2.y) && q.y <= Math.max(p1.y, p2.y))
+      q.y >= Math.min(p1.y, p2.y) &&
+      q.y <= Math.max(p1.y, p2.y)
     );
   };
 
