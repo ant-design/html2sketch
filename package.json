@@ -1,6 +1,6 @@
 {
   "name": "html2sketch",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "author": "arvinxx",
   "description": "parser html to sketch json",
   "repository": {
@@ -45,10 +45,11 @@
     "konva": "^7.0.3",
     "lint-staged": "^10.0.7",
     "prettier": "^1.18.2",
+    "puppeteer": "^5.2.1",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "react-json-view": "^1.19.1",
-    "react-konva": "^16.13.0-3",
+    "react-konva": "^16.13.0-5",
     "ts-jest": "^24.0.2",
     "tslint": "^5.18.0",
     "tslint-config-prettier": "^1.18.0",

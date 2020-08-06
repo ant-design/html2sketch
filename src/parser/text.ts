@@ -25,6 +25,8 @@ const transformToText = (node: Element): Text | Text[] | undefined => {
     paddingLeft,
     paddingTop,
     paddingRight,
+    borderLeftWidth,
+    borderTopWidth,
   } = styles;
 
   const textStyle: TextStyleParams = {
@@ -95,9 +97,22 @@ const transformToText = (node: Element): Text | Text[] | undefined => {
         x = x - pl;
       }
 
+      // 添加左侧的 border 宽度
+      x = x + parseFloat(borderLeftWidth);
+
       // 处理内部高度
       const pt = parseFloat(paddingTop);
       y = y + pt;
+
+      // 处理顶部 border 宽度
+      y = y + parseFloat(borderTopWidth);
+
+      const textHeight = fixY < 0 ? textBCRHeight - fixY * 2 : textBCRHeight;
+
+      // 处理垂直居中的样式
+      if (display === 'flex' || display === 'inline-flex') {
+        y = y + (nodeBCR.height - textHeight) / 2;
+      }
 
       const textValue = Text.fixWhiteSpace(
         textNode.nodeValue || '',
@@ -108,7 +123,7 @@ const transformToText = (node: Element): Text | Text[] | undefined => {
         x,
         y,
         width: textWidth,
-        height: fixY < 0 ? textBCRHeight - fixY * 2 : textBCRHeight,
+        height: textHeight,
         text: textValue,
         style: textStyle,
         multiline: numberOfLines > 1,

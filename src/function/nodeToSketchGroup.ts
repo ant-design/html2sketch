@@ -75,13 +75,16 @@ export const nodeToSketchGroup = (node: Element, options?: any): AnyLayer => {
     group.layers.length === 1 &&
     (group.layers[0].class === 'rectangle' ||
       group.layers[0].class === 'text' ||
+      group.layers[0].class === 'svg' ||
       group.layers[0].class === 'group')
   ) {
     console.log('该 group 只包含一个子级,丢弃...');
     const layer = group.layers[0];
     // 将父级的图层关系还给子集
+
     layer.x += group.x;
     layer.y += group.y;
+    console.log(group, layer);
     return layer;
   }
 
