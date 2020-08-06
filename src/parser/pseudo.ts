@@ -1,5 +1,6 @@
 import { Style, Rectangle, Shadow } from '../model';
 import { defaultNodeStyle } from '../model/utils';
+import transformToText from './text';
 
 /**
  * 解析伪类
@@ -8,12 +9,12 @@ const parsePseudo = (node: Element, pseudoElt: 'before' | 'after') => {
   // 判断一下是否有伪类
   const pseudoEl: CSSStyleDeclaration = getComputedStyle(node, ':' + pseudoElt);
   const { content, display } = pseudoEl;
+
   if (content === 'none' || display === 'none') {
     console.log(`No ${pseudoElt} Pseudo`);
     return null;
   }
 
-  console.log('有伪类');
   const bcr = node.getBoundingClientRect();
   const { left, top } = bcr;
   const width = bcr.right - bcr.left;
@@ -51,113 +52,120 @@ const parsePseudo = (node: Element, pseudoElt: 'before' | 'after') => {
     style.addColorFill(backgroundColor);
   }
 
-  const rect: Rectangle | null = new Rectangle({
-    width,
-    height,
-
-    x: left,
-    y: top,
-  });
-  // support for one-side borders (using inner shadow because Sketch doesn't support that)
-  if (borderWidth.indexOf(' ') === -1) {
-    style.addBorder({
-      color: borderColor,
-      thickness: parseFloat(borderWidth),
+  if (content === '') {
+    const rect: Rectangle | null = new Rectangle({
+      width,
+      height,
+      x: left,
+      y: top,
     });
-
-    // 如果是虚线
-    const isDashed =
-      borderBottomStyle === 'dashed' &&
-      borderLeftStyle === 'dashed' &&
-      borderTopStyle === 'dashed' &&
-      borderRightStyle === 'dashed';
-    if (isDashed) {
-      style.setBorderDashed({
-        dash: 3 * parseFloat(borderWidth),
-        spacing: 3 * parseFloat(borderWidth),
+    // support for one-side borders (using inner shadow because Sketch doesn't support that)
+    if (borderWidth.indexOf(' ') === -1) {
+      style.addBorder({
+        color: borderColor,
+        thickness: parseFloat(borderWidth),
       });
-    }
-    // 如果是点
-    const isDotted =
-      borderBottomStyle === 'dotted' &&
-      borderLeftStyle === 'dotted' &&
-      borderTopStyle === 'dotted' &&
-      borderRightStyle === 'dotted';
 
-    if (isDotted) {
-      style.setBorderDashed({
-        dash: parseFloat(borderWidth),
-        spacing: parseFloat(borderWidth),
-      });
-    }
-  } else {
-    const borderTopWidthFloat = parseFloat(borderTopWidth);
-    const borderRightWidthFloat = parseFloat(borderRightWidth);
-    const borderBottomWidthFloat = parseFloat(borderBottomWidth);
-    const borderLeftWidthFloat = parseFloat(borderLeftWidth);
-
-    if (borderTopWidthFloat !== 0) {
-      style.addInnerShadow({
-        color: borderTopColor,
-        offsetY: borderTopWidthFloat,
-      });
-    }
-    if (borderRightWidthFloat !== 0) {
-      style.addInnerShadow({
-        color: borderRightColor,
-        offsetX: -borderRightWidthFloat,
-      });
-    }
-    if (borderBottomWidthFloat !== 0) {
-      style.addInnerShadow({
-        color: borderBottomColor,
-        offsetY: -borderBottomWidthFloat,
-      });
-    }
-    if (borderLeftWidthFloat !== 0) {
-      style.addInnerShadow({
-        color: borderLeftColor,
-        offsetX: borderLeftWidthFloat,
-      });
-    }
-  }
-
-  if (boxShadow !== defaultNodeStyle.boxShadow) {
-    const shadowStrings = Shadow.splitShadowString(boxShadow);
-
-    shadowStrings.forEach((shadowString: string) => {
-      const shadowObject = Shadow.shadowStringToObject(shadowString);
-
-      if (shadowObject!.inset) {
-        if (borderWidth.indexOf(' ') === -1) {
-          shadowObject!.spread += parseFloat(borderWidth);
-        }
-        style.addInnerShadow(shadowObject);
-      } else {
-        style.addShadow(shadowObject);
+      // 如果是虚线
+      const isDashed =
+        borderBottomStyle === 'dashed' &&
+        borderLeftStyle === 'dashed' &&
+        borderTopStyle === 'dashed' &&
+        borderRightStyle === 'dashed';
+      if (isDashed) {
+        style.setBorderDashed({
+          dash: 3 * parseFloat(borderWidth),
+          spacing: 3 * parseFloat(borderWidth),
+        });
       }
-    });
+      // 如果是点
+      const isDotted =
+        borderBottomStyle === 'dotted' &&
+        borderLeftStyle === 'dotted' &&
+        borderTopStyle === 'dotted' &&
+        borderRightStyle === 'dotted';
+
+      if (isDotted) {
+        style.setBorderDashed({
+          dash: parseFloat(borderWidth),
+          spacing: parseFloat(borderWidth),
+        });
+      }
+    } else {
+      const borderTopWidthFloat = parseFloat(borderTopWidth);
+      const borderRightWidthFloat = parseFloat(borderRightWidth);
+      const borderBottomWidthFloat = parseFloat(borderBottomWidth);
+      const borderLeftWidthFloat = parseFloat(borderLeftWidth);
+
+      if (borderTopWidthFloat !== 0) {
+        style.addInnerShadow({
+          color: borderTopColor,
+          offsetY: borderTopWidthFloat,
+        });
+      }
+      if (borderRightWidthFloat !== 0) {
+        style.addInnerShadow({
+          color: borderRightColor,
+          offsetX: -borderRightWidthFloat,
+        });
+      }
+      if (borderBottomWidthFloat !== 0) {
+        style.addInnerShadow({
+          color: borderBottomColor,
+          offsetY: -borderBottomWidthFloat,
+        });
+      }
+      if (borderLeftWidthFloat !== 0) {
+        style.addInnerShadow({
+          color: borderLeftColor,
+          offsetX: borderLeftWidthFloat,
+        });
+      }
+    }
+
+    if (boxShadow !== defaultNodeStyle.boxShadow) {
+      const shadowStrings = Shadow.splitShadowString(boxShadow);
+
+      shadowStrings.forEach((shadowString: string) => {
+        const shadowObject = Shadow.shadowStringToObject(shadowString);
+
+        if (shadowObject!.inset) {
+          if (borderWidth.indexOf(' ') === -1) {
+            shadowObject!.spread += parseFloat(borderWidth);
+          }
+          style.addInnerShadow(shadowObject);
+        } else {
+          style.addShadow(shadowObject);
+        }
+      });
+    }
+    rect.style = style;
+    //TODO borderRadius can be expressed in different formats and use various units - for simplicity we assume "X%"
+    const cornerRadius = {
+      topLeft: Rectangle.parserBorderRadius(borderTopLeftRadius, width, height),
+      topRight: Rectangle.parserBorderRadius(
+        borderTopRightRadius,
+        width,
+        height
+      ),
+      bottomLeft: Rectangle.parserBorderRadius(
+        borderBottomLeftRadius,
+        width,
+        height
+      ),
+      bottomRight: Rectangle.parserBorderRadius(
+        borderBottomRightRadius,
+        width,
+        height
+      ),
+    };
+
+    rect.cornerRadius = cornerRadius;
+
+    return rect;
+  } else {
+    //TODO 添加文本伪类的解析
   }
-  rect.style = style;
-  //TODO borderRadius can be expressed in different formats and use various units - for simplicity we assume "X%"
-  const cornerRadius = {
-    topLeft: Rectangle.parserBorderRadius(borderTopLeftRadius, width, height),
-    topRight: Rectangle.parserBorderRadius(borderTopRightRadius, width, height),
-    bottomLeft: Rectangle.parserBorderRadius(
-      borderBottomLeftRadius,
-      width,
-      height
-    ),
-    bottomRight: Rectangle.parserBorderRadius(
-      borderBottomRightRadius,
-      width,
-      height
-    ),
-  };
-
-  rect.cornerRadius = cornerRadius;
-
-  return rect;
 };
 
 export default parsePseudo;

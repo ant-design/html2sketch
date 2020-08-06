@@ -93,6 +93,8 @@ const transformToText = (node: Element): Text | Text[] | undefined => {
       if (textAlign === 'right') {
         // 确认下 padding 的距离
         const pl = parseFloat(paddingRight);
+        // TODO 需要排除右侧有东西的情况
+        // 即 需要明确什么时候使用用下面这个公式
         x = nodeBCR.right - textWidth;
         x = x - pl;
       }

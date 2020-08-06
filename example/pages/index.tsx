@@ -10,7 +10,11 @@ import {
 } from '../components';
 
 import copy from 'copy-to-clipboard';
-import { nodeToSketchSymbol, svgNodeToSvg, nodeToSketchGroup } from '../../lib';
+import {
+  nodeToSketchSymbol,
+  svgNodeToSvg,
+  nodeToSketchGroup,
+} from '../../lib/esm';
 import { SMART_LAYOUT } from '../../lib/helpers/layout';
 import styles from './style.less';
 
