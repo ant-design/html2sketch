@@ -21,13 +21,13 @@ const transformToText = (node: Element): Text | Text[] | undefined => {
         child.nodeType === Node.TEXT_NODE && child.nodeValue!.trim().length > 0
     )
     .map((textNode) => {
-      const { lines } = getTextContext(textNode);
+      const { lines, textBCR } = getTextContext(textNode);
       let { x, y, width: textWidth, height } = getTextAbsBCR(node, textNode);
 
       const { display, whiteSpace, overflow, textOverflow, width } = styles;
 
       if (display === 'inline') {
-        textStyle.lineHeight = height;
+        textStyle.lineHeight = textBCR.height;
       }
       // **** 处理文本 ****** //
 
