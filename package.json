@@ -1,8 +1,8 @@
 {
   "name": "html2sketch",
-  "version": "0.1.9",
+  "version": "0.1.10",
   "author": "arvinxx",
-  "description": "parser html to sketch json",
+  "description": "parser HTML to Design Model",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/arvinxx/html2sketch.git"
