@@ -66,6 +66,7 @@ const parsePseudoText = (node: Element, pseudoElt: 'before' | 'after') => {
     width: textBCR.width,
     height: nodeBCR.height,
     text: pseudoText,
+    style: Text.getTextStyleFromNode(node),
     multiline: false,
   });
 };

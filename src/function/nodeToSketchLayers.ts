@@ -113,7 +113,17 @@ export const nodeToSketchLayers = (node: Element): AnyLayer[] => {
     if (isText) {
       text = transferToText(node);
       console.info('[nodeToSketchLayers]转换为 Text:', text);
-      layers.push(text);
+      if (text instanceof Array) {
+        for (let i = 0; i < text.length; i++) {
+          const textElement = text[i];
+          if (i !== 0) {
+            textElement.x = text[i - 1].right;
+          }
+          layers.push(textElement);
+        }
+      } else {
+        layers.push(text);
+      }
     }
 
     // 判断一下是否有伪类

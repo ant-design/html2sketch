@@ -133,6 +133,46 @@ class Text extends Base {
   getTextBehaviour = () => {
     return SketchFormat.TextBehaviour;
   };
+
+  /**
+   * 从节点中获取样式
+   * @param node
+   */
+  static getTextStyleFromNode = (node: Element) => {
+    const styles: CSSStyleDeclaration = getComputedStyle(node);
+
+    const {
+      // 字体
+      fontFamily,
+      fontWeight,
+      fontSize,
+      lineHeight,
+      letterSpacing,
+      textTransform,
+      textDecorationLine,
+      textAlign,
+      justifyContent,
+      display,
+      color,
+    } = styles;
+    const textStyle: TextStyleParams = {
+      fontFamily,
+      fontSize: parseInt(fontSize, 10),
+      lineHeight: lineHeight !== 'normal' ? parseFloat(lineHeight) : undefined,
+      letterSpacing:
+        letterSpacing !== 'normal' ? parseFloat(letterSpacing) : undefined,
+      fontWeight: Text.parseFontWeight(fontWeight),
+      color,
+      textTransform,
+      textDecoration: textDecorationLine,
+      textAlign:
+        display === 'flex' || display === 'inline-flex'
+          ? justifyContent
+          : textAlign,
+      skipSystemFonts: true,
+    };
+    return textStyle;
+  };
 }
 
 export default Text;
