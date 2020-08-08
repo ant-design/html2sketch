@@ -32,8 +32,11 @@ class Color extends StyleBase {
   alpha: number;
   method: ColorCls;
 
-  constructor(color: ColorParam) {
+  constructor(color?: ColorParam) {
     super();
+    if (!color) {
+      this.method = ColorCls('#000');
+    }
     if (color instanceof Array) {
       this.method = ColorCls.rgb(color);
     } else {

@@ -45,15 +45,15 @@ function getFirstFont(fonts: string, skipSystemFonts?: boolean) {
 }
 
 export interface TextStyleParams {
-  color: string;
-  fontSize: number;
-  fontFamily: string;
-  fontWeight: number | string;
+  color?: string;
+  fontSize?: number;
+  fontFamily?: string;
+  fontWeight?: number | string;
   lineHeight?: number;
   letterSpacing?: number;
-  textTransform: string;
-  textDecoration: string;
-  textAlign: string;
+  textTransform?: string;
+  textDecoration?: string;
+  textAlign?: string;
   /**
    * Some websites or component libraries use font-family
    * listsstarting with OS-specific fonts.
@@ -68,34 +68,38 @@ export interface TextStyleParams {
  * 文本样式
  */
 class TextStyle {
-  constructor({
-    color,
-    fontSize,
-    fontFamily,
-    fontWeight,
-    lineHeight,
-    letterSpacing,
-    textTransform,
-    textDecoration,
-    textAlign,
-    skipSystemFonts,
-  }: TextStyleParams) {
-    this.color = new Color(color);
-    this.fontSize = fontSize;
-    this.fontFamily = getFirstFont(fontFamily, skipSystemFonts);
-    this.lineHeight = lineHeight;
-    this.letterSpacing = letterSpacing;
-    this.fontWeight = fontWeight.toString();
-    this.textTransform = textTransform;
-    this.textDecoration = textDecoration;
-    this.textAlign = textAlign;
+  constructor(param?: TextStyleParams) {
+    if (param) {
+      const {
+        color,
+        fontFamily,
+        fontWeight,
+        lineHeight,
+        letterSpacing,
+        textTransform,
+        textDecoration,
+        textAlign,
+        skipSystemFonts,
+        fontSize,
+      } = param;
+
+      this.color = new Color(color);
+      this.fontSize = fontSize || 14;
+      this.fontFamily = getFirstFont(fontFamily, skipSystemFonts);
+      this.lineHeight = lineHeight;
+      this.letterSpacing = letterSpacing;
+      this.fontWeight = fontWeight.toString();
+      this.textTransform = textTransform;
+      this.textDecoration = textDecoration;
+      this.textAlign = textAlign || 'left';
+    }
   }
-  color: Color;
+  color: Color = new Color();
 
   /**
    * 字体家族
    **/
-  fontFamily: string;
+  fontFamily: string = 'PingFang SC';
   /**
    * 字体大小
    **/
@@ -117,11 +121,11 @@ class TextStyle {
    *
    * 例如全部大写等
    **/
-  textTransform?: string;
+  textTransform?: string = '';
   /**
    * 文本对齐
    **/
-  textAlign: string;
+  textAlign: string = 'left';
   /**
    * 文本装饰
    *
@@ -175,7 +179,7 @@ class TextStyle {
    * 取得 sketch 下的文本变化属性
    */
   getTextTransform = () => {
-    switch (this.textTransform.toLowerCase()) {
+    switch (this.textTransform?.toLowerCase()) {
       case 'uppercase':
         return SketchFormat.TextTransform.Uppercase;
       case 'lowercase':

@@ -6,7 +6,7 @@ import TextStyle, { TextStyleParams } from '../Style/TextStyle';
 
 interface TextInitParams extends BaseLayerParams {
   text: string;
-  style: TextStyleParams;
+  style?: TextStyleParams;
   multiline: boolean;
 }
 /**

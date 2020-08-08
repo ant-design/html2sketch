@@ -4,7 +4,7 @@ import { getName } from '../helpers/name';
 import { Group, Style } from '../model';
 import { AnyLayer } from '../model/type';
 
-import { isExistPseudo } from '../helpers/shape';
+import { isExistPseudoText, isExistPseudoShape } from '../helpers/shape';
 
 /**
  * 获得可用的节点子级
@@ -78,18 +78,22 @@ export const nodeToSketchGroup = (node: Element, options?: any): AnyLayer => {
       group.layers[0].class === 'svg' ||
       group.layers[0].class === 'group')
   ) {
-    console.log('该 group 只包含一个子级,丢弃...');
     const layer = group.layers[0];
+    console.log(
+      `[nodeToSketchGroup]该 group 只包含一个子级 [${layer.class}]: ${layer.name} ,丢弃...`
+    );
     // 将父级的图层关系还给子集
-
     layer.x += group.x;
     layer.y += group.y;
-    console.log(group, layer);
     return layer;
   }
 
-  if (group.layers.length === 0 && !isExistPseudo(node)) {
-    console.log('该 group 是空的,丢弃...');
+  if (
+    group.layers.length === 0 &&
+    !isExistPseudoText(node) &&
+    !isExistPseudoShape(node)
+  ) {
+    console.log('[nodeToSketchGroup]该 group 是空的,丢弃...');
     return;
   }
 

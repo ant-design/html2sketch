@@ -15,7 +15,7 @@ import {
   svgNodeToSvg,
   nodeToSketchGroup,
 } from '../../lib/esm';
-import { SMART_LAYOUT } from '../../lib/helpers/layout';
+import { SMART_LAYOUT } from '../../lib/esm/helpers/layout';
 import styles from './style.less';
 
 const { TabPane } = Tabs;
@@ -85,6 +85,7 @@ export default () => {
       }
     } catch (e) {
       message.error('解析失败,配置项可能存在错误!');
+      console.error(e);
     }
   };
   return (
@@ -149,9 +150,7 @@ export default () => {
               <ReactJson src={json || {}} />
             </Card>
           </Col>
-        ) : (
-          undefined
-        )}
+        ) : null}
       </Row>
     </div>
   );

@@ -77,6 +77,14 @@ class Base {
   set height(height: number) {
     this.frame.height = height;
   }
+
+  get right() {
+    return this.frame.right;
+  }
+  set right(right) {
+    this.frame.right = right;
+  }
+
   setFixedWidthAndHeight() {
     this.setResizingConstraint(
       RESIZING_CONSTRAINTS.WIDTH,

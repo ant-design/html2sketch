@@ -13,17 +13,36 @@ export interface FrameType {
  * Frame 类型
  */
 class Frame {
-  x: number;
-  y: number;
-  width: number;
-  height: number;
+  x: number = 0;
+  y: number = 0;
+  width: number = 0;
+  height: number = 0;
 
-  constructor(params: FrameInitParams) {
-    const { height = 0, width = 0, x = 0, y = 0 } = params;
-    this.x = x;
-    this.y = y;
-    this.width = width;
-    this.height = height;
+  get right() {
+    return this.x + this.width;
+  }
+  set right(right) {
+    this.x = right - this.width;
+  }
+
+  get left() {
+    return this.x;
+  }
+  get bottom() {
+    return this.y + this.height;
+  }
+  set bottom(bottom) {
+    this.y = bottom - this.height;
+  }
+
+  constructor(params?: FrameInitParams) {
+    if (params) {
+      const { height = 0, width = 0, x = 0, y = 0 } = params;
+      this.x = x;
+      this.y = y;
+      this.width = width;
+      this.height = height;
+    }
   }
 
   /**

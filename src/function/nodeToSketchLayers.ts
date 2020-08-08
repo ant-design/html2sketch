@@ -3,12 +3,13 @@ import { defaultNodeStyle } from '../model/utils';
 import parserToSvg from '../parser/svg';
 import transferToShape from '../parser/shape';
 import transferToText from '../parser/text';
-import parserPseudo from '../parser/pseudo';
+import parserPseudoText from '../parser/pseudoText';
+import parserPseudoShape from '../parser/pseudoShape';
 
 import { isTextVisible } from '../helpers/visibility';
 import { isTextNode } from '../helpers/nodeType';
 import { AnyLayer } from '../model/type';
-import { isExistPseudo } from '../helpers/shape';
+import { isExistPseudoText, isExistPseudoShape } from '../helpers/shape';
 
 /**
  * 是否是默认样式
@@ -40,9 +41,8 @@ export let getRelativeXY: (
 ) => { x: number; y: number };
 
 /**
- * 将节点转为 sketch JSON 对象
+ * 将节点转为 HTML JSON 对象
  * @param {HTMLElement} node 节点
- * @param {HTMLElement} options? 配置项
  */
 export const nodeToSketchLayers = (node: Element): AnyLayer[] => {
   const layers: any[] = [];
@@ -50,12 +50,12 @@ export const nodeToSketchLayers = (node: Element): AnyLayer[] => {
   const styles: CSSStyleDeclaration = getComputedStyle(node);
 
   const nodeName = node.nodeName.toLowerCase();
-  console.log('处理节点为:', node.id || node.className || nodeName, node);
+  console.info('[nodeToSketchLayers]处理节点为:', node);
 
   // ----- 初步判断 ------ //
   // skip Svg child nodes as they are already covered by `new Svg(…)`
   if (isSVGDescendant(node)) {
-    console.log('SVG 内部节点,跳过...');
+    console.log('[nodeToSketchLayers]SVG 内部节点,跳过...');
     return layers;
   }
 
@@ -71,9 +71,9 @@ export const nodeToSketchLayers = (node: Element): AnyLayer[] => {
   const isText = isTextNode(node);
 
   // 如果图层存在样式(阴影 边框等 返回 shape 节点
-  if (isImage || isShape || isExistPseudo(node)) {
+  if (isImage || isShape || isExistPseudoShape(node)) {
     // 判断一下是否有伪类
-    const afterEl = parserPseudo(node, 'after');
+    const afterEl = parserPseudoShape(node, 'after');
 
     if (afterEl) {
       layers.push(afterEl);
@@ -82,12 +82,12 @@ export const nodeToSketchLayers = (node: Element): AnyLayer[] => {
     if (isImage || isShape) {
       // 添加后继续执行,不终止
       const shape = transferToShape(node);
-      console.log('转换为 Rectangle: ', shape);
+      console.info('[nodeToSketchLayers]转换为 Rectangle: ', shape);
       layers.push(shape);
     }
 
     // 判断一下是否有伪类
-    const beforeEl = parserPseudo(node, 'before');
+    const beforeEl = parserPseudoShape(node, 'before');
 
     if (beforeEl) {
       layers.push(beforeEl);
@@ -97,7 +97,7 @@ export const nodeToSketchLayers = (node: Element): AnyLayer[] => {
   // 转换为 SVG
   if (isSVG) {
     const svg = parserToSvg(node as SVGElement);
-    console.log('转换为 Svg: ', svg);
+    console.info('[nodeToSketchLayers]转换为 Svg: ', svg);
     layers.push(svg);
 
     return layers;
@@ -108,10 +108,29 @@ export const nodeToSketchLayers = (node: Element): AnyLayer[] => {
   }
 
   // 转换为文本
-  if (isText) {
-    const text = transferToText(node);
-    console.log('转换为 Text:', text);
-    layers.push(text);
+  if (isText || isExistPseudoText(node)) {
+    let text;
+    if (isText) {
+      text = transferToText(node);
+      console.info('[nodeToSketchLayers]转换为 Text:', text);
+      layers.push(text);
+    }
+
+    // 判断一下是否有伪类
+    const afterEl = parserPseudoText(node, 'after');
+
+    if (afterEl) {
+      layers.push(afterEl);
+      if (text) {
+        text.right = afterEl.x;
+      }
+    }
+
+    // 判断一下是否有伪类
+    const beforeEl = parserPseudoText(node, 'before');
+    if (beforeEl) {
+      layers.push(beforeEl);
+    }
 
     // 添加后继续执行,不终止
   }
