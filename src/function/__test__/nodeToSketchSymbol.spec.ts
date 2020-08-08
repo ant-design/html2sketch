@@ -384,6 +384,6 @@ const symbol = {
   isVisible: true,
 };
 
-describe('nodeToSketchSymbol', function() {
-  it('should work fine', function() {});
+describe('nodeToSketchSymbol', function () {
+  it('should work fine', function () {});
 });

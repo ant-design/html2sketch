@@ -1,8 +1,8 @@
 import Rectangle from '../Rectangle';
 
-describe('Rectangle 类', function() {
-  describe('toKonvaJSON 转换正常', function() {
-    it('普通 Rectangle 转换正常', function() {
+describe('Rectangle 类', function () {
+  describe('toKonvaJSON 转换正常', function () {
+    it('普通 Rectangle 转换正常', function () {
       const rect = new Rectangle({ height: 100, width: 50, x: 280, y: 100 });
       rect.name = 'Rect';
       expect(rect.toKonvaJSON()).toStrictEqual({
@@ -16,7 +16,7 @@ describe('Rectangle 类', function() {
         className: 'Rect',
       });
     });
-    it('等圆角 Rectangle 转换正常', function() {
+    it('等圆角 Rectangle 转换正常', function () {
       const rect = new Rectangle({
         height: 100,
         width: 50,
@@ -37,7 +37,7 @@ describe('Rectangle 类', function() {
         className: 'Rect',
       });
     });
-    it('不等圆角 Rectangle 转换正常', function() {
+    it('不等圆角 Rectangle 转换正常', function () {
       const rect = new Rectangle({
         height: 100,
         width: 50,
@@ -63,7 +63,7 @@ describe('Rectangle 类', function() {
         className: 'Rect',
       });
     });
-    it('不等圆角 Rectangle2 转换正常', function() {
+    it('不等圆角 Rectangle2 转换正常', function () {
       const rect = new Rectangle({
         height: 100,
         width: 50,

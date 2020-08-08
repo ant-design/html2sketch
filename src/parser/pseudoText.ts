@@ -1,4 +1,3 @@
-import { Style } from '../model';
 import Text from '../model/Layer/Text';
 import { getTextContext } from '../helpers/text';
 
@@ -23,19 +22,11 @@ const parsePseudoText = (node: Element, pseudoElt: 'before' | 'after') => {
   }
 
   const {
-    // 背景颜色
-    backgroundColor,
     // 边框
     marginRight,
   } = pseudoEl;
 
   const nodeBCR = node.getBoundingClientRect();
-
-  const style = new Style();
-
-  if (backgroundColor) {
-    style.addColorFill(backgroundColor);
-  }
 
   pseudoNode.textContent = pseudoText;
 
@@ -60,13 +51,16 @@ const parsePseudoText = (node: Element, pseudoElt: 'before' | 'after') => {
 
   document.body.removeChild(pseudoNode); // 处理完成后移除
 
+  const textStyle = Text.getTextStyleFromNode(node);
+  textStyle.lineHeight = textBCR.height;
+
   return new Text({
     x,
     y,
     width: textBCR.width,
     height: nodeBCR.height,
     text: pseudoText,
-    style: Text.getTextStyleFromNode(node),
+    style: textStyle,
     multiline: false,
   });
 };
