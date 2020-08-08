@@ -1,5 +1,6 @@
 import { Style, Rectangle, Shadow } from '../model';
 import { defaultNodeStyle } from '../model/utils';
+import { isVisibleShape } from '../helpers/shape';
 
 /**
  * 解析图形类伪类
@@ -155,7 +156,7 @@ const parsePseudo = (node: Element, pseudoElt: 'before' | 'after') => {
 
   rect.cornerRadius = cornerRadius;
 
-  return rect;
+  if (isVisibleShape(rect)) return rect;
 };
 
 export default parsePseudo;

@@ -56,6 +56,9 @@ class Fill extends StyleBase {
    */
   stops: Color[];
 
+  get opacity() {
+    return this.color.alpha;
+  }
   /**
    * 终点
    */

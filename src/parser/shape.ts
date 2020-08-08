@@ -4,6 +4,7 @@ import {
   parseBackgroundImage,
 } from '../helpers/background';
 import { defaultNodeStyle } from '../model/utils';
+import { isVisibleShape } from '../helpers/shape';
 
 const transferToShape = (node: Element): Group | Rectangle => {
   const bcr = node.getBoundingClientRect();
@@ -236,7 +237,7 @@ const transferToShape = (node: Element): Group | Rectangle => {
         break;
     }
   }
-  return rect;
+  if (isVisibleShape(rect)) return rect;
 };
 
 export default transferToShape;

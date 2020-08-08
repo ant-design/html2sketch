@@ -45,6 +45,9 @@ class Border extends StyleBase {
         this.image = new Image(image);
     }
   }
+  get opacity() {
+    return this.color.alpha;
+  }
 
   /**
    * 颜色填充类型
