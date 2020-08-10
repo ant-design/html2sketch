@@ -90,6 +90,9 @@ class Svg extends Base {
         }
       })
       .filter((n) => n);
+    // 如果没有对象的话 就直接结束
+    if (shapes.length === 0) return;
+
     const fullPathString = shapes.reduce((prev, current) => {
       return { path: prev.path + current.path };
     }).path;
