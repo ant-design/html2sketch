@@ -1,6 +1,6 @@
 {
   "name": "html2sketch",
-  "version": "0.1.13",
+  "version": "0.1.14",
   "author": "arvinxx",
   "description": "parser HTML to Design Model",
   "repository": {
@@ -24,7 +24,7 @@
     "build:example": "APP_ROOT=example umi build",
     "test": "jest",
     "test:watch": "jest --watch",
-    "format": "prettier --write \"src/**/*.ts\" \"src/**/*.js\"",
+    "format": "prettier --write \"src/**/*.ts\"",
     "lint": "tslint -p tsconfig.json",
     "site": "gh-pages -d dist",
     "deploy": "npm run build:example && npm run site",
