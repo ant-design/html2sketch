@@ -237,7 +237,7 @@ const transferToShape = (node: Element): Group | Rectangle => {
         break;
     }
   }
-  if (isVisibleShape(rect)) return rect;
+  return rect;
 };
 
 export default transferToShape;

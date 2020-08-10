@@ -83,10 +83,8 @@ export const nodeToSketchLayers = (node: Element): AnyLayer[] => {
       // 添加后继续执行,不终止
       const shape = transferToShape(node);
 
-      if (shape) {
-        console.info('[nodeToSketchLayers]转换为 Rectangle: ', shape);
-        layers.push(shape);
-      }
+      console.info('[nodeToSketchLayers]转换为 Rectangle: ', shape);
+      layers.push(shape);
     }
 
     // 判断一下是否有伪类
