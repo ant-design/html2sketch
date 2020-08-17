@@ -4,15 +4,14 @@ import styles from './test.less';
 /**
  *
  */
-export const Test: FC = () => {
+export const Ellipsis: FC = () => {
   return (
     <div id={'x-tag'}>
       <td className="ant-table-cell cell___r1jPs">
         <span>
-          <div className={styles.ellipsis} aria-label="34646878928">
+          <div className={styles.ellipsis}>
             <span title="34646878928" aria-hidden="true">
-              "346468"
-              "..."
+              "346468" "..."
             </span>
             <div
               role="button"

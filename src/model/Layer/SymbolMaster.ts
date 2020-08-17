@@ -77,6 +77,9 @@ class SymbolMaster extends Base {
     super.addLayer(layer);
   }
 
+  /**
+   * 获取 symbol 的尺寸
+   */
   getSize() {
     let width = this.width;
     let height = this.height;
@@ -100,6 +103,10 @@ class SymbolMaster extends Base {
     return { width, height };
   }
 
+  /**
+   * 重整定界框
+   */
+  adjustToFit() {}
   /**
    * 设置布局参数
    * @param layoutType

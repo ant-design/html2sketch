@@ -28,6 +28,11 @@ class Base {
   frame: Frame;
   class: SketchFormat.ClassValue | 'svg';
 
+  /**
+   * 来自样式的名称
+   */
+  className?: string;
+
   style: Style;
   layers: AnyLayer[] = [];
   userInfo: any;

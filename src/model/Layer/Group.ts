@@ -1,7 +1,7 @@
 import SketchFormat from '@sketch-hq/sketch-file-format-ts';
 import Base, { BaseLayerParams } from './Base';
 import { defaultExportOptions } from '../utils';
-import { getGroupLayout } from '../../helpers/layout';
+import { getGroupLayout, SMART_LAYOUT } from '../../helpers/layout';
 import { AnyLayer } from '../type';
 
 class Group extends Base {
@@ -20,6 +20,22 @@ class Group extends Base {
     layer.x -= this.x;
     layer.y -= this.y;
     super.addLayer(layer);
+  }
+  /**
+   * Symbol 布局
+   */
+  groupLayout:
+    | SketchFormat.InferredGroupLayout // 水平或垂直布局
+    | SketchFormat.FreeformGroupLayout = {
+    _class: 'MSImmutableFreeformGroupLayout',
+  }; // 自由布局
+
+  /**
+   * 设置布局参数
+   * @param layoutType
+   */
+  setGroupLayout(layoutType: keyof typeof SMART_LAYOUT) {
+    this.groupLayout = getGroupLayout(layoutType);
   }
 
   /**
@@ -48,7 +64,7 @@ class Group extends Base {
       hasClippingMask: this.hasClippingMask,
       style: this.style.toSketchJSON(),
       hasClickThrough: false,
-      groupLayout: getGroupLayout(),
+      groupLayout: this.groupLayout,
       layers: this.layers.map((layer) => layer.toSketchJSON()),
       userInfo: this.userInfo,
     };

@@ -1,26 +1,11 @@
 import nodeToSketchLayers from './nodeToSketchLayers';
 import { isNodeVisible } from '../helpers/visibility';
+import { getChildNodeList } from '../helpers/hierarchy';
 import { getName } from '../helpers/name';
 import { Group, Style } from '../model';
 import { AnyLayer } from '../model/type';
 
 import { isExistPseudoText, isExistPseudoShape } from '../helpers/shape';
-
-/**
- * 获得可用的节点子级
- */
-const getChildNodeList = (node: Element) =>
-  Array.from(node.children)
-    .filter((node) => isNodeVisible(node))
-    // 根据 z-index 排序 将顶上的元素放上面
-    .sort((a, b) => {
-      const computedA = getComputedStyle(a).zIndex,
-        computedB = getComputedStyle(b).zIndex,
-        zIndexA = isNaN(Number(computedA)) ? 0 : +computedA,
-        zIndexB = isNaN(Number(computedB)) ? 0 : +computedB;
-
-      return zIndexA - zIndexB;
-    });
 
 /**
  * 将一个节点和其包含的所有子级转为 Group 对象
@@ -102,5 +87,6 @@ export const nodeToSketchGroup = (node: Element, options?: any): AnyLayer => {
   } else {
     group.name = getName(node.nodeName);
   }
+  group.className = node.className
   return group;
 };

@@ -6,7 +6,8 @@ import {
   RadioSymbol,
   ButtonSymbol,
   IconSymbol,
-  Test,
+  Ellipsis,
+  Modal,
 } from '../components';
 
 import copy from 'copy-to-clipboard';
@@ -14,6 +15,7 @@ import {
   nodeToSketchSymbol,
   svgNodeToSvg,
   nodeToSketchGroup,
+  SymbolMaster,
 } from '../../lib/esm';
 import { SMART_LAYOUT } from '../../lib/esm/helpers/layout';
 import styles from './style.less';
@@ -22,7 +24,54 @@ const { TabPane } = Tabs;
 export default () => {
   const [json, setJSON] = useState(undefined);
   const [showJSON, setShowJSON] = useState(false);
-  const [activeKey, setActiveKey] = useState('test');
+  const [activeKey, setActiveKey] = useState('modal');
+
+  /**
+   * 生成 symbol
+   */
+  const generateModalSymbol = (id: string) => {
+    const el = document.getElementById(id);
+
+    const smartLayout = el.getAttribute(
+      'smartLayout',
+    ) as keyof typeof SMART_LAYOUT;
+
+    const modal = nodeToSketchGroup(el, {
+      smartLayout: smartLayout ? smartLayout : undefined,
+    });
+
+    modal.name = el.getAttribute('symbolName') || 'symbol';
+
+    // symbol
+    // json.push(switchObj);
+
+    console.log(modal);
+    const symbol = new SymbolMaster({
+      x: modal.x,
+      y: modal.y,
+      width: modal.width,
+      height: modal.height,
+    });
+    symbol.addLayer(modal);
+
+    const adjustGroupLayer = (layer) => {
+      if (layer.layers) {
+        layer.layers.forEach(adjustGroupLayer);
+      }
+      if (layer.class === 'group' && layer.className === 'ant-modal-footer') {
+        layer.setGroupLayout('RIGHT_TO_LEFT');
+        console.log(layer);
+      }
+    };
+
+    adjustGroupLayer(symbol);
+
+    const json = symbol.toSketchJSON();
+    copy(JSON.stringify(json));
+    message.success('转换成功🎉已复制到剪切板');
+
+    setJSON(json);
+  };
 
   /**
    * 生成 symbol
@@ -31,7 +80,7 @@ export default () => {
     const els = document.getElementsByClassName(classname);
     const json: Object[] = [];
 
-    Array.from(els).forEach(el => {
+    Array.from(els).forEach((el) => {
       const smartLayout = el.getAttribute(
         'smartLayout',
       ) as keyof typeof SMART_LAYOUT;
@@ -58,7 +107,7 @@ export default () => {
 
     const json: Object[] = [];
 
-    Array.from(els).map(el => {
+    Array.from(els).map((el) => {
       const svg = svgNodeToSvg(el).toSketchJSON();
       console.log(svg);
       json.push(svg);
@@ -74,7 +123,7 @@ export default () => {
    */
   const generateGroup = () => {
     try {
-      const el = document.getElementById('x-tag');
+      const el = document.getElementById('x-modal');
       if (el) {
         const group = nodeToSketchGroup(el);
         console.log('-------转换结束--------');
@@ -95,13 +144,16 @@ export default () => {
           <Card>
             <Tabs
               activeKey={activeKey}
-              onChange={key => {
+              onChange={(key) => {
                 setActiveKey(key);
               }}
               tabPosition={'left'}
             >
-              <TabPane key={'test'} tabKey={'test'} tab={'Test'}>
-                <Test />
+              <TabPane key={'modal'} tabKey={'Modal'} tab={'Modal'}>
+                <Modal />
+              </TabPane>{' '}
+              <TabPane key={'ellipsis'} tabKey={'Ellipsis'} tab={'Ellipsis'}>
+                <Ellipsis />
               </TabPane>
               <TabPane key={'button'} tabKey={'button'} tab={'Button'}>
                 <ButtonSymbol />
@@ -129,12 +181,18 @@ export default () => {
                 </Button>
               </Col>
               <Col>
-                <Space>
+                <Space style={{ zIndex: 999999 }}>
                   <Button onClick={() => generateSvg()}>解析 Svg</Button>
                   <Button onClick={() => generateGroup()}>转换为 Group</Button>
                   <Button
                     type={'primary'}
-                    onClick={() => generateSymbol(activeKey)}
+                    onClick={() => {
+                      if (activeKey !== 'modal') {
+                        generateSymbol(activeKey);
+                      } else {
+                        generateModalSymbol('x-modal');
+                      }
+                    }}
                   >
                     转换为Symbol
                   </Button>
