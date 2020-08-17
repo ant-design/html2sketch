@@ -40,7 +40,7 @@ class Rectangle extends Base {
     return {
       _class: 'rectangle',
       name: this.name,
-      resizingConstraint: SketchFormat.ResizeType.Float,
+      resizingConstraint: this.resizingConstraint,
       frame: this.frame.toSketchJSON(),
       do_objectID: this.id,
       hasConvertedToNewRoundCorners: true,

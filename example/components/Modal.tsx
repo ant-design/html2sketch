@@ -11,6 +11,7 @@ const ModalPage: FC = () => {
     <div ref={ref} id={'x-modal'} style={{ width: '100%', height: '100%' }}>
       <Modal
         visible={true}
+        title={'123123'}
         mask={false}
         maskClosable
         wrapClassName={styles.modal}

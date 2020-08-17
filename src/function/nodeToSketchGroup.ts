@@ -7,12 +7,19 @@ import { AnyLayer } from '../model/type';
 
 import { isExistPseudoText, isExistPseudoShape } from '../helpers/shape';
 
+export interface Options {
+  postTransform: (group: AnyLayer) => AnyLayer;
+  getGroupName: (node: Element) => string;
+}
 /**
  * 将一个节点和其包含的所有子级转为 Group 对象
  * @param node
  * @param options
  */
-export const nodeToSketchGroup = (node: Element, options?: any): AnyLayer => {
+export const nodeToSketchGroup = (
+  node: Element,
+  options?: Options
+): AnyLayer => {
   const bcr = node.getBoundingClientRect();
   const { left, top } = bcr;
   const width = bcr.right - bcr.left;
@@ -32,7 +39,7 @@ export const nodeToSketchGroup = (node: Element, options?: any): AnyLayer => {
       if (childNode.shadowRoot) {
         Array.from(childNode.shadowRoot.children)
           .filter((node) => isNodeVisible(node))
-          .map(nodeToSketchGroup)
+          .map((node) => nodeToSketchGroup(node))
           .forEach((layer) => layers.push(layer));
       }
     });
@@ -87,6 +94,8 @@ export const nodeToSketchGroup = (node: Element, options?: any): AnyLayer => {
   } else {
     group.name = getName(node.nodeName);
   }
-  group.className = node.className
+
+  group.className = node.className;
+
   return group;
 };

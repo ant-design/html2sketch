@@ -338,6 +338,7 @@ class Svg extends Base {
       const layer = this.layers[0];
       layer.x = this.x;
       layer.y = this.y;
+      layer.resizingConstraint = this.resizingConstraint;
       return layer.toSketchJSON() as SketchFormat.ShapeGroup;
     } else
       return {

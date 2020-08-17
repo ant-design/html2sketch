@@ -72,6 +72,7 @@ class ShapeGroup extends Base {
       layer.y += this.y;
       // 下传 style 样式
       layer.style = this.style;
+      layer.resizingConstraint = this.resizingConstraint;
       return layer.toSketchJSON();
     } else
       return {

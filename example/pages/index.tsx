@@ -17,7 +17,10 @@ import {
   nodeToSketchGroup,
   SymbolMaster,
 } from '../../lib/esm';
-import { SMART_LAYOUT } from '../../lib/esm/helpers/layout';
+import {
+  SMART_LAYOUT,
+  RESIZING_CONSTRAINTS,
+} from '../../lib/esm/helpers/layout';
 import styles from './style.less';
 
 const { TabPane } = Tabs;
@@ -31,39 +34,68 @@ export default () => {
    */
   const generateModalSymbol = (id: string) => {
     const el = document.getElementById(id);
-
-    const smartLayout = el.getAttribute(
-      'smartLayout',
-    ) as keyof typeof SMART_LAYOUT;
-
-    const modal = nodeToSketchGroup(el, {
-      smartLayout: smartLayout ? smartLayout : undefined,
-    });
-
-    modal.name = el.getAttribute('symbolName') || 'symbol';
-
-    // symbol
-    // json.push(switchObj);
-
-    console.log(modal);
-    const symbol = new SymbolMaster({
-      x: modal.x,
-      y: modal.y,
-      width: modal.width,
-      height: modal.height,
-    });
-    symbol.addLayer(modal);
-
     const adjustGroupLayer = (layer) => {
       if (layer.layers) {
         layer.layers.forEach(adjustGroupLayer);
       }
-      if (layer.class === 'group' && layer.className === 'ant-modal-footer') {
-        layer.setGroupLayout('RIGHT_TO_LEFT');
+      if (layer.name === 'ant-modal-content') {
+        layer.setResizingConstraint(
+          // RESIZING_CONSTRAINTS.HEIGHT,
+          RESIZING_CONSTRAINTS.TOP,
+          RESIZING_CONSTRAINTS.BOTTOM,
+        );
+      }
+      if (layer.class === 'svg') {
+        layer.setResizingConstraint(
+          RESIZING_CONSTRAINTS.HEIGHT,
+          RESIZING_CONSTRAINTS.WIDTH,
+          RESIZING_CONSTRAINTS.RIGHT,
+          RESIZING_CONSTRAINTS.TOP,
+        );
         console.log(layer);
+      }
+      if (layer.class === 'group') {
+        if (layer.className === 'ant-modal-footer') {
+          layer.setGroupLayout('RIGHT_TO_LEFT');
+          layer.setResizingConstraint(
+            RESIZING_CONSTRAINTS.HEIGHT,
+            RESIZING_CONSTRAINTS.BOTTOM,
+          );
+        }
+        if (layer.className === 'ant-modal-header') {
+          layer.setGroupLayout('LEFT_TO_RIGHT');
+          layer.setResizingConstraint(
+            RESIZING_CONSTRAINTS.HEIGHT,
+            RESIZING_CONSTRAINTS.TOP,
+          );
+        }
+        if (
+          typeof layer.className === 'string' &&
+          layer?.className.includes('ant-btn')
+        ) {
+          layer.setResizingConstraint(
+            RESIZING_CONSTRAINTS.WIDTH,
+            RESIZING_CONSTRAINTS.RIGHT,
+          );
+        }
       }
     };
 
+    const group = nodeToSketchGroup(el);
+
+    console.log(group);
+
+    const symbol = new SymbolMaster({
+      x: group.x,
+      y: group.y,
+      width: group.width,
+      height: group.height,
+    });
+
+    group.layers.forEach((layer) => {
+      symbol.layers.push(layer);
+    });
+    // symbol.addLayer(group);
     adjustGroupLayer(symbol);
 
     const json = symbol.toSketchJSON();
