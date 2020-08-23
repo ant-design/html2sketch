@@ -85,6 +85,8 @@ export const nodeToSketchGroup = (
     !isExistPseudoShape(node)
   ) {
     console.log('[nodeToSketchGroup]该 group 是空的,丢弃...');
+    // @ts-ignore
+    // eslint-disable-next-line consistent-return
     return;
   }
 

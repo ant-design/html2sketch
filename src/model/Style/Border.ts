@@ -24,7 +24,7 @@ export interface BorderProps {
 
 /**
  * 描边对象
- **/
+ * */
 class Border extends StyleBase {
   constructor(props: BorderProps) {
     super();
@@ -33,58 +33,46 @@ class Border extends StyleBase {
     this.name = name || 'Border';
     this.type = type;
     this.position = position || SketchFormat.BorderPosition.Inside;
-    this.thickness = thickness;
-    switch (type) {
-      case SketchFormat.FillType.Color:
-        this.color = new Color(color);
-        break;
-      case SketchFormat.FillType.Gradient:
-        this.gradient = new Gradient(gradient);
-        break;
-      case SketchFormat.FillType.Pattern:
-        this.image = new Image(image);
+    this.thickness = thickness || 1;
+    this.color = new Color(color);
+    this.gradient = new Gradient(gradient);
+    if (image) {
+      this.image = new Image(image);
     }
   }
+
   get opacity() {
     return this.color.alpha;
   }
 
   /**
    * 颜色填充类型
-   **/
+   * */
   type: SketchFormat.FillType;
+
   /**
    * 颜色
    */
-  color?: Color;
-  /**
-   * 色彩节点
-   */
-  stops: Color[];
-
-  /**
-   * 终点
-   */
-  to: CGPoint;
+  color: Color;
 
   /**
    * 渐变类型
-   **/
-  gradient?: Gradient;
+   * */
+  gradient: Gradient;
 
   /**
    * 使用图片进行填充
-   **/
+   * */
   image?: Image;
 
   /**
    * 描边位置, 默认为内部描边
-   **/
+   * */
   position: SketchFormat.BorderPosition;
 
   /**
    * 描边宽度 默认为 1
-   **/
+   * */
   thickness: number = 1;
 
   /**
@@ -96,9 +84,9 @@ class Border extends StyleBase {
       _class: SketchFormat.ClassValue.Border,
       isEnabled: true,
       fillType: this.type,
-      color: this.color && this.color.toSketchJSON(),
+      color: this.color.toSketchJSON(),
       contextSettings: defaultContextSettings,
-      gradient: this.gradient && this.gradient.toSketchJSON(),
+      gradient: this.gradient.toSketchJSON(),
       position: this.position,
       thickness: this.thickness,
     };

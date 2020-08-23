@@ -10,7 +10,7 @@ import { FrameType } from '../Frame';
 import { getUseReplacement, inlineStyles } from '../../helpers/svg';
 import { defaultExportOptions } from '../utils';
 import { getGroupLayout } from '../../helpers/layout';
-import { Style } from '../Style/Style';
+import Style from '../Style/Style';
 
 export type SVG = {
   _class: 'svg';
@@ -63,13 +63,13 @@ interface SvgInitParams extends Partial<BaseLayerParams> {
  */
 class Svg extends Base {
   constructor({ x, y, width, height, svgString }: SvgInitParams) {
-    super({
+    super('svg', {
       height,
       width,
       y,
       x,
     });
-    this.class = 'svg';
+
     this.name = 'svg';
     this.rawSVGString = svgString;
 
@@ -78,7 +78,10 @@ class Svg extends Base {
     // ------ 处理 Svg 的 Frame ------- //
 
     // ------ 将 Svg 的子节点转换成内部格式 ------ //
+    // @ts-ignore
     let shapes: SvgShape[] = children
+
+      // eslint-disable-next-line array-callback-return
       .map((node) => {
         const { attributes, name } = node;
         switch (name) {
@@ -101,7 +104,7 @@ class Svg extends Base {
     const shapeGroupFrame = Svg.getSvgPathGroupFrame(fullPathString);
     const scaleShapeGroupToFrame = Svg.calcFrameScale(
       shapeGroupFrame,
-      this.frame.toJSON()
+      this.frame.toJSON(),
     );
     // ------ 进行统一的坐标和尺寸变换 -------- //
     shapes = shapes.map((s) => ({
@@ -130,9 +133,8 @@ class Svg extends Base {
       // 添加样式
       if (styleString) {
         const styleObj = Style.parserStyleString(styleString);
-        const { fill } = styleObj;
         const style = new Style();
-        if (fill) {
+        if (styleObj) {
           style.addColorFill(styleObj.fill);
         }
         shapeGroup.style = style;
@@ -161,12 +163,13 @@ class Svg extends Base {
    */
   layers: ShapeGroup[] = [];
 
-  shapes: SvgShape[];
+  shapes: SvgShape[] = [];
 
   /**
    * 原生 Svg 字符串
    */
   rawSVGString: string;
+
   /**
    * 转为 Sketch String
    * @deprecated
@@ -188,10 +191,10 @@ class Svg extends Base {
   static pathToShapeGroup = (svgPath: string): ShapeGroupType => {
     // ------ 第一步: 获取有效的 Path 数组 ---------- //
     // 将 多个 svg 通过 M 符号进行分割
-    let pathStr = svgPath.split(/([Mm])/).filter((s) => s);
+    const pathStr = svgPath.split(/([Mm])/).filter((s) => s);
     if (pathStr.length % 2 !== 0) {
       throw Error(
-        `Error Path!\nData:${svgPath}\nPlease check whether the path is correct.`
+        `Error Path!\nData:${svgPath}\nPlease check whether the path is correct.`,
       );
     }
     const paths = [];
@@ -215,7 +218,7 @@ class Svg extends Base {
     // 解析每个路径中的shape
     const shapes = paths.map(ShapePath.svgPathToShapePath).filter((shape) => {
       // 需要对 shape 进行清理,如果只有两个点,起点和终点,直接过滤
-      for (let i = 0; i < shape.points.length; i++) {
+      for (let i = 0; i < shape.points.length; i += 1) {
         const point = shape.points[i];
         if (isNaN(point.x) || isNaN(point.y)) {
           return false;
@@ -340,36 +343,36 @@ class Svg extends Base {
       layer.y = this.y;
       layer.resizingConstraint = this.resizingConstraint;
       return layer.toSketchJSON() as SketchFormat.ShapeGroup;
-    } else
-      return {
-        _class: 'group',
-        do_objectID: this.id,
-        booleanOperation: SketchFormat.BooleanOperation.NA,
-        isFixedToViewport: false,
-        isFlippedHorizontal: false,
-        isFlippedVertical: false,
-        isVisible: true,
-        isLocked: this.isLocked,
-        layerListExpandedType: 0,
-        name: this.name || this.class,
-        nameIsFixed: false,
-        resizingConstraint: this.resizingConstraint,
-        resizingType: SketchFormat.ResizeType.Stretch,
-        rotation: 0,
-        shouldBreakMaskChain: false,
-        exportOptions: defaultExportOptions,
-        frame: this.frame.toSketchJSON(),
-        clippingMaskMode: 0,
-        hasClippingMask: this.hasClippingMask,
-        style: this.style.toSketchJSON(),
-        hasClickThrough: false,
-        groupLayout: getGroupLayout(),
-        layers: this.layers.map((layer) => {
-          layer.x += this.x;
-          layer.y += this.y;
-          return layer.toSketchJSON();
-        }),
-      };
+    }
+    return {
+      _class: 'group',
+      do_objectID: this.id,
+      booleanOperation: SketchFormat.BooleanOperation.NA,
+      isFixedToViewport: false,
+      isFlippedHorizontal: false,
+      isFlippedVertical: false,
+      isVisible: true,
+      isLocked: this.isLocked,
+      layerListExpandedType: 0,
+      name: this.name || this.class,
+      nameIsFixed: false,
+      resizingConstraint: this.resizingConstraint,
+      resizingType: SketchFormat.ResizeType.Stretch,
+      rotation: 0,
+      shouldBreakMaskChain: false,
+      exportOptions: defaultExportOptions,
+      frame: this.frame.toSketchJSON(),
+      clippingMaskMode: 0,
+      hasClippingMask: this.hasClippingMask,
+      style: this.style.toSketchJSON(),
+      hasClickThrough: false,
+      groupLayout: getGroupLayout(),
+      layers: this.layers.map((layer) => {
+        layer.x += this.x;
+        layer.y += this.y;
+        return layer.toSketchJSON();
+      }),
+    };
   }
 }
 

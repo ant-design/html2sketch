@@ -12,8 +12,8 @@ const SYSTEM_FONTS = [
   'Roboto',
 ];
 
-// INPUT: -apple-system, "Helvetica Neue", Helvetica, Arial, sans-serif
-// OUTPUT: Helvetica Neue
+// 输入: -apple-system, "Helvetica Neue", Helvetica, Arial, sans-serif
+// 输出: PingFang SC
 function getFirstFont(fonts: string, skipSystemFonts?: boolean) {
   let regularFont: string | null = null;
   let systemFont: string | null = null;
@@ -85,57 +85,73 @@ class TextStyle {
 
       this.color = new Color(color);
       this.fontSize = fontSize || 14;
-      this.fontFamily = getFirstFont(fontFamily, skipSystemFonts);
+
       this.lineHeight = lineHeight;
       this.letterSpacing = letterSpacing;
-      this.fontWeight = fontWeight.toString();
+
       this.textTransform = textTransform;
       this.textDecoration = textDecoration;
       this.textAlign = textAlign || 'left';
+
+      if (fontWeight) {
+        this.fontWeight = fontWeight.toString();
+      }
+
+      if (fontFamily) {
+        this.fontFamily = getFirstFont(fontFamily, skipSystemFonts);
+      }
     }
   }
+
   color: Color = new Color();
 
   /**
    * 字体家族
-   **/
+   * */
   fontFamily: string = 'PingFang SC';
+
   /**
    * 字体大小
-   **/
-  fontSize: number;
+   * */
+  fontSize: number = 14;
+
   /**
    * 行高
-   **/
+   * */
   lineHeight?: number;
+
   /**
    * 字宽
-   **/
+   * */
   letterSpacing?: number;
+
   /**
    * 字重
    */
-  fontWeight: string;
+  fontWeight: string = '';
+
   /**
    * 字体变换
    *
    * 例如全部大写等
-   **/
+   * */
   textTransform?: string = '';
+
   /**
    * 文本对齐
-   **/
+   * */
   textAlign: string = 'left';
+
   /**
    * 文本装饰
    *
    * 例如 下划线、删除线等
-   **/
+   * */
   textDecoration?: string;
 
   /**
    * 字体权重
-   **/
+   * */
   FONT_WEIGHTS = {
     normal: 'Regular',
     bold: 'Bold',
@@ -152,7 +168,7 @@ class TextStyle {
 
   /**
    * 字体类型
-   **/
+   * */
   FONT_STYLES = {
     normal: false,
     italic: true,
@@ -165,6 +181,7 @@ class TextStyle {
   getSketchAlign = () => {
     switch (this.textAlign) {
       case 'left':
+      default:
         return SketchFormat.TextHorizontalAlignment.Left;
       case 'right':
         return SketchFormat.TextHorizontalAlignment.Right;
@@ -195,7 +212,7 @@ class TextStyle {
   getUnderlineStyle = () => {
     if (this.textDecoration === 'underline')
       return SketchFormat.UnderlineStyle.Underlined;
-    else return SketchFormat.UnderlineStyle.None;
+    return SketchFormat.UnderlineStyle.None;
   };
 
   /**
@@ -203,22 +220,22 @@ class TextStyle {
    */
   getStrikeThroughStyle = () => {
     if (this.textDecoration === 'line-through') return 1;
-    else return 0;
+    return 0;
   };
 
   /**
    * 修正字体家族信息
-   **/
+   * */
   fixFontFamilyInfo = (
     _family: string,
     weight?: string,
-    _fontStyle?: string
+    // _fontStyle?: string,
   ): string => {
     // const defaultFontFamily = 'PingFangSC';
 
     const defaultFontWeight = this.FONT_WEIGHTS.normal;
 
-    let fontWeight = weight ? this.FONT_WEIGHTS[weight] : defaultFontWeight;
+    const fontWeight = weight ? this.FONT_WEIGHTS[weight] : defaultFontWeight;
     // Default to PingFangSC if fonts are missing
 
     // let isItalic = false;
@@ -257,7 +274,7 @@ class TextStyle {
         },
         /**
          * 字宽
-         **/
+         * */
         kerning: this.letterSpacing || 0,
         strikethroughStyle: this.getStrikeThroughStyle(),
         MSAttributedStringFontAttribute: {

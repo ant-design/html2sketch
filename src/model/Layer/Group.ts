@@ -6,8 +6,7 @@ import { AnyLayer } from '../type';
 
 class Group extends Base {
   constructor(params: BaseLayerParams) {
-    super(params);
-    this.class = SketchFormat.ClassValue.Group;
+    super(SketchFormat.ClassValue.Group, params);
   }
 
   /**
@@ -21,6 +20,7 @@ class Group extends Base {
     layer.y -= this.y;
     super.addLayer(layer);
   }
+
   /**
    * Symbol 布局
    */

@@ -2,7 +2,7 @@ import { isGroupNode, isTextNode } from '../nodeType';
 
 describe('isTextNode', () => {
   beforeAll(() => {
-    document.body.innerHTML = `  
+    document.body.innerHTML = `
     <table>
       <tbody>
         <thead>
@@ -24,10 +24,10 @@ describe('isTextNode', () => {
   });
 
   it('#text 是文本节点', () => {
-    expect(isTextNode(document.getElementById('text'))).toBeTruthy();
+    expect(isTextNode(document.getElementById('text')!)).toBeTruthy();
   });
   it('#no-text 不是文本节点', () => {
-    expect(isTextNode(document.getElementById('no-text'))).toBeFalsy();
+    expect(isTextNode(document.getElementById('no-text')!)).toBeFalsy();
   });
 
   it('#th 是文本节点', () => {
@@ -47,9 +47,9 @@ describe('isGroupNode', () => {
   });
 
   it('#div 是组节点', () => {
-    expect(isGroupNode(document.getElementById('div'))).toBeTruthy();
+    expect(isGroupNode(document.getElementById('div')!)).toBeTruthy();
   });
   it('#span 是组节点', () => {
-    expect(isGroupNode(document.getElementById('span'))).toBeTruthy();
+    expect(isGroupNode(document.getElementById('span')!)).toBeTruthy();
   });
 });

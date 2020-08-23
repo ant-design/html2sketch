@@ -1,13 +1,12 @@
+import SketchFormat from '@sketch-hq/sketch-file-format-ts';
 import Base, { BaseLayerParams } from './Base';
 import { defaultRuleData, defaultExportOptions } from '../utils';
-import SketchFormat from '@sketch-hq/sketch-file-format-ts';
 
 interface PageInitParams extends Pick<BaseLayerParams, 'height' | 'width'> {}
 
 class Page extends Base {
   constructor({ width, height }: PageInitParams) {
-    super({ x: 0, y: 0, height, width });
-    this.class = SketchFormat.ClassValue.Page;
+    super(SketchFormat.ClassValue.Page, { x: 0, y: 0, height, width });
   }
 
   toSketchJSON(): SketchFormat.Page {

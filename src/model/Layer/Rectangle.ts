@@ -16,7 +16,7 @@ interface RectangleInitParams extends Omit<BaseLayerParams, 'x' | 'y'> {
 }
 /**
  * 矩形类型
- **/
+ * */
 class Rectangle extends Base {
   constructor({
     x,
@@ -25,8 +25,7 @@ class Rectangle extends Base {
     height,
     cornerRadius = { topLeft: 0, bottomLeft: 0, topRight: 0, bottomRight: 0 },
   }: RectangleInitParams) {
-    super({ height, x, y, width });
-    this.class = SketchFormat.ClassValue.Rectangle;
+    super(SketchFormat.ClassValue.Rectangle, { height, x, y, width });
 
     this.cornerRadius = cornerRadius;
   }
@@ -71,7 +70,7 @@ class Rectangle extends Base {
    * 转换为 Konva JSON
    */
   toKonvaJSON() {
-    const cornerRadius = this.cornerRadius;
+    const { cornerRadius } = this;
     return {
       attrs: {
         ...this.frame.toJSON(),
@@ -96,8 +95,11 @@ class Rectangle extends Base {
    * 获取 SketchPoints
    */
   getSketchPoints = (): SketchFormat.CurvePoint[] => {
-    const cornerRadius = this.cornerRadius;
-    let topRight, topLeft, bottomLeft, bottomRight;
+    const { cornerRadius } = this;
+    let topRight;
+    let topLeft;
+    let bottomLeft;
+    let bottomRight;
     if (typeof cornerRadius === 'number') {
       topRight = topLeft = bottomLeft = bottomRight = cornerRadius;
     } else if (cornerRadius instanceof Array) {

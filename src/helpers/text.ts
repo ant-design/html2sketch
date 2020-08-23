@@ -2,7 +2,7 @@
  * 获取文本定界框与行数
  * @param textNode
  */
-export const getTextContext = (textNode) => {
+export const getTextContext = (textNode: Node) => {
   // 创建Range 对象
   const rangeHelper = document.createRange();
   rangeHelper.selectNodeContents(textNode); // 选中文本节点
@@ -25,7 +25,7 @@ export const getTextContext = (textNode) => {
  * @param parentNode
  * @param textNode
  */
-export const getTextAbsBCR = (parentNode, textNode) => {
+export const getTextAbsBCR = (parentNode: Element, textNode: Node) => {
   const styles: CSSStyleDeclaration = getComputedStyle(parentNode);
   const nodeBCR = parentNode.getBoundingClientRect();
 

@@ -1,20 +1,24 @@
-import { uuid } from '../../helpers/utils';
 import SketchFormat from '@sketch-hq/sketch-file-format-ts';
+import { uuid } from '../../helpers/utils';
 
-class StyleBase {
+abstract class StyleBase {
   constructor() {
     this.id = uuid();
   }
+
   id: string;
-  name: string;
+
+  name: string = '';
 
   /**
    * 透明度
-   **/
+   * */
   private _opacity: number = 1;
+
   get opacity() {
     return this._opacity;
   }
+
   set opacity(opacity: string | number) {
     this._opacity = Number(opacity);
   }

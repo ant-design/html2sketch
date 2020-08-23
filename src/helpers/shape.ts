@@ -29,14 +29,11 @@ export const isVisibleShape = (shape: Rectangle) => {
   if (hasNoStyle) return false;
 
   const isInvalidFills = shape.style.fills.every(
-    (fill) => fill.opacity.toString() === '0'
+    (fill) => fill.opacity.toString() === '0',
   );
   const isInvalidBorders = shape.style.borders.every(
-    (border) => border.opacity === 0 || border.thickness === 0
+    (border) => border.opacity === 0 || border.thickness === 0,
   );
 
-  if (isInvalidFills && isInvalidBorders) {
-    return false;
-  }
-  return true;
+  return !(isInvalidFills && isInvalidBorders);
 };

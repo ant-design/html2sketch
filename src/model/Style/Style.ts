@@ -30,49 +30,46 @@ const defaultShadowInput: ShadowInput = {
 /**
  * 样式
  */
-export class Style extends StyleBase {
-  constructor() {
-    super();
-  }
-
+class Style extends StyleBase {
   /**
    * 填充
-   **/
+   * */
   fills: Fill[] = [];
 
   /**
    * 外阴影
-   **/
+   * */
   shadows: Shadow[] = [];
 
   /**
    * 内阴影
-   **/
+   * */
   innerShadows: InnerShadow[] = [];
 
   /**
    * 描边
-   **/
+   * */
   borders: Border[] = [];
+
   /**
    * Sketch 专属的描边属性
-   **/
+   * */
   sketchBorderOptions: SketchFormat.BorderOptions = defaultBorderOptions;
 
   /**
    * 添加颜色填充
-   **/
+   * */
   addColorFill(color: ColorParam) {
     const fill = new Fill({
       type: SketchFormat.FillType.Color,
-      color: color,
+      color,
     });
     this.fills.push(fill);
   }
 
   /**
    * 添加渐变填充
-   **/
+   * */
   addGradientFill(angle: string, stops?: ColorParam[]) {
     const { from, to } = this.convertAngleToFromAndTo(angle);
 
@@ -81,7 +78,7 @@ export class Style extends StyleBase {
       gradient: {
         from,
         to,
-        stops,
+        stops: stops || [],
         gradientType: SketchFormat.GradientType.Linear,
       },
     });
@@ -134,7 +131,7 @@ export class Style extends StyleBase {
 
   /**
    * 添加图片填充
-   **/
+   * */
   addImageFill(image: string) {
     const fill = new Fill({
       type: SketchFormat.FillType.Pattern,
@@ -146,7 +143,7 @@ export class Style extends StyleBase {
 
   /**
    * 添加描边
-   **/
+   * */
   addBorder({ color, thickness }: { thickness: number; color: ColorParam }) {
     const border = new Border({
       type: SketchFormat.FillType.Color,
@@ -159,7 +156,7 @@ export class Style extends StyleBase {
 
   /**
    * 添加阴影
-   **/
+   * */
   addShadow(params = defaultShadowInput) {
     const { color, blur, offsetX, offsetY, spread } = params;
 
@@ -176,7 +173,7 @@ export class Style extends StyleBase {
 
   /**
    * 添加内阴影
-   **/
+   * */
   addInnerShadow(params = defaultShadowInput) {
     const { color, blur, offsetX, offsetY, spread } = params;
 
@@ -193,7 +190,7 @@ export class Style extends StyleBase {
 
   /**
    * 设置描边属性
-   **/
+   * */
   setBorderDashed({
     lineCapStyle,
     lineJoinStyle,
@@ -240,9 +237,11 @@ export class Style extends StyleBase {
       fills: this.fills.map((f) => f.toJSON()),
     };
   }
+
   /**
    * 获取 style 的 hash
    */
+  // eslint-disable-next-line class-methods-use-this
   get hash() {
     // const { id, name, ...style } = obj; // 去掉 id 和 name 后进行 hash
     // return murmurHash(JSON.stringify(sortObjectKeys(style)));
@@ -254,8 +253,8 @@ export class Style extends StyleBase {
    * 从样式字符串获得样式的 JSON 对象
    * @param style
    */
-  static parserStyleString = (style: string): StyleType => {
-    if (!style || style == '') {
+  static parserStyleString = (style: string): StyleType | undefined => {
+    if (!style || style === '') {
       return;
     }
     const Arr = style
@@ -269,13 +268,13 @@ export class Style extends StyleBase {
         .trim()
         .split(':')
         .forEach((item2) => {
-          test += '"' + item2.trim() + '":';
+          test += `"${item2.trim()}":`;
         });
-      str += test + ',';
+      str += `${test},`;
     });
     str = str.replace(/:,/g, ',');
     str = str.substring(0, str.lastIndexOf(','));
-    str = '{' + str + '}';
+    str = `{${str}}`;
 
     return JSON.parse(str);
   };

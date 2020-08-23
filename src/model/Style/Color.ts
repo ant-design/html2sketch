@@ -27,15 +27,19 @@ export type ColorParam =
  */
 class Color extends StyleBase {
   red: number;
+
   green: number;
+
   blue: number;
+
   alpha: number;
+
   method: ColorCls;
 
   constructor(color?: ColorParam) {
     super();
     if (!color) {
-      this.method = ColorCls('#000');
+      this.method = ColorCls('#fff');
     }
     if (color instanceof Array) {
       this.method = ColorCls.rgb(color);
@@ -57,6 +61,7 @@ class Color extends StyleBase {
   get hex(): string {
     return this.method.hex();
   }
+
   /**
    * 色值
    */
@@ -70,6 +75,7 @@ class Color extends StyleBase {
   get s(): number {
     return this.method.saturationv();
   }
+
   /**
    * 默认的饱和度
    */
@@ -97,6 +103,7 @@ class Color extends StyleBase {
   get l(): number {
     return this.method.l();
   }
+
   /**
    * 亮度值
    */
@@ -110,12 +117,14 @@ class Color extends StyleBase {
   get b(): number {
     return this.method.b();
   }
+
   /**
    * 明度值
    */
   get value(): number {
     return this.method.value();
   }
+
   /**
    * 明度值
    */

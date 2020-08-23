@@ -2,7 +2,6 @@ import React, { FC, useState } from 'react';
 import { Button, Space, Row, Col, message } from 'antd';
 import { StepForwardOutlined, UpCircleOutlined } from '@ant-design/icons';
 import copy from 'copy-to-clipboard';
-
 import {
   AnyLayer,
   nodeToSketchGroup,
@@ -82,7 +81,7 @@ const ButtonSymbolDemo: FC = () => {
 
           return nodeToSketchSymbol({
             node,
-            symbolLayout: symbolLayout ? symbolLayout : undefined,
+            symbolLayout: symbolLayout || undefined,
             handleSymbol: (symbol) => {
               symbol.name = node.getAttribute('symbolName') || 'symbol';
               const renameBG = (layer: AnyLayer) => {

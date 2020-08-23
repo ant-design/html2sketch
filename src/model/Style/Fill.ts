@@ -22,65 +22,74 @@ export interface FillProps {
 
 /**
  * 渐变对象
- **/
+ * */
 class Fill extends StyleBase {
   constructor(props: FillProps) {
     super();
     const { type, color, name, image, gradient } = props;
 
     this.name = name || 'Fill';
-    this.type = type;
+    if (type) {
+      this.type = type;
+    }
 
     switch (type) {
       case SketchFormat.FillType.Color:
+      default:
         this.color = new Color(color);
         break;
       case SketchFormat.FillType.Gradient:
         this.gradient = new Gradient(gradient);
         break;
       case SketchFormat.FillType.Pattern:
-        this.image = new Image(image);
+        if (image) {
+          this.image = new Image(image);
+        }
     }
   }
 
   /**
    * 填色类型
-   **/
-  type: SketchFormat.FillType;
+   * */
+  type: SketchFormat.FillType = SketchFormat.FillType.Color;
+
   /**
    * 颜色
    */
-  color?: Color;
+  color: Color = new Color();
+
   /**
    * 色彩节点
    */
-  stops: Color[];
+  stops: Color[] = [];
 
   get opacity() {
     return this.color.alpha;
   }
+
   /**
    * 终点
    */
-  to: CGPoint;
+  to: CGPoint = { x: 1, y: 0 };
 
   /**
    * 渐变类型
-   **/
-  gradient?: Gradient;
+   * */
+  gradient: Gradient = new Gradient();
 
   /**
    * 使用图片进行填充
-   **/
+   * */
   image?: Image;
 
   /**
    * 填充类型
-   **/
+   * */
   patternFillType: SketchFormat.PatternFillType =
     SketchFormat.PatternFillType.Fill;
 
   patternTileScale: number = 1;
+
   /**
    * 转为 Sketch JSON 对象
    * @returns {SketchFormat.Fill}
@@ -90,12 +99,9 @@ class Fill extends StyleBase {
       _class: SketchFormat.ClassValue.Fill,
       isEnabled: true,
       fillType: this.type,
-      // TODO 需确认是否可以填充 undefined
-      color: this.color && this.color.toSketchJSON(),
+      color: this.color.toSketchJSON(),
       contextSettings: defaultContextSettings,
-      // TODO 需确认是否可以填充 undefined
-      gradient: this.gradient && this.gradient.toSketchJSON(),
-      // TODO 需确认是否可以填充 undefined
+      gradient: this.gradient.toSketchJSON(),
       image: this.image && this.image.toSketchJSON(),
       noiseIndex: 0, // 旧版本似乎可以填充噪点
       noiseIntensity: 0,
@@ -103,6 +109,7 @@ class Fill extends StyleBase {
       patternTileScale: this.patternTileScale,
     };
   };
+
   /**
    * 转为 JSON
    */

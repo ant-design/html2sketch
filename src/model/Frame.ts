@@ -14,13 +14,17 @@ export interface FrameType {
  */
 class Frame {
   x: number = 0;
+
   y: number = 0;
+
   width: number = 0;
+
   height: number = 0;
 
   get right() {
     return this.x + this.width;
   }
+
   set right(right) {
     this.x = right - this.width;
   }
@@ -28,9 +32,11 @@ class Frame {
   get left() {
     return this.x;
   }
+
   get bottom() {
     return this.y + this.height;
   }
+
   set bottom(bottom) {
     this.y = bottom - this.height;
   }
@@ -54,6 +60,7 @@ class Frame {
     x: this.x,
     y: this.y,
   });
+
   /**
    * 转为 Sketch JSON 对象
    */

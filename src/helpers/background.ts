@@ -1,40 +1,4 @@
-// Parses the background-image. The structure is as follows:
-// (Supports images and gradients)
-// ---
-// <background-image> = <bg-image> [ , <bg-image> ]*
-// <bg-image> = <image> | none
-// <image> = <url> | <image-list> | <element-reference> | <image-combination> | <gradient>
-// ---
-// Source: https://www.w3.org/TR/css-backgrounds-3/#the-background-image
-// ---
-// These functions should be pure to make it easy
-// to write test cases in the future.
-const parseBackgroundImage = (value: string) => {
-  if (value === 'none') {
-    return;
-  }
-
-  const urlMatches = value.match(/^url\("(.+)"\)$/i);
-  const linearGradientMatches = value.match(/^linear-gradient\((.+)\)$/i);
-
-  if (urlMatches && urlMatches.length === 2) {
-    // Image
-    return {
-      type: 'Image',
-      value: urlMatches[1],
-    };
-  } else if (linearGradientMatches && linearGradientMatches.length === 2) {
-    // Linear gradient
-    const linearGradientConfig = parseLinearGradient(linearGradientMatches[1]);
-
-    if (linearGradientConfig) {
-      return {
-        type: 'LinearGradient',
-        value: linearGradientConfig,
-      };
-    }
-  }
-};
+// @ts-nocheck
 
 // Parser for a linear gradient:
 // ---
@@ -74,7 +38,7 @@ const parseLinearGradient = (value: string) => {
     if (i === value.length - 1) {
       parts.push(currentPart.join('').trim());
     }
-    i++;
+    i += 1;
   }
 
   if (parts.length === 2) {
@@ -83,7 +47,8 @@ const parseLinearGradient = (value: string) => {
       angle: '180deg',
       stops: [parts[0], parts[1]],
     };
-  } else if (parts.length > 2) {
+  }
+  if (parts.length > 2) {
     // angle + n stops
     const [angle, ...stops] = parts;
 
@@ -97,6 +62,52 @@ const parseLinearGradient = (value: string) => {
   return null;
 };
 
+type BackgroundImageType = {
+  type: string;
+  value: any;
+};
+
+// Parses the background-image. The structure is as follows:
+// (Supports images and gradients)
+// ---
+// <background-image> = <bg-image> [ , <bg-image> ]*
+// <bg-image> = <image> | none
+// <image> = <url> | <image-list> | <element-reference> | <image-combination> | <gradient>
+// ---
+// Source: https://www.w3.org/TR/css-backgrounds-3/#the-background-image
+// ---
+// These functions should be pure to make it easy
+// to write test cases in the future.
+const parseBackgroundImage = (value: string): BackgroundImageType | void => {
+  if (value === 'none') {
+    return;
+  }
+
+  const urlMatches = value.match(/^url\("(.+)"\)$/i);
+  const linearGradientMatches = value.match(/^linear-gradient\((.+)\)$/i);
+
+  if (urlMatches && urlMatches.length === 2) {
+    // Image
+    // eslint-disable-next-line consistent-return
+    return {
+      type: 'Image',
+      value: urlMatches[1],
+    };
+  }
+  if (linearGradientMatches && linearGradientMatches.length === 2) {
+    // Linear gradient
+    const linearGradientConfig = parseLinearGradient(linearGradientMatches[1]);
+
+    if (linearGradientConfig) {
+      // eslint-disable-next-line consistent-return
+      return {
+        type: 'LinearGradient',
+        value: linearGradientConfig,
+      };
+    }
+  }
+};
+
 /**
  * @param {string} backgroundSize value of background-size CSS property
  * @param {{width: number, height: number}} imageSize natural size of the image
@@ -106,9 +117,10 @@ const parseLinearGradient = (value: string) => {
 const getActualImageSize = (
   backgroundSize: string,
   imageSize: { width: number; height: number },
-  containerSize: { width: any; height: any }
+  containerSize: { width: any; height: any },
 ) => {
-  let width, height;
+  let width: number;
+  let height: number;
 
   // sanity check
   if (

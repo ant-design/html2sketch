@@ -5,9 +5,11 @@ import { isVisibleShape } from '../helpers/shape';
 /**
  * 解析图形类伪类
  */
+// @ts-ignore
+// eslint-disable-next-line consistent-return
 const parsePseudo = (node: Element, pseudoElt: 'before' | 'after') => {
   // 判断一下是否有伪类
-  const pseudoEl: CSSStyleDeclaration = getComputedStyle(node, ':' + pseudoElt);
+  const pseudoEl: CSSStyleDeclaration = getComputedStyle(node, `:${pseudoElt}`);
   const { content, display } = pseudoEl;
 
   if (content !== '' || display === 'none') {
@@ -138,19 +140,20 @@ const parsePseudo = (node: Element, pseudoElt: 'before' | 'after') => {
     });
   }
   rect.style = style;
-  //TODO borderRadius can be expressed in different formats and use various units - for simplicity we assume "X%"
+  // TODO borderRadius can be expressed in different formats and use various units -
+  // for simplicity we assume "X%"
   const cornerRadius = {
     topLeft: Rectangle.parserBorderRadius(borderTopLeftRadius, width, height),
     topRight: Rectangle.parserBorderRadius(borderTopRightRadius, width, height),
     bottomLeft: Rectangle.parserBorderRadius(
       borderBottomLeftRadius,
       width,
-      height
+      height,
     ),
     bottomRight: Rectangle.parserBorderRadius(
       borderBottomRightRadius,
       width,
-      height
+      height,
     ),
   };
 

@@ -6,39 +6,31 @@ import SymbolInstance from './SymbolInstance';
 import { uuid } from '../../helpers/utils';
 import { defaultExportOptions, defaultRuleData } from '../utils';
 import { AnyLayer } from '../type';
+import { FrameType } from '../Frame';
 
 /**
  * Sketch 的 Symbol 对象
- **/
+ * */
 class SymbolMaster extends Base {
   constructor(params: BaseLayerParams) {
-    super(params);
-    this.class = SketchFormat.ClassValue.SymbolMaster;
+    super(SketchFormat.ClassValue.SymbolMaster, params);
 
     this.symbolID = uuid();
     this.groupLayout = getGroupLayout();
   }
-  width: number;
-  height: number;
 
   /**
    * 背景颜色
-   **/
+   * */
   backgroundColor: Color = new Color('#FFF');
-  /**
-   * 取消上层的 Mask
-   */
-  shouldBreakMaskChain: boolean;
-  nameIsFixed: boolean;
-  /**
-   * 是否缩放内容
-   */
-  resizesContent: boolean;
+
   symbolID: string;
+
   /**
    * 覆盖层属性
    */
   overrideProperties: SketchFormat.OverrideProperty[] = [];
+
   /**
    * Symbol 布局
    */
@@ -48,13 +40,13 @@ class SymbolMaster extends Base {
 
   /**
    * 生成 Symbol 实例
-   **/
-  getSymbolInstance({ x, y, width = null, height = null }) {
+   * */
+  getSymbolInstance({ x, y, width, height }: Partial<FrameType>) {
     // if no size will be requested, use the size of the master symbol
     const { width: masterWidth, height: masterHeight } = this.getSize();
 
-    width = width === null ? masterWidth : width;
-    height = height === null ? masterHeight : height;
+    width = width ?? masterWidth;
+    height = height ?? masterHeight;
 
     return new SymbolInstance({
       x,
@@ -81,8 +73,8 @@ class SymbolMaster extends Base {
    * 获取 symbol 的尺寸
    */
   getSize() {
-    let width = this.width;
-    let height = this.height;
+    let { width } = this;
+    let { height } = this;
 
     // if width and height were not explicitly set,
     // fit symbol size to its contents
@@ -104,10 +96,6 @@ class SymbolMaster extends Base {
   }
 
   /**
-   * 重整定界框
-   */
-  adjustToFit() {}
-  /**
    * 设置布局参数
    * @param layoutType
    */
@@ -124,7 +112,7 @@ class SymbolMaster extends Base {
   addOverride = (
     id: string,
     type: 'image' | 'style' | 'text',
-    canOverride: boolean = true
+    canOverride: boolean = true,
   ) => {
     let str;
     switch (type) {
@@ -141,7 +129,7 @@ class SymbolMaster extends Base {
     const override: SketchFormat.OverrideProperty = {
       _class: 'MSImmutableOverrideProperty',
       canOverride,
-      overrideName: id + '_' + str,
+      overrideName: `${id}_${str}`,
     };
     this.overrideProperties.push(override);
   };

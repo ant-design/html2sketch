@@ -4,6 +4,7 @@ import {
   parseBackgroundImage,
 } from '../helpers/background';
 import { defaultNodeStyle } from '../model/utils';
+import { ColorParam } from '../model/Style/Color';
 
 const transferToShape = (node: Element): Group | Rectangle => {
   const bcr = node.getBoundingClientRect();
@@ -49,7 +50,6 @@ const transferToShape = (node: Element): Group | Rectangle => {
   const rect: Rectangle | null = new Rectangle({
     width,
     height,
-
     x: left,
     y: top,
   });
@@ -62,7 +62,7 @@ const transferToShape = (node: Element): Group | Rectangle => {
   if (isImage) {
     const absoluteUrl = new URL(
       (node as HTMLImageElement).currentSrc,
-      location.href
+      location.href,
     );
 
     style.addImageFill(absoluteUrl.href);
@@ -152,19 +152,19 @@ const transferToShape = (node: Element): Group | Rectangle => {
 
   rect.style = style;
 
-  //TODO borderRadius can be expressed in different formats and use various units - for simplicity we assume "X%"
+  // TODO borderRadius can be expressed in different formats and use various units - for simplicity we assume "X%"
   const cornerRadius = {
     topLeft: Rectangle.parserBorderRadius(borderTopLeftRadius, width, height),
     topRight: Rectangle.parserBorderRadius(borderTopRightRadius, width, height),
     bottomLeft: Rectangle.parserBorderRadius(
       borderBottomLeftRadius,
       width,
-      height
+      height,
     ),
     bottomRight: Rectangle.parserBorderRadius(
       borderBottomRightRadius,
       width,
-      height
+      height,
     ),
   };
 
@@ -186,7 +186,7 @@ const transferToShape = (node: Element): Group | Rectangle => {
         const actualImgSize = getActualImageSize(
           backgroundSize,
           { width: img.width, height: img.height },
-          { width, height }
+          { width, height },
         );
 
         if (
@@ -223,9 +223,10 @@ const transferToShape = (node: Element): Group | Rectangle => {
         break;
       }
       case 'LinearGradient':
+        // eslint-disable-next-line no-case-declarations
         const { angle, stops } = backgroundImageResult.value as {
           angle: string;
-          stops;
+          stops: ColorParam[];
         };
         style.addGradientFill(angle, stops);
         break;

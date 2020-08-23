@@ -1,4 +1,4 @@
-import FileFormat from '@sketch-hq/sketch-file-format-ts';
+import SketchFormat from '@sketch-hq/sketch-file-format-ts';
 import { defaultContextSettings } from '../utils';
 import Color, { ColorParam } from './Color';
 import StyleBase from './Base';
@@ -9,19 +9,32 @@ export interface InnerShadowProps {
   offsetX?: number;
   offsetY?: number;
   spread?: number;
-  contextSettings?: FileFormat.GraphicsContextSettings;
+  contextSettings?: SketchFormat.GraphicsContextSettings;
   name?: string;
 }
 
 class InnerShadow extends StyleBase {
   constructor(props: InnerShadowProps) {
     super();
-    const { blurRadius, color, offsetX, offsetY, contextSettings } = props;
+    const {
+      blurRadius,
+      color,
+      offsetX,
+      offsetY,
+      contextSettings,
+      spread,
+    } = props;
     this.color = new Color(color);
-    this.blurRadius = blurRadius;
-    this.offsetX = offsetX;
-    this.offsetY = offsetY;
-    this.contextSettings = contextSettings;
+
+    this.blurRadius = blurRadius || 4;
+    this.offsetX = offsetX || 0;
+    this.offsetY = offsetY || 2;
+    this.spread = spread || 0;
+    this.contextSettings = contextSettings || {
+      _class: 'graphicsContextSettings',
+      blendMode: SketchFormat.BlendMode.Normal,
+      opacity: 1,
+    };
     this.name = `${this.color.hex} ${this.offsetX}px ${this.offsetY}px ${this.blurRadius}px`;
   }
 
@@ -29,39 +42,45 @@ class InnerShadow extends StyleBase {
    * 颜色
    */
   color: Color;
+
   /**
    * 模糊半径
    */
   blurRadius: number;
+
   /**
    * X 轴偏移
    */
   offsetX: number;
+
   /**
    * Y 轴偏移
    */
   offsetY: number;
+
   /**
    * 扩散效果
    */
   spread: number;
+
   /**
    * 渲染上下文
    */
-  contextSettings: FileFormat.GraphicsContextSettings;
+  contextSettings: SketchFormat.GraphicsContextSettings;
+
   /**
    * 是否启用
    */
-  isEnabled: boolean;
+  isEnabled: boolean = true;
 
   /**
    * 转为 Sketch JSON 对象
    * @returns {SketchFormat.InnerShadow}
    */
-  toSketchJSON = (): FileFormat.InnerShadow => {
+  toSketchJSON = (): SketchFormat.InnerShadow => {
     const { offsetY, offsetX, blurRadius, color, spread } = this;
     return {
-      _class: FileFormat.ClassValue.InnerShadow,
+      _class: SketchFormat.ClassValue.InnerShadow,
       isEnabled: true,
       blurRadius,
       color: color.toSketchJSON(),

@@ -8,11 +8,10 @@ interface BitmapInitParams extends BaseLayerParams {
 
 /**
  * 图片处理
- **/
+ * */
 class Bitmap extends Base {
   constructor({ url, x, y, width, height }: BitmapInitParams) {
-    super({ y, x, height, width });
-    this.class = SketchFormat.ClassValue.Bitmap;
+    super(SketchFormat.ClassValue.Bitmap, { y, x, height, width });
     this.url =
       url.indexOf('data:') === 0 ? Bitmap.ensureBase64DataURL(url) : url;
   }
@@ -51,7 +50,7 @@ class Bitmap extends Base {
 
   /**
    * 转换为 Sketch 引用 JSON 对象
-   **/
+   * */
   toSketchRefJSON = (): SketchFormat.FileRef => {
     return {
       _class: 'MSJSONFileReference',

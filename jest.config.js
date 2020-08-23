@@ -1,12 +1,19 @@
 module.exports = {
-  testURL: 'http://localhost',
-  verbose: true,
-  snapshotSerializers: [require.resolve('enzyme-to-json/serializer')],
-  extraSetupFiles: ['./tests/setupTests.js'],
+  preset: 'ts-jest',
+  testEnvironment: 'jsdom',
+  // verbose: true,
+  transform: {
+    '^.+\\.(t|j)sx?$': 'ts-jest',
+  },
   moduleNameMapper: {
     uuid: '<rootDir>/test/__mocks__/uuid.ts',
   },
+  testMatch: undefined,
+  testRegex: '(/__tests__/.*|(\\.|/)(test|spec))\\.(tsx?)$',
+  moduleFileExtensions: ['js', 'ts', 'tsx', 'json', 'node'],
   globals: {
-    ANT_DESIGN_PRO_ONLY_DO_NOT_USE_IN_YOUR_PRODUCTION: false,
+    'ts-jest': {
+      diagnostics: false,
+    },
   },
 };

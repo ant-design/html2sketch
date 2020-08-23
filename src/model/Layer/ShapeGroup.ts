@@ -1,5 +1,5 @@
-import Base, { BaseLayerParams } from './Base';
 import SketchFormat from '@sketch-hq/sketch-file-format-ts';
+import Base, { BaseLayerParams } from './Base';
 import { defaultExportOptions } from '../utils';
 import ShapePath, { ShapePathType } from './ShapePath';
 import { FrameType } from '../Frame';
@@ -18,8 +18,7 @@ export interface ShapeGroupType {
 }
 class ShapeGroup extends Base {
   constructor(params: BaseLayerParams) {
-    super(params);
-    this.class = SketchFormat.ClassValue.ShapeGroup;
+    super(SketchFormat.ClassValue.ShapeGroup, params);
   }
 
   /**
@@ -57,10 +56,12 @@ class ShapeGroup extends Base {
   addLayers(layers: ShapePath[]) {
     // 在组里面的位置是相对位置关系
     // 因此在添加图层的时候需要减掉父级的位置,得到算出相对位置
+    // eslint-disable-next-line no-restricted-syntax
     for (const layer of layers) {
       this.addLayer(layer);
     }
   }
+
   /**
    * 转换为 Sketch 对象
    */
@@ -74,31 +75,31 @@ class ShapeGroup extends Base {
       layer.style = this.style;
       layer.resizingConstraint = this.resizingConstraint;
       return layer.toSketchJSON();
-    } else
-      return {
-        _class: 'shapeGroup',
-        booleanOperation: SketchFormat.BooleanOperation.NA,
-        do_objectID: this.id,
-        layers: this.layers.map((l) => l.toSketchJSON()),
-        rotation: this.rotation,
-        windingRule: this.windingRule,
-        isVisible: true,
-        isFixedToViewport: false,
-        isFlippedHorizontal: false,
-        isFlippedVertical: false,
-        layerListExpandedType: 0,
-        nameIsFixed: false,
-        resizingType: 0,
-        shouldBreakMaskChain: false,
-        clippingMaskMode: 0,
-        isLocked: false,
-        exportOptions: defaultExportOptions,
-        frame: this.frame.toSketchJSON(),
-        name: this.name || this.class,
-        style: this.style.toSketchJSON(),
-        resizingConstraint: this.resizingConstraint,
-        hasClickThrough: false,
-      };
+    }
+    return {
+      _class: 'shapeGroup',
+      booleanOperation: SketchFormat.BooleanOperation.NA,
+      do_objectID: this.id,
+      layers: this.layers.map((l) => l.toSketchJSON()),
+      rotation: this.rotation,
+      windingRule: this.windingRule,
+      isVisible: true,
+      isFixedToViewport: false,
+      isFlippedHorizontal: false,
+      isFlippedVertical: false,
+      layerListExpandedType: 0,
+      nameIsFixed: false,
+      resizingType: 0,
+      shouldBreakMaskChain: false,
+      clippingMaskMode: 0,
+      isLocked: false,
+      exportOptions: defaultExportOptions,
+      frame: this.frame.toSketchJSON(),
+      name: this.name || this.class,
+      style: this.style.toSketchJSON(),
+      resizingConstraint: this.resizingConstraint,
+      hasClickThrough: false,
+    };
   }
 }
 

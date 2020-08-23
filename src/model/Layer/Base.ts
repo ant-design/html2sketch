@@ -1,3 +1,4 @@
+import SketchFormat from '@sketch-hq/sketch-file-format-ts';
 import { uuid } from '../../helpers/utils';
 import Frame from '../Frame';
 import Style from '../Style/Style';
@@ -6,7 +7,6 @@ import {
   RESIZING_CONSTRAINTS,
 } from '../../helpers/layout';
 import { AnyLayer } from '../type';
-import SketchFormat from '@sketch-hq/sketch-file-format-ts';
 
 const DEFAULT_USER_INFO_SCOPE = 'html2sketch';
 
@@ -15,17 +15,25 @@ export interface BaseLayerParams {
   y?: number;
   width?: number;
   height?: number;
+  name?: string;
 }
-class Base {
-  constructor(params: BaseLayerParams) {
+abstract class Base {
+  protected constructor(
+    type: SketchFormat.ClassValue | 'svg',
+    params: BaseLayerParams,
+  ) {
     this.id = uuid();
     this.userInfo = null;
     this.style = new Style();
     this.setResizingConstraint(RESIZING_CONSTRAINTS.NONE);
 
     this.frame = new Frame(params);
+    this.class = type;
+    this.name = params.name || '';
   }
+
   frame: Frame;
+
   class: SketchFormat.ClassValue | 'svg';
 
   /**
@@ -34,30 +42,46 @@ class Base {
   className?: string;
 
   style: Style;
+
   layers: AnyLayer[] = [];
+
   userInfo: any;
+
   id: string;
+
   name: string;
 
   resizingConstraint: RESIZING_CONSTRAINTS = RESIZING_CONSTRAINTS.NONE;
+
   isLocked = false;
+
   isVisible = true;
 
   isFixedToViewport = false;
+
   isFlippedHorizontal = false;
+
   isFlippedVertical = false;
 
   hasClippingMask = false;
-  LayerListExpanded: SketchFormat.LayerListExpanded;
+
+  LayerListExpanded: SketchFormat.LayerListExpanded =
+    SketchFormat.LayerListExpanded.Undecided;
 
   /**
    * 锁定图层名称
-   **/
+   * */
   nameIsFixed = false;
+
+  /**
+   * 是否忽略遮罩链
+   */
+  shouldBreakMaskChain: boolean = false;
 
   get x() {
     return this.frame.x;
   }
+
   set x(x: number) {
     this.frame.x = x;
   }
@@ -65,6 +89,7 @@ class Base {
   get y() {
     return this.frame.y;
   }
+
   set y(y: number) {
     this.frame.y = y;
   }
@@ -72,6 +97,7 @@ class Base {
   get width() {
     return this.frame.width;
   }
+
   set width(width: number) {
     this.frame.width = width;
   }
@@ -79,6 +105,7 @@ class Base {
   get height() {
     return this.frame.height;
   }
+
   set height(height: number) {
     this.frame.height = height;
   }
@@ -86,6 +113,7 @@ class Base {
   get right() {
     return this.frame.right;
   }
+
   set right(right) {
     this.frame.right = right;
   }
@@ -93,7 +121,7 @@ class Base {
   setFixedWidthAndHeight() {
     this.setResizingConstraint(
       RESIZING_CONSTRAINTS.WIDTH,
-      RESIZING_CONSTRAINTS.HEIGHT
+      RESIZING_CONSTRAINTS.HEIGHT,
     );
   }
 
@@ -110,7 +138,7 @@ class Base {
   setUserInfo(
     key: string | number,
     value: any,
-    scope = DEFAULT_USER_INFO_SCOPE
+    scope = DEFAULT_USER_INFO_SCOPE,
   ) {
     this.userInfo = this.userInfo || {};
     this.userInfo[scope] = this.userInfo[scope] || {};
@@ -229,7 +257,7 @@ class Base {
   static parserBorderRadius = (
     borderRadius: string,
     width: number,
-    height: number
+    height: number,
   ) => {
     const matches = borderRadius.match(/^([0-9.]+)(.+)$/);
 

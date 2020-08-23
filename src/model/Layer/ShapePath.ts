@@ -1,9 +1,10 @@
-import Base, { BaseLayerParams } from './Base';
 import SketchFormat from '@sketch-hq/sketch-file-format-ts';
-import { defaultExportOptions } from '../utils';
-import { BezierPoint, StartPoint } from './Svg';
 import { SVGPathData } from 'svg-pathdata';
 import { CommandC, CommandL, SVGCommand } from 'svg-pathdata/lib/types';
+import Base, { BaseLayerParams } from './Base';
+import { defaultExportOptions } from '../utils';
+import { BezierPoint, StartPoint } from './Svg';
+import { CGPoint } from '../../type';
 
 export interface ShapePathType {
   points: BezierPoint[];
@@ -26,12 +27,12 @@ export interface ShapePathInitParams extends BaseLayerParams {
  */
 class ShapePath extends Base {
   constructor(params: ShapePathInitParams) {
-    super(params);
-    this.class = SketchFormat.ClassValue.ShapePath;
-    this.isClosed = params.isClose;
+    super(SketchFormat.ClassValue.ShapePath, params);
+
     this.name = '路径';
-    if (params.isClose) {
-    }
+
+    this.isClosed = params.isClose || false;
+
     this.points = params.points;
   }
 
@@ -95,15 +96,15 @@ class ShapePath extends Base {
    */
   bezierPointToSketchPoint = (
     point: BezierPoint,
-    index: number
+    index: number,
   ): SketchFormat.CurvePoint => {
     const { nextPoint, thisPoint } = this.getContextPoints(index);
 
     let hasCurveFrom = false;
     let hasCurveTo = false;
 
-    let curveFromPoint: { x: number; y: number } = point;
-    let curveToPoint: { x: number; y: number } = point;
+    let curveFromPoint: CGPoint = point;
+    let curveToPoint: CGPoint = point;
 
     // 判断 CurveTo
     // 如果自身点是 Curve 点
@@ -137,9 +138,11 @@ class ShapePath extends Base {
       index === this.points.length - 1 &&
       point.x.toFixed(8) === firstPoint.x.toFixed(8) &&
       point.y.toFixed(8) === firstPoint.y.toFixed(8)
-    )
+    ) {
       // 则过滤最后一个点
+      // @ts-ignore
       return;
+    }
 
     return {
       _class: 'curvePoint',
@@ -161,8 +164,8 @@ class ShapePath extends Base {
    */
   private judgeIsOnSameLine = (
     q: BezierPoint,
-    p1: BezierPoint,
-    p2: BezierPoint
+    p1: CGPoint,
+    p2: CGPoint,
   ) => {
     return (
       q.x >= Math.min(p1.x, p2.x) &&
@@ -186,6 +189,12 @@ class ShapePath extends Base {
     curveFromPoint,
     curveToPoint,
     thisPoint,
+  }: {
+    hasCurveFrom: boolean;
+    hasCurveTo: boolean;
+    curveFromPoint: CGPoint;
+    curveToPoint: CGPoint;
+    thisPoint: BezierPoint;
   }): SketchFormat.CurveMode => {
     // 既有前 也有后
     if (hasCurveFrom && hasCurveTo) {
@@ -196,14 +205,15 @@ class ShapePath extends Base {
         return SketchFormat.CurveMode.Asymmetric;
       }
       // 否则就是分离
-      else return SketchFormat.CurveMode.Disconnected;
-    } else if (hasCurveFrom || hasCurveTo) {
+      return SketchFormat.CurveMode.Disconnected;
+    }
+    if (hasCurveFrom || hasCurveTo) {
       // 否则 有前或有后 就是弯的
       return SketchFormat.CurveMode.Disconnected;
     }
 
     // 不然就是直的
-    else return SketchFormat.CurveMode.Straight;
+    return SketchFormat.CurveMode.Straight;
   };
 
   /**
@@ -245,11 +255,11 @@ class ShapePath extends Base {
    */
   static svgPathToShapePath(path: string): ShapePathType {
     // 将 多个 svg 通过 M 符号进行分割 | TODO 要看下是否还有其他方式来区分对象
-    let pathStr = path.split(/([Mm])/).filter((s) => s);
+    const pathStr = path.split(/([Mm])/).filter((s) => s);
     // 只允许解析一条 path
     if (pathStr.length !== 2) {
       throw Error(
-        `Error Path!\nData:${path}\nPlease check whether the path is correct.Only allow one path shape`
+        `Error Path!\nData:${path}\nPlease check whether the path is correct.Only allow one path shape`,
       );
     }
     const svgPathData = new SVGPathData(path);
@@ -295,7 +305,7 @@ class ShapePath extends Base {
       });
 
     return {
-      points: points,
+      points,
       frame,
       isClose,
     };
@@ -310,20 +320,21 @@ class ShapePath extends Base {
     return (command: SVGCommand) => {
       switch (command.type) {
         case SVGPathData.CLOSE_PATH:
+        default:
           break;
         case SVGPathData.LINE_TO:
         case SVGPathData.MOVE_TO:
-          command.x = command.x / width;
-          command.y = command.y / height;
+          command.x /= width;
+          command.y /= height;
           break;
 
         case SVGPathData.CURVE_TO:
-          command.x = command.x / width;
-          command.x1 = command.x1 / width;
-          command.x2 = command.x2 / width;
-          command.y = command.y / height;
-          command.y1 = command.y1 / height;
-          command.y2 = command.y2 / height;
+          command.x /= width;
+          command.x1 /= width;
+          command.x2 /= width;
+          command.y /= height;
+          command.y1 /= height;
+          command.y2 /= height;
           break;
       }
       return command;

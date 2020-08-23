@@ -6,55 +6,48 @@ import Color from '../Style/Color';
 
 /**
  * 画板对象
- **/
+ * */
 class Artboard extends Base {
   constructor(params: BaseLayerParams) {
-    super(params);
-    this.class = SketchFormat.ClassValue.Artboard;
+    super(SketchFormat.ClassValue.Artboard, params);
   }
 
   /**
    * 背景颜色值
    */
-  backgroundColor?: Color;
+  backgroundColor: Color = new Color('#fff');
+
   /**
    * 是否包含颜色
    */
-  hasBackgroundColor: boolean;
+  hasBackgroundColor: boolean = false;
+
   /**
    * 导出画板带上背景颜色
    */
-  includeBackgroundColorInExport: boolean;
-  isFixedToViewport: boolean;
+  includeBackgroundColorInExport: boolean = false;
+
+  isFixedToViewport: boolean = false;
 
   /**
    * 是否横向翻转
    */
-  isFlippedHorizontal: boolean;
+  isFlippedHorizontal: boolean = false;
 
   /**
    * 是否是流程图起点
    */
-  isFlowHome: boolean;
+  isFlowHome: boolean = false;
 
   /**
    * 是否纵向翻转
    */
-  isFlippedVertical: boolean;
+  isFlippedVertical: boolean = false;
 
-  /**
-   * 固定名字?
-   */
-  nameIsFixed: boolean;
   /**
    * 内容自适应
    */
-  resizesContent: boolean;
-
-  /**
-   * 是否忽略遮罩链
-   */
-  shouldBreakMaskChain: boolean;
+  resizesContent: boolean = false;
 
   toSketchJSON = (): SketchFormat.Artboard => {
     return {

@@ -1,6 +1,6 @@
 // based on https://www.w3.org/TR/SVG2/styling.html and defaults taken from Chrome
 const SVG_STYLE_PROPERTIES = [
-  //name, default value
+  // name, default value
   ['cx', '0px'],
   ['cy', '0px'],
 
@@ -82,11 +82,11 @@ const SVG_STYLE_PROPERTIES = [
   ['writing-mode', 'horizontal-tb'],
 ];
 
-export function inlineStyles(node) {
+export function inlineStyles(node: SVGElement) {
   const styles = getComputedStyle(node);
 
   SVG_STYLE_PROPERTIES.forEach((prop) => {
-    const propName = prop[0];
+    const propName = prop[0] as string;
     const propDefaultValue = prop[1];
     const propCurrentValue = styles[propName];
     const propAttributeValue = node.getAttribute(propName);
@@ -103,11 +103,11 @@ export function inlineStyles(node) {
   });
 }
 
-export function getUseReplacement(node) {
+export function getUseReplacement(node: SVGUseElement) {
   const href = node.href.baseVal;
   // TODO this will only work for internal references
   let refNode = null;
-  let resultNode = null;
+  let resultNode: SVGSVGElement;
 
   try {
     refNode = document.querySelector(href);
@@ -119,19 +119,19 @@ export function getUseReplacement(node) {
     if (refNode instanceof SVGSymbolElement) {
       resultNode = document.createElementNS(
         'http://www.w3.org/2000/svg',
-        'svg'
+        'svg',
       );
       Array.from(refNode.attributes).forEach((attr) =>
-        resultNode.setAttribute(attr.name, attr.value)
+        resultNode.setAttribute(attr.name, attr.value),
       );
-      //@ts-ignore
+      // @ts-ignore
       Array.from(refNode.cloneNode(true).children).forEach((child) =>
-        resultNode.appendChild(child)
+        resultNode.appendChild(<Node>child),
       );
     } else {
+      // @ts-ignore
       resultNode = refNode.cloneNode(true);
     }
+    return resultNode;
   }
-
-  return resultNode;
 }

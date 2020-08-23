@@ -1,8 +1,8 @@
-import colorAsset from '../colorAsset';
+// import colorAsset from '../colorAsset';
 
 describe('colorAsset', () => {
   beforeAll(() => {
-    document.body.innerHTML = `  
+    document.body.innerHTML = `
     <table>
       <tbody>
         <thead>

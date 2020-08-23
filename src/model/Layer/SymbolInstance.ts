@@ -6,14 +6,15 @@ interface SymbolInstanceInitParams extends BaseLayerParams {
   symbolID: string;
 }
 class SymbolInstance extends Base {
-  symbolID: string;
-  nameIsFixed: boolean;
-  shouldBreakMaskChain: boolean;
   constructor({ x, y, width, height, symbolID }: SymbolInstanceInitParams) {
-    super({ width, y, x, height });
-    this.class = SketchFormat.ClassValue.SymbolInstance;
+    super(SketchFormat.ClassValue.SymbolInstance, { width, y, x, height });
+
     this.symbolID = symbolID;
   }
+
+  symbolID: string;
+
+  shouldBreakMaskChain: boolean = false;
 
   toSketchJSON(): SketchFormat.SymbolInstance {
     return {

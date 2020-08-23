@@ -1,13 +1,13 @@
 import SketchFormat from '@sketch-hq/sketch-file-format-ts';
+import { SVGPathData } from 'svg-pathdata';
+import { writeFileSync } from 'fs';
+import { join } from 'path';
 import { defaultExportOptions } from '../../utils';
 import Style from '../../Style/Style';
 import { ShapePathType } from '../ShapePath';
-import { SVGPathData } from 'svg-pathdata';
 import Frame from '../../Frame';
 import { getGroupLayout } from '../../../helpers/layout';
 import { SvgShape } from '../Svg';
-import { writeFileSync } from 'fs';
-import { join } from 'path';
 
 interface TestPathData {
   path: string;
@@ -97,10 +97,13 @@ export const groupData = {
  * @param json
  * @param name
  */
-export const outputJSONData = (json, name?: string) => {
+export const outputJSONData = (
+  json: SketchFormat.Group | SketchFormat.ShapeGroup,
+  name?: string,
+) => {
   writeFileSync(
-    join(__dirname, `./json/${name ? name : 'json'}.json`),
-    JSON.stringify(json)
+    join(__dirname, `./json/${name || 'json'}.json`),
+    JSON.stringify(json),
   );
 };
 
@@ -1043,6 +1046,8 @@ export const plus: TestPathData = {
       },
     ],
   },
+  // @ts-ignore
+  sketchJSON: {},
 };
 // ----------- Svg 类 -------------- //
 
@@ -1063,9 +1068,9 @@ export const svgPath: TestSvgData = {
   sketchJSON: {
     ...shapeGroupData,
     _class: 'shapeGroup',
-    name: 'svg',
+    name: 'shapeGroup',
     frame: new Frame({
-      height: 814.2161138351329,
+      height: 814.2161138351328,
       width: 736.652344,
       x: -90,
       y: 4,

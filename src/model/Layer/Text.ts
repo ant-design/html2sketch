@@ -1,6 +1,6 @@
+import SketchFormat from '@sketch-hq/sketch-file-format-ts';
 import Base, { BaseLayerParams } from './Base';
 import { RESIZING_CONSTRAINTS } from '../../helpers/layout';
-import SketchFormat from '@sketch-hq/sketch-file-format-ts';
 import { defaultExportOptions } from '../utils';
 import TextStyle, { TextStyleParams } from '../Style/TextStyle';
 
@@ -11,12 +11,12 @@ interface TextInitParams extends BaseLayerParams {
 }
 /**
  * 文本对象
- **/
+ * */
 class Text extends Base {
   constructor({ x, y, width, height, text, style, multiline }: TextInitParams) {
-    super({ x, y, width, height });
+    super(SketchFormat.ClassValue.Text, { x, y, width, height });
     this.name = text;
-    this.class = SketchFormat.ClassValue.Text;
+
     this.text = text;
     this.textStyle = new TextStyle(style);
     this.multiline = multiline;
@@ -28,11 +28,14 @@ class Text extends Base {
       ? SketchFormat.TextBehaviour.Fixed
       : SketchFormat.TextBehaviour.Flexible;
   }
+
   textStyle: TextStyle;
+
   /**
    * 文本内容
-   **/
+   * */
   text: string;
+
   /**
    * 多行
    */
@@ -42,7 +45,7 @@ class Text extends Base {
 
   /**
    * 转换为 Sketch JSON 对象
-   **/
+   * */
   toSketchJSON = (): SketchFormat.Text => {
     return {
       _class: 'text',
@@ -78,7 +81,7 @@ class Text extends Base {
 
   /**
    * 生成文本核心样式
-   **/
+   * */
   makeAttributedString = (): SketchFormat.AttributedString => {
     return {
       _class: 'attributedString',
@@ -93,6 +96,7 @@ class Text extends Base {
       ],
     };
   };
+
   /**
    * 解析字重
    * @param {string} fontWeight font weight as provided by the browser
@@ -102,14 +106,15 @@ class Text extends Base {
     // Support 'bold' and 'normal' for Electron compatibility.
     if (fontWeight === 'bold') {
       return 700;
-    } else if (fontWeight === 'normal') {
+    } if (fontWeight === 'normal') {
       return 400;
     }
     return parseInt(fontWeight, 10);
   };
+
   /**
    * 修复字体空格
-   **/
+   * */
   static fixWhiteSpace = (text: string, whiteSpace: string) => {
     switch (whiteSpace) {
       case 'normal':
