@@ -1,4 +1,4 @@
-import nodeToSketchLayers from '../function/nodeToSketchLayers';
+import { nodeToSketchLayers } from '../function/nodeToSketchLayers';
 
 /**
  * 解析文本共享样式

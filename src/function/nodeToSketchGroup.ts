@@ -1,14 +1,13 @@
-import nodeToSketchLayers from './nodeToSketchLayers';
+import { nodeToSketchLayers } from './nodeToSketchLayers';
 import { isNodeVisible } from '../helpers/visibility';
 import { getChildNodeList } from '../helpers/hierarchy';
 import { getName } from '../helpers/name';
-import { Group, Style } from '../model';
-import { AnyLayer } from '../model/type';
+import { Group, Style, AnyLayer } from '../model';
 
 import { isExistPseudoText, isExistPseudoShape } from '../helpers/shape';
 
 export interface Options {
-  postTransform: (group: AnyLayer) => AnyLayer;
+  postTransform?: (group: AnyLayer) => AnyLayer;
   getGroupName: (node: Element) => string;
 }
 /**
@@ -18,7 +17,7 @@ export interface Options {
  */
 export const nodeToSketchGroup = (
   node: Element,
-  options?: Options
+  options?: Options,
 ): AnyLayer => {
   const bcr = node.getBoundingClientRect();
   const { left, top } = bcr;
@@ -38,8 +37,8 @@ export const nodeToSketchGroup = (
       // Traverse the shadow DOM if present
       if (childNode.shadowRoot) {
         Array.from(childNode.shadowRoot.children)
-          .filter((node) => isNodeVisible(node))
-          .map((node) => nodeToSketchGroup(node))
+          .filter((n) => isNodeVisible(n))
+          .map((n) => nodeToSketchGroup(n))
           .forEach((layer) => layers.push(layer));
       }
     });
@@ -72,7 +71,7 @@ export const nodeToSketchGroup = (
   ) {
     const layer = group.layers[0];
     console.log(
-      `[nodeToSketchGroup]该 group 只包含一个子级 [${layer.class}]: ${layer.name} ,丢弃...`
+      `[nodeToSketchGroup]该 group 只包含一个子级 [${layer.class}]: ${layer.name} ,丢弃...`,
     );
     // 将父级的图层关系还给子集
     layer.x += group.x;

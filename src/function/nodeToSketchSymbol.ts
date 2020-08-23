@@ -1,86 +1,59 @@
-import { SymbolMaster, Style } from '../model';
-import nodeToSketchLayers from './nodeToSketchLayers';
-import transferToGroup from '../parser/group';
+import { SymbolMaster } from '../model';
 import { SMART_LAYOUT } from '../helpers/layout';
-import { orderNodeList } from '../helpers/hierarchy';
+import { nodeToSketchGroup } from './nodeToSketchGroup';
+
+interface NodeToSketchSymbolParams {
+  node: Element;
+  symbolLayout?: keyof typeof SMART_LAYOUT;
+  /**
+   * 如果需要对 symbol 进行调整处理
+   * 传入这个方法
+   */
+  handleSymbol?: (symbol: SymbolMaster) => void;
+}
 
 /**
  * 解析为 Symbol
  */
-export const nodeToSketchSymbol = (
-  node: Element,
-  options?: { smartLayout: keyof typeof SMART_LAYOUT }
-) => {
-  const symbolNode = node;
-  const name = node.className.replace(' symbol', '').replace('ant-', '');
 
-  const { left: x, top: y, width, height } = symbolNode.getBoundingClientRect();
-  const symbol = new SymbolMaster({ x, y, width, height });
-  symbol.name = name;
+export const nodeToSketchSymbol = ({
+  node,
+  symbolLayout,
+  handleSymbol,
+}: NodeToSketchSymbolParams) => {
+  const group = nodeToSketchGroup(node);
 
-  const group = transferToGroup(node);
+  const symbol = new SymbolMaster({
+    x: group.x,
+    y: group.y,
+    width: group.width,
+    height: group.height,
+  });
 
-  const styles = getComputedStyle(node);
-  const groupStyle = new Style();
-  groupStyle.opacity = styles.opacity; // 赋值不透明度
-  group.style = groupStyle;
+  symbol.style = group.style;
 
-  const parentAndChildren = [
-    symbolNode,
-    ...Array.from(symbolNode.querySelectorAll('*')),
-  ];
-
-  orderNodeList(parentAndChildren)
-    .map((node) => {
-      const layers = nodeToSketchLayers(node);
-
-      return layers.map((layer) => {
-        if (layer) {
-          let name = '';
-          switch (layer.class) {
-            case 'text':
-              name = '文本';
-              break;
-            case 'rectangle':
-              name = 'BG';
-              break;
-          }
-          layer.name = name;
-
-          return layer;
-        }
-      });
-    })
-    .reduce((prev, current) => prev.concat(current), [])
-    .filter((layer) => layer !== null)
-    .forEach((layer) => {
-      switch (layer.class) {
-        case 'text':
-          symbol.addOverride(layer.id, 'stringValue');
-          break;
-        case 'svg':
-          // 由于
-          layer.layers.forEach((shapeGroup) => {
-            shapeGroup.x += group.x;
-            shapeGroup.y += group.y;
-          });
-      }
-      group.addLayer(layer);
-    });
-
-  symbol.addLayer(group);
-
-  symbol.height = symbol.getSize().height;
-  symbol.width = symbol.getSize().width;
-
-  group.x = 0;
-  group.y = 0;
-
-  if (options) {
-    if (options.smartLayout) {
-      symbol.setGroupLayout(options.smartLayout);
+  group.layers.forEach((layer) => {
+    switch (layer.class) {
+      case 'text':
+        // 对所有的文本都添加
+        symbol.addOverride(layer.id, 'text');
+        break;
+      case 'svg':
+        // 由于svg 属于 ShapeGroup 其坐标关系不一致因此需要重新定义过
+        layer.layers.forEach((shapeGroup) => {
+          shapeGroup.x += group.x;
+          shapeGroup.y += group.y;
+        });
     }
+    symbol.layers.push(layer);
+  });
+
+  if (symbolLayout) {
+    symbol.setGroupLayout(symbolLayout);
   }
 
+  if (handleSymbol) {
+    handleSymbol(symbol);
+  }
   return symbol;
 };

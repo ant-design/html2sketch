@@ -18,19 +18,8 @@
     "declaration": true,
     "skipLibCheck": true,
     "paths": {
-      "html2sketch": ["./src"]
+      "@ant-design/pro-components-editor": ["./src"]
     }
   },
-  "include": ["**/src/", "**/docs/", "**/tests/"],
-  "exclude": [
-    "node_modules",
-    "build",
-    "scripts",
-    "acceptance-tests",
-    "webpack",
-    "jest",
-    "tslint:latest",
-    "tslint-config-prettier",
-    "example"
-  ]
+  "include": ["src/"]
 }

@@ -117,16 +117,31 @@ class SymbolMaster extends Base {
 
   /**
    * 添加 override 设置
+   * @param id
+   * @param type 覆盖层的类型
+   * @param canOverride 是否允许覆盖
    */
   addOverride = (
     id: string,
-    type: 'image' | 'layerStyle' | 'stringValue',
+    type: 'image' | 'style' | 'text',
     canOverride: boolean = true
   ) => {
+    let str;
+    switch (type) {
+      case 'image':
+        str = type;
+        break;
+      case 'style':
+        str = 'layerStyle';
+        break;
+      case 'text':
+      default:
+        str = 'stringValue';
+    }
     const override: SketchFormat.OverrideProperty = {
       _class: 'MSImmutableOverrideProperty',
       canOverride,
-      overrideName: id + '_' + type,
+      overrideName: id + '_' + str,
     };
     this.overrideProperties.push(override);
   };

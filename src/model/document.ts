@@ -11,39 +11,49 @@ import layerToSharedStyle from '../parser/sharedLayerStyle';
  */
 class Document {
   id: string;
+
   colors: Color[];
+
   /**
    * 色板
    */
-  swatches: SketchFormat.Swatch[];
+  swatches: SketchFormat.Swatch[] = [];
+
   /**
    * 颜色资产
    */
-  colorAssets: ColorAsset[];
+  colorAssets: ColorAsset[] = [];
+
   /**
    * 文本样式
    */
   textStyles: SketchFormat.SharedStyle[];
+
   /**
    * 图层样式
    */
   layerStyles: SketchFormat.SharedStyle[];
+
   /**
    * 外部图层样式
    */
-  foreignLayerStyles: SketchFormat.ForeignLayerStyle[];
+  foreignLayerStyles: SketchFormat.ForeignLayerStyle[] = [];
+
   /**
    * 外部文本样式
    */
-  foreignTextStyles: SketchFormat.ForeignTextStyle[];
+  foreignTextStyles: SketchFormat.ForeignTextStyle[] = [];
+
   /**
    * 外部 Swatch
    */
-  foreignSwatch: SketchFormat.ForeignSwatch[];
+  foreignSwatch: SketchFormat.ForeignSwatch[] = [];
+
   /**
    * 外部 Symbol
    */
-  foreignSymbol: SketchFormat.ForeignSymbol[];
+  foreignSymbol: SketchFormat.ForeignSymbol[] = [];
+
   /**
    * 画板
    */
@@ -52,7 +62,8 @@ class Document {
   /**
    * 文件名
    */
-  name: string;
+  name: string = '';
+
   constructor() {
     this.id = uuid();
     this.colors = [];
@@ -76,6 +87,7 @@ class Document {
   addColor(color: Color) {
     this.colors.push(color);
   }
+
   /**
    * 转为 Sketch JSON对象
    */
@@ -97,7 +109,7 @@ class Document {
         gradientAssets: [],
         colors: this.colors.map((color) => color.toSketchJSON()),
         colorAssets: this.colorAssets.map((colorAsset) =>
-          colorAsset.toSketchJSON()
+          colorAsset.toSketchJSON(),
         ),
       },
       currentPageIndex: 0,

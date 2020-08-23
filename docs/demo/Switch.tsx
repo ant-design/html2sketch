@@ -4,7 +4,7 @@ import { Switch, Space } from 'antd';
 /**
  *
  */
-export const SwitchSymbol: FC = () => {
+const SwitchDemo: FC = () => {
   return (
     <>
       <div>
@@ -62,3 +62,5 @@ export const SwitchSymbol: FC = () => {
     </>
   );
 };
+
+export default SwitchDemo;

@@ -8,7 +8,7 @@ import parserPseudoShape from '../parser/pseudoShape';
 
 import { isTextVisible } from '../helpers/visibility';
 import { isTextNode } from '../helpers/nodeType';
-import { AnyLayer } from '../model/type';
+import { AnyLayer, Text } from '../model';
 import { isExistPseudoText, isExistPseudoShape } from '../helpers/shape';
 
 /**
@@ -29,16 +29,6 @@ const isDefaultStyles = (styles: CSSStyleDeclaration) =>
  */
 const isSVGDescendant = (node: Element) =>
   node instanceof SVGElement && node.matches('svg *');
-
-/**
- * 获取相对定位
- * @param {Element} node 节点
- * @param {string} align 对齐
- */
-export let getRelativeXY: (
-  node: Element,
-  align?: string
-) => { x: number; y: number };
 
 /**
  * 将节点转为 HTML JSON 对象
@@ -115,7 +105,7 @@ export const nodeToSketchLayers = (node: Element): AnyLayer[] => {
       text = transferToText(node);
       console.info('[nodeToSketchLayers]转换为 Text:', text);
       if (text instanceof Array) {
-        for (let i = 0; i < text.length; i++) {
+        for (let i = 0; i < text.length; i += 1) {
           const textElement = text[i];
           if (i !== 0) {
             textElement.x = text[i - 1].right;
@@ -132,7 +122,7 @@ export const nodeToSketchLayers = (node: Element): AnyLayer[] => {
 
     if (afterEl) {
       layers.push(afterEl);
-      if (text) {
+      if (text instanceof Text) {
         text.right = afterEl.x;
       }
     }
@@ -148,5 +138,3 @@ export const nodeToSketchLayers = (node: Element): AnyLayer[] => {
 
   return layers;
 };
-
-export default nodeToSketchLayers;
