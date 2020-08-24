@@ -5,4 +5,4 @@ order: 50
 
 ## 按钮
 
-<code src="../demo/Button.tsx" />
+<code src="./demo/Button.tsx" />
