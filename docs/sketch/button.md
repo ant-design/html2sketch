@@ -1,6 +1,6 @@
 ---
 title: 按钮
-order: 50
+order: 10
 ---
 
 ## 按钮

@@ -6,7 +6,7 @@ import {
   AnyLayer,
   nodeToSketchGroup,
   nodeToSketchSymbol,
-  SMART_LAYOUT,
+  GroupLayoutType,
 } from 'html2sketch';
 import Footer, { ActionType } from './Footer';
 import { generateSymbolName } from './utils/symbolName';
@@ -75,12 +75,9 @@ const ButtonSymbolDemo: FC = () => {
       type: 'primary',
       onClick: () => {
         transformFunc((node) => {
-          const symbolLayout = node.getAttribute(
-            'layout',
-          ) as keyof typeof SMART_LAYOUT;
+          const symbolLayout = node.getAttribute('layout') as GroupLayoutType;
 
-          return nodeToSketchSymbol({
-            node,
+          return nodeToSketchSymbol(node, {
             symbolLayout: symbolLayout || undefined,
             handleSymbol: (symbol) => {
               symbol.name = node.getAttribute('symbol-name') || 'symbol';
@@ -109,7 +106,7 @@ const ButtonSymbolDemo: FC = () => {
           return (
             <Fragment key={sizeIndex}>
               <Col key={sizeIndex}>
-                <Space align={'start'}>
+                <Space align="start">
                   <div style={{ width: 32 }}>{group[sizeIndex]}</div>
                   <Row gutter={[8, 12]}>
                     {list.map((button, index) => {
