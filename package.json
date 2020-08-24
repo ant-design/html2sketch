@@ -49,11 +49,10 @@
   },
   "lint-staged": {
     "**/*.less": "stylelint --syntax less",
-    "**/*.{js,jsx,tsx,ts,less,md,json}": [
+    "**/*.{js,jsx,tsx,ts,md,json}": [
       "prettier --write",
       "git add"
     ],
-    "**/*.{js,jsx}": "npm run lint-staged:js",
     "**/*.{js,ts,tsx}": "npm run lint-staged:js"
   },
   "dependencies": {

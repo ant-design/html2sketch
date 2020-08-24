@@ -8,6 +8,7 @@
     "baseUrl": ".",
     "jsx": "react",
     "allowSyntheticDefaultImports": true,
+    "resolveJsonModule": true,
     "moduleResolution": "node",
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
