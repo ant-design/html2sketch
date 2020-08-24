@@ -3,7 +3,6 @@ global.requestAnimationFrame =
   function requestAnimationFrame(cb) {
     return setTimeout(cb, 0);
   };
-
 global.cancelAnimationFrame =
   global.cancelAnimationFrame ||
   function cancelAnimationFrame() {

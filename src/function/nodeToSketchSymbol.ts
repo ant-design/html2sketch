@@ -15,10 +15,7 @@ interface NodeToSketchSymbolOptions {
  * 解析为 Symbol
  */
 
-export default (
-  node: Element,
-  { symbolLayout, handleSymbol }: NodeToSketchSymbolOptions,
-) => {
+export default (node: Element, options?: NodeToSketchSymbolOptions) => {
   const group = nodeToGroup(node);
 
   const symbol = new SymbolMaster({
@@ -42,12 +39,16 @@ export default (
     symbol.layers.push(layer);
   });
 
-  if (symbolLayout) {
-    symbol.setGroupLayout(symbolLayout);
-  }
+  if (options) {
+    const { symbolLayout, handleSymbol } = options;
 
-  if (handleSymbol) {
-    handleSymbol(symbol);
+    if (symbolLayout) {
+      symbol.setGroupLayout(symbolLayout);
+    }
+
+    if (handleSymbol) {
+      handleSymbol(symbol);
+    }
   }
   return symbol;
 };
