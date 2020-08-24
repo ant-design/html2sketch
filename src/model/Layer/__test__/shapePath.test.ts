@@ -14,24 +14,32 @@ describe('ShapePath', () => {
     it('圆角矩形 roundRect 转换正常', function () {
       const { frame, isClose, points } = roundRect.shapePath;
       const shapePath = new ShapePath({ isClose, points, ...frame });
+
+      expect(shapePath.toSketchJSON()).toMatchSnapshot();
       expect(shapePath.toSketchJSON()).toStrictEqual(roundRect.sketchJSON);
     });
 
     it('正方形 rect 转换正常', function () {
       const { frame, isClose, points } = rect.shapePath;
       const shapePath = new ShapePath({ isClose, points, ...frame });
+
+      expect(shapePath.toSketchJSON()).toMatchSnapshot();
       expect(shapePath.toSketchJSON()).toStrictEqual(rect.sketchJSON);
     });
     it('不规则图形compPath转换正常', function () {
       const { frame, isClose, points } = compPath.shapePath;
       const shapePath = new ShapePath({ isClose, points, ...frame });
+
+      expect(shapePath.toSketchJSON()).toMatchSnapshot();
       expect(shapePath.toSketchJSON()).toStrictEqual(compPath.sketchJSON);
     });
     it('带圆角的矩形 rectRound2 转换正常', function () {
       const { frame, isClose, points } = singleRoundRect.shapePath;
       const shapePath = new ShapePath({ isClose, points, ...frame });
+
+      expect(shapePath.toSketchJSON()).toMatchSnapshot();
       expect(shapePath.toSketchJSON()).toStrictEqual(
-        singleRoundRect.sketchJSON
+        singleRoundRect.sketchJSON,
       );
     });
     it('开放矩形 unclosedRect 转换正常', function () {
@@ -39,6 +47,7 @@ describe('ShapePath', () => {
 
       const shapePath = new ShapePath({ isClose, points, ...frame });
 
+      expect(shapePath.toSketchJSON()).toMatchSnapshot();
       expect(shapePath.toSketchJSON()).toStrictEqual(unclosedRect.sketchJSON);
     });
 
@@ -46,6 +55,8 @@ describe('ShapePath', () => {
       const { frame, isClose, points } = upArrow.shapePath;
 
       const shapePath = new ShapePath({ isClose, points, ...frame });
+
+      expect(shapePath.toSketchJSON()).toMatchSnapshot();
       expect(shapePath.toSketchJSON()).toStrictEqual(upArrow.sketchJSON);
     });
 
@@ -53,6 +64,8 @@ describe('ShapePath', () => {
       const { frame, isClose, points } = plus.shapePath;
 
       const shapePath = new ShapePath({ isClose, points, ...frame });
+
+      expect(shapePath.toSketchJSON()).toMatchSnapshot();
       expect(shapePath.toSketchJSON()).toStrictEqual(plus.sketchJSON);
     });
   });
@@ -61,6 +74,7 @@ describe('ShapePath', () => {
     describe('转换正常', () => {
       it('upArrow 转换正常', function () {
         const t = ShapePath.svgPathToShapePath(upArrow.path);
+
         expect(t).toStrictEqual(upArrow.shapePath);
       });
       it('正常转换圆角矩形', function () {
@@ -103,7 +117,7 @@ describe('ShapePath', () => {
           }
         };
         expect(t).toThrow(
-          `Error Path!\nData:${path}\nPlease check whether the path is correct.`
+          `Error Path!\nData:${path}\nPlease check whether the path is correct.`,
         );
       });
       it('如果没有 M 则报错', function () {
@@ -117,7 +131,7 @@ describe('ShapePath', () => {
           }
         };
         expect(t).toThrow(
-          `Error Path!\nData:${path}\nPlease check whether the path is correct.`
+          `Error Path!\nData:${path}\nPlease check whether the path is correct.`,
         );
       });
     });

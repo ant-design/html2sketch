@@ -13,11 +13,12 @@ describe('Bitmap 类', () => {
     //@ts-ignore
     expect(bitmap.toSketchJSON().image.url).toEqual('foo.png');
 
+    expect(bitmap.toSketchJSON()).toMatchSnapshot();
     expect(bitmap.toSketchJSON()).toStrictEqual({
       _class: 'bitmap',
       booleanOperation: -1,
       clippingMaskMode: 0,
-      do_objectID: 'uuid',
+      do_objectID: 'UUID',
       clippingMask: '',
       exportOptions: {
         _class: 'exportOptions',
@@ -38,7 +39,7 @@ describe('Bitmap 类', () => {
       hasClippingMask: false,
       image: {
         _class: 'MSJSONOriginalDataReference',
-        _ref: 'images/uuid',
+        _ref: 'images/UUID',
         _ref_class: 'MSImageData',
         url: 'foo.png',
       },
@@ -78,7 +79,7 @@ describe('Bitmap 类', () => {
           blendMode: 0,
           opacity: 1,
         },
-        do_objectID: 'uuid',
+        do_objectID: 'UUID',
         endMarkerType: 0,
         fills: [],
         innerShadows: [],
