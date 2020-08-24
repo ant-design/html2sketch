@@ -93,8 +93,8 @@
         "constrainProportions": false,
         "height": 87.72402454839879,
         "width": 124.5285705596584,
-        "x": 87.75245579159936,
-        "y": 98.10186830874403
+        "x": 200.50491158319872,
+        "y": 94.20373661748806
       },
       "name": "路径",
       "style": {
@@ -536,8 +536,8 @@
         "constrainProportions": false,
         "height": 300,
         "width": 300,
-        "x": 0,
-        "y": 0
+        "x": 25,
+        "y": -102
       },
       "name": "shapeGroup",
       "style": {

@@ -83,7 +83,7 @@ describe('Svg 类', () => {
       expect(svg.toSketchJSON()).toMatchSnapshot();
       // 如果出现小数点的不一致 进行重新输出
       // outputJSONData(svg.toSketchJSON(), 'up-circle');
-      // expect(svg.toSketchJSON()).toStrictEqual(upCircleSvg.sketchJSON);
+      expect(svg.toSketchJSON()).toStrictEqual(upCircleSvg.sketchJSON);
     });
   });
 
