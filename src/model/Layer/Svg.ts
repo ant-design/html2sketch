@@ -171,20 +171,6 @@ class Svg extends Base {
   rawSVGString: string;
 
   /**
-   * 转为 Sketch String
-   * @deprecated
-   */
-  toSketchString = (): SVG => {
-    return {
-      _class: 'svg',
-      rawSVGString: this.rawSVGString,
-      frame: this.frame.toSketchJSON(),
-      resizingConstraint: this.resizingConstraint,
-      hasClippingMask: this.hasClippingMask,
-    };
-  };
-
-  /**
    * 将 Path 转为贝赛尔曲线
    * @param svgPath 路径
    */

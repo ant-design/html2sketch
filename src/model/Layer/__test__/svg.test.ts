@@ -9,47 +9,55 @@ import {
   behanceSvg,
   upCircleSvg,
   plusSvg,
-  outputJSONData,
   plus,
+  // outputJSONData,
 } from './commonSvgData';
 
 describe('Svg 类', () => {
   describe('toSketchJSON', () => {
-    it('svgPath 复合对象转换正常', () => {
-      const svg = new Svg({
-        svgString: svgPath.svgString,
-        height: 814.2161138351328,
-        width: 736.652344,
-        x: -90,
-        y: 4,
+    describe('单条 path', function () {
+      it('svgPath 复合对象转换正常', () => {
+        const svg = new Svg({
+          svgString: svgPath.svgString,
+          height: 814.2161138351328,
+          width: 736.652344,
+          x: -90,
+          y: 4,
+        });
+        expect(svg.toSketchJSON()).toMatchSnapshot();
+        // 如果出现小数点的不一致 进行重新输出
+        // outputJSONData(svg.toSketchJSON(), 'svg-path');
+        expect(svg.toSketchJSON()).toStrictEqual(svgPath.sketchJSON);
       });
-
-      expect(svg.toSketchJSON()).toStrictEqual(svgPath.sketchJSON);
+      it('dropbox 转换正常', () => {
+        const svg = new Svg({
+          height: 100,
+          width: 100,
+          x: 520,
+          y: 349,
+          svgString: dropboxSvgPath.svgString,
+        });
+        expect(svg.toSketchJSON()).toMatchSnapshot();
+        // 如果出现小数点的不一致 进行重新输出
+        // outputJSONData(svg.toSketchJSON(), 'dropbox');
+        expect(svg.toSketchJSON()).toStrictEqual(dropboxSvgPath.sketchJSON);
+      });
+      it('behance 转换正常', () => {
+        const svg = new Svg({
+          height: 56.01562500000003,
+          width: 89.22991071428572,
+          x: 123,
+          y: 18.01116071428572,
+          svgString: behanceSvg.svgString,
+        });
+        expect(svg.toSketchJSON()).toMatchSnapshot();
+        // 如果出现小数点的不一致 进行重新输出
+        // outputJSONData(svg.toSketchJSON(), 'plus');
+        expect(svg.toSketchJSON()).toStrictEqual(behanceSvg.sketchJSON);
+      });
     });
 
-    it('dropbox 转换正常', () => {
-      const svg = new Svg({
-        height: 100,
-        width: 100,
-        x: 520,
-        y: 349,
-        svgString: dropboxSvgPath.svgString,
-      });
-      outputJSONData(svg.toSketchJSON(), 'dropbox');
-      expect(svg.toSketchJSON()).toStrictEqual(dropboxSvgPath.sketchJSON);
-    });
-    it('behance 转换正常', () => {
-      const svg = new Svg({
-        height: 56.01562500000003,
-        width: 89.22991071428572,
-        x: 123,
-        y: 18.01116071428572,
-        svgString: behanceSvg.svgString,
-      });
-      outputJSONData(svg.toSketchJSON(), 'behance');
-      expect(svg.toSketchJSON()).toStrictEqual(behanceSvg.sketchJSON);
-    });
-
+    describe('多条 path', function () {});
     it('plusSvg 转换正常', () => {
       const svg = new Svg({
         height: 25,
@@ -58,7 +66,9 @@ describe('Svg 类', () => {
         y: 22,
         svgString: plusSvg.svgString,
       });
-      outputJSONData(svg.toSketchJSON(), 'plus');
+      // 如果出现小数点的不一致 进行重新输出
+      // outputJSONData(svg.toSketchJSON(), 'plus');
+      // expect(svg.toSketchJSON()).toMatchSnapshot();
       expect(svg.toSketchJSON()).toStrictEqual(plusSvg.sketchJSON);
     });
 
@@ -70,8 +80,10 @@ describe('Svg 类', () => {
         x: 25,
         y: -102,
       });
+      expect(svg.toSketchJSON()).toMatchSnapshot();
+      // 如果出现小数点的不一致 进行重新输出
       // outputJSONData(svg.toSketchJSON(), 'up-circle');
-      expect(svg.toSketchJSON()).toStrictEqual(upCircleSvg.sketchJSON);
+      // expect(svg.toSketchJSON()).toStrictEqual(upCircleSvg.sketchJSON);
     });
   });
 
@@ -101,16 +113,10 @@ describe('Svg 类', () => {
       });
     });
 
-    it('plusSvg转换正常', () => {
-      const points = Svg.pathToShapeGroup(plusSvg.shapes![0].path);
-
+    it('plus 转换正常', () => {
+      const points = Svg.pathToShapeGroup(plus.path);
       expect(points).toStrictEqual({
-        frame: {
-          height: 262.00241998455107,
-          width: 371.92533073817987,
-          x: 326.0873346309101,
-          y: 356.99758001544893,
-        },
+        frame: { height: 720, width: 76, x: 474, y: 151.99999999999997 },
         shapes: [plus.shapePath],
       });
     });
@@ -168,5 +174,4 @@ describe('Svg 类', () => {
       expect(scale).toBe(0.5);
     });
   });
-  describe('', () => {});
 });
