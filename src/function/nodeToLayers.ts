@@ -32,10 +32,10 @@ const isSVGDescendant = (node: Element) =>
   node instanceof SVGElement && node.matches('svg *');
 
 /**
- * 将节点转为 HTML JSON 对象
+ * 将节点转为 Layer 对象
  * @param {HTMLElement} node 节点
  */
-const nodeToSketchLayers = (node: Element): AnyLayer[] => {
+const nodeToLayers = (node: Element): AnyLayer[] => {
   const layers: any[] = [];
 
   const styles: CSSStyleDeclaration = getComputedStyle(node);
@@ -140,4 +140,4 @@ const nodeToSketchLayers = (node: Element): AnyLayer[] => {
   return layers;
 };
 
-export default nodeToSketchLayers;
+export default nodeToLayers;

@@ -1,5 +1,5 @@
-export { default as nodeToSketchLayers } from './function/nodeToSketchLayers';
-export { default as nodeToSketchGroup } from './function/nodeToSketchGroup';
+export { default as nodeToLayers } from './function/nodeToLayers';
+export { default as nodeToGroup } from './function/nodeToGroup';
 export { default as nodeToSketchSymbol } from './function/nodeToSketchSymbol';
 
 export { default as parserSharedTextStyle } from './parser/sharedTextStyle';

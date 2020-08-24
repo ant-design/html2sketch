@@ -1,6 +1,6 @@
 import { SymbolMaster } from '../model';
 import { GroupLayoutType } from '../helpers/layout';
-import nodeToSketchGroup from './nodeToSketchGroup';
+import nodeToGroup from './nodeToGroup';
 
 interface NodeToSketchSymbolOptions {
   symbolLayout?: GroupLayoutType;
@@ -19,7 +19,7 @@ export default (
   node: Element,
   { symbolLayout, handleSymbol }: NodeToSketchSymbolOptions,
 ) => {
-  const group = nodeToSketchGroup(node);
+  const group = nodeToGroup(node);
 
   const symbol = new SymbolMaster({
     x: group.x,
@@ -36,14 +36,8 @@ export default (
         // 对所有的文本都添加
         symbol.addOverride(layer.id, 'text');
         break;
-      case 'svg':
-        // 由于svg 属于 ShapeGroup 其坐标关系不一致因此需要重新定义过
-        layer.layers.forEach((shapeGroup) => {
-          shapeGroup.x += group.x;
-          shapeGroup.y += group.y;
-        });
-        break;
       default:
+        break;
     }
     symbol.layers.push(layer);
   });

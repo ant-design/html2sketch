@@ -67,8 +67,8 @@ describe('Svg 类', () => {
         svgString: plusSvg.svgString,
       });
       // 如果出现小数点的不一致 进行重新输出
+      expect(svg.toSketchJSON()).toMatchSnapshot();
       // outputJSONData(svg.toSketchJSON(), 'plus');
-      // expect(svg.toSketchJSON()).toMatchSnapshot();
       expect(svg.toSketchJSON()).toStrictEqual(plusSvg.sketchJSON);
     });
 

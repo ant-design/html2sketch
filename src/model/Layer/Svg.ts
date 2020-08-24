@@ -12,19 +12,12 @@ import { defaultExportOptions } from '../utils';
 import { getGroupLayout } from '../../helpers/layout';
 import Style from '../Style/Style';
 
-export type SVG = {
-  _class: 'svg';
-  rawSVGString: string;
-  frame: SketchFormat.Rect;
-  resizingConstraint: number;
-  hasClippingMask: boolean;
-};
-
 export type StartPoint = {
   type: typeof SVGPathData.MOVE_TO;
   x: number;
   y: number;
 };
+
 export type CurvePoint = {
   type: typeof SVGPathData.CURVE_TO;
   x1: number;
@@ -75,7 +68,7 @@ class Svg extends Base {
 
     // --------- 处理 Svg String 变成 Svg Shape ---------- //
     const { children } = svgson.parseSync(svgString);
-    // ------ 处理 Svg 的 Frame ------- //
+    // --------- 处理 Svg 的 Frame ------- //
 
     // ------ 将 Svg 的子节点转换成内部格式 ------ //
     // @ts-ignore
@@ -144,18 +137,6 @@ class Svg extends Base {
 
       this.addLayer(shapeGroup);
     });
-  }
-
-  /**
-   * 添加图层
-   * @param layer
-   */
-  addLayer(layer: ShapeGroup) {
-    // 在组里面的位置是相对位置关系
-    // 因此在添加图层的时候需要减掉父级的位置,得到算出相对位置
-    layer.x -= this.x;
-    layer.y -= this.y;
-    super.addLayer(layer);
   }
 
   /**
@@ -354,11 +335,7 @@ class Svg extends Base {
       style: this.style.toSketchJSON(),
       hasClickThrough: false,
       groupLayout: getGroupLayout(),
-      layers: this.layers.map((layer) => {
-        layer.x += this.x;
-        layer.y += this.y;
-        return layer.toSketchJSON();
-      }),
+      layers: this.layers.map((layer) => layer.toSketchJSON()),
     };
   }
 }

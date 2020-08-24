@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import nodeToSketchLayers from './nodeToSketchLayers';
+import nodeToLayers from './nodeToLayers';
 import { isNodeVisible } from '../helpers/visibility';
 import { getChildNodeList } from '../helpers/hierarchy';
 import { getName } from '../helpers/name';
@@ -15,13 +15,13 @@ export interface Options {
  * @param node
  * @param options
  */
-const nodeToSketchGroup = (node: Element, options?: Options): AnyLayer => {
+const nodeToGroup = (node: Element, options?: Options): AnyLayer => {
   const bcr = node.getBoundingClientRect();
   const { left, top } = bcr;
   const width = bcr.right - bcr.left;
   const height = bcr.bottom - bcr.top;
 
-  const layers = nodeToSketchLayers(node) || [];
+  const layers = nodeToLayers(node) || [];
 
   // ---------- 处理父节点 ------ //
   if (node.nodeName !== 'svg') {
@@ -29,13 +29,13 @@ const nodeToSketchGroup = (node: Element, options?: Options): AnyLayer => {
 
     // Recursively collect child groups for child nodes
     childNodeList.forEach((childNode) => {
-      layers.push(nodeToSketchGroup(childNode, options));
+      layers.push(nodeToGroup(childNode, options));
 
       // Traverse the shadow DOM if present
       if (childNode.shadowRoot) {
         Array.from(childNode.shadowRoot.children)
           .filter((n) => isNodeVisible(n))
-          .map((n) => nodeToSketchGroup(n))
+          .map((n) => nodeToGroup(n))
           .forEach((layer) => layers.push(layer));
       }
     });
@@ -98,4 +98,4 @@ const nodeToSketchGroup = (node: Element, options?: Options): AnyLayer => {
   return group;
 };
 
-export default nodeToSketchGroup;
+export default nodeToGroup;
