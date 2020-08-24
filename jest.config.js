@@ -7,6 +7,7 @@ module.exports = {
   },
   moduleNameMapper: {
     uuid: '<rootDir>/test/__mocks__/uuid.ts',
+    html2sketch: '<rootDir>/src',
   },
   testMatch: undefined,
   testRegex: '(/__tests__/.*|(\\.|/)(test|spec))\\.(tsx?)$',
