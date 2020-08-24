@@ -17,8 +17,8 @@ jobs:
         uses: JamesIves/github-pages-deploy-action@master
         env:
           CI: true
-          GIT_CONFIG_NAME: qixian.cs
-          GIT_CONFIG_EMAIL: qixian.cs@outlook.com
+          GIT_CONFIG_NAME: arvinxx
+          GIT_CONFIG_EMAIL: arvinx@foxmail.com
           NODE_OPTIONS: --max_old_space_size=4096
           GITHUB_TOKEN: ${{ secrets.ACTION_TOKEN }}
           BRANCH: gh-pages

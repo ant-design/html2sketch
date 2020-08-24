@@ -9,6 +9,7 @@ module.exports = {
     uuid: '<rootDir>/test/__mocks__/uuid.ts',
     html2sketch: '<rootDir>/src',
   },
+  setupFilesAfterEnv: ['./tests/setupTests.js'],
   testMatch: undefined,
   testRegex: '(/__tests__/.*|(\\.|/)(test|spec))\\.(tsx?)$',
   moduleFileExtensions: ['js', 'ts', 'tsx', 'json', 'node'],

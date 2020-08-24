@@ -29,6 +29,7 @@
   "scripts": {
     "start": "dumi dev",
     "build": "father-build && webpack",
+    "build:watch": "IS_TEST_ENV=true webpack -w  --config webpack.test.config.js",
     "lint": "npm run lint-eslint",
     "lint-eslint": "eslint --cache --ext .js,.jsx,.ts,.tsx --format=pretty ./src",
     "lint-staged": "lint-staged",
@@ -41,6 +42,9 @@
     "test": "umi-test",
     "test:update": "umi-test --update-snapshot",
     "test:coverage": "umi-test --coverage",
+    "test:case": "umi-test tests",
+    "test:case-pre": "concurrently \"npm start \" \"npm run build:watch\"",
+    "test:case-run": "concurrently \"npm start \" \"npm run build:watch\" \"npm run test:case\" ",
     "tsc": "tsc -p tsconfig-check.json"
   },
   "husky": {
@@ -81,6 +85,7 @@
     "@types/jest": "^26.0.0",
     "@types/lodash.isequal": "^4.5.5",
     "@types/memoize-one": "^5.1.2",
+    "@types/puppeteer": "^3.0.1",
     "@types/qs": "^6.9.0",
     "@types/react": "^16.9.17",
     "@types/react-copy-to-clipboard": "^4.3.0",
@@ -96,6 +101,7 @@
     "@umijs/test": "^3.2.10",
     "babel-loader": "^8.1.0",
     "babel-plugin-import": "^1.12.2",
+    "concurrently": "^5.3.0",
     "copy-to-clipboard": "^3.3.1",
     "cross-env": "^7.0.0",
     "dumi": "^1.0.13",
@@ -134,7 +140,7 @@
     "umi-plugin-githubpages": "^2.0.0",
     "umi-test": "^1.9.6",
     "umi-types": "^0.5.11",
-    "webpack-cli": "^3.3.10"
+    "webpack-cli": "^3.3.12"
   },
   "engines": {
     "node": ">=8.0.0"
