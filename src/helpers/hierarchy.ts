@@ -5,13 +5,13 @@ import { isNodeVisible } from './visibility';
  */
 export const getChildNodeList = (node: Element) =>
   Array.from(node.children)
-    .filter((node) => isNodeVisible(node))
+    .filter((el) => isNodeVisible(el))
     // 根据 z-index 排序 将顶上的元素放上面
     .sort((a, b) => {
-      const computedA = getComputedStyle(a).zIndex,
-        computedB = getComputedStyle(b).zIndex,
-        zIndexA = isNaN(Number(computedA)) ? 0 : +computedA,
-        zIndexB = isNaN(Number(computedB)) ? 0 : +computedB;
+      const computedA = getComputedStyle(a).zIndex;
+      const computedB = getComputedStyle(b).zIndex;
+      const zIndexA = isNaN(Number(computedA)) ? 0 : +computedA;
+      const zIndexB = isNaN(Number(computedB)) ? 0 : +computedB;
 
       return zIndexA - zIndexB;
     });
@@ -26,10 +26,10 @@ export const orderNodeList = (nodes: Element[]) => {
       .filter((node) => isNodeVisible(node))
       // 根据 z-index 排序 将顶上的元素放上面
       .sort((a, b) => {
-        const computedA = getComputedStyle(a).zIndex,
-          computedB = getComputedStyle(b).zIndex,
-          zIndexA = isNaN(Number(computedA)) ? 0 : +computedA,
-          zIndexB = isNaN(Number(computedB)) ? 0 : +computedB;
+        const computedA = getComputedStyle(a).zIndex;
+        const computedB = getComputedStyle(b).zIndex;
+        const zIndexA = isNaN(Number(computedA)) ? 0 : +computedA;
+        const zIndexB = isNaN(Number(computedB)) ? 0 : +computedB;
 
         return zIndexA - zIndexB;
       })

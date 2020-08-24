@@ -4,8 +4,8 @@ import { getName } from '../helpers/name';
 
 const transferToGroup = (node: Element) => {
   const bcr = node.getBoundingClientRect();
-  let x = bcr.left,
-    y = bcr.top;
+  const x = bcr.left;
+  const y = bcr.top;
 
   const width = bcr.right - bcr.left;
   const height = bcr.bottom - bcr.top;

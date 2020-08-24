@@ -6,6 +6,10 @@ import {
 import { defaultNodeStyle } from '../model/utils';
 import { ColorParam } from '../model/Style/Color';
 
+/**
+ * 将节点转换为 Shape 对象
+ * @param node HTML Node
+ */
 const transferToShape = (node: Element): Group | Rectangle => {
   const bcr = node.getBoundingClientRect();
   const style = new Style();

@@ -9,6 +9,7 @@ class Image extends StyleBase {
     super();
     this.url = url;
   }
+
   url: string;
 
   toSketchJSON(): SketchFormat.FileRef {

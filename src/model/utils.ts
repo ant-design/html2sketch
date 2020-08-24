@@ -11,7 +11,7 @@ export const defaultExportOptions: FileFormat.ExportOptions = {
 
 /**
  * SKetch默认的圆角选项
- **/
+ * */
 export const defaultBorderOptions: FileFormat.BorderOptions = {
   _class: 'borderOptions',
   isEnabled: true,
@@ -22,7 +22,7 @@ export const defaultBorderOptions: FileFormat.BorderOptions = {
 
 /**
  * SKetch默认的色彩控制
- **/
+ * */
 export const defaultColorControls: FileFormat.ColorControls = {
   _class: 'colorControls',
   isEnabled: false,
@@ -34,7 +34,7 @@ export const defaultColorControls: FileFormat.ColorControls = {
 
 /**
  * SKetch 默认规则数据
- **/
+ * */
 export const defaultRuleData = (): FileFormat.RulerData => ({
   _class: 'rulerData',
   base: 0,
@@ -43,7 +43,7 @@ export const defaultRuleData = (): FileFormat.RulerData => ({
 
 /**
  * SKetch 默认blend 样式
- **/
+ * */
 export const defaultContextSettings: FileFormat.GraphicsContextSettings = {
   _class: 'graphicsContextSettings',
   blendMode: FileFormat.BlendMode.Normal,
@@ -68,11 +68,11 @@ export const defaultNodeStyle: Partial<CSSStyleDeclaration> = {
 };
 
 export const sketchImage = (
-  url: string
+  url: string,
 ): FileFormat.FileRef | FileFormat.DataRef => ({
   _class: 'MSJSONOriginalDataReference',
   _ref_class: 'MSImageData',
   _ref: `images/${uuid()}`,
-  //@ts-ignore
+  // @ts-ignore
   url,
 });

@@ -1,9 +1,9 @@
-import { nodeToSketchLayers } from './nodeToSketchLayers';
+/* eslint-disable no-console */
+import nodeToSketchLayers from './nodeToSketchLayers';
 import { isNodeVisible } from '../helpers/visibility';
 import { getChildNodeList } from '../helpers/hierarchy';
 import { getName } from '../helpers/name';
 import { Group, Style, AnyLayer } from '../model';
-
 import { isExistPseudoText, isExistPseudoShape } from '../helpers/shape';
 
 export interface Options {
@@ -15,10 +15,7 @@ export interface Options {
  * @param node
  * @param options
  */
-export const nodeToSketchGroup = (
-  node: Element,
-  options?: Options,
-): AnyLayer => {
+const nodeToSketchGroup = (node: Element, options?: Options): AnyLayer => {
   const bcr = node.getBoundingClientRect();
   const { left, top } = bcr;
   const width = bcr.right - bcr.left;
@@ -100,3 +97,5 @@ export const nodeToSketchGroup = (
 
   return group;
 };
+
+export default nodeToSketchGroup;

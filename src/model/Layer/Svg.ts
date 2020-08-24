@@ -90,6 +90,7 @@ class Svg extends Base {
               path: attributes.d,
               style: attributes.style,
             };
+          default:
         }
       })
       .filter((n) => n);

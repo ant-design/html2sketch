@@ -1,5 +1,5 @@
-export { default as Document } from './Document';
 export { default as Frame } from './Frame';
+export { default as Document } from './Document';
 
 export { default as Artboard } from './Layer/Artboard';
 export { default as Rectangle } from './Layer/Rectangle';

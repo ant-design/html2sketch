@@ -1,7 +1,7 @@
 import SketchFormat from '@sketch-hq/sketch-file-format-ts';
 import Base, { BaseLayerParams } from './Base';
 import { defaultExportOptions } from '../utils';
-import { getGroupLayout, SMART_LAYOUT } from '../../helpers/layout';
+import { getGroupLayout, GroupLayoutType } from '../../helpers/layout';
 import { AnyLayer } from '../type';
 
 class Group extends Base {
@@ -34,7 +34,7 @@ class Group extends Base {
    * 设置布局参数
    * @param layoutType
    */
-  setGroupLayout(layoutType: keyof typeof SMART_LAYOUT) {
+  setGroupLayout(layoutType: GroupLayoutType) {
     this.groupLayout = getGroupLayout(layoutType);
   }
 

@@ -76,9 +76,7 @@ class Rectangle extends Base {
         ...this.frame.toJSON(),
         id: this.id,
         cornerRadius:
-          typeof cornerRadius === 'number'
-            ? cornerRadius
-            : cornerRadius instanceof Array
+          typeof cornerRadius === 'number' || cornerRadius instanceof Array
             ? cornerRadius
             : [
                 cornerRadius.topLeft,
@@ -101,12 +99,12 @@ class Rectangle extends Base {
     let bottomLeft;
     let bottomRight;
     if (typeof cornerRadius === 'number') {
-      topRight = topLeft = bottomLeft = bottomRight = cornerRadius;
+      topLeft = cornerRadius;
+      topRight = cornerRadius;
+      bottomRight = cornerRadius;
+      bottomLeft = cornerRadius;
     } else if (cornerRadius instanceof Array) {
-      topLeft = cornerRadius[0];
-      topRight = cornerRadius[1];
-      bottomRight = cornerRadius[2];
-      bottomLeft = cornerRadius[3];
+      [topLeft, topRight, bottomRight, bottomLeft] = cornerRadius;
     } else {
       topLeft = cornerRadius.topLeft;
       topRight = cornerRadius.topRight;

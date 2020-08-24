@@ -1,24 +1,59 @@
 import FileFormat from '@sketch-hq/sketch-file-format-ts';
+
 const containsAllItems = (needles: any[], haystack: string | any[]) =>
   needles.every((needle) => haystack.includes(needle));
+
+/**
+ * 调整尺寸变量基础参数
+ */
+export enum ResizingConstraint {
+  /**
+   * 无
+   */
+  None = 63,
+  /**
+   * 上
+   */
+  Top = 31,
+  /**
+   * 右
+   */
+  Right = 62,
+  /**
+   * 下
+   */
+  Bottom = 55,
+  /**
+   * 左
+   */
+  Left = 59,
+  /**
+   * 定宽度
+   */
+  Width = 61,
+  /**
+   * 定高度
+   */
+  Height = 47,
+}
 
 /**
  * 计算 Resizing 变量
  */
 export const calculateResizingConstraintValue = (
-  ...args: RESIZING_CONSTRAINTS[]
+  ...args: ResizingConstraint[]
 ) => {
   const noHeight = [
-    RESIZING_CONSTRAINTS.TOP,
-    RESIZING_CONSTRAINTS.BOTTOM,
-    RESIZING_CONSTRAINTS.HEIGHT,
+    ResizingConstraint.Top,
+    ResizingConstraint.Bottom,
+    ResizingConstraint.Height,
   ];
   const noWidth = [
-    RESIZING_CONSTRAINTS.LEFT,
-    RESIZING_CONSTRAINTS.RIGHT,
-    RESIZING_CONSTRAINTS.WIDTH,
+    ResizingConstraint.Left,
+    ResizingConstraint.Right,
+    ResizingConstraint.Width,
   ];
-  const validValues = Object.values(RESIZING_CONSTRAINTS);
+  const validValues = Object.values(ResizingConstraint);
 
   if (!args.every((arg) => validValues.includes(arg))) {
     throw new Error('Unknown resizing constraint');
@@ -29,47 +64,15 @@ export const calculateResizingConstraintValue = (
   }
 
   return args.length > 0
-    ? args.reduce((acc, item) => acc & item, args[0])
-    : RESIZING_CONSTRAINTS.NONE;
+    ? // eslint-disable-next-line no-bitwise
+      args.reduce((acc, item) => acc & item, args[0])
+    : ResizingConstraint.None;
 };
-/**
- * 调整尺寸变量基础参数
- */
-export enum RESIZING_CONSTRAINTS {
-  /**
-   * 无
-   */
-  NONE = 63,
-  /**
-   * 上
-   */
-  TOP = 31,
-  /**
-   * 右
-   */
-  RIGHT = 62,
-  /**
-   * 下
-   */
-  BOTTOM = 55,
-  /**
-   * 左
-   */
-  LEFT = 59,
-  /**
-   * 定宽度
-   */
-  WIDTH = 61,
-  /**
-   * 定高度
-   */
-  HEIGHT = 47,
-}
 
 /**
  * 智能布局参数
  */
-export const SMART_LAYOUT = {
+export const GroupLayout = {
   LEFT_TO_RIGHT: 'LEFT_TO_RIGHT',
   HORIZONTALLY_CENTER: 'HORIZONTALLY_CENTER',
   RIGHT_TO_LEFT: 'RIGHT_TO_LEFT',
@@ -77,16 +80,17 @@ export const SMART_LAYOUT = {
   VERTICALLY_CENTER: 'VERTICALLY_CENTER',
   BOTTOM_TO_TOP: 'BOTTOM_TO_TOP',
 };
+export type GroupLayoutType = keyof typeof GroupLayout;
 
 /**
  * 获取布局参数
  * @param layoutType
  */
 export const getGroupLayout = (
-  layoutType?: keyof typeof SMART_LAYOUT,
+  layoutType?: GroupLayoutType,
 ): FileFormat.InferredGroupLayout | FileFormat.FreeformGroupLayout => {
   switch (layoutType) {
-    case SMART_LAYOUT.LEFT_TO_RIGHT: {
+    case GroupLayout.LEFT_TO_RIGHT: {
       return {
         _class: FileFormat.ClassValue.MSImmutableInferredGroupLayout,
         axis: FileFormat.InferredLayoutAxis.Horizontal,
@@ -94,7 +98,7 @@ export const getGroupLayout = (
       };
     }
 
-    case SMART_LAYOUT.HORIZONTALLY_CENTER: {
+    case GroupLayout.HORIZONTALLY_CENTER: {
       return {
         _class: FileFormat.ClassValue.MSImmutableInferredGroupLayout,
         axis: FileFormat.InferredLayoutAxis.Horizontal,
@@ -102,7 +106,7 @@ export const getGroupLayout = (
       };
     }
 
-    case SMART_LAYOUT.RIGHT_TO_LEFT: {
+    case GroupLayout.RIGHT_TO_LEFT: {
       return {
         _class: FileFormat.ClassValue.MSImmutableInferredGroupLayout,
         axis: FileFormat.InferredLayoutAxis.Horizontal,
@@ -110,7 +114,7 @@ export const getGroupLayout = (
       };
     }
 
-    case SMART_LAYOUT.TOP_TO_BOTTOM: {
+    case GroupLayout.TOP_TO_BOTTOM: {
       return {
         _class: FileFormat.ClassValue.MSImmutableInferredGroupLayout,
         axis: FileFormat.InferredLayoutAxis.Vertical,
@@ -118,7 +122,7 @@ export const getGroupLayout = (
       };
     }
 
-    case SMART_LAYOUT.VERTICALLY_CENTER: {
+    case GroupLayout.VERTICALLY_CENTER: {
       return {
         _class: FileFormat.ClassValue.MSImmutableInferredGroupLayout,
         axis: FileFormat.InferredLayoutAxis.Vertical,
@@ -126,7 +130,7 @@ export const getGroupLayout = (
       };
     }
 
-    case SMART_LAYOUT.BOTTOM_TO_TOP: {
+    case GroupLayout.BOTTOM_TO_TOP: {
       return {
         _class: FileFormat.ClassValue.MSImmutableInferredGroupLayout,
         axis: FileFormat.InferredLayoutAxis.Vertical,

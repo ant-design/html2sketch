@@ -8,7 +8,7 @@ import {
 
 /**
  * 将 Node 转为 Text 对象
- **/
+ * */
 const transformToText = (node: Element): Text | Text[] | undefined => {
   // 添加文本
   const styles: CSSStyleDeclaration = getComputedStyle(node);
@@ -18,11 +18,12 @@ const transformToText = (node: Element): Text | Text[] | undefined => {
     .filter(
       (child) =>
         // 提取所有 text 元素 且 text 里有东西
-        child.nodeType === Node.TEXT_NODE && child.nodeValue!.trim().length > 0
+        child.nodeType === Node.TEXT_NODE && child.nodeValue!.trim().length > 0,
     )
-    .map((textNode) => {
-      const { lines, textBCR } = getTextContext(textNode);
-      let { x, y, width: textWidth, height } = getTextAbsBCR(node, textNode);
+    .map((childNode) => {
+      const { lines, textBCR } = getTextContext(childNode);
+      const { x, y, width: bcrWidth, height } = getTextAbsBCR(node, childNode);
+      let textWidth = bcrWidth;
 
       const { display, whiteSpace, overflow, textOverflow, width } = styles;
 
@@ -31,13 +32,13 @@ const transformToText = (node: Element): Text | Text[] | undefined => {
       }
       // **** 处理文本 ****** //
 
-      let textValue = Text.fixWhiteSpace(textNode.nodeValue || '', whiteSpace);
+      let textValue = Text.fixWhiteSpace(childNode.nodeValue || '', whiteSpace);
       const originText = textValue;
       // 针对隐藏或者带省略号的
       if (overflow === 'hidden') {
         textWidth = parseFloat(width); // 修改其宽度
 
-        textValue = getLineTextWithWidth(textNode, textWidth);
+        textValue = getLineTextWithWidth(childNode, textWidth);
         if (
           textOverflow === 'ellipsis' &&
           originText.length !== textValue.length
@@ -60,9 +61,11 @@ const transformToText = (node: Element): Text | Text[] | undefined => {
 
   if (textNode.length === 0) {
     return;
-  } else if (textNode.length === 1) {
+  }
+  if (textNode.length === 1) {
     return textNode[0];
-  } else return textNode;
+  }
+  return textNode;
 };
 
 export default transformToText;

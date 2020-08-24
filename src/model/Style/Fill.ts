@@ -95,19 +95,23 @@ class Fill extends StyleBase {
    * @returns {SketchFormat.Fill}
    */
   toSketchJSON = (): SketchFormat.Fill => {
-    return {
+    const fill: SketchFormat.Fill = {
       _class: SketchFormat.ClassValue.Fill,
       isEnabled: true,
       fillType: this.type,
       color: this.color.toSketchJSON(),
       contextSettings: defaultContextSettings,
       gradient: this.gradient.toSketchJSON(),
-      image: this.image && this.image.toSketchJSON(),
       noiseIndex: 0, // 旧版本似乎可以填充噪点
       noiseIntensity: 0,
       patternFillType: this.patternFillType,
       patternTileScale: this.patternTileScale,
     };
+    if (this.image) {
+      fill.image = this.image.toSketchJSON();
+    }
+
+    return fill;
   };
 
   /**

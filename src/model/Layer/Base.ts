@@ -4,7 +4,7 @@ import Frame from '../Frame';
 import Style from '../Style/Style';
 import {
   calculateResizingConstraintValue,
-  RESIZING_CONSTRAINTS,
+  ResizingConstraint,
 } from '../../helpers/layout';
 import { AnyLayer } from '../type';
 
@@ -25,7 +25,7 @@ abstract class Base {
     this.id = uuid();
     this.userInfo = null;
     this.style = new Style();
-    this.setResizingConstraint(RESIZING_CONSTRAINTS.NONE);
+    this.setResizingConstraint(ResizingConstraint.None);
 
     this.frame = new Frame(params);
     this.class = type;
@@ -51,7 +51,7 @@ abstract class Base {
 
   name: string;
 
-  resizingConstraint: RESIZING_CONSTRAINTS = RESIZING_CONSTRAINTS.NONE;
+  resizingConstraint: ResizingConstraint = ResizingConstraint.None;
 
   isLocked = false;
 
@@ -120,8 +120,8 @@ abstract class Base {
 
   setFixedWidthAndHeight() {
     this.setResizingConstraint(
-      RESIZING_CONSTRAINTS.WIDTH,
-      RESIZING_CONSTRAINTS.HEIGHT,
+      ResizingConstraint.Width,
+      ResizingConstraint.Height,
     );
   }
 
@@ -129,7 +129,7 @@ abstract class Base {
    * 设置调整尺寸的相关参数
    * @param constraints
    */
-  setResizingConstraint(...constraints: RESIZING_CONSTRAINTS[]) {
+  setResizingConstraint(...constraints: ResizingConstraint[]) {
     this.resizingConstraint = calculateResizingConstraintValue(...constraints);
   }
 

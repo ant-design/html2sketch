@@ -29,7 +29,7 @@
   "scripts": {
     "start": "dumi dev",
     "build": "father-build && webpack",
-    "lint": "npm run lint-eslint && npm run lint:style",
+    "lint": "npm run lint-eslint",
     "lint-eslint": "eslint --cache --ext .js,.jsx,.ts,.tsx --format=pretty ./src",
     "lint-staged": "lint-staged",
     "lint-staged:js": "eslint --cache --ext .js,.jsx,.ts,.tsx --format=pretty",

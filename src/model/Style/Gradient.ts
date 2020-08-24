@@ -1,9 +1,9 @@
 import SketchFormat from '@sketch-hq/sketch-file-format-ts';
 
+import { GradientType } from '@sketch-hq/sketch-file-format-ts/dist/cjs/v3-types';
 import Color, { ColorParam } from './Color';
 import StyleBase from './Base';
 import { CGPoint } from '../../type';
-import { GradientType } from '@sketch-hq/sketch-file-format-ts/dist/cjs/v3-types';
 
 export interface GradientProps {
   type?: SketchFormat.GradientType;

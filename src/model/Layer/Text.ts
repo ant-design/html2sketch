@@ -1,6 +1,6 @@
 import SketchFormat from '@sketch-hq/sketch-file-format-ts';
 import Base, { BaseLayerParams } from './Base';
-import { RESIZING_CONSTRAINTS } from '../../helpers/layout';
+import { ResizingConstraint } from '../../helpers/layout';
 import { defaultExportOptions } from '../utils';
 import TextStyle, { TextStyleParams } from '../Style/TextStyle';
 
@@ -20,7 +20,7 @@ class Text extends Base {
     this.text = text;
     this.textStyle = new TextStyle(style);
     this.multiline = multiline;
-    this.setResizingConstraint(RESIZING_CONSTRAINTS.NONE);
+    this.setResizingConstraint(ResizingConstraint.None);
 
     // 1 - width is set to Fixed
     // 0 - width is set to Auto - this helps us avoid issues with browser setting too small width causing line to break
@@ -106,7 +106,8 @@ class Text extends Base {
     // Support 'bold' and 'normal' for Electron compatibility.
     if (fontWeight === 'bold') {
       return 700;
-    } if (fontWeight === 'normal') {
+    }
+    if (fontWeight === 'normal') {
       return 400;
     }
     return parseInt(fontWeight, 10);

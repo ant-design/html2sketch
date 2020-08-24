@@ -6,7 +6,7 @@ import { getTextContext } from '../helpers/text';
  */
 const parsePseudoText = (node: Element, pseudoElt: 'before' | 'after') => {
   // 判断一下是否有伪类
-  const pseudoEl: CSSStyleDeclaration = getComputedStyle(node, ':' + pseudoElt);
+  const pseudoEl: CSSStyleDeclaration = getComputedStyle(node, `:${pseudoElt}`);
   const { content, display } = pseudoEl;
   const pseudoNode = node.cloneNode(true);
   const pseudoText = content.replace(/"/g, '');
@@ -38,15 +38,18 @@ const parsePseudoText = (node: Element, pseudoElt: 'before' | 'after') => {
   switch (pseudoElt) {
     case 'after':
       x = nodeBCR.right - parseFloat(marginRight) - textBCR.width;
+      break;
+    default:
+      break;
   }
-  let y = nodeBCR.y;
+  let { y } = nodeBCR;
 
   const nodeDisplay = getComputedStyle(node).display;
   // 处理垂直居中的样式
   if (nodeDisplay !== 'inline') {
-    y = y + (nodeBCR.height - textBCR.height) / 2;
+    y += (nodeBCR.height - textBCR.height) / 2;
   } else {
-    y = y + (nodeBCR.height - textBCR.height) / 2;
+    y += (nodeBCR.height - textBCR.height) / 2;
   }
 
   document.body.removeChild(pseudoNode); // 处理完成后移除

@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { defaultNodeStyle } from '../model/utils';
 
 import parserToSvg from '../parser/svg';
@@ -34,7 +35,7 @@ const isSVGDescendant = (node: Element) =>
  * 将节点转为 HTML JSON 对象
  * @param {HTMLElement} node 节点
  */
-export const nodeToSketchLayers = (node: Element): AnyLayer[] => {
+const nodeToSketchLayers = (node: Element): AnyLayer[] => {
   const layers: any[] = [];
 
   const styles: CSSStyleDeclaration = getComputedStyle(node);
@@ -138,3 +139,5 @@ export const nodeToSketchLayers = (node: Element): AnyLayer[] => {
 
   return layers;
 };
+
+export default nodeToSketchLayers;

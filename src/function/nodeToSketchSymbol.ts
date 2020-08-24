@@ -1,10 +1,9 @@
 import { SymbolMaster } from '../model';
-import { SMART_LAYOUT } from '../helpers/layout';
-import { nodeToSketchGroup } from './nodeToSketchGroup';
+import { GroupLayoutType } from '../helpers/layout';
+import nodeToSketchGroup from './nodeToSketchGroup';
 
-interface NodeToSketchSymbolParams {
-  node: Element;
-  symbolLayout?: keyof typeof SMART_LAYOUT;
+interface NodeToSketchSymbolOptions {
+  symbolLayout?: GroupLayoutType;
   /**
    * 如果需要对 symbol 进行调整处理
    * 传入这个方法
@@ -16,11 +15,10 @@ interface NodeToSketchSymbolParams {
  * 解析为 Symbol
  */
 
-export const nodeToSketchSymbol = ({
-  node,
-  symbolLayout,
-  handleSymbol,
-}: NodeToSketchSymbolParams) => {
+export default (
+  node: Element,
+  { symbolLayout, handleSymbol }: NodeToSketchSymbolOptions,
+) => {
   const group = nodeToSketchGroup(node);
 
   const symbol = new SymbolMaster({
@@ -44,6 +42,8 @@ export const nodeToSketchSymbol = ({
           shapeGroup.x += group.x;
           shapeGroup.y += group.y;
         });
+        break;
+      default:
     }
     symbol.layers.push(layer);
   });

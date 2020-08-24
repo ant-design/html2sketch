@@ -29,8 +29,8 @@ export const getTextAbsBCR = (parentNode: Element, textNode: Node) => {
   const styles: CSSStyleDeclaration = getComputedStyle(parentNode);
   const nodeBCR = parentNode.getBoundingClientRect();
 
-  let x = nodeBCR.x;
-  let y = nodeBCR.y;
+  let { x } = nodeBCR;
+  let { y } = nodeBCR;
 
   const { lines, textBCR } = getTextContext(textNode);
 
@@ -45,7 +45,7 @@ export const getTextAbsBCR = (parentNode: Element, textNode: Node) => {
     borderTopWidth,
   } = styles;
 
-  let textWidth = textBCR.width;
+  const textWidth = textBCR.width;
   const lineHeightInt = parseInt(lineHeight, 10);
   const textBCRHeight = textBCR.height;
 
@@ -61,7 +61,7 @@ export const getTextAbsBCR = (parentNode: Element, textNode: Node) => {
     if (textAlign === 'left' || textAlign === 'start') {
       // 确认下 padding 的距离
       const pl = parseFloat(paddingLeft);
-      x = x + pl;
+      x += pl;
     }
     // 如果是居中对齐
     if (textAlign === 'center') {
@@ -72,25 +72,25 @@ export const getTextAbsBCR = (parentNode: Element, textNode: Node) => {
       // 确认下 padding 的距离
       const pl = parseFloat(paddingRight);
       x = nodeBCR.right - textWidth;
-      x = x - pl;
+      x -= pl;
     }
 
     // 添加左侧的 border 宽度
-    x = x + parseFloat(borderLeftWidth);
+    x += parseFloat(borderLeftWidth);
 
     // 处理内部高度
     const pt = parseFloat(paddingTop);
-    y = y + pt;
+    y += pt;
 
     // 处理顶部 border 宽度
-    y = y + parseFloat(borderTopWidth);
+    y += parseFloat(borderTopWidth);
   }
 
-  let textHeight = fixY < 0 ? textBCRHeight - fixY * 2 : textBCRHeight;
+  const textHeight = fixY < 0 ? textBCRHeight - fixY * 2 : textBCRHeight;
 
   // 处理垂直居中的样式
   if (display === 'flex' || display === 'inline-flex') {
-    y = y + (nodeBCR.height - textHeight) / 2;
+    y += (nodeBCR.height - textHeight) / 2;
   }
 
   return { x, y, height: textHeight, width: textWidth };
@@ -105,7 +105,7 @@ export const getLineTextWithWidth = (textNode: ChildNode, width: number) => {
   if (!text) return '';
 
   let textContent = '';
-  for (let i = 0; i < text.length; i++) {
+  for (let i = 0; i < text.length; i += 1) {
     const charNode = textNode.cloneNode(true);
     charNode.textContent = textContent;
     document.body.appendChild(charNode);

@@ -1,5 +1,5 @@
 import SketchFormat from '@sketch-hq/sketch-file-format-ts';
-import { getGroupLayout, SMART_LAYOUT } from '../../helpers/layout';
+import { getGroupLayout, GroupLayoutType } from '../../helpers/layout';
 import Base, { BaseLayerParams } from './Base';
 import Color from '../Style/Color';
 import SymbolInstance from './SymbolInstance';
@@ -99,7 +99,7 @@ class SymbolMaster extends Base {
    * 设置布局参数
    * @param layoutType
    */
-  setGroupLayout(layoutType: keyof typeof SMART_LAYOUT) {
+  setGroupLayout(layoutType: GroupLayoutType) {
     this.groupLayout = getGroupLayout(layoutType);
   }
 
