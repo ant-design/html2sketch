@@ -4,7 +4,7 @@ import { StepForwardOutlined, UpCircleOutlined } from '@ant-design/icons';
 import copy from 'copy-to-clipboard';
 import {
   AnyLayer,
-  nodeToSketchGroup,
+  nodeToGroup,
   nodeToSketchSymbol,
   GroupLayoutType,
 } from 'html2sketch';
@@ -66,7 +66,7 @@ const ButtonSymbolDemo: FC = () => {
       type: 'default',
       onClick: () => {
         transformFunc((node) => {
-          return nodeToSketchGroup(node).toSketchJSON();
+          return nodeToGroup(node).toSketchJSON();
         });
       },
     },
