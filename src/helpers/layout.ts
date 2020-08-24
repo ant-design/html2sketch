@@ -66,7 +66,9 @@ export enum RESIZING_CONSTRAINTS {
   HEIGHT = 47,
 }
 
-//*智能布局参数
+/**
+ * 智能布局参数
+ */
 export const SMART_LAYOUT = {
   LEFT_TO_RIGHT: 'LEFT_TO_RIGHT',
   HORIZONTALLY_CENTER: 'HORIZONTALLY_CENTER',
@@ -81,7 +83,7 @@ export const SMART_LAYOUT = {
  * @param layoutType
  */
 export const getGroupLayout = (
-  layoutType?: keyof typeof SMART_LAYOUT
+  layoutType?: keyof typeof SMART_LAYOUT,
 ): FileFormat.InferredGroupLayout | FileFormat.FreeformGroupLayout => {
   switch (layoutType) {
     case SMART_LAYOUT.LEFT_TO_RIGHT: {

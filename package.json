@@ -1,7 +1,7 @@
 {
   "name": "html2sketch",
   "version": "0.1.15",
-  "author": "arvinxx",
+  "author": "arvinxx(arvinx@foxmail.com)",
   "description": "parser HTML to Sketch",
   "keywords": [
     "html",
@@ -67,13 +67,12 @@
   "devDependencies": {
     "@ant-design/compatible": "^1.0.1",
     "@ant-design/dark-theme": "^2.0.2",
-    "@ant-design/pro-skeleton": "^1.0.0-beta.2",
+    "@ant-design/pro-skeleton": "^1.0.0-beta.7",
     "@babel/core": "^7.8.3",
     "@babel/plugin-proposal-object-rest-spread": "^7.8.3",
     "@babel/preset-env": "^7.8.3",
     "@babel/preset-react": "^7.8.3",
     "@babel/preset-typescript": "^7.8.3",
-    "@material-ui/core": "^4.8.2",
     "@testing-library/react": "^10.0.2",
     "@testing-library/react-hooks": "^3.2.1",
     "@types/classnames": "^2.2.7",
@@ -116,7 +115,7 @@
     "mini-css-extract-plugin": "^0.9.0",
     "np": "^6.1.0",
     "optimize-css-assets-webpack-plugin": "^5.0.3",
-    "prettier": "^2.0.1",
+    "prettier": "^2.0.5",
     "puppeteer": "^5.2.1",
     "react": "^16.11.0",
     "react-dom": "^16.11.0",

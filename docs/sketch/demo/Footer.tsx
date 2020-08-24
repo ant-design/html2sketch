@@ -20,7 +20,7 @@ const Footer: FC<FooterProps> = ({ actions, json }) => {
   return (
     <>
       <Divider dashed />
-      <Row gutter={[0, 24]}>
+      <Row>
         <Col span={24}>
           <Row justify={'space-between'}>
             <Col>
@@ -36,7 +36,11 @@ const Footer: FC<FooterProps> = ({ actions, json }) => {
             <Col>
               <Space>
                 {actions.map((action) => (
-                  <Button type={action.type} onClick={action.onClick}>
+                  <Button
+                    key={action.text}
+                    type={action.type}
+                    onClick={action.onClick}
+                  >
                     {action.text}
                   </Button>
                 ))}

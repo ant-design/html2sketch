@@ -5,4 +5,4 @@ order: 50
 
 ## 切换器
 
-<code src="../demo/Switch.tsx" />
+<code src="./demo/Switch.tsx" />
