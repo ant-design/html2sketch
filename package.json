@@ -29,7 +29,6 @@
   "scripts": {
     "start": "dumi dev",
     "build": "father-build && webpack",
-    "build:watch": "IS_TEST_ENV=true webpack -w  --config webpack.test.config.js",
     "lint": "npm run lint-eslint",
     "lint-eslint": "eslint --cache --ext .js,.jsx,.ts,.tsx --format=pretty ./src",
     "lint-staged": "lint-staged",
@@ -42,9 +41,9 @@
     "test": "umi-test",
     "test:update": "umi-test --update-snapshot",
     "test:coverage": "umi-test --coverage",
-    "test:case": "umi-test tests",
-    "test:case-pre": "concurrently \"npm start \" \"npm run build:watch\"",
-    "test:case-run": "concurrently \"npm start \" \"npm run build:watch\" \"npm run test:case\" ",
+    "e2e": "npm run test-case:pre",
+    "e2e:build": "webpack  --config webpack.test.config.js",
+    "e2e:pre": "npm run test-case:build && npm start",
     "tsc": "tsc -p tsconfig-check.json"
   },
   "husky": {
@@ -140,6 +139,7 @@
     "umi-plugin-githubpages": "^2.0.0",
     "umi-test": "^1.9.6",
     "umi-types": "^0.5.11",
+    "express": "^4.1.1",
     "webpack-cli": "^3.3.12"
   },
   "engines": {
