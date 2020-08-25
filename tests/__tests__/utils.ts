@@ -2,7 +2,7 @@ import { join, resolve } from 'path';
 import puppeteer from 'puppeteer';
 import SketchFormat from '@sketch-hq/sketch-file-format-ts';
 import { writeFileSync } from 'fs';
-import { SymbolMaster } from 'html2sketch';
+import { NodeToSketchSymbolOptions, SymbolMaster } from 'html2sketch';
 
 export type HandleSymbolFn = (symbol: SymbolMaster) => void;
 
@@ -56,19 +56,34 @@ export const initHtml2Sketch = async (
     nodeToSketchSymbol: async (
       url: string,
       selector: (dom: Document) => Element | Element[],
-      handleSymbol?: HandleSymbolFn,
+      options?: NodeToSketchSymbolOptions,
     ): Promise<SketchFormat.SymbolMaster> => {
       await page.goto(`${baseURL}${url}${isLocal ? '' : '.html'}`);
 
       try {
         await page.evaluate(`window.IS_TEST_ENV=true`);
 
-        const handleSymbolFn = handleSymbol
-          ? `,{handleSymbol:${handleSymbol}}`
-          : '';
+        const symbolOptionsArr = [];
+        if (options) {
+          if (options.handleSymbol) {
+            symbolOptionsArr.push(`handleSymbol:${options.handleSymbol}`);
+          }
+          if (options.layerParams) {
+            symbolOptionsArr.push(
+              `layerParams:${JSON.stringify(options.layerParams)}`,
+            );
+          }
+          if (options.symbolLayout) {
+            symbolOptionsArr.push(`symbolLayout:${options.symbolLayout}`);
+          }
+        }
+        const symbolOptions =
+          symbolOptionsArr.length === 0
+            ? ''
+            : `,{${symbolOptionsArr.join(',')}}`;
 
         const sketchJSON = (await page.evaluate(
-          `html2sketch.nodeToSketchSymbol(${selector}(document)${handleSymbolFn}).toSketchJSON()`,
+          `html2sketch.nodeToSketchSymbol(${selector}(document)${symbolOptions}).toSketchJSON()`,
         )) as SketchFormat.SymbolMaster;
 
         await closeFn();

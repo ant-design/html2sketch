@@ -3,20 +3,25 @@ import nodeToGroup from './nodeToGroup';
 import adjustSymbolLayout, { SymbolAdjustParams } from './adjustSymbolLayout';
 import { HandleSymbolFn, GroupLayoutType } from '../type';
 
-interface NodeToSketchSymbolOptions {
+export interface NodeToSketchSymbolOptions {
+  /**
+   * symbol 自己的 layout 类型
+   */
   symbolLayout?: GroupLayoutType;
   /**
    * 如果需要对 symbol 进行调整处理
    * 传入这个方法
    */
   handleSymbol?: HandleSymbolFn;
-  layerLayouts: SymbolAdjustParams[];
+  /**
+   * symbol 内部图层的配置项
+   */
+  layerParams?: SymbolAdjustParams[];
 }
 
 /**
  * 解析为 Symbol
  */
-
 export default (node: Element, options?: NodeToSketchSymbolOptions) => {
   if (!node) throw Error('解析对象不存在 请检查传入对象');
 
@@ -44,7 +49,7 @@ export default (node: Element, options?: NodeToSketchSymbolOptions) => {
   });
 
   if (options) {
-    const { symbolLayout, handleSymbol, layerLayouts } = options;
+    const { symbolLayout, handleSymbol, layerParams } = options;
 
     if (symbolLayout) {
       symbol.setGroupLayout(symbolLayout);
@@ -53,9 +58,9 @@ export default (node: Element, options?: NodeToSketchSymbolOptions) => {
     if (handleSymbol) {
       handleSymbol(symbol);
     }
-    if (layerLayouts) {
+    if (layerParams) {
       // 调整 symbol 的 layout 类型
-      adjustSymbolLayout(symbol, layerLayouts);
+      adjustSymbolLayout(symbol, layerParams);
     }
   }
 

@@ -48,7 +48,7 @@
     "e2e:doc-build": "UMI_ENV=e2e dumi build",
     "e2e:test": "jest --config=jest.e2e.config.js",
     "e2e:test-local": "LOCAL=1 jest --config=jest.e2e.config.js",
-    "e2e:test-update": "TEST_UPDATE=1 jest --config=jest.e2e.config.js --update-snapshot"
+    "e2e:test-update": "LOCAL=1 TEST_UPDATE=1 jest --config=jest.e2e.config.js --update-snapshot"
   },
   "husky": {
     "hooks": {

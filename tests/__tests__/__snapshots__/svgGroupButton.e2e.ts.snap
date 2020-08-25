@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`测试 Svg的Group 和Button 类型 should test 1`] = `
+exports[`测试 Svg的Group 和Button 类型 生成符合预期的规范 1`] = `
 Object {
   "_class": "symbolMaster",
   "allowsOverrides": true,
