@@ -33,7 +33,7 @@ class Border extends StyleBase {
     this.name = name || 'Border';
     this.type = type;
     this.position = position || SketchFormat.BorderPosition.Inside;
-    this.thickness = thickness || 1;
+    this.thickness = thickness || 0;
     this.color = new Color(color);
     this.gradient = new Gradient(gradient);
     if (image) {
@@ -71,9 +71,9 @@ class Border extends StyleBase {
   position: SketchFormat.BorderPosition;
 
   /**
-   * 描边宽度 默认为 1
+   * 描边宽度 默认为 0
    * */
-  thickness: number = 1;
+  thickness: number;
 
   /**
    * 转为 Sketch JSON 对象

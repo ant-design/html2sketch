@@ -24,7 +24,9 @@ abstract class Base {
   ) {
     this.id = uuid();
     this.userInfo = null;
+
     this.style = new Style();
+
     this.setResizingConstraint(ResizingConstraint.None);
 
     this.frame = new Frame(params);
