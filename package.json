@@ -30,6 +30,7 @@
     "start": "dumi dev",
     "build": "father-build && webpack",
     "lint": "npm run lint-eslint",
+    "tsc": "tsc -p tsconfig-check.json",
     "lint-eslint": "eslint --cache --ext .js,.jsx,.ts,.tsx --format=pretty ./src",
     "lint-staged": "lint-staged",
     "lint-staged:js": "eslint --cache --ext .js,.jsx,.ts,.tsx --format=pretty",
@@ -41,10 +42,12 @@
     "test": "umi-test",
     "test:update": "umi-test --update-snapshot",
     "test:coverage": "umi-test --coverage",
-    "e2e": "npm run test-case:pre",
-    "e2e:build": "webpack  --config webpack.test.config.js",
-    "e2e:pre": "npm run test-case:build && npm start",
-    "tsc": "tsc -p tsconfig-check.json"
+    "e2e": "npm run e2e:pre-build && npm run e2e:run",
+    "e2e:local": "concurrently \"npm run e2e:pre-local\" && \"npm run e2e:run\"",
+    "e2e:pre-build": "UMI_ENV=e2e dumi build",
+    "e2e:run": "jest --config=jest.e2e.config.js",
+    "e2e:pre-local": "UMI_ENV=e2e dumi dev",
+    "e2e:run-local": "LOCAL=1 jest --config=jest.e2e.config.js"
   },
   "husky": {
     "hooks": {

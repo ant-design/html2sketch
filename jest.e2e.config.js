@@ -10,9 +10,9 @@ module.exports = {
     html2sketch: '<rootDir>/src',
   },
   setupFilesAfterEnv: ['./tests/setupTests.js'],
-  testMatch: ['**/__tests__/**/*.ts', '**/?(*.)+(spec|test).ts'],
-  testPathIgnorePatterns: ['/node_modules/', 'tests'],
-  moduleFileExtensions: ['js', 'ts', 'tsx', 'json', 'node'],
+  testMatch: ['**/__tests__/**/?(*.)+(e2e).ts'],
+  testPathIgnorePatterns: ['/node_modules/'],
+  moduleFileExtensions: ['js', 'ts'],
   globals: {
     'ts-jest': {
       diagnostics: false,
