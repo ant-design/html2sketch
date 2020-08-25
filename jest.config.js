@@ -11,7 +11,7 @@ module.exports = {
   },
   setupFilesAfterEnv: ['./tests/setupTests.js'],
   testMatch: ['**/__tests__/**/*.ts', '**/?(*.)+(spec|test).ts'],
-  testPathIgnorePatterns: ['/node_modules/', 'tests'],
+  testPathIgnorePatterns: ['/node_modules/', '/tests/'],
   moduleFileExtensions: ['js', 'ts', 'tsx', 'json', 'node'],
   globals: {
     'ts-jest': {

@@ -10,7 +10,8 @@ import {
   upCircleSvg,
   plusSvg,
   plus,
-  // outputJSONData,
+  outputJSONData,
+  isUpdate,
 } from './commonSvgData';
 
 describe('Svg 类', () => {
@@ -25,8 +26,10 @@ describe('Svg 类', () => {
           y: 4,
         });
         expect(svg.toSketchJSON()).toMatchSnapshot();
-        // 如果出现小数点的不一致 进行重新输出
-        // outputJSONData(svg.toSketchJSON(), 'svg-path');
+        if (isUpdate) {
+          // 如果出现小数点的不一致 进行重新输出
+          outputJSONData(svg.toSketchJSON(), 'svg-path');
+        }
         expect(svg.toSketchJSON()).toStrictEqual(svgPath.sketchJSON);
       });
       it('dropbox 转换正常', () => {
@@ -38,8 +41,10 @@ describe('Svg 类', () => {
           svgString: dropboxSvgPath.svgString,
         });
         expect(svg.toSketchJSON()).toMatchSnapshot();
-        // 如果出现小数点的不一致 进行重新输出
-        // outputJSONData(svg.toSketchJSON(), 'dropbox');
+        if (isUpdate) {
+          // 如果出现小数点的不一致 进行重新输出
+          outputJSONData(svg.toSketchJSON(), 'dropbox');
+        }
         expect(svg.toSketchJSON()).toStrictEqual(dropboxSvgPath.sketchJSON);
       });
       it('behance 转换正常', () => {
@@ -51,8 +56,10 @@ describe('Svg 类', () => {
           svgString: behanceSvg.svgString,
         });
         expect(svg.toSketchJSON()).toMatchSnapshot();
-        // 如果出现小数点的不一致 进行重新输出
-        // outputJSONData(svg.toSketchJSON(), 'plus');
+        if (isUpdate) {
+          // 如果出现小数点的不一致 进行重新输出
+          outputJSONData(svg.toSketchJSON(), 'behance');
+        }
         expect(svg.toSketchJSON()).toStrictEqual(behanceSvg.sketchJSON);
       });
     });
@@ -68,7 +75,10 @@ describe('Svg 类', () => {
       });
       // 如果出现小数点的不一致 进行重新输出
       expect(svg.toSketchJSON()).toMatchSnapshot();
-      // outputJSONData(svg.toSketchJSON(), 'plus');
+      if (isUpdate) {
+        // 如果出现小数点的不一致 进行重新输出
+        outputJSONData(svg.toSketchJSON(), 'plus');
+      }
       expect(svg.toSketchJSON()).toStrictEqual(plusSvg.sketchJSON);
     });
 
@@ -82,7 +92,10 @@ describe('Svg 类', () => {
       });
       expect(svg.toSketchJSON()).toMatchSnapshot();
       // 如果出现小数点的不一致 进行重新输出
-      // outputJSONData(svg.toSketchJSON(), 'up-circle');
+      if (isUpdate) {
+        // 如果出现小数点的不一致 进行重新输出
+        outputJSONData(svg.toSketchJSON(), 'up-circle');
+      }
       expect(svg.toSketchJSON()).toStrictEqual(upCircleSvg.sketchJSON);
     });
   });
