@@ -3,6 +3,8 @@ title: Switch切换器
 order: 10
 ---
 
-## 测试带 SVG Group 和按钮组合
+## 测试 Switch 切换器
 
 <code src="../demo/Switch.tsx" />
+
+Switch 的按钮用了伪类,因此这个是拿来测试伪类的

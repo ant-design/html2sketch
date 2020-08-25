@@ -2,54 +2,80 @@ import { join, resolve } from 'path';
 import puppeteer from 'puppeteer';
 import SketchFormat from '@sketch-hq/sketch-file-format-ts';
 import { writeFileSync } from 'fs';
+import { SymbolMaster } from 'html2sketch';
+
+export type HandleSymbolFn = (symbol: SymbolMaster) => void;
 
 interface Options {
-  headless?: boolean;
+  showWindows?: boolean;
   close?: boolean;
   noSandbox?: boolean;
   port?: number;
-  baseUrl?: string;
+  debug?: boolean;
 }
 
-export const initHtml2Sketch = async ({
-  headless = true,
-  close = true,
-  noSandbox = true,
-  port = 8000,
-}: Options) => {
+/**
+ * 初始化解析方法
+ * @param options
+ */
+export const initHtml2Sketch = async (
+  {
+    close = true,
+    showWindows = false,
+    port = 8000,
+    noSandbox = true,
+    debug = false,
+  }: Options = {
+    showWindows: false,
+    close: true,
+    noSandbox: true,
+    port: 8000,
+    debug: false,
+  },
+) => {
   const isLocal = process.env.LOCAL === '1';
   const httpURL = `http://localhost:${port}/case`;
   const fileURL = `file://${resolve(__dirname, '../dist')}/case`;
   const baseURL = isLocal ? httpURL : fileURL;
 
   const browser = await puppeteer.launch({
-    headless,
+    headless: debug ? false : !showWindows,
     args: noSandbox ? ['--no-sandbox', '--disable-setuid-sandbox'] : undefined,
   });
   const page = await browser.newPage();
   await page.setViewport({ width: 1200, height: 1000, deviceScaleFactor: 1 }); // 设置宽高
+
+  const closeFn = async () => {
+    // 如果没有 debug 的话
+    if (!debug && close) {
+      await browser.close();
+    }
+  };
+
   return {
     nodeToSketchSymbol: async (
       url: string,
       selector: (dom: Document) => Element | Element[],
+      handleSymbol?: HandleSymbolFn,
     ): Promise<SketchFormat.SymbolMaster> => {
       await page.goto(`${baseURL}${url}${isLocal ? '' : '.html'}`);
 
       try {
         await page.evaluate(`window.IS_TEST_ENV=true`);
 
+        const handleSymbolFn = handleSymbol
+          ? `,{handleSymbol:${handleSymbol}}`
+          : '';
+
         const sketchJSON = (await page.evaluate(
-          `html2sketch.nodeToSketchSymbol(${selector}(document)).toSketchJSON()`,
+          `html2sketch.nodeToSketchSymbol(${selector}(document)${handleSymbolFn}).toSketchJSON()`,
         )) as SketchFormat.SymbolMaster;
-        if (close) {
-          await browser.close();
-        }
+
+        await closeFn();
 
         return sketchJSON;
       } catch (e) {
-        if (close) {
-          await browser.close();
-        }
+        await closeFn();
         throw e;
       }
     },
@@ -66,15 +92,11 @@ export const initHtml2Sketch = async ({
         const json = await page.evaluate(
           `html2sketch.nodeToGroup(${selector}(document))`,
         );
-        if (close) {
-          await browser.close();
-        }
+        await closeFn();
 
         return json;
       } catch (e) {
-        if (close) {
-          await browser.close();
-        }
+        await closeFn();
         throw e;
       }
     },

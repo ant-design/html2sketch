@@ -1,3 +1,5 @@
+jest.setTimeout(10000);
+
 global.requestAnimationFrame =
   global.requestAnimationFrame ||
   function requestAnimationFrame(cb) {
