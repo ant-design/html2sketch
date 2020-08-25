@@ -1,0 +1,34 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TextStyle 类 toSketchJSON 正常解析 1`] = `
+Object {
+  "_class": "textStyle",
+  "encodedAttributes": Object {
+    "MSAttributedStringColorAttribute": Object {
+      "_class": "color",
+      "alpha": 1,
+      "blue": 0,
+      "green": 0,
+      "red": 0,
+    },
+    "MSAttributedStringFontAttribute": Object {
+      "_class": "fontDescriptor",
+      "attributes": Object {
+        "name": "PingFangSC-Regular",
+        "size": 14,
+      },
+    },
+    "MSAttributedStringTextTransformAttribute": 0,
+    "kerning": 0,
+    "paragraphStyle": Object {
+      "_class": "paragraphStyle",
+      "alignment": 0,
+      "maximumLineHeight": undefined,
+      "minimumLineHeight": undefined,
+    },
+    "strikethroughStyle": 0,
+    "underlineStyle": 0,
+  },
+  "verticalAlignment": 0,
+}
+`;

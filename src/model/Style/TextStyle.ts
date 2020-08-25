@@ -347,7 +347,7 @@ class TextStyle {
         }
       case 'block':
       default:
-        return textAlign as TextHorizontalAlign;
+        return (textAlign as TextHorizontalAlign) || TextHorizontalAlign.Left;
     }
   };
 
@@ -363,6 +363,10 @@ class TextStyle {
       // 针对 flex 布局
       case 'flex':
       case 'inline-flex':
+        if (alignItems === 'center') {
+          return TextVerticalAlign.Middle;
+        }
+
         switch (flexDirection) {
           case 'row':
           default:
@@ -370,8 +374,6 @@ class TextStyle {
               default:
               case 'start':
                 return TextVerticalAlign.Top;
-              case 'center':
-                return TextVerticalAlign.Middle;
               case 'end':
                 return TextVerticalAlign.Bottom;
             }
@@ -380,8 +382,6 @@ class TextStyle {
               default:
               case 'start':
                 return TextVerticalAlign.Bottom;
-              case 'center':
-                return TextVerticalAlign.Middle;
               case 'end':
                 return TextVerticalAlign.Top;
             }
