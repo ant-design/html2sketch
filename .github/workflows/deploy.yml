@@ -17,6 +17,7 @@ jobs:
         uses: JamesIves/github-pages-deploy-action@master
         env:
           CI: true
+          PROGRESS: none
           GIT_CONFIG_NAME: arvinxx
           GIT_CONFIG_EMAIL: arvinx@foxmail.com
           NODE_OPTIONS: --max_old_space_size=4096
