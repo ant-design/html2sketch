@@ -13,7 +13,22 @@ import {
 interface FooterProps {
   elements: Element[];
 }
-const Footer: FC<FooterProps> = ({ elements }) => {
+
+declare global {
+  interface Window {
+    html2sketch: {
+      nodeToSketchSymbol: any;
+      nodeToGroup: any;
+    };
+  }
+}
+
+window.html2sketch = {
+  nodeToSketchSymbol,
+  nodeToGroup,
+};
+
+const TestLayout: FC<FooterProps> = ({ elements, children }) => {
   const [json, setJSON] = useState<object>();
   const [showJSON, setShowJSON] = useState(false);
 
@@ -40,11 +55,12 @@ const Footer: FC<FooterProps> = ({ elements }) => {
   };
 
   return (
-    <>
+    <div>
+      {children}
       <Divider dashed />
       <Row>
         <Col span={24}>
-          <Row justify={'space-between'}>
+          <Row justify="space-between">
             <Col>
               <Button
                 disabled={!json}
@@ -67,7 +83,7 @@ const Footer: FC<FooterProps> = ({ elements }) => {
                   转换为 Group
                 </Button>
                 <Button
-                  type={'primary'}
+                  type="primary"
                   onClick={() => {
                     transformFunc((node) => {
                       const symbolLayout: GroupLayoutType = 'LEFT_TO_RIGHT';
@@ -101,13 +117,13 @@ const Footer: FC<FooterProps> = ({ elements }) => {
         {showJSON ? (
           <Col span={24}>
             <Card>
-              <ReactJson name={'Sketch JSON'} src={json || {}} />
+              <ReactJson name="Sketch JSON" src={json || {}} />
             </Card>
           </Col>
         ) : null}
       </Row>
-    </>
+    </div>
   );
 };
 
-export default Footer;
+export default TestLayout;

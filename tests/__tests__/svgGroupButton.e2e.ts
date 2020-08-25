@@ -1,8 +1,5 @@
-import {
-  initHtml2Sketch,
-  // outputJSONData
-} from '../utils';
-import SvgButton from '../json/svg-button.json';
+import { initHtml2Sketch, isUpdate, outputJSONData } from './utils';
+import SvgButton from './json/svg-button.json';
 
 describe('测试 Svg的Group 和Button 类型', () => {
   test('should test', async () => {
@@ -17,7 +14,9 @@ describe('测试 Svg的Group 和Button 类型', () => {
     expect(symbol).toBeTruthy();
     expect(symbol).toMatchSnapshot();
 
-    // outputJSONData(symbol, 'svg-button');
+    if (isUpdate) {
+      outputJSONData(symbol, 'svg-button');
+    }
     expect(symbol).toStrictEqual(SvgButton);
   });
 });

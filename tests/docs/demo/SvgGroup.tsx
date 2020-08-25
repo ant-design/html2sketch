@@ -2,12 +2,12 @@ import React, { FC, useState, useRef, useEffect } from 'react';
 import { Button } from 'antd';
 import { UpCircleOutlined } from '@ant-design/icons';
 
-import Footer from './Footer';
+import TestLayout from './utils/TestLayout';
 
 /**
  * Button demo
  */
-const ButtonSymbolDemo: FC = () => {
+const SvgGroupCase: FC = () => {
   const ref = useRef(null);
   const [elements, setElements] = useState([]);
 
@@ -19,19 +19,12 @@ const ButtonSymbolDemo: FC = () => {
   });
 
   return (
-    <div>
-      <Button
-        ref={ref}
-        id={'button'}
-        icon={<UpCircleOutlined />}
-        symbol-name={'测试组件'}
-        type={'primary'}
-      >
+    <TestLayout elements={elements}>
+      <Button ref={ref} id="button" icon={<UpCircleOutlined />} type="primary">
         文本
       </Button>
-      <Footer elements={elements} />
-    </div>
+    </TestLayout>
   );
 };
 
-export default ButtonSymbolDemo;
+export default SvgGroupCase;

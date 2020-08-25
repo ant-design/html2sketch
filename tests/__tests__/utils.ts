@@ -16,25 +16,24 @@ export const initHtml2Sketch = async ({
   close = true,
   noSandbox = true,
   port = 8000,
-  baseUrl = 'localhost',
 }: Options) => {
-  const baseURL = `http://${baseUrl}:${port}/~test`;
+  const isLocal = process.env.LOCAL === '1';
+  const httpURL = `http://localhost:${port}/case`;
+  const fileURL = `file://${resolve(__dirname, '../dist')}/case`;
+  const baseURL = isLocal ? httpURL : fileURL;
 
   const browser = await puppeteer.launch({
     headless,
     args: noSandbox ? ['--no-sandbox', '--disable-setuid-sandbox'] : undefined,
   });
   const page = await browser.newPage();
-
+  await page.setViewport({ width: 1200, height: 1000, deviceScaleFactor: 1 }); // 设置宽高
   return {
     nodeToSketchSymbol: async (
       url: string,
       selector: (dom: Document) => Element | Element[],
     ): Promise<SketchFormat.SymbolMaster> => {
-      await page.goto(baseURL + url);
-      await page.addScriptTag({
-        path: resolve(__dirname, './dist/html2sketch.js'),
-      });
+      await page.goto(`${baseURL}${url}${isLocal ? '' : '.html'}`);
 
       try {
         await page.evaluate(`window.IS_TEST_ENV=true`);
@@ -96,10 +95,9 @@ export const outputJSONData = (
     | SketchFormat.Group
     | SketchFormat.ShapeGroup
     | SketchFormat.SymbolMaster,
-  name?: string,
+  name: string,
 ) => {
-  writeFileSync(
-    join(__dirname, `./json/${name || 'json'}.json`),
-    JSON.stringify(json),
-  );
+  writeFileSync(join(__dirname, `./json/${name}.json`), JSON.stringify(json));
 };
+
+export const isUpdate = process.env.TEST_UPDATE === '1';
