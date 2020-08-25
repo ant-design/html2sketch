@@ -70,7 +70,7 @@ class Text extends Base {
       hasClippingMask: this.hasClippingMask,
       style: this.style.toSketchJSON(),
 
-      attributedString: this.makeAttributedString(),
+      attributedString: this.getSketchAttributedString(),
       automaticallyDrawOnUnderlyingPath: false,
       dontSynchroniseWithSymbol: false,
       lineSpacingBehaviour: 2,
@@ -82,7 +82,7 @@ class Text extends Base {
   /**
    * 生成文本核心样式
    * */
-  makeAttributedString = (): SketchFormat.AttributedString => {
+  getSketchAttributedString = (): SketchFormat.AttributedString => {
     return {
       _class: 'attributedString',
       string: this.text,
@@ -136,15 +136,11 @@ class Text extends Base {
     return text;
   };
 
-  getTextBehaviour = () => {
-    return SketchFormat.TextBehaviour;
-  };
-
   /**
    * 从节点中获取样式
    * @param node
    */
-  static getTextStyleFromNode = (node: Element) => {
+  static getTextStyleFromNode = (node: Element): TextStyleParams => {
     const styles: CSSStyleDeclaration = getComputedStyle(node);
 
     const {
@@ -156,12 +152,10 @@ class Text extends Base {
       letterSpacing,
       textTransform,
       textDecorationLine,
-      textAlign,
-      justifyContent,
-      display,
       color,
     } = styles;
-    const textStyle: TextStyleParams = {
+
+    return {
       fontFamily,
       fontSize: parseInt(fontSize, 10),
       lineHeight: lineHeight !== 'normal' ? parseFloat(lineHeight) : undefined,
@@ -171,13 +165,10 @@ class Text extends Base {
       color,
       textTransform,
       textDecoration: textDecorationLine,
-      textAlign:
-        display === 'flex' || display === 'inline-flex'
-          ? justifyContent
-          : textAlign,
+      textAlign: TextStyle.parseTextHorizontalAlign(styles),
+      verticalAlign: TextStyle.parseTextVerticalAlign(styles),
       skipSystemFonts: true,
     };
-    return textStyle;
   };
 }
 

@@ -2,13 +2,13 @@ import SketchFormat from '@sketch-hq/sketch-file-format-ts';
 import Color from './Color';
 
 const SYSTEM_FONTS = [
-  // Apple
+  /* * Apple * */
   '-apple-system',
   'system-ui',
   'BlinkMacSystemFont',
-  // Microsoft
+  /* * Microsoft * */
   'Segoe UI',
-  // Android
+  /* * Android * */
   'Roboto',
 ];
 
@@ -53,7 +53,8 @@ export interface TextStyleParams {
   letterSpacing?: number;
   textTransform?: string;
   textDecoration?: string;
-  textAlign?: string;
+  textAlign?: TextHorizontalAlign;
+  verticalAlign?: TextVerticalAlign;
   /**
    * Some websites or component libraries use font-family
    * listsstarting with OS-specific fonts.
@@ -62,6 +63,18 @@ export interface TextStyleParams {
    * we skip those fonts to choose a font Sketch is capable of.
    * */
   skipSystemFonts?: boolean;
+}
+
+export enum TextHorizontalAlign {
+  Left = 'left',
+  Right = 'right',
+  Center = 'center',
+  Justify = 'justify',
+}
+export enum TextVerticalAlign {
+  Top = 'top',
+  Middle = 'middle',
+  Bottom = 'bottom',
 }
 
 /**
@@ -91,7 +104,7 @@ class TextStyle {
 
       this.textTransform = textTransform;
       this.textDecoration = textDecoration;
-      this.textAlign = textAlign || 'left';
+      this.textAlign = textAlign || TextHorizontalAlign.Left;
 
       if (fontWeight) {
         this.fontWeight = fontWeight.toString();
@@ -138,9 +151,14 @@ class TextStyle {
   textTransform?: string = '';
 
   /**
-   * 文本对齐
+   * 文本横向对齐
    * */
-  textAlign: string = 'left';
+  textAlign: TextHorizontalAlign = TextHorizontalAlign.Left;
+
+  /**
+   * 文本纵向对齐
+   */
+  verticalAlign: TextVerticalAlign = TextVerticalAlign.Top;
 
   /**
    * 文本装饰
@@ -176,9 +194,9 @@ class TextStyle {
   };
 
   /**
-   * 取得 sketch 下的对齐参数
+   * 取得 sketch 下的横向对齐参数
    */
-  getSketchAlign = () => {
+  getSketchHorizontalAlign = () => {
     switch (this.textAlign) {
       case 'left':
       default:
@@ -189,6 +207,21 @@ class TextStyle {
         return SketchFormat.TextHorizontalAlignment.Centered;
       case 'justify':
         return SketchFormat.TextHorizontalAlignment.Justified;
+    }
+  };
+
+  /**
+   * 取得 sketch 下的纵向对齐参数
+   */
+  getSketchVerticalAlign = () => {
+    switch (this.verticalAlign) {
+      case 'top':
+      default:
+        return SketchFormat.TextVerticalAlignment.Top;
+      case 'middle':
+        return SketchFormat.TextVerticalAlignment.Middle;
+      case 'bottom':
+        return SketchFormat.TextVerticalAlignment.Bottom;
     }
   };
 
@@ -262,13 +295,13 @@ class TextStyle {
   toSketchJSON = (): SketchFormat.TextStyle => {
     return {
       _class: 'textStyle',
-      verticalAlignment: SketchFormat.TextVerticalAlignment.Top,
+      verticalAlignment: this.getSketchVerticalAlign(),
       encodedAttributes: {
         underlineStyle: this.getUnderlineStyle(),
         MSAttributedStringTextTransformAttribute: this.getTextTransform(),
         paragraphStyle: {
           _class: 'paragraphStyle',
-          alignment: this.getSketchAlign(),
+          alignment: this.getSketchHorizontalAlign(),
           maximumLineHeight: this.lineHeight,
           minimumLineHeight: this.lineHeight,
         },
@@ -287,6 +320,77 @@ class TextStyle {
         MSAttributedStringColorAttribute: this.color.toSketchJSON(),
       },
     };
+  };
+
+  /**
+   * 从样式对象中解析出文本的横向对齐方式
+   */
+  static parseTextHorizontalAlign = (
+    styles: CSSStyleDeclaration,
+  ): TextHorizontalAlign => {
+    const { display, justifyContent, textAlign } = styles;
+    switch (display) {
+      case 'flex':
+      case 'inline-flex':
+        switch (justifyContent) {
+          case 'start':
+          default:
+            return TextHorizontalAlign.Left;
+          case 'right':
+          case 'end':
+            return TextHorizontalAlign.Right;
+          case 'center':
+            return TextHorizontalAlign.Center;
+          case 'space-between':
+          case 'space-around':
+            return TextHorizontalAlign.Justify;
+        }
+      case 'block':
+      default:
+        return textAlign as TextHorizontalAlign;
+    }
+  };
+
+  /**
+   * 从样式对象中解析出文本的纵向对齐方式
+   * @param styles
+   */
+  static parseTextVerticalAlign = (
+    styles: CSSStyleDeclaration,
+  ): TextVerticalAlign => {
+    const { display, alignItems, flexDirection } = styles;
+    switch (display) {
+      // 针对 flex 布局
+      case 'flex':
+      case 'inline-flex':
+        switch (flexDirection) {
+          case 'row':
+          default:
+            switch (alignItems) {
+              default:
+              case 'start':
+                return TextVerticalAlign.Top;
+              case 'center':
+                return TextVerticalAlign.Middle;
+              case 'end':
+                return TextVerticalAlign.Bottom;
+            }
+          case 'row-reverse':
+            switch (alignItems) {
+              default:
+              case 'start':
+                return TextVerticalAlign.Bottom;
+              case 'center':
+                return TextVerticalAlign.Middle;
+              case 'end':
+                return TextVerticalAlign.Top;
+            }
+        }
+
+      case 'block':
+      default:
+        return TextVerticalAlign.Top;
+    }
   };
 }
 
