@@ -1,6 +1,7 @@
 import { SymbolMaster } from '../model';
-import { GroupLayoutType } from '../helpers/layout';
 import nodeToGroup from './nodeToGroup';
+import adjustSymbolLayout, { SymbolAdjustParams } from './adjustSymbolLayout';
+import { HandleSymbolFn, GroupLayoutType } from '../type';
 
 interface NodeToSketchSymbolOptions {
   symbolLayout?: GroupLayoutType;
@@ -8,7 +9,8 @@ interface NodeToSketchSymbolOptions {
    * 如果需要对 symbol 进行调整处理
    * 传入这个方法
    */
-  handleSymbol?: (symbol: SymbolMaster) => void;
+  handleSymbol?: HandleSymbolFn;
+  layerLayouts: SymbolAdjustParams[];
 }
 
 /**
@@ -16,6 +18,8 @@ interface NodeToSketchSymbolOptions {
  */
 
 export default (node: Element, options?: NodeToSketchSymbolOptions) => {
+  if (!node) throw Error('解析对象不存在 请检查传入对象');
+
   const group = nodeToGroup(node);
 
   const symbol = new SymbolMaster({
@@ -40,7 +44,7 @@ export default (node: Element, options?: NodeToSketchSymbolOptions) => {
   });
 
   if (options) {
-    const { symbolLayout, handleSymbol } = options;
+    const { symbolLayout, handleSymbol, layerLayouts } = options;
 
     if (symbolLayout) {
       symbol.setGroupLayout(symbolLayout);
@@ -49,6 +53,12 @@ export default (node: Element, options?: NodeToSketchSymbolOptions) => {
     if (handleSymbol) {
       handleSymbol(symbol);
     }
+    if (layerLayouts) {
+      // 调整 symbol 的 layout 类型
+      adjustSymbolLayout(symbol, layerLayouts);
+    }
   }
+
+  adjustSymbolLayout(symbol);
   return symbol;
 };

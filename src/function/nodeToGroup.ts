@@ -16,6 +16,8 @@ export interface Options {
  * @param options
  */
 const nodeToGroup = (node: Element, options?: Options): AnyLayer => {
+  if (!node) throw Error('解析对象不存在 请检查传入对象');
+
   const bcr = node.getBoundingClientRect();
   const { left, top } = bcr;
   const width = bcr.right - bcr.left;
