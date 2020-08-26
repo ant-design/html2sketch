@@ -18,6 +18,7 @@ const ModalPage: FC = () => {
   }, [ref.current]);
   return (
     <TestLayout elements={elements}>
+      <div ref={ref} />
       <Modal
         visible
         title="Modal 测试"
@@ -27,7 +28,7 @@ const ModalPage: FC = () => {
         className="modal-body"
         wrapClassName="modal-wrapper"
       >
-        123
+        这是里面的内容
       </Modal>
     </TestLayout>
   );
