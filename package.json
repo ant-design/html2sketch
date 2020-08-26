@@ -39,6 +39,7 @@
     "prettier": "prettier -c --write \"**/**\"",
     "site": "dumi build && gh-pages -d ./dist",
     "site_build": "dumi build",
+    "clean": "rm -rf es lib dist build coverage tests/dist",
     "test": "umi-test",
     "test:update": "TEST_UPDATE=1 umi-test --update-snapshot",
     "test:coverage": "umi-test --coverage",
