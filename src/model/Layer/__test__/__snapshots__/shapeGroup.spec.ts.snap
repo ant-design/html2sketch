@@ -1,0 +1,83 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ShapeGroup toSketchJSON 生成正常 1`] = `
+Object {
+  "_class": "shapeGroup",
+  "booleanOperation": -1,
+  "clippingMaskMode": 0,
+  "do_objectID": "UUID",
+  "exportOptions": Object {
+    "_class": "exportOptions",
+    "exportFormats": Array [],
+    "includedLayerIds": Array [],
+    "layerOptions": 0,
+    "shouldTrim": false,
+  },
+  "frame": Object {
+    "_class": "rect",
+    "constrainProportions": false,
+    "height": 0,
+    "width": 0,
+    "x": 0,
+    "y": 0,
+  },
+  "hasClickThrough": false,
+  "hasClippingMask": false,
+  "isFixedToViewport": false,
+  "isFlippedHorizontal": false,
+  "isFlippedVertical": false,
+  "isLocked": false,
+  "isVisible": true,
+  "layerListExpandedType": 0,
+  "layers": Array [],
+  "name": "shapeGroup",
+  "nameIsFixed": false,
+  "resizingConstraint": 63,
+  "resizingType": 0,
+  "rotation": 0,
+  "shouldBreakMaskChain": false,
+  "style": Object {
+    "_class": "style",
+    "borderOptions": Object {
+      "_class": "borderOptions",
+      "dashPattern": Array [],
+      "isEnabled": true,
+      "lineCapStyle": 0,
+      "lineJoinStyle": 0,
+    },
+    "borders": Array [],
+    "colorControls": Object {
+      "_class": "colorControls",
+      "brightness": 0,
+      "contrast": 1,
+      "hue": 0,
+      "isEnabled": false,
+      "saturation": 1,
+    },
+    "contextSettings": Object {
+      "_class": "graphicsContextSettings",
+      "blendMode": 0,
+      "opacity": 1,
+    },
+    "do_objectID": "UUID",
+    "endMarkerType": 0,
+    "fills": Array [],
+    "innerShadows": Array [],
+    "miterLimit": 10,
+    "shadows": Array [],
+    "startMarkerType": 0,
+    "windingRule": 1,
+  },
+  "windingRule": 1,
+}
+`;
+
+exports[`ShapeGroup 生成正常 1`] = `
+Object {
+  "id": "UUID",
+  "layers": Array [],
+  "locked": false,
+  "name": "",
+  "resizingConstraint": 63,
+}
+`;
