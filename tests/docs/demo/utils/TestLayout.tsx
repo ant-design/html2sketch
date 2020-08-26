@@ -1,5 +1,4 @@
 /* eslint-disable import/no-unresolved */
-
 import React, { FC, useState } from 'react';
 import { Button, Row, Col, Card, Divider, Space, message } from 'antd';
 import ReactJson from 'react-json-view';
@@ -7,9 +6,11 @@ import ReactJson from 'react-json-view';
 import copy from 'copy-to-clipboard';
 import {
   AnyLayer,
+  Group,
   GroupLayoutType,
   nodeToGroup,
   nodeToSketchSymbol,
+  SymbolMaster,
 } from 'html2sketch';
 
 interface FooterProps {
@@ -34,18 +35,26 @@ const TestLayout: FC<FooterProps> = ({ elements, children }) => {
   const [json, setJSON] = useState<object>();
   const [showJSON, setShowJSON] = useState(false);
 
-  const transformFunc = (transferFn: (node: Element) => Object) => {
+  const transformFunc = (
+    transferFn: (node: Element) => SymbolMaster | Group,
+  ) => {
     try {
       const els = elements;
 
       const objects: Object[] = [];
 
       Array.from(els).forEach((el) => {
-        const sketchBtn = transferFn(el);
-        objects.push(sketchBtn);
+        console.groupCollapsed('[html2sketch]开始转换...');
+        const sketchObj = transferFn(el);
+        console.groupEnd();
+        console.groupEnd();
+        console.group('转换结果');
+        console.log('图形对象', sketchObj);
+        objects.push(sketchObj.toSketchJSON());
       });
-      console.log('-------转换结束--------');
-      console.log(objects);
+
+      console.log('Sketch JSON 对象:', objects);
+      console.groupEnd();
 
       copy(JSON.stringify(objects));
       message.success('转换成功🎉已复制到剪切板');
@@ -78,7 +87,7 @@ const TestLayout: FC<FooterProps> = ({ elements, children }) => {
                 <Button
                   onClick={() => {
                     transformFunc((node) => {
-                      return nodeToGroup(node).toSketchJSON();
+                      return nodeToGroup(node);
                     });
                   }}
                 >
@@ -106,7 +115,7 @@ const TestLayout: FC<FooterProps> = ({ elements, children }) => {
                           };
                           symbol.layers.forEach(renameBG);
                         },
-                      }).toSketchJSON();
+                      });
                     });
                   }}
                 >
