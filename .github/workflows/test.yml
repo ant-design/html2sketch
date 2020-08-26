@@ -13,7 +13,11 @@ jobs:
 
       - name: lint
         run: npm run lint && npm run tsc
+
       - name: test
         run: npm run test:coverage
+
+      - name: e2e
+        run: npm run e2e
       - name: Generate coverage
         run: bash <(curl -s https://codecov.io/bash)
