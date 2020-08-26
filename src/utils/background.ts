@@ -1,5 +1,3 @@
-// @ts-nocheck
-
 // Parser for a linear gradient:
 // ---
 // <linear-gradient> = linear-gradient(
@@ -118,38 +116,40 @@ const getActualImageSize = (
   backgroundSize: string,
   imageSize: { width: number; height: number },
   containerSize: { width: any; height: any },
-) => {
-  let width: number;
-  let height: number;
+): { width: number; height: number } => {
+  let width: number = 0;
+  let height: number = 0;
+
+  const { height: imgH, width: imgW } = imageSize;
 
   // sanity check
   if (
-    imageSize.width === 0 ||
-    imageSize.height === 0 ||
+    imgW === 0 ||
+    imgH === 0 ||
     containerSize.width === 0 ||
     containerSize.height === 0
   ) {
     width = 0;
     height = 0;
   } else if (backgroundSize === 'cover') {
-    if (imageSize.width > imageSize.height) {
+    if (imgW > imgH) {
       height = containerSize.height;
-      width = (height / imageSize.height) * imageSize.width;
+      width = (height / imgH) * imgW;
     } else {
       width = containerSize.width;
-      height = (width / imageSize.width) * imageSize.height;
+      height = (width / imgW) * imgH;
     }
   } else if (backgroundSize === 'contain') {
-    if (imageSize.width > imageSize.height) {
+    if (imgW > imgH) {
       width = containerSize.width;
-      height = (width / imageSize.width) * imageSize.height;
+      height = (width / imgW) * imgH;
     } else {
       height = containerSize.height;
-      width = (height / imageSize.height) * imageSize.width;
+      width = (height / imgH) * imgW;
     }
   } else if (backgroundSize === 'auto') {
-    width = imageSize.width;
-    height = imageSize.height;
+    width = imgW;
+    height = imgH;
   } else {
     // we currently don't support multiple backgrounds
     const [singleBackgroundSize] = backgroundSize.split(',');
@@ -159,7 +159,7 @@ const getActualImageSize = (
     ] = singleBackgroundSize.trim().split(' ');
 
     if (backgroundSizeWidth === 'auto' || backgroundSizeWidth === undefined) {
-      backgroundSizeWidth = null;
+      backgroundSizeWidth = '';
     } else if (backgroundSizeWidth.endsWith('%')) {
       backgroundSizeWidth = (
         (parseFloat(backgroundSizeWidth) / 100) *
@@ -170,7 +170,7 @@ const getActualImageSize = (
     }
 
     if (backgroundSizeHeight === 'auto' || backgroundSizeHeight === undefined) {
-      backgroundSizeHeight = null;
+      backgroundSizeHeight = '';
     } else if (backgroundSizeHeight.endsWith('%')) {
       backgroundSizeHeight = (
         (parseFloat(backgroundSizeHeight) / 100) *
@@ -180,15 +180,15 @@ const getActualImageSize = (
       backgroundSizeHeight = parseFloat(backgroundSizeHeight).toString();
     }
 
-    if (backgroundSizeWidth !== null && backgroundSizeHeight === null) {
-      width = backgroundSizeWidth;
-      height = (width / imageSize.width) * imageSize.height;
-    } else if (backgroundSizeWidth === null && backgroundSizeHeight !== null) {
-      height = backgroundSizeHeight;
-      width = (height / imageSize.height) * imageSize.width;
-    } else if (backgroundSizeWidth !== null && backgroundSizeHeight !== null) {
-      width = backgroundSizeWidth;
-      height = backgroundSizeHeight;
+    if (backgroundSizeWidth !== '' && backgroundSizeHeight === '') {
+      width = Number(backgroundSizeWidth);
+      height = (width / imgW) * imgH;
+    } else if (backgroundSizeWidth === '' && backgroundSizeHeight !== '') {
+      height = Number(backgroundSizeHeight);
+      width = (height / imgH) * imgW;
+    } else if (backgroundSizeWidth !== '' && backgroundSizeHeight !== '') {
+      width = Number(backgroundSizeWidth);
+      height = Number(backgroundSizeHeight);
     }
   }
 
