@@ -1,4 +1,5 @@
 import { SymbolMaster } from '../model';
+import { defaultSymbolParamsList } from '../utils/sketchSymbolParams';
 import nodeToGroup from './nodeToGroup';
 import adjustSymbolLayout from './adjustSymbolLayout';
 import { NodeToSketchSymbolOptions } from '../type';
@@ -48,6 +49,14 @@ export default (node: Element, options?: NodeToSketchSymbolOptions) => {
     }
   }
 
-  adjustSymbolLayout(symbol);
+  /**
+   * 设置一些内置的的 symbol 配置项
+   */
+  defaultSymbolParamsList.forEach((paramsList) => {
+    const { symbolLayout, layerParams } = paramsList;
+    symbol.setGroupLayout(symbolLayout);
+    adjustSymbolLayout(symbol, layerParams);
+  });
+
   return symbol;
 };

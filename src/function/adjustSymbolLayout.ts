@@ -68,6 +68,10 @@ const adjust = (
   }
 };
 
+// const selectorLayer=()=>{
+//
+// }
+
 /**
  * 调整单个图层的 配置项
  * @param layer
