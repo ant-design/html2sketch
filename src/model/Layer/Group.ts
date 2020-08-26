@@ -6,7 +6,7 @@ import { AnyLayer } from '../type';
 import { GroupLayoutType } from '../../type';
 
 class Group extends Base {
-  constructor(params: BaseLayerParams) {
+  constructor(params?: BaseLayerParams) {
     super(SketchFormat.ClassValue.Group, params);
   }
 

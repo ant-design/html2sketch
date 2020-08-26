@@ -13,7 +13,7 @@ import { FrameType } from '../Frame';
  * Sketch 的 Symbol 对象
  * */
 class SymbolMaster extends Base {
-  constructor(params: BaseLayerParams) {
+  constructor(params?: BaseLayerParams) {
     super(SketchFormat.ClassValue.SymbolMaster, params);
 
     this.symbolID = uuid();
