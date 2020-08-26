@@ -2,10 +2,7 @@ import SketchFormat from '@sketch-hq/sketch-file-format-ts';
 import { uuid } from '../../utils/utils';
 import Frame from '../Frame';
 import Style from '../Style/Style';
-import {
-  calculateResizingConstraintValue,
-  ResizingConstraint,
-} from '../../utils/layout';
+import { calcResizingConstraint, ResizingConstraint } from '../../utils/layout';
 import { AnyLayer } from '../type';
 
 const DEFAULT_USER_INFO_SCOPE = 'html2sketch';
@@ -132,7 +129,7 @@ abstract class Base {
    * @param constraints
    */
   setResizingConstraint(...constraints: ResizingConstraint[]) {
-    this.resizingConstraint = calculateResizingConstraintValue(...constraints);
+    this.resizingConstraint = calcResizingConstraint(...constraints);
   }
 
   // scope defines which Sketch plugin will have access to provided data via Settings.setLayerSettingForKey

@@ -41,9 +41,7 @@ export enum ResizingConstraint {
 /**
  * 计算 Resizing 变量
  */
-export const calculateResizingConstraintValue = (
-  ...args: ResizingConstraint[]
-) => {
+export const calcResizingConstraint = (...args: ResizingConstraint[]) => {
   const noHeight = [
     ResizingConstraint.Top,
     ResizingConstraint.Bottom,
