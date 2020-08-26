@@ -14,6 +14,7 @@ module.exports = {
     'no-restricted-globals': 0,
     'no-continue': 0,
     'no-shadow': 'warn',
+    'no-console': 0,
     'no-underscore-dangle': 0,
   },
 };
