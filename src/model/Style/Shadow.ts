@@ -24,16 +24,20 @@ class Shadow extends StyleBase {
       contextSettings,
       spread,
     } = props;
+
     this.color = new Color(color);
-    this.blurRadius = blurRadius || 4;
+    this.blurRadius = blurRadius || 0;
     this.offsetX = offsetX || 0;
-    this.offsetY = offsetY || 2;
+    this.offsetY = offsetY || 0;
     this.spread = spread || 0;
     this.contextSettings = contextSettings || {
       _class: 'graphicsContextSettings',
       blendMode: SketchFormat.BlendMode.Normal,
       opacity: 1,
     };
+    if (blurRadius || offsetX || color || offsetY || spread) {
+      this.isEnabled = true;
+    }
     this.name = `${this.color.hex} ${this.offsetX}px ${this.offsetY}px ${this.blurRadius}px`;
   }
 
@@ -70,7 +74,7 @@ class Shadow extends StyleBase {
   /**
    * 是否启用
    */
-  isEnabled: boolean = true;
+  isEnabled: boolean = false;
 
   /**
    * 分割阴影字符串
