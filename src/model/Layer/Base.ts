@@ -34,6 +34,12 @@ abstract class Base {
   class: LayerClassType;
 
   /**
+   * 节点名称
+   * 来自 HTML 的节点类型
+   */
+  nodeType?: string;
+
+  /**
    * 来自样式的名称
    */
   className?: string;

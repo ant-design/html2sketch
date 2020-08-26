@@ -59,6 +59,9 @@ const parsePseudo = (node: Element, pseudoElt: 'before' | 'after') => {
     x: left,
     y: top,
   });
+
+  rect.nodeType = node.nodeName;
+
   // support for one-side borders (using inner shadow because Sketch doesn't support that)
   if (borderWidth.indexOf(' ') === -1) {
     style.addBorder({

@@ -6,6 +6,7 @@ import {
   GroupLayoutType,
   AnyLayer,
   DefaultSymbolParams,
+  LayerSelector,
 } from '../type';
 
 /**
@@ -53,9 +54,41 @@ const adjust = (
   }
 };
 
-// const selectorLayer=()=>{
-//
-// }
+/**
+ * 选择图层的方法
+ * @param layer
+ * @param selector
+ */
+const selectorLayer = <T extends AnyLayer | SymbolMaster>(
+  layer: T,
+  selector?: LayerSelector,
+): T | undefined => {
+  switch (selector?.type) {
+    case 'class':
+      if (layer.class === selector?.value) return layer;
+      return;
+    case 'classname':
+      if (layer.className?.includes(selector?.value)) return layer;
+
+      return;
+    case 'name':
+      if (layer.name === selector?.value) return layer;
+
+      return;
+    case 'text':
+      if (
+        layer.class === 'text' &&
+        (layer as Text).text.includes(selector?.value)
+      )
+        return layer;
+      break;
+    case 'tag':
+      if (layer.nodeType === selector?.value) return layer;
+
+      break;
+    default:
+  }
+};
 
 /**
  * 调整单个图层的 配置项
@@ -68,50 +101,18 @@ const adjustGroupLayer = (layer: AnyLayer, params?: SymbolAdjustParams[]) => {
   }
   if (!params) return false;
 
-  let isSelected = false;
   // 对每个传进来的参数进行调教
   params.forEach((param) => {
     const { layout, resizing, selector, text } = param;
 
-    switch (selector?.type) {
-      case 'class':
-        if (layer.class === selector.value) {
-          isSelected = true;
-          adjust(layer, { resizing, layout });
-        }
-        break;
-      case 'classname':
-        if (layer.className?.includes(selector.value)) {
-          isSelected = true;
-          adjust(layer, { resizing, layout });
-        }
-        break;
-      case 'name':
-        if (layer.name === selector.value) {
-          isSelected = true;
-          adjust(layer, { resizing, layout });
-        }
-        break;
-      case 'text':
-        if (layer.class === 'text') {
-          if ((layer as Text).text.includes(selector.value)) {
-            isSelected = true;
-            adjust(layer, { resizing, layout });
-          }
-          if (text) {
-            adjustText(layer as Text, text);
-          }
-        }
-        break;
-      // case 'tag':
-      //   if (layer?.tag === selector.value) {
-      //     adjust(layer, { resizing, layout });
-      //   }
-      //   break;
-      default:
+    const selectedLayer = selectorLayer<AnyLayer>(layer, selector);
+    if (selectedLayer) {
+      adjust(selectedLayer, { resizing, layout });
+      if (layer.class === 'text' && text) {
+        adjustText(selectedLayer as Text, text);
+      }
     }
   });
-  return isSelected;
 };
 
 /**
@@ -129,26 +130,21 @@ const adjustSymbolParams = (
 
   if (!symbolParams) return;
 
-  const { symbolLayout, layerParams, symbolName } = symbolParams;
+  const { symbolLayout, layerParams, symbolName, selector } = symbolParams;
 
-  let isSelected = false;
+  console.log(symbol, selector);
+  const selectedSymbol = selectorLayer<SymbolMaster>(symbol, selector);
 
-  symbol.layers.forEach((l) => {
-    const hasSelected = adjustGroupLayer(l, layerParams);
-    // 如果命中过 就判断为选中过
-    if (!isSelected && hasSelected) {
-      isSelected = hasSelected;
-    }
-  });
-
-  if (isSelected) {
-    if (symbolName) {
-      symbol.name = symbolName;
-    }
-    if (symbolLayout) {
-      symbol.setGroupLayout(symbolLayout);
-    }
+  if (!selectedSymbol) return;
+  if (symbolName) {
+    symbol.name = symbolName;
   }
+  if (symbolLayout) {
+    symbol.setGroupLayout(symbolLayout);
+  }
+  symbol.layers.forEach((l) => {
+    adjustGroupLayer(l, layerParams);
+  });
 };
 
 export default adjustSymbolParams;

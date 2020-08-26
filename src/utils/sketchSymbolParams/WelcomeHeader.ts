@@ -7,6 +7,7 @@ import { DefaultSymbolParams } from '../../type';
 export const welcomeHeader: DefaultSymbolParams = {
   symbolName: 'WelcomeHeader',
   symbolLayout: 'NONE',
+  selector: { type: 'classname', value: 'tech-welcomeheader' },
   layerParams: [
     {
       // 左上角的按钮

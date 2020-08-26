@@ -44,6 +44,10 @@ export interface DefaultSymbolParams {
    * symbol 内部的图层配置项
    */
   layerParams: SymbolAdjustParams[];
+  /**
+   * 图层选择器
+   */
+  selector?: LayerSelector;
 }
 
 export enum LayerSelectorMatchMethod {
@@ -52,17 +56,21 @@ export enum LayerSelectorMatchMethod {
 }
 
 /**
+ * 选择图层的方法
+ */
+export interface LayerSelector {
+  type: 'classname' | 'class' | 'name' | 'text' | 'tag';
+  value: string;
+  match?: LayerSelectorMatchMethod;
+}
+/**
  * 对 symbol 的相关配置项调整的参数
  */
 export interface SymbolAdjustParams {
   /**
    * 选择器
    */
-  selector: {
-    type: 'classname' | 'class' | 'name' | 'text' | 'tag';
-    value: string;
-    match?: LayerSelectorMatchMethod;
-  };
+  selector: LayerSelector;
   /**
    * sketch 的调整参数
    */

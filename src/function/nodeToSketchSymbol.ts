@@ -20,6 +20,8 @@ export default (node: Element, options?: NodeToSketchSymbolOptions) => {
   });
 
   symbol.style = group.style;
+  symbol.nodeType = group.nodeType;
+  symbol.className = group.className;
 
   group.layers.forEach((layer) => {
     switch (layer.class) {

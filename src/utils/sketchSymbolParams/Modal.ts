@@ -7,6 +7,7 @@ import { DefaultSymbolParams } from '../../type';
 export const defaultModal: DefaultSymbolParams = {
   symbolName: 'Modal',
   symbolLayout: 'NONE',
+  selector: { type: 'classname', value: 'ant-modal' },
   layerParams: [
     {
       // 内容
