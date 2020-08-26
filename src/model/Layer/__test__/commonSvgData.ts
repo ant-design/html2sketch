@@ -1,10 +1,11 @@
 import SketchFormat from '@sketch-hq/sketch-file-format-ts';
+import { Frame, Style } from 'html2sketch';
 import { SVGPathData } from 'svg-pathdata';
 import { writeFileSync } from 'fs';
 import { join } from 'path';
 import { defaultExportOptions } from '../../utils';
-import { ShapePathType } from '../ShapePath';
-import { Frame, Style } from 'html2sketch';
+import { ShapePathType } from '../../type';
+
 import svgPathJSON from './json/svg-path.json';
 import behanceJSON from './json/behance.json';
 import dropboxJSON from './json/dropbox.json';

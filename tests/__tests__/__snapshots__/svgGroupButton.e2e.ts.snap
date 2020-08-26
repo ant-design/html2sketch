@@ -219,7 +219,7 @@ Object {
         "shadows": Array [
           Object {
             "_class": "shadow",
-            "blurRadius": 4,
+            "blurRadius": 0,
             "color": Object {
               "_class": "color",
               "alpha": 0.043,
@@ -515,6 +515,7 @@ Object {
             "y": 0,
           },
           "hasClickThrough": false,
+          "hasClippingMask": false,
           "isFixedToViewport": false,
           "isFlippedHorizontal": false,
           "isFlippedVertical": false,
@@ -816,7 +817,7 @@ Object {
       ],
       "name": "up-circle",
       "nameIsFixed": false,
-      "resizingConstraint": 63,
+      "resizingConstraint": 12,
       "resizingType": 0,
       "rotation": 0,
       "shouldBreakMaskChain": false,
@@ -923,7 +924,7 @@ Object {
       "lineSpacingBehaviour": 2,
       "name": "文本",
       "nameIsFixed": false,
-      "resizingConstraint": 63,
+      "resizingConstraint": 25,
       "resizingType": 0,
       "rotation": 0,
       "shouldBreakMaskChain": false,
@@ -962,7 +963,7 @@ Object {
       "textBehaviour": 0,
     },
   ],
-  "name": "",
+  "name": "Modal",
   "nameIsFixed": false,
   "overrideProperties": Array [
     Object {

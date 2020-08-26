@@ -46,7 +46,7 @@
   "isFlippedVertical": false,
   "isLocked": false,
   "isFlowHome": false,
-  "name": "",
+  "name": "Modal",
   "rotation": 0,
   "layerListExpandedType": 0,
   "overrideProperties": [
@@ -159,7 +159,7 @@
           {
             "_class": "shadow",
             "isEnabled": true,
-            "blurRadius": 4,
+            "blurRadius": 0,
             "color": {
               "_class": "color",
               "red": 0,
@@ -261,7 +261,7 @@
       "layerListExpandedType": 0,
       "name": "up-circle",
       "nameIsFixed": false,
-      "resizingConstraint": 63,
+      "resizingConstraint": 12,
       "resizingType": 0,
       "rotation": 0,
       "shouldBreakMaskChain": false,
@@ -854,7 +854,8 @@
             }
           },
           "resizingConstraint": 63,
-          "hasClickThrough": false
+          "hasClickThrough": false,
+          "hasClippingMask": false
         }
       ]
     },
@@ -870,7 +871,7 @@
       "name": "文本",
       "nameIsFixed": false,
       "layerListExpandedType": 0,
-      "resizingConstraint": 63,
+      "resizingConstraint": 25,
       "resizingType": 0,
       "rotation": 0,
       "shouldBreakMaskChain": false,

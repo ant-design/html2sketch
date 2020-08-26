@@ -535,5 +535,6 @@
     }
   },
   "resizingConstraint": 63,
-  "hasClickThrough": false
+  "hasClickThrough": false,
+  "hasClippingMask": false
 }
