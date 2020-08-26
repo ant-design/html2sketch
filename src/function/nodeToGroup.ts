@@ -3,8 +3,9 @@ import nodeToLayers from './nodeToLayers';
 import { isNodeVisible } from '../utils/visibility';
 import { getChildNodeList } from '../utils/hierarchy';
 import { getName } from '../utils/name';
-import { Group, Style, AnyLayer } from '../model';
+import { Group, Style } from '../model';
 import { isExistPseudoText, isExistPseudoShape } from '../utils/shape';
+import { AnyLayer } from '../type';
 
 export interface Options {
   postTransform?: (group: AnyLayer) => AnyLayer;

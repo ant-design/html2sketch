@@ -1,4 +1,5 @@
 import FileFormat from '@sketch-hq/sketch-file-format-ts';
+import { GroupLayoutType } from '../type';
 
 const containsAllItems = (needles: any[], haystack: string | any[]) =>
   needles.every((needle) => haystack.includes(needle));
@@ -80,8 +81,6 @@ export const GroupLayout = {
   VERTICALLY_CENTER: 'VERTICALLY_CENTER',
   BOTTOM_TO_TOP: 'BOTTOM_TO_TOP',
 };
-
-export type GroupLayoutType = keyof typeof GroupLayout;
 
 /**
  * 获取布局参数

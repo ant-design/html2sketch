@@ -1,23 +1,7 @@
 import { SymbolMaster } from '../model';
 import nodeToGroup from './nodeToGroup';
-import adjustSymbolLayout, { SymbolAdjustParams } from './adjustSymbolLayout';
-import { HandleSymbolFn, GroupLayoutType } from '../type';
-
-export interface NodeToSketchSymbolOptions {
-  /**
-   * symbol 自己的 layout 类型
-   */
-  symbolLayout?: GroupLayoutType;
-  /**
-   * 如果需要对 symbol 进行调整处理
-   * 传入这个方法
-   */
-  handleSymbol?: HandleSymbolFn;
-  /**
-   * symbol 内部图层的配置项
-   */
-  layerParams?: SymbolAdjustParams[];
-}
+import adjustSymbolLayout from './adjustSymbolLayout';
+import { NodeToSketchSymbolOptions } from '../type';
 
 /**
  * 解析为 Symbol

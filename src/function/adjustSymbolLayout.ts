@@ -1,27 +1,11 @@
-import SketchFormat from '@sketch-hq/sketch-file-format-ts';
-import { ResizingConstraint, GroupLayoutType } from '../utils/layout';
-import { AnyLayer } from '../model/type';
+import { ResizingConstraint } from '../utils/layout';
 import { Group, SymbolMaster, Text } from '../model';
 import {
-  TextHorizontalAlign,
-  TextVerticalAlign,
-} from '../model/Style/TextStyle';
-
-export interface TextParam {
-  textBehaviour?: SketchFormat.TextBehaviour;
-  verticalAlign?: TextVerticalAlign;
-  horizontalAlign?: TextHorizontalAlign;
-}
-
-export interface SymbolAdjustParams {
-  selector: {
-    type: 'classname' | 'class' | 'name' | 'text' | 'tag';
-    value: string;
-  };
-  resizing?: ResizingConstraint[];
-  layout?: GroupLayoutType;
-  text?: TextParam;
-}
+  SymbolAdjustParams,
+  TextParam,
+  GroupLayoutType,
+  AnyLayer,
+} from '../type';
 
 /**
  * 调整图层类型的布局模式

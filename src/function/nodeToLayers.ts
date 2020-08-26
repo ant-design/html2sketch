@@ -9,7 +9,8 @@ import parserPseudoShape from '../parser/pseudoShape';
 
 import { isTextVisible } from '../utils/visibility';
 import { isTextNode } from '../utils/nodeType';
-import { AnyLayer, Text } from '../model';
+import { Text } from '../model';
+import { AnyLayer } from '../type';
 import { isExistPseudoText, isExistPseudoShape } from '../utils/shape';
 
 /**

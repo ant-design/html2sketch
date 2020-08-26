@@ -16,5 +16,3 @@ export { default as SymbolInstance } from './Layer/SymbolInstance';
 export { default as Style } from './Style/Style';
 export { default as ColorAsset } from './Style/ColorAsset';
 export { default as Shadow } from './Style/Shadow';
-
-export { AnyLayer, AnyShape } from './type';
