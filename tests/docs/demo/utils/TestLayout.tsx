@@ -1,3 +1,5 @@
+/* eslint-disable import/no-unresolved */
+
 import React, { FC, useState } from 'react';
 import { Button, Row, Col, Card, Divider, Space, message } from 'antd';
 import ReactJson from 'react-json-view';
@@ -58,7 +60,7 @@ const TestLayout: FC<FooterProps> = ({ elements, children }) => {
     <div>
       {children}
       <Divider dashed />
-      <Row>
+      <Row style={{ zIndex: 99999 }}>
         <Col span={24}>
           <Row justify="space-between">
             <Col>

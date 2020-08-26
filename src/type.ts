@@ -25,12 +25,29 @@ export type GroupLayoutType =
   | 'VERTICALLY_CENTER'
   | 'RIGHT_TO_LEFT'
   | 'LEFT_TO_RIGHT'
-  | 'TOP_TO_BOTTOM';
+  | 'TOP_TO_BOTTOM'
+  | 'NONE';
 
 /**
  * 对 symbol 进行自定义处理的方法
  */
 export type HandleSymbolFn = (symbol: SymbolMaster) => void;
+
+export interface DefaultSymbolParams {
+  /**
+   * symbol 本身的 layout
+   */
+  symbolLayout: GroupLayoutType;
+  /**
+   * symbol 内部的图层配置项
+   */
+  layerParams: SymbolAdjustParams[];
+}
+
+export enum LayerSelectorMatchMethod {
+  Equal,
+  Included,
+}
 
 /**
  * 对 symbol 的相关配置项调整的参数
@@ -42,6 +59,7 @@ export interface SymbolAdjustParams {
   selector: {
     type: 'classname' | 'class' | 'name' | 'text' | 'tag';
     value: string;
+    match?: LayerSelectorMatchMethod;
   };
   /**
    * sketch 的调整参数

@@ -1,25 +1,34 @@
-import React, { FC, useRef } from 'react';
+import React, { FC, useEffect } from 'react';
 import { Modal } from 'antd';
 import TestLayout from './utils/TestLayout';
+import useElements from './utils/useElements';
+import './Modal.less';
 
 /**
  *
  */
 const ModalPage: FC = () => {
-  const ref = useRef(null);
+  const { elements, ref, setElements } = useElements();
+
+  useEffect(() => {
+    const modal = document.getElementsByClassName('ant-modal')?.item(0);
+    if (modal) {
+      setElements([modal]);
+    }
+  }, [ref.current]);
   return (
-    <TestLayout elements={[]}>
-      <div ref={ref} id="x-modal" style={{ width: '100%', height: '100%' }}>
-        <Modal
-          visible
-          title="123123"
-          mask={false}
-          maskClosable
-          getContainer={() => document.getElementById('x-modal')!}
-        >
-          123
-        </Modal>
-      </div>
+    <TestLayout elements={elements}>
+      <Modal
+        visible
+        title="Modal 测试"
+        mask={false}
+        centered
+        maskClosable
+        className="modal-body"
+        wrapClassName="modal-wrapper"
+      >
+        123
+      </Modal>
     </TestLayout>
   );
 };

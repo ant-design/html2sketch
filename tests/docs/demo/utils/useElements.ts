@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
 
-export default () => {
-  const ref = useRef(null);
-  const [elements, setElements] = useState([]);
+export default <T = any>() => {
+  const ref = useRef<T>(null);
+  const [elements, setElements] = useState<T[]>([]);
 
   useEffect(() => {
     if (elements.length === 0 && ref.current) {
@@ -10,5 +10,5 @@ export default () => {
       setElements([ref.current]);
     }
   });
-  return { ref, elements };
+  return { ref, elements, setElements };
 };
