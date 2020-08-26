@@ -53,7 +53,8 @@ export default (node: Element, options?: NodeToSketchSymbolOptions) => {
    * 设置一些内置的的 symbol 配置项
    */
   defaultSymbolParamsList.forEach((paramsList) => {
-    const { symbolLayout, layerParams } = paramsList;
+    const { symbolLayout, layerParams, symbolName } = paramsList;
+    symbol.name = symbolName;
     symbol.setGroupLayout(symbolLayout);
     adjustSymbolLayout(symbol, layerParams);
   });

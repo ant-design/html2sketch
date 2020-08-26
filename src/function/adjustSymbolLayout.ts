@@ -8,28 +8,6 @@ import {
 } from '../type';
 
 /**
- * 调整图层类型的布局模式
- * @param layer 图层对象
- * @param layout 布局类型
- */
-const adjustGroupLayout = (layer: AnyLayer, layout: GroupLayoutType) => {
-  if (layer.class !== 'group') return;
-
-  if (layout) {
-    (layer as Group).setGroupLayout(layout);
-  }
-};
-
-/**
- * 调整图层类型的布局模式
- * @param layer 图层对象
- * @param resizing 调整尺寸类型
- */
-const adjustResizing = (layer: AnyLayer, resizing: ResizingConstraint[]) => {
-  layer.setResizingConstraint(...resizing);
-};
-
-/**
  * 调整文本部分
  * @param layer 文本图册
  * @param param 文本参数
@@ -49,9 +27,11 @@ const adjustText = (layer: Text, param: TextParam) => {
 
 /**
  * 调整配置项
+ * 1.图层类型的布局模式
+ * 2.图层类型的布局模式
  * @param layer
- * @param layout
- * @param resizing
+ * @param layout 布局类型
+ * @param resizing 调整尺寸的约束条件
  */
 const adjust = (
   layer: AnyLayer,
@@ -61,10 +41,14 @@ const adjust = (
   }: { resizing?: ResizingConstraint[]; layout?: GroupLayoutType },
 ) => {
   if (layout) {
-    adjustGroupLayout(layer, layout);
+    if (layer.class !== 'group') return;
+
+    if (layout) {
+      (layer as Group).setGroupLayout(layout);
+    }
   }
   if (resizing) {
-    adjustResizing(layer, resizing);
+    layer.setResizingConstraint(...resizing);
   }
 };
 
@@ -95,6 +79,7 @@ const adjustGroupLayer = (layer: AnyLayer, params?: SymbolAdjustParams[]) => {
         break;
       case 'classname':
         if (layer.className?.includes(selector.value)) {
+          console.log(layer, selector.value, resizing);
           adjust(layer, { resizing, layout });
         }
         break;

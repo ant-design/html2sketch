@@ -34,6 +34,7 @@ export type GroupLayoutType =
 export type HandleSymbolFn = (symbol: SymbolMaster) => void;
 
 export interface DefaultSymbolParams {
+  symbolName: string;
   /**
    * symbol 本身的 layout
    */

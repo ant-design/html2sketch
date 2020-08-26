@@ -5,6 +5,7 @@ import { DefaultSymbolParams } from '../../type';
  * TechUI WelcomeHeader
  */
 export const welcomeHeader: DefaultSymbolParams = {
+  symbolName: 'WelcomeHeader',
   symbolLayout: 'NONE',
   layerParams: [
     {
