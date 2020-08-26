@@ -4,7 +4,7 @@ import {
   getTextContext,
   getTextAbsBCR,
   getLineTextWithWidth,
-} from '../helpers/text';
+} from '../utils/text';
 
 /**
  * 将 Node 转为 Text 对象

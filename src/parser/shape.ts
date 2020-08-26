@@ -1,8 +1,5 @@
 import { Style, Bitmap, Group, Rectangle, Shadow } from '../model';
-import {
-  getActualImageSize,
-  parseBackgroundImage,
-} from '../helpers/background';
+import { getActualImageSize, parseBackgroundImage } from '../utils/background';
 import { defaultNodeStyle } from '../model/utils';
 import { ColorParam } from '../model/Style/Color';
 

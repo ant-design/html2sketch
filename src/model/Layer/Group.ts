@@ -1,7 +1,7 @@
 import SketchFormat from '@sketch-hq/sketch-file-format-ts';
 import Base, { BaseLayerParams } from './Base';
 import { defaultExportOptions } from '../utils';
-import { getGroupLayout, GroupLayoutType } from '../../helpers/layout';
+import { getGroupLayout, GroupLayoutType } from '../../utils/layout';
 import { AnyLayer } from '../type';
 
 class Group extends Base {

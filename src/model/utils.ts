@@ -1,5 +1,5 @@
 import FileFormat from '@sketch-hq/sketch-file-format-ts';
-import { uuid } from '../helpers/utils';
+import { uuid } from '../utils/utils';
 
 export const defaultExportOptions: FileFormat.ExportOptions = {
   _class: 'exportOptions',

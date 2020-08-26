@@ -1,5 +1,5 @@
 import Text from '../model/Layer/Text';
-import { getTextContext } from '../helpers/text';
+import { getTextContext } from '../utils/text';
 
 /**
  * 解析伪类

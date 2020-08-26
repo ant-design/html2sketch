@@ -1,5 +1,5 @@
 import SketchFormat from '@sketch-hq/sketch-file-format-ts';
-import { ResizingConstraint, GroupLayoutType } from '../helpers/layout';
+import { ResizingConstraint, GroupLayoutType } from '../utils/layout';
 import { AnyLayer } from '../model/type';
 import { Group, SymbolMaster, Text } from '../model';
 import {

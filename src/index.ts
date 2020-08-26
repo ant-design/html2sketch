@@ -7,8 +7,10 @@ export {
 export { default as adjustSymbolLayout } from './function/adjustSymbolLayout';
 
 export { default as parserSharedTextStyle } from './parser/sharedTextStyle';
+
 export { default as svgNodeToSvg } from './parser/svg';
 
-export { GroupLayoutType, ResizingConstraint } from './helpers/layout';
+export { ResizingConstraint } from './utils/layout';
 
 export * from './model';
+export * from './type';

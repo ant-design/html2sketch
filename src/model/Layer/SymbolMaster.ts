@@ -1,9 +1,9 @@
 import SketchFormat from '@sketch-hq/sketch-file-format-ts';
-import { getGroupLayout, GroupLayoutType } from '../../helpers/layout';
+import { getGroupLayout, GroupLayoutType } from '../../utils/layout';
 import Base, { BaseLayerParams } from './Base';
 import Color from '../Style/Color';
 import SymbolInstance from './SymbolInstance';
-import { uuid } from '../../helpers/utils';
+import { uuid } from '../../utils/utils';
 import { defaultExportOptions, defaultRuleData } from '../utils';
 import { AnyLayer } from '../type';
 import { FrameType } from '../Frame';

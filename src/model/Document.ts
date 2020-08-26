@@ -1,5 +1,5 @@
 import SketchFormat from '@sketch-hq/sketch-file-format-ts';
-import { uuid } from '../helpers/utils';
+import { uuid } from '../utils/utils';
 import Group from './Layer/Group';
 import Page from './Layer/Page';
 import Color from './Style/Color';

@@ -27,7 +27,7 @@ export const isNodeVisible = (
     visibility,
     display,
     clip,
-  } = getComputedStyle(node)
+  } = getComputedStyle(node),
 ) => {
   // skip node when display is set to none for itself or an ancestor
   // helps us catch things such as <noscript>

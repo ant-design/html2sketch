@@ -1,6 +1,6 @@
 import { Style, Rectangle, Shadow } from '../model';
 import { defaultNodeStyle } from '../model/utils';
-import { isVisibleShape } from '../helpers/shape';
+import { isVisibleShape } from '../utils/shape';
 
 /**
  * 解析图形类伪类

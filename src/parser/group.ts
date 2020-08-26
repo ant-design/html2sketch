@@ -1,6 +1,6 @@
 import Group from '../model/Layer/Group';
 import Style from '../model/Style/Style';
-import { getName } from '../helpers/name';
+import { getName } from '../utils/name';
 
 const transferToGroup = (node: Element) => {
   const bcr = node.getBoundingClientRect();

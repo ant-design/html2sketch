@@ -80,6 +80,7 @@ export const GroupLayout = {
   VERTICALLY_CENTER: 'VERTICALLY_CENTER',
   BOTTOM_TO_TOP: 'BOTTOM_TO_TOP',
 };
+
 export type GroupLayoutType = keyof typeof GroupLayout;
 
 /**

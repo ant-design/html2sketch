@@ -7,10 +7,10 @@ import transferToText from '../parser/text';
 import parserPseudoText from '../parser/pseudoText';
 import parserPseudoShape from '../parser/pseudoShape';
 
-import { isTextVisible } from '../helpers/visibility';
-import { isTextNode } from '../helpers/nodeType';
+import { isTextVisible } from '../utils/visibility';
+import { isTextNode } from '../utils/nodeType';
 import { AnyLayer, Text } from '../model';
-import { isExistPseudoText, isExistPseudoShape } from '../helpers/shape';
+import { isExistPseudoText, isExistPseudoShape } from '../utils/shape';
 
 /**
  * 是否是默认样式

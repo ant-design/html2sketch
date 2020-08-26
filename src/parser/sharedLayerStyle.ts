@@ -1,10 +1,10 @@
 import FileFormat from '@sketch-hq/sketch-file-format-ts';
-import { uuid } from '../helpers/utils';
+import { uuid } from '../utils/utils';
 import Group from '../model/Layer/Group';
 
 const layerToSharedStyle = (
   layer: Group,
-  id?: string
+  id?: string,
 ): FileFormat.SharedStyle => {
   return {
     _class: 'sharedStyle',

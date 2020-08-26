@@ -7,9 +7,9 @@ import ShapePath from './ShapePath';
 import ShapeGroup, { ShapeGroupType } from './ShapeGroup';
 import { FrameType } from '../Frame';
 
-import { getUseReplacement, inlineStyles } from '../../helpers/svg';
+import { getUseReplacement, inlineStyles } from '../../utils/svg';
 import { defaultExportOptions } from '../utils';
-import { getGroupLayout } from '../../helpers/layout';
+import { getGroupLayout } from '../../utils/layout';
 import Style from '../Style/Style';
 
 export type StartPoint = {
