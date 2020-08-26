@@ -168,7 +168,7 @@ class SymbolMaster extends Base {
 
       isFlippedHorizontal: false,
       isFlippedVertical: false,
-      isLocked: this.isLocked,
+      isLocked: this.locked,
       isFlowHome: false,
       name: this.name,
       rotation: 0,

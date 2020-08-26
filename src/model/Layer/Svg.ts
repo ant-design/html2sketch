@@ -4,13 +4,14 @@ import { SVGPathData } from 'svg-pathdata';
 
 import Base, { BaseLayerParams } from './Base';
 import ShapePath from './ShapePath';
-import ShapeGroup, { ShapeGroupType } from './ShapeGroup';
+import ShapeGroup from './ShapeGroup';
 import { FrameType } from '../Frame';
 
 import { getUseReplacement, inlineStyles } from '../../utils/svg';
 import { defaultExportOptions } from '../utils';
 import { getGroupLayout } from '../../utils/layout';
 import Style from '../Style/Style';
+import { ShapeGroupType } from '../type';
 
 export type StartPoint = {
   type: typeof SVGPathData.MOVE_TO;
@@ -320,7 +321,7 @@ class Svg extends Base {
       isFlippedHorizontal: false,
       isFlippedVertical: false,
       isVisible: true,
-      isLocked: this.isLocked,
+      isLocked: this.locked,
       layerListExpandedType: 0,
       name: this.name || this.class,
       nameIsFixed: false,

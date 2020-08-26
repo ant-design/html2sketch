@@ -7,6 +7,7 @@ import {
 } from './model/Style/TextStyle';
 
 // *** 统一的类型定义收口文件 *** //
+export * from './model/type';
 
 /**
  * 获得 CG 点的配置
@@ -34,11 +35,11 @@ export type GroupLayoutType =
 export type HandleSymbolFn = (symbol: SymbolMaster) => void;
 
 export interface DefaultSymbolParams {
-  symbolName: string;
+  symbolName?: string;
   /**
    * symbol 本身的 layout
    */
-  symbolLayout: GroupLayoutType;
+  symbolLayout?: GroupLayoutType;
   /**
    * symbol 内部的图层配置项
    */
@@ -103,5 +104,3 @@ export interface NodeToSketchSymbolOptions {
    */
   layerParams?: SymbolAdjustParams[];
 }
-
-export { AnyLayer, AnyShape } from './model/type';

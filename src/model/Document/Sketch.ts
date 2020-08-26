@@ -1,15 +1,16 @@
 import SketchFormat from '@sketch-hq/sketch-file-format-ts';
-import { uuid } from '../utils/utils';
-import Group from './Layer/Group';
-import Page from './Layer/Page';
-import Color from './Style/Color';
-import ColorAsset from './Style/ColorAsset';
-import layerToSharedStyle from '../parser/sharedLayerStyle';
+import { uuid } from '../../utils/utils';
+import Group from '../Layer/Group';
+import Page from '../Layer/Page';
+import Color from '../Style/Color';
+import ColorAsset from '../Style/ColorAsset';
+import layerToSharedStyle from '../../parser/sharedLayerStyle';
+import { AnyLayer } from '../type';
 
 /**
  * Sketch 文档对象
  */
-class Document {
+class Sketch {
   id: string;
 
   colors: Color[];
@@ -76,7 +77,7 @@ class Document {
     this.pages.push(page);
   }
 
-  addTextStyle(textLayer: any, id: string) {
+  addTextStyle(textLayer: AnyLayer, id?: string) {
     this.textStyles.push(layerToSharedStyle(textLayer, id));
   }
 
@@ -143,4 +144,4 @@ class Document {
   });
 }
 
-export default Document;
+export default Sketch;

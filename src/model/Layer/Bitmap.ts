@@ -35,7 +35,7 @@ class Bitmap extends Base {
     isFixedToViewport: false,
     isFlippedHorizontal: false,
     isFlippedVertical: false,
-    isLocked: this.isLocked,
+    isLocked: this.locked,
     isVisible: true,
     layerListExpandedType: 0,
     name: this.name || this.class,

@@ -51,7 +51,7 @@ class Group extends Base {
       isFlippedHorizontal: false,
       isFlippedVertical: false,
       isVisible: true,
-      isLocked: this.isLocked,
+      isLocked: this.locked,
       layerListExpandedType: 0,
       name: this.name || this.class,
       nameIsFixed: false,

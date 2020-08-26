@@ -3,7 +3,7 @@ import { uuid } from '../../utils/utils';
 import Frame from '../Frame';
 import Style from '../Style/Style';
 import { calcResizingConstraint, ResizingConstraint } from '../../utils/layout';
-import { AnyLayer } from '../type';
+import { AnyLayer, LayerClassType } from '../type';
 
 const DEFAULT_USER_INFO_SCOPE = 'html2sketch';
 
@@ -14,26 +14,24 @@ export interface BaseLayerParams {
   height?: number;
   name?: string;
 }
+
 abstract class Base {
-  protected constructor(
-    type: SketchFormat.ClassValue | 'svg',
-    params: BaseLayerParams,
-  ) {
+  protected constructor(type: LayerClassType, params?: BaseLayerParams) {
     this.id = uuid();
     this.userInfo = null;
-
+    this.class = type;
     this.style = new Style();
 
     this.setResizingConstraint(ResizingConstraint.None);
 
     this.frame = new Frame(params);
-    this.class = type;
-    this.name = params.name || '';
+
+    this.name = params?.name || '';
   }
 
   frame: Frame;
 
-  class: SketchFormat.ClassValue | 'svg';
+  class: LayerClassType;
 
   /**
    * 来自样式的名称
@@ -52,7 +50,10 @@ abstract class Base {
 
   resizingConstraint: ResizingConstraint = ResizingConstraint.None;
 
-  isLocked = false;
+  /**
+   * 上锁状态
+   */
+  locked = false;
 
   isVisible = true;
 
@@ -62,6 +63,9 @@ abstract class Base {
 
   isFlippedVertical = false;
 
+  /**
+   * 是否存在剪贴蒙版
+   */
   hasClippingMask = false;
 
   LayerListExpanded: SketchFormat.LayerListExpanded =
@@ -154,6 +158,20 @@ abstract class Base {
 
   addLayers(layers: AnyLayer[]) {
     this.layers = this.layers.concat(layers);
+  }
+
+  /**
+   * 将对象转为 JSON
+   */
+  // @ts-ignore
+  toJSON() {
+    return {
+      id: this.id,
+      name: this.name,
+      layers: this.layers.map((l) => l.toJSON()),
+      locked: this.locked,
+      resizingConstraint: this.resizingConstraint,
+    };
   }
 
   /**

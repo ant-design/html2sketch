@@ -35,7 +35,7 @@ class SymbolInstance extends Base {
       isFixedToViewport: false,
       isFlippedHorizontal: false,
       isFlippedVertical: false,
-      isLocked: this.isLocked,
+      isLocked: this.locked,
       name: this.name,
       rotation: 0,
       layerListExpandedType: SketchFormat.LayerListExpanded.Undecided,

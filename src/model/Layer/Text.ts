@@ -7,7 +7,7 @@ import TextStyle, { TextStyleParams } from '../Style/TextStyle';
 interface TextInitParams extends BaseLayerParams {
   text: string;
   style?: TextStyleParams;
-  multiline: boolean;
+  multiline?: boolean;
 }
 /**
  * 文本对象
@@ -19,7 +19,7 @@ class Text extends Base {
 
     this.text = text;
     this.textStyle = new TextStyle(style);
-    this.multiline = multiline;
+    this.multiline = multiline || false;
     this.setResizingConstraint(ResizingConstraint.None);
 
     // 1 - width is set to Fixed
@@ -54,7 +54,7 @@ class Text extends Base {
       isFixedToViewport: false,
       isFlippedHorizontal: false,
       isFlippedVertical: false,
-      isLocked: this.isLocked,
+      isLocked: this.locked,
       isVisible: true,
       name: this.name || this.class,
       nameIsFixed: this.nameIsFixed,

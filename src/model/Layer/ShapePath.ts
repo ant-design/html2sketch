@@ -5,18 +5,14 @@ import Base, { BaseLayerParams } from './Base';
 import { defaultExportOptions } from '../utils';
 import { BezierPoint, StartPoint } from './Svg';
 import { CGPoint } from '../../type';
-
-export interface ShapePathType {
-  points: BezierPoint[];
-  frame: { width: number; height: number; x?: number; y?: number };
-  isClose: boolean;
-}
+import { ShapePathType } from '../type';
 
 interface ContextPoints {
   thisPoint: BezierPoint;
   nextPoint: BezierPoint;
   prevPoint: BezierPoint;
 }
+
 export interface ShapePathInitParams extends BaseLayerParams {
   isClose: boolean;
   points: BezierPoint[];
@@ -162,11 +158,7 @@ class ShapePath extends Base {
    * @param p1 上一个点
    * @param p2 下一个点
    */
-  private judgeIsOnSameLine = (
-    q: BezierPoint,
-    p1: CGPoint,
-    p2: CGPoint,
-  ) => {
+  private judgeIsOnSameLine = (q: BezierPoint, p1: CGPoint, p2: CGPoint) => {
     return (
       q.x >= Math.min(p1.x, p2.x) &&
       q.x <= Math.max(p1.x, p2.x) &&

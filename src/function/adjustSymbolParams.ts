@@ -5,6 +5,7 @@ import {
   TextParam,
   GroupLayoutType,
   AnyLayer,
+  DefaultSymbolParams,
 } from '../type';
 
 /**
@@ -65,8 +66,9 @@ const adjustGroupLayer = (layer: AnyLayer, params?: SymbolAdjustParams[]) => {
   if (layer.layers) {
     layer.layers.forEach((l) => adjustGroupLayer(l, params));
   }
-  if (!params) return;
+  if (!params) return false;
 
+  let isSelected = false;
   // 对每个传进来的参数进行调教
   params.forEach((param) => {
     const { layout, resizing, selector, text } = param;
@@ -74,23 +76,26 @@ const adjustGroupLayer = (layer: AnyLayer, params?: SymbolAdjustParams[]) => {
     switch (selector?.type) {
       case 'class':
         if (layer.class === selector.value) {
+          isSelected = true;
           adjust(layer, { resizing, layout });
         }
         break;
       case 'classname':
         if (layer.className?.includes(selector.value)) {
-          console.log(layer, selector.value, resizing);
+          isSelected = true;
           adjust(layer, { resizing, layout });
         }
         break;
       case 'name':
         if (layer.name === selector.value) {
+          isSelected = true;
           adjust(layer, { resizing, layout });
         }
         break;
       case 'text':
         if (layer.class === 'text') {
           if ((layer as Text).text.includes(selector.value)) {
+            isSelected = true;
             adjust(layer, { resizing, layout });
           }
           if (text) {
@@ -106,21 +111,44 @@ const adjustGroupLayer = (layer: AnyLayer, params?: SymbolAdjustParams[]) => {
       default:
     }
   });
+  return isSelected;
 };
 
 /**
  * 调整 Symbol 的 Layout
  * @param symbol
- * @param groupLayouts
+ * @param symbolParams
  */
-const adjustSymbolLayout = (
+const adjustSymbolParams = (
   symbol: SymbolMaster,
-  groupLayouts?: SymbolAdjustParams[],
+  symbolParams?: DefaultSymbolParams,
 ) => {
   if (symbol.class !== 'symbolMaster') {
     throw Error('传入对象不是 Symbol 对象,请检查!');
   }
-  symbol.layers.forEach((l) => adjustGroupLayer(l, groupLayouts));
+
+  if (!symbolParams) return;
+
+  const { symbolLayout, layerParams, symbolName } = symbolParams;
+
+  let isSelected = false;
+
+  symbol.layers.forEach((l) => {
+    const hasSelected = adjustGroupLayer(l, layerParams);
+    // 如果命中过 就判断为选中过
+    if (!isSelected && hasSelected) {
+      isSelected = hasSelected;
+    }
+  });
+
+  if (isSelected) {
+    if (symbolName) {
+      symbol.name = symbolName;
+    }
+    if (symbolLayout) {
+      symbol.setGroupLayout(symbolLayout);
+    }
+  }
 };
 
-export default adjustSymbolLayout;
+export default adjustSymbolParams;

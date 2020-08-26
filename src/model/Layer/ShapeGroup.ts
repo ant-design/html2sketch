@@ -1,23 +1,10 @@
 import SketchFormat from '@sketch-hq/sketch-file-format-ts';
 import Base, { BaseLayerParams } from './Base';
 import { defaultExportOptions } from '../utils';
-import ShapePath, { ShapePathType } from './ShapePath';
-import { FrameType } from '../Frame';
-/**
- * Shape Group 包含的信息
- */
-export interface ShapeGroupType {
-  /**
-   * 包含的 ShapePath
-   */
-  shapes: ShapePathType[];
-  /**
-   * ShapeGroup的 Frame
-   */
-  frame: FrameType;
-}
+import ShapePath from './ShapePath';
+
 class ShapeGroup extends Base {
-  constructor(params: BaseLayerParams) {
+  constructor(params?: BaseLayerParams) {
     super(SketchFormat.ClassValue.ShapeGroup, params);
   }
 
@@ -92,13 +79,14 @@ class ShapeGroup extends Base {
       resizingType: 0,
       shouldBreakMaskChain: false,
       clippingMaskMode: 0,
-      isLocked: false,
+      isLocked: this.locked,
       exportOptions: defaultExportOptions,
       frame: this.frame.toSketchJSON(),
       name: this.name || this.class,
       style: this.style.toSketchJSON(),
       resizingConstraint: this.resizingConstraint,
       hasClickThrough: false,
+      hasClippingMask: this.hasClippingMask,
     };
   }
 }

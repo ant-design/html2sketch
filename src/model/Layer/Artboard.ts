@@ -65,7 +65,7 @@ class Artboard extends Base {
       userInfo: this.userInfo,
       isFlippedVertical: this.isFlippedVertical,
       isFlowHome: this.isFlowHome,
-      isLocked: this.isLocked,
+      isLocked: this.locked,
       isVisible: this.isVisible,
       layerListExpandedType: this.LayerListExpanded,
       layers: this.layers.map((l) => l.toSketchJSON()),
