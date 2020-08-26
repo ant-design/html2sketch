@@ -1,10 +1,11 @@
 import { ResizingConstraint } from '../layout';
-import { DefaultSymbolParams, LayerSelectorMatchMethod } from '../../type';
+import { DefaultSymbolParams } from '../../type';
 
 /**
- * 默认的 modal 样式
+ * 默认的 Modal 样式
  */
 export const defaultModal: DefaultSymbolParams = {
+  symbolName: 'Modal',
   symbolLayout: 'NONE',
   layerParams: [
     {
@@ -37,7 +38,8 @@ export const defaultModal: DefaultSymbolParams = {
       resizing: [
         ResizingConstraint.Bottom,
         ResizingConstraint.Height,
-        ResizingConstraint.Width,
+        ResizingConstraint.Left,
+        ResizingConstraint.Right,
       ],
       layout: 'RIGHT_TO_LEFT',
     },
@@ -47,15 +49,19 @@ export const defaultModal: DefaultSymbolParams = {
         type: 'classname',
         value: 'ant-modal-header',
       },
-      resizing: [ResizingConstraint.Height, ResizingConstraint.Top],
-      layout: 'RIGHT_TO_LEFT',
+      resizing: [
+        ResizingConstraint.Height,
+        ResizingConstraint.Left,
+        ResizingConstraint.Top,
+        ResizingConstraint.Right,
+      ],
+      layout: 'LEFT_TO_RIGHT',
     },
     {
-      // Modal 头部
+      // 按钮 头部
       selector: {
         type: 'classname',
-        value: 'ant-modal-header',
-        match: LayerSelectorMatchMethod.Included,
+        value: 'ant-btn',
       },
       resizing: [ResizingConstraint.Width, ResizingConstraint.Right],
       layout: 'RIGHT_TO_LEFT',
