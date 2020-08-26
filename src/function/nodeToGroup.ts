@@ -11,18 +11,23 @@ export interface Options {
   postTransform?: (group: AnyLayer) => AnyLayer;
   getGroupName: (node: Element) => string;
 }
+
+const consoleGroupStyle = `font-weight:bold;color:#666;`;
+
 /**
  * 将一个节点和其包含的所有子级转为 Group 对象
  * @param node
  * @param options
  */
-const nodeToGroup = (node: Element, options?: Options): AnyLayer => {
+const nodeToGroup = (node: Element, options?: Options): Group => {
   if (!node) throw Error('解析对象不存在 请检查传入对象');
 
   const bcr = node.getBoundingClientRect();
   const { left, top } = bcr;
   const width = bcr.right - bcr.left;
   const height = bcr.bottom - bcr.top;
+
+  console.group('%c处理节点:', consoleGroupStyle, node);
 
   const layers = nodeToLayers(node) || [];
 
@@ -60,8 +65,8 @@ const nodeToGroup = (node: Element, options?: Options): AnyLayer => {
     .forEach((layer) => {
       group.addLayer(layer);
     });
+  console.groupEnd();
 
-  // 处理多余的层级
   if (
     group.layers.length === 1 &&
     (group.layers[0].class === 'rectangle' ||
@@ -69,14 +74,16 @@ const nodeToGroup = (node: Element, options?: Options): AnyLayer => {
       group.layers[0].class === 'svg' ||
       group.layers[0].class === 'group')
   ) {
+    console.groupCollapsed('%c清理无效层级', consoleGroupStyle);
     const layer = group.layers[0];
     console.log(
-      `[nodeToSketchGroup]该 group 只包含一个子级 [${layer.class}]: ${layer.name} ,丢弃...`,
+      `该 group 只包含一个子级 [${layer.class}]: ${layer.name} ,丢弃...`,
     );
+    console.groupEnd();
     // 将父级的图层关系还给子集
     layer.x += group.x;
     layer.y += group.y;
-    return layer;
+    return layer as Group;
   }
 
   if (
@@ -84,7 +91,9 @@ const nodeToGroup = (node: Element, options?: Options): AnyLayer => {
     !isExistPseudoText(node) &&
     !isExistPseudoShape(node)
   ) {
-    console.log('[nodeToSketchGroup]该 group 是空的,丢弃...');
+    console.groupCollapsed('%c清理无效层级', consoleGroupStyle);
+    console.log('该 group 是空的,丢弃...');
+    console.groupEnd();
     // @ts-ignore
     // eslint-disable-next-line consistent-return
     return;
@@ -97,7 +106,7 @@ const nodeToGroup = (node: Element, options?: Options): AnyLayer => {
   }
 
   group.className = node.className;
-
+  console.info('%c输出 Group 为:', 'font-weight:bold;color:#4590f7;', group);
   return group;
 };
 

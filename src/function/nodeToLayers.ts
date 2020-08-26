@@ -38,16 +38,14 @@ const isSVGDescendant = (node: Element) =>
  */
 const nodeToLayers = (node: Element): AnyLayer[] => {
   const layers: any[] = [];
-
   const styles: CSSStyleDeclaration = getComputedStyle(node);
 
   const nodeName = node.nodeName.toLowerCase();
-  console.info('[nodeToSketchLayers]处理节点为:', node);
 
   // ----- 初步判断 ------ //
   // skip Svg child nodes as they are already covered by `new Svg(…)`
   if (isSVGDescendant(node)) {
-    console.log('[nodeToSketchLayers]SVG 内部节点,跳过...');
+    console.log('SVG 内部节点,跳过...');
     return layers;
   }
 
@@ -75,7 +73,7 @@ const nodeToLayers = (node: Element): AnyLayer[] => {
       // 添加后继续执行,不终止
       const shape = transferToShape(node);
 
-      console.info('[nodeToSketchLayers]转换为 Rectangle: ', shape);
+      console.info('转换为:', shape);
       layers.push(shape);
     }
 
@@ -90,7 +88,7 @@ const nodeToLayers = (node: Element): AnyLayer[] => {
   // 转换为 SVG
   if (isSVG) {
     const svg = parserToSvg(node as SVGElement);
-    console.info('[nodeToSketchLayers]转换为 Svg: ', svg);
+    console.info('转换为:', svg);
     layers.push(svg);
 
     return layers;
@@ -105,7 +103,7 @@ const nodeToLayers = (node: Element): AnyLayer[] => {
     let text;
     if (isText) {
       text = transferToText(node);
-      console.info('[nodeToSketchLayers]转换为 Text:', text);
+      console.info('转换为:', text);
       if (text instanceof Array) {
         for (let i = 0; i < text.length; i += 1) {
           const textElement = text[i];
