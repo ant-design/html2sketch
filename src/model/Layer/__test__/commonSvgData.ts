@@ -119,7 +119,7 @@ export const outputJSONData = (
 /**
  * 更新
  */
-export const isUpdate = process.env.TEST_UPDATE === '1';
+export const isUpdate = process.env.UPDATE === '1';
 
 // ----------- Path 类 ------------- //
 

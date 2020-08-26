@@ -33,10 +33,10 @@ export const initHtml2Sketch = async (
     debug: false,
   },
 ) => {
-  const isLocal = process.env.LOCAL === '1';
+  const isOnline = process.env.ONLINE === '1';
   const httpURL = `http://localhost:${port}/case`;
   const fileURL = `file://${resolve(__dirname, '../dist')}/case`;
-  const baseURL = isLocal ? httpURL : fileURL;
+  const baseURL = isOnline ? fileURL : httpURL;
 
   const browser = await puppeteer.launch({
     headless: debug ? false : !showWindows,
@@ -58,7 +58,7 @@ export const initHtml2Sketch = async (
       selector: (dom: Document) => Element | Element[],
       options?: NodeToSketchSymbolOptions,
     ): Promise<SketchFormat.SymbolMaster> => {
-      await page.goto(`${baseURL}${url}${isLocal ? '' : '.html'}`);
+      await page.goto(`${baseURL}${url}${isOnline ? '.html' : ''}`);
 
       try {
         await page.evaluate(`window.IS_TEST_ENV=true`);
@@ -137,4 +137,4 @@ export const outputJSONData = (
   writeFileSync(join(__dirname, `./json/${name}.json`), JSON.stringify(json));
 };
 
-export const isUpdate = process.env.TEST_UPDATE === '1';
+export const isUpdate = process.env.UPDATE === '1';
