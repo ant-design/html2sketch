@@ -6,7 +6,7 @@
 
 [![david deps][david-image]][david-url] [![david devDeps][david-dev-image]][david-dev-url]
 
-[![Coverage][coverage]][codecov-url] [![Test CI status][test-ci]][test-ci-url] ![Deploy CI][deploy-ci]
+[![Test CI status][test-ci]][test-ci-url] ![Deploy CI][deploy-ci] [![Coverage][coverage]][codecov-url]
 
 [![ docs by dumi][dumi-url]](https://d.umijs.org/) [![Build With father][father-url]](https://github.com/umijs/father/)
 
