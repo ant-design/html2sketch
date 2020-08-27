@@ -1,5 +1,4 @@
-import Group from '../model/Layer/Group';
-import Style from '../model/Style/Style';
+import { Group, Style } from '../model';
 import { getName } from '../utils/name';
 
 const transferToGroup = (node: Element) => {

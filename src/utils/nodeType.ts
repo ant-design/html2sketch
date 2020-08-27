@@ -15,3 +15,12 @@ export const isGroupNode = (node: Element): boolean => {
   const nodeName = node.nodeName.toLowerCase();
   return nodeName === 'div' || nodeName === 'span' || nodeName === 'th';
 };
+
+/**
+ * 判断是否是图片节点
+ */
+export const isImageNode = (node: Element): boolean => {
+  if (!node) return false;
+  const nodeName = node.nodeName.toLowerCase();
+  return nodeName === 'image';
+};

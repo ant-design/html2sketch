@@ -60,24 +60,24 @@ class Bitmap extends Base {
   };
 
   /**
-   * 获取成内嵌的 DataURL
-   * @param url 网址
+   * 将传入的 data:类型的数值 转成 Base64 类型的字符串
+   * @param url
    */
   static ensureBase64DataURL = (url: string) => {
     const imageData = url.match(/data:(.+?)(;(.+))?,(.+)/i);
 
+    // 确保传入的 data:类型的参数都是 base64 的
     if (imageData && imageData[3] !== 'base64') {
       // Solve for an NSURL bug that can't handle plaintext data: URLs
       const type = imageData[1];
       const data = decodeURIComponent(imageData[4]);
       const encodingMatch = imageData[3] && imageData[3].match(/^charset=(.*)/);
-      let buffer: any;
+      let buffer: Buffer;
 
       if (encodingMatch) {
         // @ts-ignore
         buffer = Buffer.from(data, encodingMatch[1]);
       } else {
-        // @ts-ignore
         buffer = Buffer.from(data);
       }
 
