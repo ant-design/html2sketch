@@ -1,8 +1,14 @@
-export const isTextVisible = ({
+/**
+ * 判断文本是否可见
+ * @param textIndent
+ * @param overflowX
+ * @param overflowY
+ */
+export function isTextVisible({
   textIndent,
   overflowX,
   overflowY,
-}: CSSStyleDeclaration) => {
+}: CSSStyleDeclaration) {
   // NOTE overflow:hidden is not needed if text-indent is huge
   // , but how to define 'huge'?
   if (
@@ -14,9 +20,9 @@ export const isTextVisible = ({
   }
 
   return true;
-};
+}
 
-export const isNodeVisible = (
+export function isNodeVisible(
   node: Element,
   { width, height } = node.getBoundingClientRect(),
   {
@@ -28,7 +34,7 @@ export const isNodeVisible = (
     display,
     clip,
   } = getComputedStyle(node),
-) => {
+) {
   // skip node when display is set to none for itself or an ancestor
   // helps us catch things such as <noscript>
   // HTMLSlotElement has a null offsetParent, but should still be visible
@@ -75,4 +81,4 @@ export const isNodeVisible = (
   }
 
   return true;
-};
+}
