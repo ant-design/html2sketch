@@ -33,12 +33,24 @@ class Frame {
     return this.x;
   }
 
+  set left(left) {
+    this.x = left;
+  }
+
   get bottom() {
     return this.y + this.height;
   }
 
   set bottom(bottom) {
     this.y = bottom - this.height;
+  }
+
+  get top() {
+    return this.y;
+  }
+
+  set top(top) {
+    this.y = top;
   }
 
   constructor(params?: FrameInitParams) {

@@ -1,13 +1,13 @@
-import Base from '../Base';
 import { ResizingConstraint } from 'html2sketch';
+import BaseLayer from '../BaseLayer';
 
-class TestGroup extends Base {
+class TestGroup extends BaseLayer {
   constructor() {
     super('group');
   }
 }
 
-describe('Base 类', function () {
+describe('Base图层 类', function () {
   test('setName', () => {
     const a = new TestGroup();
     const name = 'test/name-should-work';
@@ -32,6 +32,7 @@ describe('Base 类', function () {
 
     a.setResizingConstraint(...resizingConstraint);
 
+    // eslint-disable-next-line no-bitwise
     expect(a.toJSON().resizingConstraint).toBe(Top & Left);
   });
 
@@ -49,6 +50,7 @@ describe('Base 类', function () {
 
     a.setFixedWidthAndHeight();
 
+    // eslint-disable-next-line no-bitwise
     expect(a.toJSON().resizingConstraint).toBe(Width & Height);
   });
 });

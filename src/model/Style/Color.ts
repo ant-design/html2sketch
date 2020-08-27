@@ -1,6 +1,6 @@
 import SketchFormat from '@sketch-hq/sketch-file-format-ts';
 import ColorCls from 'color';
-import StyleBase from './Base';
+import BaseStyle from '../Base/BaseStyle';
 
 export declare type ColorType = {
   r: number;
@@ -25,7 +25,7 @@ export type ColorParam =
  * 创建颜色类型
  * @constructor 入参 {ColorParam}
  */
-class Color extends StyleBase {
+class Color extends BaseStyle {
   red: number;
 
   green: number;

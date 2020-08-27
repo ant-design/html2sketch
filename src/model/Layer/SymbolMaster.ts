@@ -1,18 +1,18 @@
 import SketchFormat from '@sketch-hq/sketch-file-format-ts';
 import { getGroupLayout } from '../../utils/layout';
-import Base, { BaseLayerParams } from './Base';
+import BaseLayer, { BaseLayerParams } from '../Base/BaseLayer';
 import Color from '../Style/Color';
 import SymbolInstance from './SymbolInstance';
 import { uuid } from '../../utils/utils';
 import { defaultExportOptions, defaultRuleData } from '../utils';
 import { AnyLayer } from '../type';
 import { GroupLayoutType } from '../../type';
-import { FrameType } from '../Frame';
+import { FrameType } from '../Base/Frame';
 
 /**
  * Sketch 的 Symbol 对象
  * */
-class SymbolMaster extends Base {
+class SymbolMaster extends BaseLayer {
   constructor(params?: BaseLayerParams) {
     super(SketchFormat.ClassValue.SymbolMaster, params);
 

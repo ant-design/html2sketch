@@ -1,9 +1,9 @@
-import Sketch from '../Sketch';
+import SketchDocument from '../SketchDocument';
 import { Text } from '../../index';
 
 describe('Sketch 文档类', function () {
   it('addPage', () => {
-    const doc = new Sketch();
+    const doc = new SketchDocument();
 
     expect(doc.toSketchJSON()).toMatchObject({
       pages: [],
@@ -22,7 +22,7 @@ describe('Sketch 文档类', function () {
   });
 
   it('addTextStyle', () => {
-    const doc = new Sketch();
+    const doc = new SketchDocument();
 
     expect(doc.toSketchJSON()).toMatchObject({
       layerTextStyles: {
@@ -31,6 +31,7 @@ describe('Sketch 文档类', function () {
       },
     });
 
+    // @ts-ignore
     doc.addTextStyle(new Text({ text: '123', style: { color: '#eee' } }));
 
     expect(doc.toSketchJSON()).toMatchObject({

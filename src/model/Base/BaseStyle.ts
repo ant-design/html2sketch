@@ -1,7 +1,7 @@
 import SketchFormat from '@sketch-hq/sketch-file-format-ts';
 import { uuid } from '../../utils/utils';
 
-abstract class StyleBase {
+abstract class BaseStyle {
   constructor() {
     this.id = uuid();
   }
@@ -32,4 +32,4 @@ abstract class StyleBase {
   };
 }
 
-export default StyleBase;
+export default BaseStyle;

@@ -1,6 +1,6 @@
 import SketchFormat from '@sketch-hq/sketch-file-format-ts';
 import { uuid } from '../../utils/utils';
-import Frame from '../Frame';
+import Frame from './Frame';
 import Style from '../Style/Style';
 import { calcResizingConstraint, ResizingConstraint } from '../../utils/layout';
 import { AnyLayer, LayerClassType } from '../type';
@@ -15,7 +15,7 @@ export interface BaseLayerParams {
   name?: string;
 }
 
-abstract class Base {
+abstract class BaseLayer {
   protected constructor(type: LayerClassType, params?: BaseLayerParams) {
     this.id = uuid();
     this.userInfo = null;
@@ -295,4 +295,4 @@ abstract class Base {
   };
 }
 
-export default Base;
+export default BaseLayer;

@@ -2,7 +2,7 @@ import SketchFormat from '@sketch-hq/sketch-file-format-ts';
 
 import { defaultBorderOptions, defaultColorControls } from '../utils';
 import { ColorParam } from './Color';
-import StyleBase from './Base';
+import BaseStyle from '../Base/BaseStyle';
 import Fill from './Fill';
 import Shadow from './Shadow';
 import InnerShadow from './InnerShadow';
@@ -30,7 +30,7 @@ const defaultShadowInput: ShadowInput = {
 /**
  * 样式
  */
-class Style extends StyleBase {
+class Style extends BaseStyle {
   /**
    * 填充
    * */

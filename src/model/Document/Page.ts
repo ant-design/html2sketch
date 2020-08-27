@@ -1,10 +1,10 @@
 import SketchFormat from '@sketch-hq/sketch-file-format-ts';
-import Base, { BaseLayerParams } from './Base';
+import BaseLayer, { BaseLayerParams } from '../Base/BaseLayer';
 import { defaultRuleData, defaultExportOptions } from '../utils';
 
 interface PageInitParams extends Pick<BaseLayerParams, 'height' | 'width'> {}
 
-class Page extends Base {
+class Page extends BaseLayer {
   constructor({ width, height }: PageInitParams) {
     super(SketchFormat.ClassValue.Page, { x: 0, y: 0, height, width });
   }

@@ -1,6 +1,6 @@
 import SketchFormat from '@sketch-hq/sketch-file-format-ts';
-import Color, { ColorParam } from './Color';
-import StyleBase from './Base';
+import Color, { ColorParam } from '../Style/Color';
+import BaseStyle from './BaseStyle';
 
 export interface ShadowParams {
   color?: ColorParam;
@@ -12,7 +12,7 @@ export interface ShadowParams {
   name?: string;
 }
 
-abstract class BaseShadow extends StyleBase {
+abstract class BaseShadow extends BaseStyle {
   protected constructor(
     type: SketchFormat.ClassValue.Shadow | SketchFormat.ClassValue.InnerShadow,
     params: ShadowParams,

@@ -1,4 +1,4 @@
-import BaseShadow from '../BaseShadow';
+import BaseShadow from '../../Base/BaseShadow';
 
 const { shadowStringToObject, splitShadowString } = BaseShadow;
 describe('Shadow 类', () => {

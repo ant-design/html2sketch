@@ -1,7 +1,7 @@
 import SketchFormat from '@sketch-hq/sketch-file-format-ts';
 
 import Color, { ColorParam } from './Color';
-import StyleBase from './Base';
+import BaseStyle from '../Base/BaseStyle';
 import { CGPoint } from '../../type';
 import { defaultContextSettings } from '../utils';
 import Gradient from './Gradient';
@@ -25,7 +25,7 @@ export interface BorderProps {
 /**
  * 描边对象
  * */
-class Border extends StyleBase {
+class Border extends BaseStyle {
   constructor(props: BorderProps) {
     super();
     const { type, color, name, image, gradient, position, thickness } = props;

@@ -2,7 +2,7 @@ import SketchFormat from '@sketch-hq/sketch-file-format-ts';
 
 import { GradientType } from '@sketch-hq/sketch-file-format-ts/dist/cjs/v3-types';
 import Color, { ColorParam } from './Color';
-import StyleBase from './Base';
+import BaseStyle from '../Base/BaseStyle';
 import { CGPoint } from '../../type';
 
 export interface GradientProps {
@@ -16,7 +16,7 @@ export interface GradientProps {
 /**
  * 渐变对象
  * */
-class Gradient extends StyleBase {
+class Gradient extends BaseStyle {
   constructor(props?: GradientProps) {
     super();
     if (!props) {

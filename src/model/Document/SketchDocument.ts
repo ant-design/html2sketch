@@ -1,7 +1,7 @@
 import SketchFormat from '@sketch-hq/sketch-file-format-ts';
 import { uuid } from '../../utils/utils';
 import Group from '../Layer/Group';
-import Page from '../Layer/Page';
+import Page from './Page';
 import Color from '../Style/Color';
 import ColorAsset from '../Style/ColorAsset';
 import layerToSharedStyle from '../../parser/sharedLayerStyle';
@@ -10,7 +10,7 @@ import { AnyLayer } from '../type';
 /**
  * Sketch 文档对象
  */
-class Sketch {
+class SketchDocument {
   id: string;
 
   colors: Color[];
@@ -144,4 +144,4 @@ class Sketch {
   });
 }
 
-export default Sketch;
+export default SketchDocument;

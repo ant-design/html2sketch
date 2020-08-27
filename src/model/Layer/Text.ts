@@ -1,5 +1,5 @@
 import SketchFormat from '@sketch-hq/sketch-file-format-ts';
-import Base, { BaseLayerParams } from './Base';
+import BaseLayer, { BaseLayerParams } from '../Base/BaseLayer';
 import { ResizingConstraint } from '../../utils/layout';
 import { defaultExportOptions } from '../utils';
 import TextStyle, { TextStyleParams } from '../Style/TextStyle';
@@ -12,7 +12,7 @@ interface TextInitParams extends BaseLayerParams {
 /**
  * 文本对象
  * */
-class Text extends Base {
+class Text extends BaseLayer {
   constructor({ x, y, width, height, text, style, multiline }: TextInitParams) {
     super(SketchFormat.ClassValue.Text, { x, y, width, height });
     this.name = text;
