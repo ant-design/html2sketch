@@ -3,9 +3,9 @@ import TextStyle, {
   TextVerticalAlign,
 } from '../TextStyle';
 
-describe('TextStyle 类', function () {
-  describe('parseTextHorizontalAlign', function () {
-    it('display 为 block 时解析正确', function () {
+describe('TextStyle 类', () => {
+  describe('parseTextHorizontalAlign', () => {
+    it('display 为 block 时解析正确', () => {
       const leftStyle = {
         display: 'block',
       } as CSSStyleDeclaration;
@@ -29,7 +29,7 @@ describe('TextStyle 类', function () {
         TextHorizontalAlign.Center,
       );
     });
-    it('display 为 flex 时解析正确', function () {
+    it('display 为 flex 时解析正确', () => {
       const leftStyle = {
         display: 'flex',
         flexDirection: 'row',
@@ -81,8 +81,8 @@ describe('TextStyle 类', function () {
     });
   });
 
-  describe('parseTextVerticalAlign', function () {
-    it('display 为 block 时解析正确', function () {
+  describe('parseTextVerticalAlign', () => {
+    it('display 为 block 时解析正确', () => {
       const topStyle = {
         display: 'block',
       } as CSSStyleDeclaration;
@@ -90,7 +90,7 @@ describe('TextStyle 类', function () {
         TextVerticalAlign.Top,
       );
     });
-    it('display 为 flex 时解析正确', function () {
+    it('display 为 flex 时解析正确', () => {
       const topStyle = {
         display: 'flex',
         flexDirection: 'row',
@@ -144,8 +144,8 @@ describe('TextStyle 类', function () {
     });
   });
 
-  describe('toSketchJSON', function () {
-    it('正常解析', function () {
+  describe('toSketchJSON', () => {
+    it('正常解析', () => {
       const textStyle = new TextStyle();
 
       expect(textStyle.toSketchJSON()).toMatchSnapshot();

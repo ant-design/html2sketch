@@ -50,7 +50,7 @@ describe('calcResizingConstraint', () => {
   });
 });
 
-describe('getGroupLayout', function () {
+describe('getGroupLayout', () => {
   const defaultGroupLayout = {
     _class: 'MSImmutableFreeformGroupLayout',
   };

@@ -13,10 +13,11 @@ import {
   outputJSONData,
   isUpdate,
 } from './commonSvgData';
+// import { JSDOM } from 'jsdom';
 
 describe('Svg 类', () => {
   describe('toSketchJSON', () => {
-    describe('单条 path', function () {
+    describe('单条 path', () => {
       it('svgPath 复合对象转换正常', () => {
         const svg = new Svg({
           svgString: svgPath.svgString,
@@ -64,7 +65,7 @@ describe('Svg 类', () => {
       });
     });
 
-    describe('多条 path', function () {});
+    describe('多条 path', () => {});
     it('plusSvg 转换正常', () => {
       const svg = new Svg({
         height: 25,
@@ -186,5 +187,88 @@ describe('Svg 类', () => {
       const scale = Svg.calcFrameScale(originFrame, targetFrame);
       expect(scale).toBe(0.5);
     });
+  });
+
+  describe('getSVGString', () => {
+    const { getSVGString } = Svg;
+
+    it('返回节点的正确外层 HTML  w/o children', () => {
+      const outerHTML = 'pizza';
+      const node1 = ({
+        children: [],
+        outerHTML,
+      } as unknown) as Element;
+
+      expect(getSVGString(node1)).toEqual(outerHTML);
+    });
+
+    // test('returns correct outher HTML of the DOM node with children', () => {
+    //   const dom = new JSDOM(`
+    // <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+    //   <circle cx="100" cy="100" r="100"/>
+    //   <rect x="10" y="10" width="30" height="30"/>
+    //   <g>
+    //     <ellipse cx="75" cy="75" rx="20" ry="5" stroke="red" fill="transparent" stroke-width="5"/>
+    //   </g>
+    // </svg>`);
+    //
+    //   const document = dom.window.document;
+    //   const node = (document.querySelector('svg') as unknown) as Element;
+    //
+    //   global['document'] = document;
+    //   global.SVGElement = dom.window.SVGElement;
+    //   global.getComputedStyle = dom.window.getComputedStyle;
+    //
+    //   expect(getSVGString(node))
+    //     .toEqual(`<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+    //   <circle cx="100" cy="100" r="100"></circle>
+    //   <rect x="10" y="10" width="30" height="30"></rect>
+    //   <g>
+    //     <ellipse cx="75" cy="75" rx="20" ry="5" stroke="red" fill="transparent" stroke-width="5"></ellipse>
+    //   </g>
+    // </svg>`);
+    // });
+    //
+    // test('inlines styles of the children, ignores styles with default values', () => {
+    //   const dom = new JSDOM(`
+    // <html>
+    // <head>
+    // <style>
+    //   #a {
+    //     fill: red;
+    //     overflow: visible; /* default value */
+    //     opacity: 1; /* default value */
+    //   }
+    //
+    //   #b {
+    //     fill: blue;
+    //     width: 40px;
+    //     height: 40px;
+    //   }
+    // </style>
+    // </head>
+    // <body>
+    // <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+    //   <circle cx="100" cy="100" r="100" id="a"></circle>
+    //   <g>
+    //     <rect x="10" y="10" width="30" height="30" id="b"></rect>
+    //   </g>
+    // </svg>`);
+    //
+    //   const document = dom.window.document;
+    //   const node = (document.querySelector('svg') as unknown) as Element;
+    //
+    //   global['document'] = document;
+    //   global.SVGElement = dom.window.SVGElement;
+    //   global.getComputedStyle = dom.window.getComputedStyle;
+    //
+    //   expect(getSVGString(node))
+    //     .toEqual(`<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+    //   <circle cx="100" cy="100" r="100" id="a" style="fill: red;"></circle>
+    //   <g>
+    //     <rect x="10" y="10" width="30" height="30" id="b" style="height: 40px; width: 40px; fill: blue;"></rect>
+    //   </g>
+    // </svg>`);
+    // });
   });
 });

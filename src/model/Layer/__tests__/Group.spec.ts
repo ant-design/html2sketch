@@ -1,6 +1,6 @@
 import Group from '../Group';
 
-describe('Group', function () {
+describe('Group', () => {
   it('toSketchJSON', () => {
     const group = new Group({ x: 0, y: 50, width: 200, height: 100 });
 

@@ -2,7 +2,7 @@ import BaseShadow from '../../Base/BaseShadow';
 
 const { shadowStringToObject, splitShadowString } = BaseShadow;
 describe('Shadow 类', () => {
-  describe('splitShadowString', function () {
+  describe('splitShadowString', () => {
     it('should return array of split shadowStrings', () => {
       const boxShadow =
         'rgb(0, 0, 0) 0px 0px 5px 2px, red 0px 0px 5px 2px inset, ' +
@@ -38,7 +38,7 @@ describe('Shadow 类', () => {
       ]);
     });
   });
-  describe('shadowStringToObject', function () {
+  describe('shadowStringToObject', () => {
     test('返回多个阴影', () => {
       const shadowString1 = 'rgb(0, 0, 0) 0px 0px 5px 2px';
       const shadowString2 = 'rgba(0, 0, 0, 0) 0px 0px 5.5px 2.2px inset';

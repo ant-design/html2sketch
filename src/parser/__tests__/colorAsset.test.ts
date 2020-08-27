@@ -23,7 +23,7 @@ describe('colorAsset', () => {
     document.body.innerHTML = '';
   });
 
-  it('RGB should work fine', function () {
+  it('RGB should work fine', () => {
     // const color = colorAsset()
   });
 });

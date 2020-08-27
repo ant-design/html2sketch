@@ -1,13 +1,13 @@
 import ShapeGroup from '../ShapeGroup';
 
-describe('ShapeGroup', function () {
-  describe('toSketchJSON', function () {
-    it('生成正常', function () {
+describe('ShapeGroup', () => {
+  describe('toSketchJSON', () => {
+    it('生成正常', () => {
       const shapeGroup = new ShapeGroup();
       expect(shapeGroup.toSketchJSON()).toMatchSnapshot();
     });
   });
-  it('生成正常', function () {
+  it('生成正常', () => {
     const shapeGroup = new ShapeGroup();
     expect(shapeGroup).toMatchSnapshot();
   });

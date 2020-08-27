@@ -73,30 +73,6 @@ export const shapeGroupData = {
   windingRule: 1,
 };
 
-// 可复用的 group 数据
-export const groupData = {
-  do_objectID: 'UUID',
-  booleanOperation: -1,
-  isFixedToViewport: false,
-  isFlippedHorizontal: false,
-  isFlippedVertical: false,
-  isLocked: false,
-  isVisible: true,
-  layerListExpandedType: 0,
-  name: 'svg',
-  nameIsFixed: false,
-  resizingConstraint: 63,
-  resizingType: 0,
-  rotation: 0,
-  shouldBreakMaskChain: false,
-  exportOptions: defaultExportOptions,
-  clippingMaskMode: 0,
-  hasClippingMask: false,
-  style: new Style().toSketchJSON(),
-  hasClickThrough: false,
-  groupLayout: { _class: 'MSImmutableFreeformGroupLayout' },
-};
-
 /**
  * 打印出 JSON 数据到路径中
  *

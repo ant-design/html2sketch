@@ -1,5 +1,5 @@
-import { isNodeVisible, isTextVisible } from '../visibility';
 import { JSDOM } from 'jsdom';
+import { isNodeVisible, isTextVisible } from '../visibility';
 
 describe('isNodeVisible', () => {
   it('正确识别可见节点', () => {

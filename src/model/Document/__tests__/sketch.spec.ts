@@ -1,7 +1,7 @@
 import SketchDocument from '../SketchDocument';
 import { Text } from '../../index';
 
-describe('Sketch 文档类', function () {
+describe('Sketch 文档类', () => {
   it('addPage', () => {
     const doc = new SketchDocument();
 
