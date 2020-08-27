@@ -29,18 +29,10 @@
   "scripts": {
     "start": "UMI_ENV=e2e dumi dev",
     "build": "father-build && webpack",
-    "lint": "npm run lint-eslint",
-    "tsc": "tsc -p tsconfig-check.json",
-    "lint-eslint": "eslint --cache --ext .js,.jsx,.ts,.tsx --format=pretty ./src",
-    "lint-staged": "lint-staged",
-    "lint-staged:js": "eslint --cache --ext .js,.jsx,.ts,.tsx --format=pretty",
-    "lint:fix": "eslint --fix --cache --ext .js,.jsx,.ts,.tsx --format=pretty ",
-    "prepublishOnly": "npm run test && npm run build && np --no-cleanup --yolo --no-publish --any-branch",
-    "prettier": "prettier -c --write \"**/**\"",
     "site": "dumi build && gh-pages -d ./dist",
     "site:dev": "dumi dev",
     "site:build": "dumi build",
-    "clean": "rm -rf es lib dist build coverage tests/dist",
+    "--------": "",
     "test": "umi-test",
     "test:update": "UPDATE=1 umi-test --update-snapshot",
     "test:coverage": "umi-test --coverage",
@@ -48,7 +40,17 @@
     "e2e:build": "UMI_ENV=e2e dumi build",
     "e2e:test": "jest --config=jest.e2e.config.js",
     "e2e:test-update": "UPDATE=1 jest --config=jest.e2e.config.js --update-snapshot",
-    "e2e:test-online": "ONLINE=1 jest --config=jest.e2e.config.js"
+    "e2e:test-online": "ONLINE=1 jest --config=jest.e2e.config.js",
+    "---------": "",
+    "clean": "rm -rf es lib dist build coverage tests/dist",
+    "lint": "npm run lint-eslint",
+    "tsc": "tsc -p tsconfig-check.json",
+    "lint-eslint": "eslint --cache --ext .js,.jsx,.ts,.tsx --format=pretty ./src",
+    "lint-staged": "lint-staged",
+    "lint-staged:js": "eslint --cache --ext .js,.jsx,.ts,.tsx --format=pretty",
+    "lint:fix": "eslint --fix --cache --ext .js,.jsx,.ts,.tsx --format=pretty ",
+    "prepublishOnly": "npm run test && npm run build && np --no-cleanup --yolo --no-publish --any-branch",
+    "prettier": "prettier -c --write \"**/**\""
   },
   "husky": {
     "hooks": {
