@@ -5,8 +5,8 @@ import { defaultRuleData, defaultExportOptions } from '../utils';
 interface PageInitParams extends Pick<BaseLayerParams, 'height' | 'width'> {}
 
 class Page extends BaseLayer {
-  constructor({ width, height }: PageInitParams) {
-    super(SketchFormat.ClassValue.Page, { x: 0, y: 0, height, width });
+  constructor(params?: PageInitParams) {
+    super(SketchFormat.ClassValue.Page, { x: 0, y: 0, ...params });
   }
 
   toSketchJSON(): SketchFormat.Page {

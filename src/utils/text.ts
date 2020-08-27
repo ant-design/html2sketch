@@ -95,6 +95,7 @@ export const getTextAbsBCR = (parentNode: Element, textNode: Node) => {
 
   return { x, y, height: textHeight, width: textWidth };
 };
+
 /**
  * 获取一行宽度的文本
  * @param textNode
