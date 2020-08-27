@@ -1,4 +1,4 @@
-import { ResizingConstraint } from 'html2sketch';
+import { ResizingConstraint } from '../../../index';
 import BaseLayer from '../BaseLayer';
 
 class TestGroup extends BaseLayer {

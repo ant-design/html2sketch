@@ -1,4 +1,4 @@
-import { Frame } from 'html2sketch';
+import Frame from '../Frame';
 
 describe('Frame 类', () => {
   describe('正常生成 Frame ', () => {

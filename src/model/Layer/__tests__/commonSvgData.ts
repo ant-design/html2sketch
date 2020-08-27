@@ -1,8 +1,8 @@
 import SketchFormat from '@sketch-hq/sketch-file-format-ts';
-import { Frame, Style } from 'html2sketch';
 import { SVGPathData } from 'svg-pathdata';
 import { writeFileSync } from 'fs';
 import { join } from 'path';
+import { Frame, Style } from '../../index';
 import { defaultExportOptions } from '../../utils';
 import { ShapePathType } from '../../type';
 
