@@ -4,9 +4,9 @@
 
 [![NPM version][npm-image]][npm-url] [![NPM downloads][download-image]][download-url]
 
-[![david deps][david-image]][david-url] [![david devDeps][david-dev-image]][david-dev-url]
-
 [![Test CI status][test-ci]][test-ci-url] ![Deploy CI][deploy-ci] [![Coverage][coverage]][codecov-url]
+
+[![david deps][david-image]][david-url] [![david devDeps][david-dev-image]][david-dev-url]
 
 [![ docs by dumi][dumi-url]](https://d.umijs.org/) [![Build With father][father-url]](https://github.com/umijs/father/)
 
