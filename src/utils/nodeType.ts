@@ -22,5 +22,5 @@ export const isGroupNode = (node: Element): boolean => {
 export const isImageNode = (node: Element): boolean => {
   if (!node) return false;
   const nodeName = node.nodeName.toLowerCase();
-  return nodeName === 'image';
+  return nodeName === 'img';
 };
