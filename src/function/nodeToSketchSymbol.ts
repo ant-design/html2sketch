@@ -23,6 +23,8 @@ export default (node: Element, options?: NodeToSketchSymbolOptions) => {
   symbol.nodeType = group.nodeType;
   symbol.className = group.className;
 
+  symbol.name = group.name;
+
   group.layers.forEach((layer) => {
     switch (layer.class) {
       case 'text':
