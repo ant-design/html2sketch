@@ -7,7 +7,7 @@ class TestGroup extends BaseLayer {
   }
 }
 
-describe('Base图层 类', function () {
+describe('Base图层 类', () => {
   test('setName', () => {
     const a = new TestGroup();
     const name = 'test/name-should-work';
