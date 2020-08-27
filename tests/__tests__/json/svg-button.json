@@ -6,7 +6,7 @@
     "height": 32,
     "width": 82,
     "x": 343,
-    "y": 150
+    "y": 183
   },
   "allowsOverrides": true,
   "backgroundColor": {
@@ -46,7 +46,7 @@
   "isFlippedVertical": false,
   "isLocked": false,
   "isFlowHome": false,
-  "name": "",
+  "name": "按钮",
   "rotation": 0,
   "layerListExpandedType": 0,
   "overrideProperties": [

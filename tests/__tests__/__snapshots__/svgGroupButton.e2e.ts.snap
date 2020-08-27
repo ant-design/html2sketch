@@ -27,7 +27,7 @@ Object {
     "height": 32,
     "width": 82,
     "x": 343,
-    "y": 150,
+    "y": 183,
   },
   "groupLayout": Object {
     "_class": "MSImmutableFreeformGroupLayout",
@@ -963,7 +963,7 @@ Object {
       "textBehaviour": 0,
     },
   ],
-  "name": "",
+  "name": "按钮",
   "nameIsFixed": false,
   "overrideProperties": Array [
     Object {

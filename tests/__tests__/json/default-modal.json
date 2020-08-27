@@ -5,8 +5,8 @@
     "constrainProportions": false,
     "height": 178,
     "width": 520,
-    "x": 340,
-    "y": 399
+    "x": 140,
+    "y": 199
   },
   "allowsOverrides": true,
   "backgroundColor": {
@@ -1755,7 +1755,7 @@
         "height": 11.642801698213486,
         "width": 11.307373046875,
         "x": 486.33917236328125,
-        "y": 22.178558349609375
+        "y": 22.178573608398438
       },
       "name": "路径",
       "style": {

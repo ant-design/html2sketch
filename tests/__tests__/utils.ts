@@ -43,7 +43,6 @@ export const initHtml2Sketch = async (
     args: noSandbox ? ['--no-sandbox', '--disable-setuid-sandbox'] : undefined,
   });
   const page = await browser.newPage();
-  await page.setViewport({ width: 1200, height: 1000, deviceScaleFactor: 1 }); // 设置宽高
 
   const closeFn = async () => {
     // 如果没有 debug 的话
