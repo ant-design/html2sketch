@@ -1,8 +1,7 @@
 import React, { FC, useEffect } from 'react';
 import { Modal } from 'antd';
-import TestLayout from './utils/TestLayout';
-import useElements from './utils/useElements';
-import './Modal.less';
+
+import { useElements, TestLayout } from '@test-utils';
 
 /**
  *

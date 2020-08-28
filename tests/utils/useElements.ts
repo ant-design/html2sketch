@@ -7,7 +7,7 @@ export default <T = any>() => {
   useEffect(() => {
     if (elements.length === 0 && ref.current) {
       // @ts-ignore
-      setElements([ref.current]);
+      setElements(ref.current);
     }
   });
   return { ref, elements, setElements };

@@ -1,12 +1,10 @@
 import React, { FC } from 'react';
 import { Button } from 'antd';
 import { UpCircleOutlined } from '@ant-design/icons';
-
-import TestLayout from './utils/TestLayout';
-import useElements from './utils/useElements';
+import { useElements, TestLayout } from '@test-utils';
 
 /**
- * Button demo
+ * Button demos
  */
 const SvgGroupCase: FC = () => {
   const { elements, ref } = useElements();

@@ -7,4 +7,4 @@ group:
 
 ## 测试 Group 类型的 SVG 和按钮的组合
 
-<code src="../demo/SvgGroup.tsx" />
+<code src="./demos/SvgGroup.tsx" />

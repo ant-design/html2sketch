@@ -24,8 +24,8 @@ order: 40
 
 ## image 节点 + 网址
 
-<code src="../demo/Image.tsx" />
+<code src="./demos/Image.tsx" />
 
 ## image 节点 + 内联 Png 图片
 
-<code src="../demo/InlineImage.tsx" />
+<code src="./demos/InlineImage.tsx" />

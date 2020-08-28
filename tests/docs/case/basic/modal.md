@@ -7,4 +7,4 @@ order: 50
 
 测试浮层的结果
 
-<code src="../demo/DefaultModal.tsx" />
+<code src="./demos/DefaultModal.tsx" />

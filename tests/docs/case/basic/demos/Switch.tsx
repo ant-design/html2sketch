@@ -1,8 +1,6 @@
 import React, { FC } from 'react';
 import { Switch, Space } from 'antd';
-
-import TestLayout from './utils/TestLayout';
-import useElements from './utils/useElements';
+import { useElements, TestLayout } from '@test-utils';
 
 const SwitchDemo: FC = () => {
   const { elements, ref } = useElements();
