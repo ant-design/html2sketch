@@ -22,5 +22,5 @@ describe('测试 Modal 类型', () => {
       outputJSONData(symbol, 'default-modal');
     }
     expect(symbol).toStrictEqual(DefaultModalJSON);
-  }, 15000);
+  }, 60000);
 });
