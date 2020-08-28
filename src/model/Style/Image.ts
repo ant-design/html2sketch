@@ -1,10 +1,10 @@
 import SketchFormat from '@sketch-hq/sketch-file-format-ts';
-import StyleBase from './Base';
+import BaseStyle from '../Base/BaseStyle';
 
 /**
  * 图片资产
  */
-class Image extends StyleBase {
+class Image extends BaseStyle {
   constructor(url: string) {
     super();
     this.url = url;

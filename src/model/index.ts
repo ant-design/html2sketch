@@ -1,5 +1,7 @@
-export { default as Frame } from './Frame';
-export { default as SketchDocument } from './Document/Sketch';
+export { default as Frame } from './Base/Frame';
+
+export { default as SketchDocument } from './Document/SketchDocument';
+export { default as Page } from './Document/Page';
 
 export { default as Artboard } from './Layer/Artboard';
 export { default as Rectangle } from './Layer/Rectangle';
@@ -7,7 +9,6 @@ export { default as Svg } from './Layer/Svg';
 export { default as Text } from './Layer/Text';
 export { default as Group } from './Layer/Group';
 export { default as SymbolMaster } from './Layer/SymbolMaster';
-export { default as Page } from './Layer/Page';
 export { default as Bitmap } from './Layer/Bitmap';
 export { default as ShapeGroup } from './Layer/ShapeGroup';
 export { default as ShapePath } from './Layer/ShapePath';

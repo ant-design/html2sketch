@@ -1,11 +1,11 @@
 import SketchFormat from '@sketch-hq/sketch-file-format-ts';
 import Color from './Color';
-import StyleBase from './Base';
+import BaseStyle from '../Base/BaseStyle';
 
 /**
  * 颜色资产
  */
-class ColorAsset extends StyleBase {
+class ColorAsset extends BaseStyle {
   color: Color;
 
   constructor(hex: string, name?: string) {

@@ -1,5 +1,5 @@
 import SketchFormat from '@sketch-hq/sketch-file-format-ts';
-import Base, { BaseLayerParams } from './Base';
+import BaseLayer, { BaseLayerParams } from '../Base/BaseLayer';
 import { sketchImage, defaultExportOptions } from '../utils';
 
 interface BitmapInitParams extends BaseLayerParams {
@@ -9,7 +9,7 @@ interface BitmapInitParams extends BaseLayerParams {
 /**
  * 图片处理
  * */
-class Bitmap extends Base {
+class Bitmap extends BaseLayer {
   constructor({ url, x, y, width, height }: BitmapInitParams) {
     super(SketchFormat.ClassValue.Bitmap, { y, x, height, width });
     this.url =

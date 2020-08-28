@@ -1,13 +1,13 @@
 import SketchFormat from '@sketch-hq/sketch-file-format-ts';
 
-import Base, { BaseLayerParams } from './Base';
+import BaseLayer, { BaseLayerParams } from '../Base/BaseLayer';
 import { defaultRuleData, defaultExportOptions } from '../utils';
 import Color from '../Style/Color';
 
 /**
  * 画板对象
  * */
-class Artboard extends Base {
+class Artboard extends BaseLayer {
   constructor(params: BaseLayerParams) {
     super(SketchFormat.ClassValue.Artboard, params);
   }

@@ -1,7 +1,7 @@
 import SketchFormat from '@sketch-hq/sketch-file-format-ts';
 
 import Color, { ColorParam } from './Color';
-import StyleBase from './Base';
+import BaseStyle from '../Base/BaseStyle';
 import { CGPoint } from '../../type';
 import { defaultContextSettings } from '../utils';
 import Gradient from './Gradient';
@@ -23,7 +23,7 @@ export interface FillProps {
 /**
  * 渐变对象
  * */
-class Fill extends StyleBase {
+class Fill extends BaseStyle {
   constructor(props: FillProps) {
     super();
     const { type, color, name, image, gradient } = props;

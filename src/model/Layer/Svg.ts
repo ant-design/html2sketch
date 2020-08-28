@@ -2,10 +2,10 @@ import SketchFormat from '@sketch-hq/sketch-file-format-ts';
 import * as svgson from 'svgson';
 import { SVGPathData } from 'svg-pathdata';
 
-import Base, { BaseLayerParams } from './Base';
+import BaseLayer, { BaseLayerParams } from '../Base/BaseLayer';
 import ShapePath from './ShapePath';
 import ShapeGroup from './ShapeGroup';
-import { FrameType } from '../Frame';
+import { FrameType } from '../Base/Frame';
 
 import { getUseReplacement, inlineStyles } from '../../utils/svg';
 import { defaultExportOptions } from '../utils';
@@ -55,7 +55,7 @@ interface SvgInitParams extends Partial<BaseLayerParams> {
 /**
  * SVG 对象
  */
-class Svg extends Base {
+class Svg extends BaseLayer {
   constructor({ x, y, width, height, svgString }: SvgInitParams) {
     super('svg', {
       height,

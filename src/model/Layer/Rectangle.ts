@@ -1,6 +1,6 @@
 import SketchFormat from '@sketch-hq/sketch-file-format-ts';
 
-import Base, { BaseLayerParams } from './Base';
+import BaseLayer, { BaseLayerParams } from '../Base/BaseLayer';
 import { defaultExportOptions } from '../utils';
 
 type CornerRadius = {
@@ -17,7 +17,7 @@ interface RectangleInitParams extends Omit<BaseLayerParams, 'x' | 'y'> {
 /**
  * 矩形类型
  * */
-class Rectangle extends Base {
+class Rectangle extends BaseLayer {
   constructor({
     x,
     y,

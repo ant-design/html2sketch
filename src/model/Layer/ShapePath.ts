@@ -1,7 +1,7 @@
 import SketchFormat from '@sketch-hq/sketch-file-format-ts';
 import { SVGPathData } from 'svg-pathdata';
 import { CommandC, CommandL, SVGCommand } from 'svg-pathdata/lib/types';
-import Base, { BaseLayerParams } from './Base';
+import BaseLayer, { BaseLayerParams } from '../Base/BaseLayer';
 import { defaultExportOptions } from '../utils';
 import { BezierPoint, StartPoint } from './Svg';
 import { CGPoint } from '../../type';
@@ -21,7 +21,7 @@ export interface ShapePathInitParams extends BaseLayerParams {
 /**
  * ShapePath 是一组点构成的形状对象
  */
-class ShapePath extends Base {
+class ShapePath extends BaseLayer {
   constructor(params: ShapePathInitParams) {
     super(SketchFormat.ClassValue.ShapePath, params);
 

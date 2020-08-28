@@ -19,7 +19,8 @@
     "declaration": true,
     "skipLibCheck": true,
     "paths": {
-      "html2sketch": ["./src"]
+      "html2sketch": ["./src"],
+      "@test-utils": ["./tests/utils"]
     }
   },
   "include": ["src/"]

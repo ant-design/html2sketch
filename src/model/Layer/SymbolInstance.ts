@@ -1,11 +1,11 @@
 import SketchFormat from '@sketch-hq/sketch-file-format-ts';
 import { defaultExportOptions } from '../utils';
-import Base, { BaseLayerParams } from './Base';
+import BaseLayer, { BaseLayerParams } from '../Base/BaseLayer';
 
 interface SymbolInstanceInitParams extends BaseLayerParams {
   symbolID: string;
 }
-class SymbolInstance extends Base {
+class SymbolInstance extends BaseLayer {
   constructor({ x, y, width, height, symbolID }: SymbolInstanceInitParams) {
     super(SketchFormat.ClassValue.SymbolInstance, { width, y, x, height });
 

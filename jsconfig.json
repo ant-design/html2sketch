@@ -4,7 +4,8 @@
     "experimentalDecorators": true,
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"]
+      "html2sketch": ["./src"],
+      "@test-utils": ["./tests/utils"]
     }
   }
 }

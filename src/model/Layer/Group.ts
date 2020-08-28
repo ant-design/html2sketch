@@ -1,11 +1,11 @@
 import SketchFormat from '@sketch-hq/sketch-file-format-ts';
-import Base, { BaseLayerParams } from './Base';
+import BaseLayer, { BaseLayerParams } from '../Base/BaseLayer';
 import { defaultExportOptions } from '../utils';
 import { getGroupLayout } from '../../utils/layout';
 import { AnyLayer } from '../type';
 import { GroupLayoutType } from '../../type';
 
-class Group extends Base {
+class Group extends BaseLayer {
   constructor(params?: BaseLayerParams) {
     super(SketchFormat.ClassValue.Group, params);
   }

@@ -1,6 +1,6 @@
 import SketchFormat from '@sketch-hq/sketch-file-format-ts';
 import { defaultContextSettings } from '../utils';
-import BaseShadow, { ShadowParams } from './BaseShadow';
+import BaseShadow, { ShadowParams } from '../Base/BaseShadow';
 
 class InnerShadow extends BaseShadow {
   constructor(props: ShadowParams) {
