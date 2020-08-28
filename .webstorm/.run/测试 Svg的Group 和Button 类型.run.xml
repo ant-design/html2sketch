@@ -1,16 +1,15 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="测试 Modal 类型.Modal 正常" type="JavaScriptTestRunnerJest">
+  <configuration default="false" name="测试 Svg的Group 和Button 类型" type="JavaScriptTestRunnerJest" nameIsGenerated="true">
     <config-file value="$PROJECT_DIR$/jest.e2e.config.js" />
     <node-interpreter value="project" />
     <node-options value="" />
     <jest-package value="$PROJECT_DIR$/node_modules/jest" />
     <working-dir value="$PROJECT_DIR$" />
     <envs />
-    <scope-kind value="TEST" />
-    <test-file value="$PROJECT_DIR$/tests/__tests__/modal.e2e.ts" />
+    <scope-kind value="SUITE" />
+    <test-file value="$PROJECT_DIR$/tests/__tests__/svgGroupButton.e2e.ts" />
     <test-names>
-      <test-name value="测试 Modal 类型" />
-      <test-name value="Modal 正常" />
+      <test-name value="测试 Svg的Group 和Button 类型" />
     </test-names>
     <method v="2" />
   </configuration>
