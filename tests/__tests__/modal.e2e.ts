@@ -1,9 +1,12 @@
-import { initHtml2Sketch, isUpdate, outputJSONData } from './utils';
+import { initHtml2Sketch, isUpdate, outputJSONData, waitTime } from './utils';
 import DefaultModalJSON from './json/default-modal.json';
 
 describe('测试 Modal 类型', () => {
   test('Modal 正常', async () => {
     const html2Sketch = await initHtml2Sketch();
+
+    await waitTime(500);
+
     function selector(dom: Document) {
       return dom.getElementsByClassName('ant-modal')?.item(0)!;
     }

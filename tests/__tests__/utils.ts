@@ -137,3 +137,15 @@ export const outputJSONData = (
 };
 
 export const isUpdate = process.env.UPDATE === '1';
+
+/**
+ * 等待一段时间
+ * @param time
+ */
+export const waitTime = (time: number) => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve(true);
+    }, time);
+  });
+};
