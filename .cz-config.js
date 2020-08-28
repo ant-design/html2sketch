@@ -26,9 +26,9 @@ module.exports = {
       name: '✅   test:       Add missing tests or correcting existing tests',
     },
     {
-      value: '🛠 chore',
+      value: '🔧 chore',
       name:
-        "🛠  chore:      Changes that don't modify src or test files. Such as updating build tasks, package manager",
+        "🔧  chore:      Changes that don't modify src or test files. Such as updating build tasks, package manager",
     },
     {
       value: '💅 style',
