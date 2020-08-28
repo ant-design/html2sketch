@@ -17,5 +17,5 @@ jobs:
         with:
           surge_token: ${{ secrets.SURGE_TOKEN }}
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          build: npm run site
+          build: npm i && npm run site
           dist: dist
