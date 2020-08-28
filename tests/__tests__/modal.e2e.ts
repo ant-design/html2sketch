@@ -5,7 +5,7 @@ describe('测试 Modal 类型', () => {
   test('Modal 正常', async () => {
     const html2Sketch = await initHtml2Sketch();
 
-    await waitTime(500);
+    await waitTime(1000);
 
     function selector(dom: Document) {
       return dom.getElementsByClassName('ant-modal')?.item(0)!;
