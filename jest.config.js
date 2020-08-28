@@ -8,6 +8,7 @@ module.exports = {
   moduleNameMapper: {
     '^uuid$': '<rootDir>/test/__mocks__/uuid.ts',
     html2sketch: '<rootDir>/src',
+    '@test-utils': '<rootDir>/tests/utils',
   },
   setupFilesAfterEnv: ['./tests/setupTests.js'],
   testMatch: ['**/?(*.)+(spec|test).ts'],

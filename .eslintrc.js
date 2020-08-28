@@ -1,7 +1,6 @@
 module.exports = {
   extends: [require.resolve('@umijs/fabric/dist/eslint')],
   globals: {
-    ANT_DESIGN_PRO_ONLY_DO_NOT_USE_IN_YOUR_PRODUCTION: true,
     page: true,
   },
   rules: {
@@ -16,5 +15,18 @@ module.exports = {
     'no-shadow': 'warn',
     'no-console': 0,
     'no-underscore-dangle': 0,
+  },
+  settings: {
+    'import/resolver': {
+      alias: {
+        map: [
+          ['html2sketch', './src/'],
+          ['@test-utils', './tests/utils'],
+        ],
+      },
+      typescript: {
+        alwaysTryTypes: true,
+      },
+    },
   },
 };

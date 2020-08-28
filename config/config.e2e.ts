@@ -1,4 +1,5 @@
 import { defineConfig } from 'umi';
+import { resolve } from 'path';
 
 export default defineConfig({
   title: 'html2sketch 测试用例集',
@@ -12,5 +13,8 @@ export default defineConfig({
   exportStatic: {
     htmlSuffix: process.env.NODE_ENV === 'production',
     dynamicRoot: true,
+  },
+  alias: {
+    '@test-utils': resolve(__dirname, '../tests/utils'),
   },
 });
