@@ -22,20 +22,23 @@ export default (node: Element, options?: NodeToSketchSymbolOptions) => {
   symbol.style = group.style;
   symbol.nodeType = group.nodeType;
   symbol.className = group.className;
-
   symbol.name = group.name;
 
-  group.layers.forEach((layer) => {
-    switch (layer.class) {
-      case 'text':
-        // 对所有的文本都添加
-        symbol.addOverride(layer.id, 'text');
-        break;
-      default:
-        break;
-    }
-    symbol.layers.push(layer);
-  });
+  if (group.class !== 'group') {
+    symbol.addLayer(group);
+  } else {
+    group.layers.forEach((layer) => {
+      switch (layer.class) {
+        case 'text':
+          // 对所有的文本都添加
+          symbol.addOverride(layer.id, 'text');
+          break;
+        default:
+          break;
+      }
+      symbol.layers.push(layer);
+    });
+  }
 
   if (options) {
     const { symbolLayout, handleSymbol, layerParams } = options;

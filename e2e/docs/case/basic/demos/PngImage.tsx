@@ -9,7 +9,7 @@ export default () => {
 
   return (
     <TestLayout elements={elements}>
-      <div ref={ref}>
+      <div ref={ref} id="png-url">
         <img
           alt="Png"
           src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"

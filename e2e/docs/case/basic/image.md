@@ -26,6 +26,10 @@ order: 40
 
 <code src="./demos/InlineImage.tsx" />
 
+## image 节点 + 内联 Png 图片 测试两个图片
+
+<code src="./demos/TwoInlineImage.tsx" />
+
 ## image 节点 + png 网址
 
 <code src="./demos/PngImage.tsx" />
