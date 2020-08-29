@@ -13,15 +13,11 @@ export function isTextVisible({
 }: CSSStyleDeclaration) {
   // NOTE overflow:hidden is not needed if text-indent is huge
   // , but how to define 'huge'?
-  if (
+  return !(
     parseFloat(textIndent) < 0 &&
     overflowX === 'hidden' &&
     overflowY === 'hidden'
-  ) {
-    return false;
-  }
-
-  return true;
+  );
 }
 
 /**

@@ -1,5 +1,5 @@
-import Bitmap from '../Bitmap';
 import SketchFormat from '@sketch-hq/sketch-file-format-ts';
+import Bitmap from '../Bitmap';
 
 describe('Bitmap 类', () => {
   it('传入 base64 URL 后 可正常生成 Sketch JSON', () => {

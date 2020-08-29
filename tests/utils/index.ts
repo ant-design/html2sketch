@@ -7,6 +7,8 @@ import behance from './json/behance.json';
 import dropbox from './json/dropbox.json';
 import upCircle from './json/up-circle.json';
 import plus from './json/plus.json';
+import text from './json/text.json';
+import shape from './json/shape.json';
 
 export const svgJSON = svg;
 export const behanceJSON = behance;
@@ -14,6 +16,8 @@ export const dropboxJSON = dropbox;
 export const upCircleJSON = upCircle;
 export const plusJSON = plus;
 export const svgPathJSON = svgPath;
+export const textJSON = text;
+export const shapeJSON = shape;
 
 /**
  * 打印出 JSON 数据到路径中
@@ -25,7 +29,11 @@ export const svgPathJSON = svgPath;
  * @param name
  */
 export const outputJSONData = (
-  json: SketchFormat.Group | SketchFormat.ShapeGroup,
+  json:
+    | SketchFormat.Group
+    | SketchFormat.ShapeGroup
+    | SketchFormat.Text
+    | SketchFormat.Rectangle,
   name?: string,
 ) => {
   writeFileSync(
