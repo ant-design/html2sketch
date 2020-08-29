@@ -4,8 +4,8 @@ import { isNodeVisible } from '../utils/visibility';
 import { getChildNodeList } from '../utils/hierarchy';
 import { getName } from '../utils/name';
 import { Group, Style } from '../model';
-import { isExistPseudoText, isExistPseudoShape } from '../utils/shape';
-import { AnyLayer } from '../type';
+import { isExistPseudoText, isExistPseudoShape } from '../utils/pseudo';
+import { AnyLayer } from '..';
 
 export interface Options {
   postTransform?: (group: AnyLayer) => AnyLayer;
@@ -71,6 +71,7 @@ const nodeToGroup = (node: Element, options?: Options): Group => {
     group.layers.length === 1 &&
     (group.layers[0].class === 'rectangle' ||
       group.layers[0].class === 'text' ||
+      group.layers[0].class === 'bitmap' ||
       group.layers[0].class === 'svg' ||
       group.layers[0].class === 'group')
   ) {
@@ -88,8 +89,8 @@ const nodeToGroup = (node: Element, options?: Options): Group => {
 
   if (
     group.layers.length === 0 &&
-    !isExistPseudoText(node) &&
-    !isExistPseudoShape(node)
+    !isExistPseudoText(node).exist &&
+    !isExistPseudoShape(node).exist
   ) {
     console.groupCollapsed('%c清理无效层级', consoleGroupStyle);
     console.log('该 group 是空的,丢弃...');

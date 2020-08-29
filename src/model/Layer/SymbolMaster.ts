@@ -136,7 +136,7 @@ class SymbolMaster extends BaseLayer {
   };
 
   toSketchJSON = (): SketchFormat.SymbolMaster => {
-    return {
+    const symbolJSON: SketchFormat.SymbolMaster = {
       _class: 'symbolMaster',
       frame: this.frame.toSketchJSON(),
       allowsOverrides: true,
@@ -177,6 +177,11 @@ class SymbolMaster extends BaseLayer {
       layers: this.layers.map((l) => l.toSketchJSON()),
       isVisible: true,
     };
+
+    if (this.userInfo) {
+      symbolJSON.userInfo = this.userInfo;
+    }
+    return symbolJSON;
   };
 }
 

@@ -1,6 +1,8 @@
 import SketchFormat from '@sketch-hq/sketch-file-format-ts';
 import BaseLayer, { BaseLayerParams } from '../Base/BaseLayer';
-import { sketchImage, defaultExportOptions } from '../utils';
+import { defaultExportOptions } from '../utils';
+import { getBase64ImageString } from '../../utils/url';
+import { uuid } from '../../utils/utils';
 
 interface BitmapInitParams extends BaseLayerParams {
   url: string;
@@ -12,10 +14,16 @@ interface BitmapInitParams extends BaseLayerParams {
 class Bitmap extends BaseLayer {
   constructor({ url, x, y, width, height }: BitmapInitParams) {
     super(SketchFormat.ClassValue.Bitmap, { y, x, height, width });
+    if (!url) {
+      throw Error('没有传入 URL 请检查参数');
+    }
     this.url =
       url.indexOf('data:') === 0 ? Bitmap.ensureBase64DataURL(url) : url;
   }
 
+  /**
+   * base64 的
+   */
   url: string;
 
   /**
@@ -26,7 +34,7 @@ class Bitmap extends BaseLayer {
     do_objectID: this.id,
     frame: this.frame.toSketchJSON(),
     style: this.style.toSketchJSON(),
-    image: sketchImage(this.url),
+    image: this.toSketchImageJSON(),
     booleanOperation: SketchFormat.BooleanOperation.NA,
     exportOptions: defaultExportOptions,
     clippingMask: '',
@@ -51,11 +59,19 @@ class Bitmap extends BaseLayer {
   /**
    * 转换为 Sketch 引用 JSON 对象
    * */
-  toSketchRefJSON = (): SketchFormat.FileRef => {
+  toSketchImageJSON = (): SketchFormat.DataRef => {
+    const base64 = getBase64ImageString(this.url);
+    if (!base64) throw Error(`不正确的图像网址:${base64}`);
     return {
-      _class: 'MSJSONFileReference',
+      _class: 'MSJSONOriginalDataReference',
       _ref_class: 'MSImageData',
-      _ref: `images/${this.url}`,
+      _ref: `images/${uuid()}`,
+      data: {
+        _data: base64,
+      },
+      sha1: {
+        _data: '',
+      },
     };
   };
 

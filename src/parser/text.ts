@@ -9,7 +9,7 @@ import {
 /**
  * 将 Node 转为 Text 对象
  * */
-const transformToText = (node: Element): Text | Text[] | undefined => {
+export const parseToText = (node: Element): Text | Text[] | undefined => {
   // 添加文本
   const styles: CSSStyleDeclaration = getComputedStyle(node);
   const textStyle = Text.getTextStyleFromNode(node);
@@ -67,5 +67,3 @@ const transformToText = (node: Element): Text | Text[] | undefined => {
   }
   return textNode;
 };
-
-export default transformToText;

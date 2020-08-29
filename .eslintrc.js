@@ -21,6 +21,8 @@ module.exports = {
       alias: {
         map: [
           ['html2sketch', './src/'],
+          ['html2sketch/*', './src/*'],
+          ['@e2e-utils', './e2e/utils'],
           ['@test-utils', './tests/utils'],
         ],
       },

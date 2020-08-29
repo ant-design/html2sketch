@@ -1,3 +1,5 @@
+import Rectangle from '../model/Layer/Rectangle';
+
 /**
  * 判断文本是否可见
  * @param textIndent
@@ -11,17 +13,26 @@ export function isTextVisible({
 }: CSSStyleDeclaration) {
   // NOTE overflow:hidden is not needed if text-indent is huge
   // , but how to define 'huge'?
-  if (
+  return !(
     parseFloat(textIndent) < 0 &&
     overflowX === 'hidden' &&
     overflowY === 'hidden'
-  ) {
-    return false;
-  }
-
-  return true;
+  );
 }
 
+/**
+ * 判断节点是否不可见
+ * @param node
+ * @param width
+ * @param height
+ * @param position
+ * @param overflowX
+ * @param overflowY
+ * @param opacity
+ * @param visibility
+ * @param display
+ * @param clip
+ */
 export function isNodeVisible(
   node: Element,
   { width, height } = node.getBoundingClientRect(),
@@ -82,3 +93,28 @@ export function isNodeVisible(
 
   return true;
 }
+
+/**
+ * 判断是否是不可见的样式
+ * @param shape
+ */
+export const isVisibleShape = (shape: Rectangle) => {
+  const isInvisible = shape.style.opacity === 0;
+
+  // 透明度为 0 也返回不可见
+  if (isInvisible) return false;
+
+  // 没任何样式的话,就返回不可见
+  const hasNoStyle =
+    shape.style.fills.length === 0 && shape.style.borders.length === 0;
+  if (hasNoStyle) return false;
+
+  const isInvalidFills = shape.style.fills.every(
+    (fill) => fill.opacity.toString() === '0',
+  );
+  const isInvalidBorders = shape.style.borders.every(
+    (border) => border.opacity === 0 || border.thickness === 0,
+  );
+
+  return !(isInvalidFills && isInvalidBorders);
+};

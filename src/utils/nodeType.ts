@@ -1,4 +1,20 @@
 /**
+ * 判断是否是某种节点类型
+ * @param node
+ * @param type
+ */
+export const isNodeType = (node: Element, type: string | string[]): boolean => {
+  if (!node) return false;
+  const nodeName = node.nodeName.toLowerCase();
+
+  if (typeof type === 'string') {
+    return type === nodeName;
+  }
+
+  return type.includes(nodeName);
+};
+
+/**
  * 判断是否是 Text 节点
  */
 export const isTextNode = (node: Element): boolean => {
@@ -12,15 +28,32 @@ export const isTextNode = (node: Element): boolean => {
  * 判断是否是 Group 节点
  */
 export const isGroupNode = (node: Element): boolean => {
-  const nodeName = node.nodeName.toLowerCase();
-  return nodeName === 'div' || nodeName === 'span' || nodeName === 'th';
+  return isNodeType(node, ['div', 'span', 'th']);
 };
 
 /**
  * 判断是否是图片节点
  */
 export const isImageNode = (node: Element): boolean => {
-  if (!node) return false;
-  const nodeName = node.nodeName.toLowerCase();
-  return nodeName === 'img';
+  return isNodeType(node, 'img');
+};
+
+/**
+ * 判断是否是图片节点
+ */
+export const isCanvasNode = (node: Element): boolean => {
+  return isNodeType(node, 'canvas');
+};
+
+/**
+ * 是否是 SVG 的子级
+ */
+export const isSVGChildNode = (node: Element) =>
+  node instanceof SVGElement && node.matches('svg *');
+
+/**
+ * 判断是否是Svg节点
+ */
+export const isSvgNode = (node: Element): boolean => {
+  return isNodeType(node, 'svg');
 };

@@ -4,22 +4,15 @@ import { getTextContext } from '../utils/text';
 /**
  * 解析伪类
  */
-const parsePseudoText = (node: Element, pseudoElt: 'before' | 'after') => {
+export const parsePseudoToText = (
+  node: Element,
+  pseudoElt: 'before' | 'after',
+) => {
   // 判断一下是否有伪类
   const pseudoEl: CSSStyleDeclaration = getComputedStyle(node, `:${pseudoElt}`);
-  const { content, display } = pseudoEl;
+  const { content } = pseudoEl;
   const pseudoNode = node.cloneNode(true);
   const pseudoText = content.replace(/"/g, '');
-
-  if (
-    content === 'none' ||
-    // 如果修剪一下没东西,也直接去掉
-    !pseudoText.trim() ||
-    content === '' ||
-    display === 'none'
-  ) {
-    return null;
-  }
 
   const {
     // 边框
@@ -67,5 +60,3 @@ const parsePseudoText = (node: Element, pseudoElt: 'before' | 'after') => {
     multiline: false,
   });
 };
-
-export default parsePseudoText;
