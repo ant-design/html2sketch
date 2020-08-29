@@ -88,27 +88,39 @@ yarn install
 ### 目录架构
 
 ```
-├── README.md                      # 说明文档
-├── changelog.en-US.md             # 更新日志
-├── changelog.zh-CN.md             # 更新日志
-├── config                         # Dumi 配置文件夹
-│   ├── config.e2e.ts              # E2E 测试配置
-│   └── config.ts                  # 打包配置
-├── docs                           # 说明网站与演示 demo
 ├── src                            # 源代码
+├── docs                           # 说明网站与演示 demo
 ├── e2e                            # e2e 测试文件夹
-│   ├── __mocks__                  # mock 文件夹
-│   ├── __tests__                  # 测试用例
-│   ├── docs
-│   ├── setupE2E.ts
-│   └── utils
+├── tests                          # 单元测试文件夹
+├── config                         # Dumi 配置文件夹
 ├── public                         # 静态资源文件
 ├── tsconfig-check.json            # ts lint 静态资源文件
 ├── jest.config.js                 # Jest 单元测试配置
-├── jest.e2e.config.js             # Jest e2e测试配置
-├── jsconfig.json
-├── package.json                   #
-├── tsconfig-check.json            # 源文件 lint 配置
+├── jest.e2e.config.js             # Jest e2e 测试配置
+├── package.json                   # package.json
+├── jsconfig.json                  # jsconfig 配置
 ├── tsconfig.json                  # tsconfig 配置
+├── tsconfig-check.json            # 为 lint 使用的 tsconfig
 └── webpack.config.js              # webpack 打包配置
+├── README.md                      # 说明文档
+├── changelog.en-US.md             # 更新日志
+├── changelog.zh-CN.md             # 更新日志
 ```
+
+### 模块架构
+
+```
+src
+├── index.ts                       # 索引
+├── type.ts                        # 相关类型定义文件
+├── function                       # 合成方法
+├── model                          # 设计对象实体
+├── parser                         # 解析器
+└── utils                          # 工具函数
+```
+
+#### 实现思路
+
+DOM -> 解析器 -> DIM -> SketchJSON
+
+![解析流程](https://user-images.githubusercontent.com/28616219/91637898-379b0680-ea3e-11ea-95e6-74694ed72a57.png)
