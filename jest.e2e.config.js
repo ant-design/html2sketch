@@ -8,9 +8,9 @@ module.exports = {
   moduleNameMapper: {
     uuid: '<rootDir>/test/__mocks__/uuid.ts',
     html2sketch: '<rootDir>/src',
-    '@test-utils': '<rootDir>/tests/utils',
+    '@test-utils': '<rootDir>/e2e/utils',
   },
-  setupFilesAfterEnv: ['./tests/setupTests.js'],
+  setupFilesAfterEnv: ['./e2e/setupTests.js'],
   testMatch: ['**/__tests__/**/?(*.)+(e2e).ts'],
   testPathIgnorePatterns: ['/node_modules/'],
   moduleFileExtensions: ['js', 'ts'],

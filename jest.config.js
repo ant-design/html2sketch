@@ -12,7 +12,7 @@ module.exports = {
   },
   setupFilesAfterEnv: ['./tests/setupTests.js'],
   testMatch: ['**/?(*.)+(spec|test).ts'],
-  testPathIgnorePatterns: ['/node_modules/', '/tests/'],
+  testPathIgnorePatterns: ['/node_modules/', '/e2e/'],
   moduleFileExtensions: ['js', 'ts', 'tsx', 'json', 'node'],
   globals: {
     'ts-jest': {

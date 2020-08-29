@@ -19,7 +19,7 @@ describe('parseToBitmap', () => {
     expect(imageLayer).toBeUndefined();
   });
 
-  it('可正常解析', () => {
+  xit('可正常解析', () => {
     const img = document.getElementById('img') as HTMLImageElement;
     const imageLayer = parseToBitmap(img);
     expect(imageLayer?.url).toBe(
@@ -29,7 +29,7 @@ describe('parseToBitmap', () => {
 });
 
 describe('getImageBase64', () => {
-  it('should ', () => {
+  xit('should ', () => {
     const dom = new JSDOM(
       `<img id='img' alt="Ant Design" src="https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg" />`,
     );
