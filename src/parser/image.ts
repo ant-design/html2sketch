@@ -1,30 +1,6 @@
-import { Bitmap } from '../model';
+import { Bitmap, Svg } from '../model';
 import { isImageNode } from '../utils/nodeType';
-
-/**
- *
- * @param img html的 img 标签
- * @param format 图片格式
- * @returns {string}
- */
-export const getImageBase64 = (
-  img: HTMLImageElement,
-  format: string = 'png',
-) => {
-  // 1. 创建canvas DOM元素，并设置其宽高和图片一样
-  let canvas: HTMLCanvasElement | null = document.createElement('canvas');
-  canvas.width = img.width;
-  canvas.height = img.height;
-
-  // 2. 使用画布画图
-  const ctx = canvas.getContext('2d');
-  ctx?.drawImage(img, 0, 0, img.width, img.height);
-
-  // 3. 返回的是一串Base64编码的URL并指定格式
-  const dataURL = canvas.toDataURL(`image/${format}`);
-  canvas = null; // 释放
-  return dataURL;
-};
+import { getImageBase64URL } from '../utils/image';
 
 /**
  * 将图片 image 解析为图片
@@ -36,7 +12,31 @@ export const parseToBitmap = (node: HTMLImageElement) => {
   }
   const { width, height, y, x } = node.getBoundingClientRect();
 
-  const url = getImageBase64(node);
+  // 如果解析失败, 则采用提前准备好的错误图片
+  const errorUrl = '';
+
+  let url;
+  if (node.src.startsWith('http')) {
+    url = node.getAttribute('base64') || errorUrl;
+    if (node.src.endsWith('.svg')) {
+      const svgStr = atob(url.replace('data:image/svg+xml;base64,', ''));
+      console.log(svgStr);
+
+      const svg = new Svg({
+        svgString: svgStr,
+        x,
+        y,
+        width,
+        height,
+      });
+
+      svg.mapBasicInfo(node);
+
+      return svg;
+    }
+  } else {
+    url = getImageBase64URL(node);
+  }
 
   const bitmap = new Bitmap({
     url,

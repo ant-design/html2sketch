@@ -22,10 +22,14 @@ order: 40
 - svg
 - png
 
-## image 节点 + 网址
-
-<code src="./demos/Image.tsx" />
-
 ## image 节点 + 内联 Png 图片
 
 <code src="./demos/InlineImage.tsx" />
+
+## image 节点 + png 网址
+
+<code src="./demos/PngImage.tsx" />
+
+## image 节点 + svg 网址
+
+<code src="./demos/SvgImage.tsx" />

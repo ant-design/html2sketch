@@ -1,16 +1,21 @@
 import React, { FC, useState } from 'react';
-import { Button, Row, Col, Card, Divider, Space } from 'antd';
+import { Button, Card, Col, Divider, Row, Space } from 'antd';
 import ReactJson from 'react-json-view';
 import useSketchJSON from './useSketchJSON';
+import useAddBase64Url from './useAddBase64Url';
 
 interface FooterProps {
   elements: Element[] | Element;
   buttons?: { name: string; onClick: () => void }[];
 }
 
-const TestLayout: FC<FooterProps> = ({ elements, children, buttons }) => {
+const ToSketchLayout: FC<FooterProps> = ({ elements, children, buttons }) => {
   const { sketchJSON, generateGroup, generateSymbol } = useSketchJSON();
   const [showJSON, setShowJSON] = useState(false);
+
+  const { isFinished } = useAddBase64Url();
+
+  const disableToParse = !isFinished;
 
   return (
     <div>
@@ -37,6 +42,7 @@ const TestLayout: FC<FooterProps> = ({ elements, children, buttons }) => {
                   </Button>
                 ))}
                 <Button
+                  disabled={disableToParse}
                   onClick={() => {
                     generateGroup(elements);
                   }}
@@ -44,6 +50,7 @@ const TestLayout: FC<FooterProps> = ({ elements, children, buttons }) => {
                   转换为 Group
                 </Button>
                 <Button
+                  disabled={disableToParse}
                   type="primary"
                   onClick={() => {
                     generateSymbol(elements);
@@ -67,4 +74,4 @@ const TestLayout: FC<FooterProps> = ({ elements, children, buttons }) => {
   );
 };
 
-export default TestLayout;
+export default ToSketchLayout;

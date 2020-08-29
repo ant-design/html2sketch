@@ -1,5 +1,6 @@
 import { JSDOM } from 'jsdom';
-import { parseToBitmap, getImageBase64 } from '../image';
+import { Bitmap } from 'html2sketch';
+import { parseToBitmap } from '../image';
 
 describe('parseToBitmap', () => {
   const dom = new JSDOM(
@@ -22,21 +23,8 @@ describe('parseToBitmap', () => {
   xit('可正常解析', () => {
     const img = document.getElementById('img') as HTMLImageElement;
     const imageLayer = parseToBitmap(img);
-    expect(imageLayer?.url).toBe(
+    expect((imageLayer as Bitmap)?.url).toBe(
       'https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg',
     );
-  });
-});
-
-describe('getImageBase64', () => {
-  xit('should ', () => {
-    const dom = new JSDOM(
-      `<img id='img' alt="Ant Design" src="https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg" />`,
-    );
-    const { document } = dom.window;
-
-    const img = document.getElementById('img') as HTMLImageElement;
-    const base64URL = getImageBase64(img);
-    expect(base64URL).toBe('123');
   });
 });
