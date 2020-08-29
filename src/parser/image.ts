@@ -1,6 +1,6 @@
 import { Bitmap, Svg } from '../model';
 import { isImageNode } from '../utils/nodeType';
-import { getImageBase64URL } from '../utils/image';
+import { getImageBase64URL, errorBase64Url } from '../utils/image';
 
 /**
  * 将图片 image 解析为图片
@@ -13,28 +13,32 @@ export const parseToBitmap = (node: HTMLImageElement) => {
   const { width, height, y, x } = node.getBoundingClientRect();
 
   // 如果解析失败, 则采用提前准备好的错误图片
-  const errorUrl = '';
 
   let url;
+  // 网络 URL
   if (node.src.startsWith('http')) {
-    url = node.getAttribute('base64') || errorUrl;
+    url = node.getAttribute('base64') || errorBase64Url;
     if (node.src.endsWith('.svg')) {
-      const svgStr = atob(url.replace('data:image/svg+xml;base64,', ''));
-      console.log(svgStr);
+      try {
+        const svgStr = atob(url.replace('data:image/svg+xml;base64,', ''));
+        const svg = new Svg({
+          svgString: svgStr,
+          x,
+          y,
+          width,
+          height,
+        });
 
-      const svg = new Svg({
-        svgString: svgStr,
-        x,
-        y,
-        width,
-        height,
-      });
+        svg.mapBasicInfo(node);
 
-      svg.mapBasicInfo(node);
-
-      return svg;
+        return svg;
+      } catch (e) {
+        console.log(e);
+        url = errorBase64Url;
+      }
     }
   } else {
+    // 内联的 URL
     url = getImageBase64URL(node);
   }
 

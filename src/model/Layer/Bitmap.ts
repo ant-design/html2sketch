@@ -14,6 +14,9 @@ interface BitmapInitParams extends BaseLayerParams {
 class Bitmap extends BaseLayer {
   constructor({ url, x, y, width, height }: BitmapInitParams) {
     super(SketchFormat.ClassValue.Bitmap, { y, x, height, width });
+    if (!url) {
+      throw Error('没有传入 URL 请检查参数');
+    }
     this.url =
       url.indexOf('data:') === 0 ? Bitmap.ensureBase64DataURL(url) : url;
   }
