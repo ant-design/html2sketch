@@ -23,7 +23,7 @@ describe('测试图片', () => {
   });
 
   test('PNG图片链接类型正常', async () => {
-    const html2Sketch = await initHtml2Sketch({ showWindows: true });
+    const html2Sketch = await initHtml2Sketch();
     function selector(dom: Document) {
       return dom.getElementById('png-url')!;
     }
