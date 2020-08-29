@@ -30,7 +30,7 @@ export const getImageBase64 = (
  * 将图片 image 解析为图片
  * @param node HTMLImageElement
  */
-const parserToImage = (node: HTMLImageElement) => {
+export const parseToBitmap = (node: HTMLImageElement) => {
   if (!isImageNode(node)) {
     return;
   }
@@ -38,13 +38,15 @@ const parserToImage = (node: HTMLImageElement) => {
 
   const url = getImageBase64(node);
 
-  return new Bitmap({
+  const bitmap = new Bitmap({
     url,
     x,
     y,
     width,
     height,
   });
-};
 
-export default parserToImage;
+  bitmap.mapBasicInfo(node);
+
+  return bitmap;
+};

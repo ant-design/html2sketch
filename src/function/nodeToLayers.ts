@@ -1,22 +1,27 @@
 /* eslint-disable no-console */
+import { AnyLayer } from '..';
 import { defaultNodeStyle } from '../model/utils';
 import { Text } from '../model';
 
-import parserToSvg from '../parser/svg';
-import parserToShape from '../parser/shape';
-import parserToText from '../parser/text';
-import parserPseudoText from '../parser/pseudoText';
-import parserPseudoShape from '../parser/pseudoShape';
-
-import { AnyLayer } from '..';
-import { isTextVisible } from '../utils/visibility';
 import {
+  parseCanvasToBitmap,
+  parseToBitmap,
+  parseToSvg,
+  parseToText,
+  parseToShape,
+  parsePseudoToShape,
+  parsePseudoToText,
+} from '../parser';
+
+import { isTextVisible } from '../utils/visibility';
+import { isExistPseudoText, isExistPseudoShape } from '../utils/shape';
+import {
+  isCanvasNode,
   isImageNode,
-  isSVGDescendantNode,
+  isSVGChildNode,
+  isSvgNode,
   isTextNode,
 } from '../utils/nodeType';
-import { isExistPseudoText, isExistPseudoShape } from '../utils/shape';
-import parserToImage from '../parser/image';
 
 /**
  * 是否是默认样式
@@ -39,73 +44,80 @@ const nodeToLayers = (node: Element): AnyLayer[] => {
   const layers: any[] = [];
   const styles: CSSStyleDeclaration = getComputedStyle(node);
 
-  const nodeName = node.nodeName.toLowerCase();
+  // ---------- 处理节点 ---------- //
 
-  // ----- 初步判断 ------ //
-  // skip Svg child nodes as they are already covered by `new Svg(…)`
-  if (isSVGDescendantNode(node)) {
+  // svg 内部节点 直接跳过 ( 已经被转换到 svg 中)
+  if (isSVGChildNode(node)) {
     console.log('SVG 内部节点,跳过...');
     return layers;
   }
 
-  // ---------- 处理子节点 ---------- //
-
+  // 图片类型的节点(img)
   if (isImageNode(node)) {
-    const image = parserToImage(<HTMLImageElement>node);
+    const image = parseToBitmap(<HTMLImageElement>node);
+    console.info('转换为:', image);
     layers.push(image);
+    return layers;
+  }
+
+  // 画布类型节点(canvas)
+  if (isCanvasNode(node)) {
+    const canvas = parseCanvasToBitmap(<HTMLCanvasElement>node);
+    console.info('转换为:', canvas);
+    layers.push(canvas);
     return layers;
   }
 
   // 图层存在样式(阴影 边框等) 使用 Rect 类
   const isShape = !isDefaultStyles(styles);
-  // 使用 SVG 类
-  const isSVG = nodeName === 'svg';
-  // 使用 Text 类
-  const isText = isTextNode(node);
 
   // 如果图层存在样式(阴影 边框等 返回 shape 节点
   if (isShape || isExistPseudoShape(node)) {
     // 判断一下是否有伪类
-    const afterEl = parserPseudoShape(node, 'after');
+    const afterEl = parsePseudoToShape(node, 'after');
 
     if (afterEl) {
+      console.info('转换为:', afterEl);
       layers.push(afterEl);
     }
 
     if (isShape) {
-      // 添加后继续执行,不终止
-      const shape = parserToShape(node);
-
+      const shape = parseToShape(node);
       console.info('转换为:', shape);
       layers.push(shape);
     }
 
     // 判断一下是否有伪类
-    const beforeEl = parserPseudoShape(node, 'before');
+    const beforeEl = parsePseudoToShape(node, 'before');
 
     if (beforeEl) {
+      console.info('转换为:', afterEl);
       layers.push(beforeEl);
     }
   }
 
   // 转换为 SVG
-  if (isSVG) {
-    const svg = parserToSvg(node as SVGElement);
+  if (isSvgNode(node)) {
+    const svg = parseToSvg(node as SVGElement);
     console.info('转换为:', svg);
     layers.push(svg);
 
     return layers;
   }
+
   // 判断一下文本是否可见 不可见直接返回
   if (!isTextVisible(styles)) {
     return layers;
   }
 
+  // 文本类型节点
+  const isText = isTextNode(node);
+
   // 转换为文本
   if (isText || isExistPseudoText(node)) {
     let text;
     if (isText) {
-      text = parserToText(node);
+      text = parseToText(node);
       console.info('转换为:', text);
       if (text instanceof Array) {
         for (let i = 0; i < text.length; i += 1) {
@@ -121,7 +133,7 @@ const nodeToLayers = (node: Element): AnyLayer[] => {
     }
 
     // 判断一下是否有伪类
-    const afterEl = parserPseudoText(node, 'after');
+    const afterEl = parsePseudoToText(node, 'after');
 
     if (afterEl) {
       layers.push(afterEl);
@@ -131,7 +143,7 @@ const nodeToLayers = (node: Element): AnyLayer[] => {
     }
 
     // 判断一下是否有伪类
-    const beforeEl = parserPseudoText(node, 'before');
+    const beforeEl = parsePseudoToText(node, 'before');
     if (beforeEl) {
       layers.push(beforeEl);
     }

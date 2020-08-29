@@ -58,7 +58,7 @@ class Bitmap extends BaseLayer {
    * */
   toSketchImageJSON = (): SketchFormat.DataRef => {
     const base64 = getBase64ImageString(this.url);
-    if (!base64) throw Error('不正确的图像网址');
+    if (!base64) throw Error(`不正确的图像网址:${base64}`);
     return {
       _class: 'MSJSONOriginalDataReference',
       _ref_class: 'MSImageData',

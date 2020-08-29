@@ -5,7 +5,7 @@ import { getChildNodeList } from '../utils/hierarchy';
 import { getName } from '../utils/name';
 import { Group, Style } from '../model';
 import { isExistPseudoText, isExistPseudoShape } from '../utils/shape';
-import { AnyLayer } from '../type';
+import { AnyLayer } from '..';
 
 export interface Options {
   postTransform?: (group: AnyLayer) => AnyLayer;

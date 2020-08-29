@@ -7,7 +7,7 @@
  * @param url 解析后的 base64 URL
  */
 export const getBase64ImageString = (url: string): string | undefined => {
-  const reg = /data:image\/.*;base64,(.*==)/;
+  const reg = /data:image\/.*;base64,(.*)/;
   const group = reg.exec(url);
 
   if (!group) {

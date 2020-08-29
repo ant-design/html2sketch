@@ -48,5 +48,12 @@ export const isCanvasNode = (node: Element): boolean => {
 /**
  * 是否是 SVG 的子级
  */
-export const isSVGDescendantNode = (node: Element) =>
+export const isSVGChildNode = (node: Element) =>
   node instanceof SVGElement && node.matches('svg *');
+
+/**
+ * 判断是否是Svg节点
+ */
+export const isSvgNode = (node: Element): boolean => {
+  return isNodeType(node, 'svg');
+};

@@ -17,7 +17,7 @@ describe('parseCanvasToBitmap', () => {
       expect(imageLayer).toBeUndefined();
     });
 
-    it('可正常解析', () => {
+    xit('可正常解析', () => {
       const img = document.getElementById('canvas') as HTMLCanvasElement;
       const imageLayer = parseCanvasToBitmap(img);
       expect(imageLayer?.url).toBeUndefined();
@@ -28,7 +28,7 @@ describe('parseCanvasToBitmap', () => {
     const dom = new JSDOM(`<canvas id="canvas" />`);
     const { document } = dom.window;
 
-    it('可正常解析', () => {
+    xit('可正常解析', () => {
       const img = document.getElementById('canvas') as HTMLCanvasElement;
       const imageLayer = parseCanvasToBitmap(img);
       expect(imageLayer?.url).toBeUndefined();

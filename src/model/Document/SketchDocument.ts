@@ -4,7 +4,6 @@ import Group from '../Layer/Group';
 import Page from './Page';
 import Color from '../Style/Color';
 import ColorAsset from '../Style/ColorAsset';
-import layerToSharedStyle from '../../parser/sharedLayerStyle';
 import { AnyLayer } from '../type';
 
 /**
@@ -78,11 +77,11 @@ class SketchDocument {
   }
 
   addTextStyle(textLayer: AnyLayer, id?: string) {
-    this.textStyles.push(layerToSharedStyle(textLayer, id));
+    this.textStyles.push(Group.layerToSketchSharedStyle(textLayer, id));
   }
 
   addLayerStyle(layer: Group, id: string) {
-    this.layerStyles.push(layerToSharedStyle(layer, id));
+    this.layerStyles.push(Group.layerToSketchSharedStyle(layer, id));
   }
 
   addColor(color: Color) {
