@@ -21,10 +21,10 @@
     "skipLibCheck": true,
     "paths": {
       "html2sketch": ["./src"],
-      "@test-utils": ["./tests/utils"]
+      "@test-utils": ["./e2e/utils"]
     }
   },
-  "include": ["**/src/", "**/docs/", "**/tests/"],
+  "include": ["**/src/", "**/docs/", "**/e2e/"],
   "exclude": [
     "node_modules",
     "build",

@@ -82,7 +82,7 @@ export const initHtml2Sketch = async (
             : `,{${symbolOptionsArr.join(',')}}`;
 
         const sketchJSON = (await page.evaluate(
-          `html2sketch.nodeToSketchSymbol(${selector}(document)${symbolOptions}).toSketchJSON()`,
+          `DUMI_HTML2SKETCH.nodeToSketchSymbol(${selector}(document)${symbolOptions}).toSketchJSON()`,
         )) as SketchFormat.SymbolMaster;
 
         await closeFn();

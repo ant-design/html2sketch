@@ -8,7 +8,10 @@ describe('测试 Svg的Group 和Button 类型', () => {
       return dom.getElementById('button')!;
     }
 
-    const symbol = await html2Sketch.nodeToSketchSymbol('/svg-group', selector);
+    const symbol = await html2Sketch.nodeToSketchSymbol(
+      '/basic/svg-group',
+      selector,
+    );
     expect(symbol).toBeTruthy();
     expect(symbol).toMatchSnapshot();
 

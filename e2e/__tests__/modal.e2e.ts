@@ -8,7 +8,10 @@ describe('测试 Modal 类型', () => {
       return dom.getElementsByClassName('ant-modal')?.item(0)!;
     }
 
-    const symbol = await html2Sketch.nodeToSketchSymbol('/modal', selector);
+    const symbol = await html2Sketch.nodeToSketchSymbol(
+      '/basic/modal',
+      selector,
+    );
     expect(symbol).toBeTruthy();
     expect(symbol).toMatchSnapshot();
 
