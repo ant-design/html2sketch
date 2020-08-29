@@ -1,17 +1,22 @@
 /* eslint-disable no-console */
 import { defaultNodeStyle } from '../model/utils';
+import { Text } from '../model';
 
 import parserToSvg from '../parser/svg';
-import transferToShape from '../parser/shape';
-import transferToText from '../parser/text';
+import parserToShape from '../parser/shape';
+import parserToText from '../parser/text';
 import parserPseudoText from '../parser/pseudoText';
 import parserPseudoShape from '../parser/pseudoShape';
 
+import { AnyLayer } from '..';
 import { isTextVisible } from '../utils/visibility';
-import { isTextNode } from '../utils/nodeType';
-import { Text } from '../model';
-import { AnyLayer } from '../type';
+import {
+  isImageNode,
+  isSVGDescendantNode,
+  isTextNode,
+} from '../utils/nodeType';
 import { isExistPseudoText, isExistPseudoShape } from '../utils/shape';
+import parserToImage from '../parser/image';
 
 /**
  * 是否是默认样式
@@ -27,12 +32,6 @@ const isDefaultStyles = (styles: CSSStyleDeclaration) =>
   });
 
 /**
- * 是否是 SVG 的子级
- */
-const isSVGDescendant = (node: Element) =>
-  node instanceof SVGElement && node.matches('svg *');
-
-/**
  * 将节点转为 Layer 对象
  * @param {HTMLElement} node 节点
  */
@@ -44,15 +43,19 @@ const nodeToLayers = (node: Element): AnyLayer[] => {
 
   // ----- 初步判断 ------ //
   // skip Svg child nodes as they are already covered by `new Svg(…)`
-  if (isSVGDescendant(node)) {
+  if (isSVGDescendantNode(node)) {
     console.log('SVG 内部节点,跳过...');
     return layers;
   }
 
   // ---------- 处理子节点 ---------- //
 
-  // 使用 Rect 类, 图片填充到 Fill 里
-  const isImage = nodeName === 'img' && (node as HTMLImageElement).currentSrc;
+  if (isImageNode(node)) {
+    const image = parserToImage(<HTMLImageElement>node);
+    layers.push(image);
+    return layers;
+  }
+
   // 图层存在样式(阴影 边框等) 使用 Rect 类
   const isShape = !isDefaultStyles(styles);
   // 使用 SVG 类
@@ -61,7 +64,7 @@ const nodeToLayers = (node: Element): AnyLayer[] => {
   const isText = isTextNode(node);
 
   // 如果图层存在样式(阴影 边框等 返回 shape 节点
-  if (isImage || isShape || isExistPseudoShape(node)) {
+  if (isShape || isExistPseudoShape(node)) {
     // 判断一下是否有伪类
     const afterEl = parserPseudoShape(node, 'after');
 
@@ -69,9 +72,9 @@ const nodeToLayers = (node: Element): AnyLayer[] => {
       layers.push(afterEl);
     }
 
-    if (isImage || isShape) {
+    if (isShape) {
       // 添加后继续执行,不终止
-      const shape = transferToShape(node);
+      const shape = parserToShape(node);
 
       console.info('转换为:', shape);
       layers.push(shape);
@@ -102,7 +105,7 @@ const nodeToLayers = (node: Element): AnyLayer[] => {
   if (isText || isExistPseudoText(node)) {
     let text;
     if (isText) {
-      text = transferToText(node);
+      text = parserToText(node);
       console.info('转换为:', text);
       if (text instanceof Array) {
         for (let i = 0; i < text.length; i += 1) {

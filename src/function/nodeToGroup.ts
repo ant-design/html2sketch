@@ -71,6 +71,7 @@ const nodeToGroup = (node: Element, options?: Options): Group => {
     group.layers.length === 1 &&
     (group.layers[0].class === 'rectangle' ||
       group.layers[0].class === 'text' ||
+      group.layers[0].class === 'bitmap' ||
       group.layers[0].class === 'svg' ||
       group.layers[0].class === 'group')
   ) {
