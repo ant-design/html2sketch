@@ -44,7 +44,7 @@
     "e2e:update": "UPDATE=1 jest --config=jest.e2e.config.js --update-snapshot",
     "e2e:online": "ONLINE=1 jest --config=jest.e2e.config.js",
     "---------   ": "",
-    "clean": "rm -rf es lib dist build coverage tests/dist",
+    "clean": "rm -rf es lib dist build coverage tests/dist src/.umi .eslintcache",
     "lint": "npm run lint-eslint",
     "tsc": "tsc -p tsconfig-check.json",
     "lint-eslint": "eslint --cache --ext .js,.jsx,.ts,.tsx --format=pretty ./src",
