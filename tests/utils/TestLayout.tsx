@@ -5,9 +5,10 @@ import useSketchJSON from './useSketchJSON';
 
 interface FooterProps {
   elements: Element[] | Element;
+  buttons?: { name: string; onClick: () => void }[];
 }
 
-const TestLayout: FC<FooterProps> = ({ elements, children }) => {
+const TestLayout: FC<FooterProps> = ({ elements, children, buttons }) => {
   const { sketchJSON, generateGroup, generateSymbol } = useSketchJSON();
   const [showJSON, setShowJSON] = useState(false);
 
@@ -30,6 +31,11 @@ const TestLayout: FC<FooterProps> = ({ elements, children }) => {
             </Col>
             <Col>
               <Space>
+                {buttons?.map((button) => (
+                  <Button key={button.name} onClick={button.onClick}>
+                    {button.name}
+                  </Button>
+                ))}
                 <Button
                   onClick={() => {
                     generateGroup(elements);
