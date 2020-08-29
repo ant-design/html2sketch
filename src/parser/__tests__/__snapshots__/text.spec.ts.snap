@@ -28,8 +28,8 @@ Object {
           "paragraphStyle": Object {
             "_class": "paragraphStyle",
             "alignment": 0,
-            "maximumLineHeight": undefined,
-            "minimumLineHeight": undefined,
+            "maximumLineHeight": 22,
+            "minimumLineHeight": 22,
           },
           "strikethroughStyle": 0,
           "underlineStyle": 0,
