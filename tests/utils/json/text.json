@@ -1,0 +1,100 @@
+{
+  "_class": "text",
+  "do_objectID": "UUID",
+  "booleanOperation": -1,
+  "isFixedToViewport": false,
+  "isFlippedHorizontal": false,
+  "isFlippedVertical": false,
+  "isLocked": false,
+  "isVisible": true,
+  "name": "123",
+  "nameIsFixed": false,
+  "layerListExpandedType": 0,
+  "resizingConstraint": 63,
+  "resizingType": 0,
+  "rotation": 0,
+  "shouldBreakMaskChain": false,
+  "exportOptions": {
+    "_class": "exportOptions",
+    "includedLayerIds": [],
+    "layerOptions": 0,
+    "shouldTrim": false,
+    "exportFormats": []
+  },
+  "frame": {
+    "_class": "rect",
+    "constrainProportions": false,
+    "height": 22,
+    "width": 25.609375,
+    "x": 8,
+    "y": 8
+  },
+  "clippingMaskMode": 0,
+  "hasClippingMask": false,
+  "style": {
+    "_class": "style",
+    "do_objectID": "UUID",
+    "endMarkerType": 0,
+    "miterLimit": 10,
+    "startMarkerType": 0,
+    "windingRule": 1,
+    "borderOptions": {
+      "_class": "borderOptions",
+      "isEnabled": true,
+      "dashPattern": [],
+      "lineCapStyle": 0,
+      "lineJoinStyle": 0
+    },
+    "colorControls": {
+      "_class": "colorControls",
+      "isEnabled": false,
+      "brightness": 0,
+      "contrast": 1,
+      "hue": 0,
+      "saturation": 1
+    },
+    "fills": [],
+    "borders": [],
+    "shadows": [],
+    "innerShadows": [],
+    "contextSettings": {
+      "_class": "graphicsContextSettings",
+      "blendMode": 0,
+      "opacity": 1
+    }
+  },
+  "attributedString": {
+    "_class": "attributedString",
+    "string": "123",
+    "attributes": [
+      {
+        "_class": "stringAttribute",
+        "location": 0,
+        "length": 3,
+        "attributes": {
+          "underlineStyle": 0,
+          "MSAttributedStringTextTransformAttribute": 0,
+          "paragraphStyle": { "_class": "paragraphStyle", "alignment": 0 },
+          "kerning": 0,
+          "strikethroughStyle": 0,
+          "MSAttributedStringFontAttribute": {
+            "_class": "fontDescriptor",
+            "attributes": { "name": "PingFangSC-Regular", "size": 16 }
+          },
+          "MSAttributedStringColorAttribute": {
+            "_class": "color",
+            "red": 0,
+            "green": 0,
+            "blue": 0,
+            "alpha": 1
+          }
+        }
+      }
+    ]
+  },
+  "automaticallyDrawOnUnderlyingPath": false,
+  "dontSynchroniseWithSymbol": false,
+  "lineSpacingBehaviour": 2,
+  "textBehaviour": 0,
+  "glyphBounds": ""
+}
