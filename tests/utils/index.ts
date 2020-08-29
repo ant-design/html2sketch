@@ -9,6 +9,7 @@ import upCircle from './json/up-circle.json';
 import plus from './json/plus.json';
 import text from './json/text.json';
 import shape from './json/shape.json';
+import group from './json/group.json';
 
 export const svgJSON = svg;
 export const behanceJSON = behance;
@@ -18,6 +19,7 @@ export const plusJSON = plus;
 export const svgPathJSON = svgPath;
 export const textJSON = text;
 export const shapeJSON = shape;
+export const groupJSON = group;
 
 /**
  * 打印出 JSON 数据到路径中
