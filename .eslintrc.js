@@ -22,7 +22,8 @@ module.exports = {
         map: [
           ['html2sketch', './src/'],
           ['html2sketch/*', './src/*'],
-          ['@test-utils', './e2e/utils'],
+          ['@e2e-utils', './e2e/utils'],
+          ['@test-utils', './tests/utils'],
         ],
       },
       typescript: {

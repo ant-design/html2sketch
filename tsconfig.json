@@ -22,7 +22,8 @@
     "paths": {
       "html2sketch": ["./src"],
       "html2sketch/*": ["./src/*"],
-      "@test-utils": ["./e2e/utils"]
+      "@test-utils": ["./tests/utils"],
+      "@e2e-utils": ["./e2e/utils"]
     }
   },
   "include": ["**/src/", "**/docs/", "**/e2e/"],
