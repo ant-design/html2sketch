@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { useElements, TestLayout } from '@test-utils';
+import { useElements, TestLayout } from '@e2e-utils';
 import copy from 'copy-to-clipboard';
 import { message } from 'antd';
 

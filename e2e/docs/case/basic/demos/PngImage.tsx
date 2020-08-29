@@ -1,5 +1,5 @@
 import React from 'react';
-import { useElements, TestLayout } from '@test-utils';
+import { useElements, TestLayout } from '@e2e-utils';
 
 /**
  *

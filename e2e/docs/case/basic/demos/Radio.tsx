@@ -1,6 +1,6 @@
 import React from 'react';
 import { Radio } from 'antd';
-import { useElements, TestLayout } from '@test-utils';
+import { useElements, TestLayout } from '@e2e-utils';
 
 /**
  *

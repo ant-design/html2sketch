@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 
 import { UpCircleOutlined, PlusOutlined } from '@ant-design/icons';
-import { TestLayout, useElements } from '@test-utils';
+import { TestLayout, useElements } from '@e2e-utils';
 
 const IconTest: FC = () => {
   const { elements, ref } = useElements();
