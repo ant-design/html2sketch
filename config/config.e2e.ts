@@ -12,6 +12,6 @@ export default defineConfig({
     dynamicRoot: true,
   },
   alias: {
-    '@test-utils': resolve(__dirname, '../e2e/utils'),
+    '@e2e-utils': resolve(__dirname, '../e2e/utils'),
   },
 });
