@@ -1,3 +1,4 @@
+import { isUpdate, outputJSONData } from '@test-utils';
 import Svg from '../Svg';
 import {
   svgPath,
@@ -10,10 +11,7 @@ import {
   upCircleSvg,
   plusSvg,
   plus,
-  outputJSONData,
-  isUpdate,
 } from './commonSvgData';
-// import { JSDOM } from 'jsdom';
 
 describe('Svg 类', () => {
   describe('toSketchJSON', () => {
