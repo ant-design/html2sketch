@@ -6,7 +6,7 @@ describe('parseToText', () => {
     document.body.innerHTML = '';
   });
   beforeAll(() => {
-    document.body.innerHTML = `<div id="text">123</div>`;
+    document.body.innerHTML = `<div id="text" style="font-family:"PingFang TC"">123</div>`;
   });
   it('文本正常解析', () => {
     const node = document.getElementById('text') as HTMLDivElement;
