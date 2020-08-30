@@ -61,7 +61,7 @@ const parseLinearGradient = (value: string) => {
 };
 
 type BackgroundImageType = {
-  type: string;
+  type: 'Image' | 'LinearGradient';
   value: any;
 };
 

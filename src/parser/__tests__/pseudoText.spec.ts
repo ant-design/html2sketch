@@ -1,4 +1,3 @@
-import { isUpdate, outputJSONData, pseudoTextJSON } from '@test-utils';
 import { parsePseudoToText, Text } from 'html2sketch';
 
 describe('parseToShape', () => {
@@ -46,14 +45,34 @@ describe('parseToShape', () => {
 `;
   });
 
-  it('text 解析成文本', () => {
-    const node = document.getElementById('text') as HTMLDivElement;
+  it('before 解析成文本', () => {
+    const node = document.getElementById('before') as HTMLDivElement;
     const text = parsePseudoToText(node, 'before') as Text;
 
-    const textLayer = text.toSketchJSON();
-    if (isUpdate) {
-      outputJSONData(textLayer, 'pseudo-text');
-    }
-    expect(textLayer).toStrictEqual(pseudoTextJSON);
+    const textJSON = text.toSketchJSON();
+
+    expect(textJSON._class).toBe('text');
+    expect(textJSON.attributedString.string).toBe('before');
+  });
+  it('after 解析成文本', () => {
+    const node = document.getElementById('after') as HTMLDivElement;
+    const text = parsePseudoToText(node, 'after') as Text;
+
+    const textJSON = text.toSketchJSON();
+
+    expect(textJSON._class).toBe('text');
+    expect(textJSON.attributedString.string).toBe('after');
+  });
+  it('mix 解析成文本', () => {
+    const node = document.getElementById('mix') as HTMLDivElement;
+    const mixBefore = parsePseudoToText(node, 'before') as Text;
+    const mixAfter = parsePseudoToText(node, 'after') as Text;
+    const beforeJSON = mixBefore.toSketchJSON();
+    const afterJSON = mixAfter.toSketchJSON();
+
+    expect(beforeJSON._class).toBe('text');
+    expect(beforeJSON.attributedString.string).toBe('mix-before');
+    expect(afterJSON._class).toBe('text');
+    expect(afterJSON.attributedString.string).toBe('mix-after');
   });
 });
