@@ -1,9 +1,6 @@
-import { Bitmap, Svg } from 'html2sketch';
+import { Bitmap, Svg, parseToBitmap } from 'html2sketch';
 import { errorBase64Url } from 'html2sketch/utils/image';
-import { readFileSync } from 'fs';
-import { resolve } from 'path';
-
-import { parseToBitmap } from '../image';
+import { antdSvg } from '@test-utils';
 
 describe('parseToBitmap', () => {
   describe('Png 内联', () => {
@@ -68,7 +65,6 @@ describe('parseToBitmap', () => {
     it('正常解析出 Svg', () => {
       const img = document.getElementById('img') as HTMLImageElement;
       const imageLayer = parseToBitmap(img);
-      const antdSvg = readFileSync(resolve(__dirname, './antd.svg'), 'utf8');
       expect((imageLayer as Svg)?.rawSVGString).toBe(antdSvg);
     });
   });

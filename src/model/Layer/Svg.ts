@@ -2,7 +2,7 @@ import SketchFormat from '@sketch-hq/sketch-file-format-ts';
 import * as svgson from 'svgson';
 import { SVGPathData } from 'svg-pathdata';
 
-import BaseLayer, { BaseLayerParams } from '../Base/BaseLayer';
+import BaseLayer from '../Base/BaseLayer';
 import ShapePath from './ShapePath';
 import ShapeGroup from './ShapeGroup';
 import { FrameType } from '../Base/Frame';
@@ -11,42 +11,7 @@ import { getUseReplacement, inlineStyles } from '../../utils/svg';
 import { defaultExportOptions } from '../utils';
 import { getGroupLayout } from '../../utils/layout';
 import Style from '../Style/Style';
-import { ShapeGroupType } from '../type';
-
-export type StartPoint = {
-  type: typeof SVGPathData.MOVE_TO;
-  x: number;
-  y: number;
-};
-
-export type CurvePoint = {
-  type: typeof SVGPathData.CURVE_TO;
-  x1: number;
-  y1: number;
-  x2: number;
-  y2: number;
-  x: number;
-  y: number;
-};
-
-export type LinePoint = {
-  type: typeof SVGPathData.LINE_TO;
-  x: number;
-  y: number;
-};
-
-export type BezierPoint = StartPoint | CurvePoint | LinePoint;
-
-export interface SvgShape {
-  path: string;
-  style?: any;
-  /**
-   * 缠绕规则 奇偶缠绕和非零缠绕
-   * 详情见
-   * @see https://www.yuque.com/arvinxx/fontend/7ad6671c-d309-40fc-a0a8-55888f508289
-   */
-  windingRule?: SketchFormat.WindingRule;
-}
+import { ShapeGroupType, SvgShape, BaseLayerParams } from '../type';
 
 interface SvgInitParams extends Partial<BaseLayerParams> {
   svgString: string;
@@ -72,6 +37,7 @@ class Svg extends BaseLayer {
     // --------- 处理 Svg 的 Frame ------- //
 
     // ------ 将 Svg 的子节点转换成内部格式 ------ //
+
     // @ts-ignore
     let shapes: SvgShape[] = children
 
@@ -83,16 +49,18 @@ class Svg extends BaseLayer {
             return {
               path: attributes.d,
               style: attributes.style,
+              layers: [],
             };
           default:
         }
       })
       .filter((n) => n);
+
     // 如果没有对象的话 就直接结束
     if (shapes.length === 0) return;
 
     const fullPathString = shapes.reduce((prev, current) => {
-      return { path: prev.path + current.path };
+      return { path: prev.path + current.path, layers: [] };
     }).path;
 
     // 计算定界框的缩放尺寸
@@ -154,6 +122,70 @@ class Svg extends BaseLayer {
   rawSVGString: string;
 
   /**
+   * 转换为 Sketch 对象
+   * 会自动识别ShapeGroup 中是否只包含一个对象
+   * 从而清理无用的 ShapeGroup
+   */
+  toSketchJSON(): SketchFormat.Group | SketchFormat.ShapeGroup {
+    if (this.layers.length === 1) {
+      const layer = this.layers[0];
+      layer.x = this.x;
+      layer.y = this.y;
+      layer.resizingConstraint = this.resizingConstraint;
+      return layer.toSketchJSON() as SketchFormat.ShapeGroup;
+    }
+    return {
+      _class: 'group',
+      do_objectID: this.id,
+      booleanOperation: SketchFormat.BooleanOperation.NA,
+      isFixedToViewport: false,
+      isFlippedHorizontal: false,
+      isFlippedVertical: false,
+      isVisible: true,
+      isLocked: this.locked,
+      layerListExpandedType: 0,
+      name: this.name || this.class,
+      nameIsFixed: false,
+      resizingConstraint: this.resizingConstraint,
+      resizingType: SketchFormat.ResizeType.Stretch,
+      rotation: 0,
+      shouldBreakMaskChain: false,
+      exportOptions: defaultExportOptions,
+      frame: this.frame.toSketchJSON(),
+      clippingMaskMode: 0,
+      hasClippingMask: this.hasClippingMask,
+      style: this.style.toSketchJSON(),
+      hasClickThrough: false,
+      groupLayout: getGroupLayout(),
+      layers: this.layers.map((layer) => layer.toSketchJSON()),
+    };
+  }
+
+  /**
+   * ShapeGroup 转子图层方法
+   * @param shapeGroup
+   */
+  shapeGroupDataToLayers = (shapeGroup: ShapeGroupType) => {
+    const { shapes } = shapeGroup;
+
+    return shapes.map((shape) => {
+      const { points, isClose, frame } = shape;
+
+      return new ShapePath({
+        points,
+        isClose,
+
+        width: frame.width,
+        height: frame.height,
+        // 需要计算与 innerFrame 的相对坐标
+        // https://www.yuque.com/design-engineering/sketch-dev/hsbz8m#OPWbw
+        x: frame.x,
+        y: frame.y,
+      });
+    });
+  };
+
+  /**
    * 将 Path 转为贝赛尔曲线
    * @param svgPath 路径
    */
@@ -201,30 +233,6 @@ class Svg extends BaseLayer {
       shapes,
       frame: groupFrame,
     };
-  };
-
-  /**
-   * ShapeGroup 转子图层方法
-   * @param shapeGroup
-   */
-  shapeGroupDataToLayers = (shapeGroup: ShapeGroupType) => {
-    const { shapes } = shapeGroup;
-
-    return shapes.map((shape) => {
-      const { points, isClose, frame } = shape;
-
-      return new ShapePath({
-        points,
-        isClose,
-
-        width: frame.width,
-        height: frame.height,
-        // 需要计算与 innerFrame 的相对坐标
-        // https://www.yuque.com/design-engineering/sketch-dev/hsbz8m#OPWbw
-        x: frame.x,
-        y: frame.y,
-      });
-    });
   };
 
   /**
@@ -301,44 +309,70 @@ class Svg extends BaseLayer {
   };
 
   /**
-   * 转换为 Sketch 对象
-   * 会自动识别ShapeGroup 中是否只包含一个对象
-   * 从而清理无用的 ShapeGroup
+   * 将 svgon 解析出来的 node 转变为 svgShape
+   * @param node
    */
-  toSketchJSON(): SketchFormat.Group | SketchFormat.ShapeGroup {
-    if (this.layers.length === 1) {
-      const layer = this.layers[0];
-      layer.x = this.x;
-      layer.y = this.y;
-      layer.resizingConstraint = this.resizingConstraint;
-      return layer.toSketchJSON() as SketchFormat.ShapeGroup;
+  static parseSvgsonToSvgShapes = (
+    node?: svgson.INode,
+  ): SvgShape | SvgShape[] | undefined => {
+    if (!node) return;
+    const { children } = node;
+    if (children.length > 0) {
+      const svgShapes = children.map(Svg.parseSvgsonToSvgShape);
+      return svgShapes.filter((s) => s) as SvgShape[];
     }
-    return {
-      _class: 'group',
-      do_objectID: this.id,
-      booleanOperation: SketchFormat.BooleanOperation.NA,
-      isFixedToViewport: false,
-      isFlippedHorizontal: false,
-      isFlippedVertical: false,
-      isVisible: true,
-      isLocked: this.locked,
-      layerListExpandedType: 0,
-      name: this.name || this.class,
-      nameIsFixed: false,
-      resizingConstraint: this.resizingConstraint,
-      resizingType: SketchFormat.ResizeType.Stretch,
-      rotation: 0,
-      shouldBreakMaskChain: false,
-      exportOptions: defaultExportOptions,
-      frame: this.frame.toSketchJSON(),
-      clippingMaskMode: 0,
-      hasClippingMask: this.hasClippingMask,
-      style: this.style.toSketchJSON(),
-      hasClickThrough: false,
-      groupLayout: getGroupLayout(),
-      layers: this.layers.map((layer) => layer.toSketchJSON()),
-    };
-  }
+    return Svg.parseSvgsonToSvgShape(node);
+  };
+
+  static parseSvgsonToSvgShape = (
+    node: svgson.INode,
+  ): SvgShape | SvgShape[] | undefined => {
+    const { children, attributes, name, type, value } = node;
+
+    let layers: SvgShape[] = [];
+
+    switch (name) {
+      // 入口
+      case 'svg':
+        if (children.length > 0) {
+          const svgShapes = children.map(Svg.parseSvgsonToSvgShape);
+          layers = svgShapes.filter((s) => s) as SvgShape[];
+        }
+        return layers;
+      // 编组
+      case 'g':
+        if (children.length > 0) {
+          const svgShapes = children.map(Svg.parseSvgsonToSvgShape);
+          layers = svgShapes.filter((s) => s) as SvgShape[];
+        }
+        return {
+          type: 'group',
+          layers,
+          path: '',
+          style: attributes.style,
+        };
+      case 'defs':
+        return {};
+
+      // path
+      case 'path':
+        return {
+          path: attributes.d,
+          style: attributes.style,
+          layers,
+        };
+      // 圆形
+      case 'ellipse':
+        return {
+          style: attributes.style,
+        };
+
+      // 两者是无关紧要的信息
+      case 'title':
+      case 'desc':
+      default:
+    }
+  };
 }
 
 export default Svg;

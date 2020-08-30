@@ -11,6 +11,9 @@ import {
   upCircleSvg,
   plusSvg,
   plus,
+  antdSvg,
+  antdJSON,
+  antdSvgson,
 } from '@test-utils';
 import Svg from '../Svg';
 
@@ -97,6 +100,21 @@ describe('Svg 类', () => {
           outputJSONData(svg.toSketchJSON(), 'up-circle');
         }
         expect(svg.toSketchJSON()).toStrictEqual(upCircleSvg.sketchJSON);
+      });
+    });
+
+    describe('解析复杂插画', () => {
+      it('antd Logo 可正常解析', () => {
+        const svg = new Svg({
+          height: 100,
+          width: 100,
+          x: 0,
+          y: 0,
+          svgString: antdSvg,
+        });
+        // outputJSONData(svg.toSketchJSON(), 'antd');
+
+        expect(svg.toSketchJSON()).toStrictEqual(antdJSON);
       });
     });
   });
@@ -270,5 +288,12 @@ describe('Svg 类', () => {
     //   </g>
     // </svg>`);
     // });
+  });
+
+  describe('parseSvgonToSvgShape', () => {
+    it('antd Svgson', () => {
+      const data = Svg.parseSvgsonToSvgShape(antdSvgson);
+      console.log(data);
+    });
   });
 });

@@ -1,6 +1,6 @@
 import SketchFormat from '@sketch-hq/sketch-file-format-ts';
-import { writeFileSync } from 'fs';
-import { join } from 'path';
+import { readFileSync, writeFileSync } from 'fs';
+import { join, resolve } from 'path';
 import svg from './json/svg.json';
 import svgPath from './json/svg-path.json';
 import behance from './json/behance.json';
@@ -9,11 +9,13 @@ import upCircle from './json/up-circle.json';
 import plus from './json/plus.json';
 import text from './json/text.json';
 import shape from './json/shape.json';
+import antd from './json/antd.json';
 import nodeToGroup from './json/node-to-group.json';
 import nodeToGroupGroup from './json/node-to-group-group.json';
 import pseudoText from './json/pseudo-text.json';
 
 export const svgJSON = svg;
+export const antdJSON = antd;
 export const behanceJSON = behance;
 export const dropboxJSON = dropbox;
 export const upCircleJSON = upCircle;
@@ -50,6 +52,12 @@ export const outputJSONData = (
     JSON.stringify(json),
   );
 };
+
+export const antdSvg = readFileSync(resolve(__dirname, './antd.svg'), 'utf8');
+
+export const antdSvgson = JSON.parse(
+  readFileSync(resolve(__dirname, './antd-svgson.json'), 'utf8'),
+);
 
 /**
  * 更新
