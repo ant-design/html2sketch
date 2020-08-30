@@ -126,7 +126,7 @@ Object {
           "point": "{0, 1}",
         },
       ],
-      "resizingConstraint": 63,
+      "resizingConstraint": 23,
       "resizingType": 0,
       "rotation": 0,
       "shouldBreakMaskChain": false,
@@ -627,7 +627,6 @@ Object {
         "startMarkerType": 0,
         "windingRule": 1,
       },
-      "userInfo": null,
     },
     Object {
       "_class": "text",
@@ -876,37 +875,7 @@ Object {
             },
             "do_objectID": "UUID",
             "endMarkerType": 0,
-            "fills": Array [
-              Object {
-                "_class": "fill",
-                "color": Object {
-                  "_class": "color",
-                  "alpha": 0,
-                  "blue": 0,
-                  "green": 0,
-                  "red": 0,
-                },
-                "contextSettings": Object {
-                  "_class": "graphicsContextSettings",
-                  "blendMode": 0,
-                  "opacity": 1,
-                },
-                "fillType": 0,
-                "gradient": Object {
-                  "_class": "gradient",
-                  "elipseLength": 0,
-                  "from": "{0, 0}",
-                  "gradientType": 0,
-                  "stops": Array [],
-                  "to": "{1, 0}",
-                },
-                "isEnabled": true,
-                "noiseIndex": 0,
-                "noiseIntensity": 0,
-                "patternFillType": 1,
-                "patternTileScale": 1,
-              },
-            ],
+            "fills": Array [],
             "innerShadows": Array [
               Object {
                 "_class": "innerShadow",
@@ -1308,7 +1277,6 @@ Object {
             "startMarkerType": 0,
             "windingRule": 1,
           },
-          "userInfo": null,
         },
         Object {
           "_class": "group",
@@ -1683,7 +1651,6 @@ Object {
             "startMarkerType": 0,
             "windingRule": 1,
           },
-          "userInfo": null,
         },
       ],
       "name": "编组",
@@ -1724,7 +1691,6 @@ Object {
         "startMarkerType": 0,
         "windingRule": 1,
       },
-      "userInfo": null,
     },
     Object {
       "_class": "shapePath",
