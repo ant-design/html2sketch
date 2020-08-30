@@ -10,7 +10,7 @@ describe('nodeToSketchSymbol', function () {
   it('单个正常解析', function () {
     const node = document.getElementById('group') as HTMLDivElement;
 
-    const group = nodeToSketchSymbol(node);
-    expect(group.toSketchJSON()).toMatchSnapshot();
+    const symbol = nodeToSketchSymbol(node);
+    expect(symbol.toSketchJSON()).toMatchSnapshot();
   });
 });
