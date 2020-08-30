@@ -2,7 +2,6 @@ module.exports = {
   preset: 'ts-jest',
   runner: 'jest-electron/runner',
   testEnvironment: 'jest-electron/environment',
-  // testEnvironment: 'jsdom',
   verbose: true,
   transform: {
     '^.+\\.(t|j)sx?$': 'ts-jest',
