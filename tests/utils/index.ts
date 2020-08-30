@@ -10,6 +10,8 @@ import plus from './json/plus.json';
 import text from './json/text.json';
 import shape from './json/shape.json';
 import group from './json/group.json';
+import nodeToGroup from './json/node-to-group.json';
+import nodeToGroupGroup from './json/node-to-group-group.json';
 
 export const svgJSON = svg;
 export const behanceJSON = behance;
@@ -20,6 +22,8 @@ export const svgPathJSON = svgPath;
 export const textJSON = text;
 export const shapeJSON = shape;
 export const groupJSON = group;
+export const nodeToGroupJSON = nodeToGroup;
+export const nodeToGroupGroupJSON = nodeToGroupGroup;
 
 /**
  * 打印出 JSON 数据到路径中

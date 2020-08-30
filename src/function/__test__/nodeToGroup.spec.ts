@@ -1,4 +1,10 @@
 import nodeToGroup from '../nodeToGroup';
+import {
+  isUpdate,
+  outputJSONData,
+  nodeToGroupJSON,
+  nodeToGroupGroupJSON,
+} from '@test-utils';
 
 describe('单个', function () {
   afterEach(() => {
@@ -10,7 +16,11 @@ describe('单个', function () {
   it('正常解析', function () {
     const node = document.getElementById('group') as HTMLDivElement;
     const group = nodeToGroup(node);
-    expect(group.toSketchJSON()).toMatchSnapshot();
+    // expect(group.toSketchJSON()).toMatchSnapshot();
+    if (isUpdate) {
+      outputJSONData(group.toSketchJSON(), 'node-to-group');
+    }
+    expect(group.toSketchJSON()).toStrictEqual(nodeToGroupJSON);
   });
 });
 
@@ -25,6 +35,11 @@ describe('多个解析', function () {
   it('多个解析', () => {
     const node = document.getElementById('group') as HTMLDivElement;
     const group = nodeToGroup(node);
-    expect(group.toSketchJSON()).toMatchSnapshot();
+
+    // expect(group.toSketchJSON()).toMatchSnapshot();
+    if (isUpdate) {
+      outputJSONData(group.toSketchJSON(), 'node-to-group-group');
+    }
+    expect(group.toSketchJSON()).toStrictEqual(nodeToGroupGroupJSON);
   });
 });
