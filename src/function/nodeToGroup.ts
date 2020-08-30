@@ -4,7 +4,7 @@ import { isNodeVisible } from '../utils/visibility';
 import { getChildNodeList } from '../utils/hierarchy';
 import { getName } from '../utils/name';
 import { Group, Style } from '../model';
-import { isExistPseudoText, isExistPseudoShape } from '../utils/shape';
+import { isExistPseudoText, isExistPseudoShape } from '../utils/pseudo';
 import { AnyLayer } from '..';
 
 export interface Options {
@@ -89,8 +89,8 @@ const nodeToGroup = (node: Element, options?: Options): Group => {
 
   if (
     group.layers.length === 0 &&
-    !isExistPseudoText(node) &&
-    !isExistPseudoShape(node)
+    !isExistPseudoText(node).exist &&
+    !isExistPseudoShape(node).exist
   ) {
     console.groupCollapsed('%c清理无效层级', consoleGroupStyle);
     console.log('该 group 是空的,丢弃...');

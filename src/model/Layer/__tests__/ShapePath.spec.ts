@@ -1,4 +1,3 @@
-import ShapePath from '../ShapePath';
 import {
   rect,
   singleRoundRect,
@@ -7,7 +6,8 @@ import {
   unclosedRect,
   upArrow,
   plus,
-} from './commonSvgData';
+} from '@test-utils';
+import ShapePath from '../ShapePath';
 
 describe('ShapePath', () => {
   describe('toSketchJSON 转换符合规范', () => {

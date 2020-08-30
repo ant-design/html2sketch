@@ -40,26 +40,6 @@
 
 ## 开发
 
-### 前置依赖安装
-
-#### node-canvas
-
-由于开发中测试环境依赖模块 `node-canvas` , 需要前置安装:
-
-| 系统 | 命令 |
-| --- | --- |
-| OS X | `brew install pkg-config cairo pango libpng jpeg giflib librsvg` |
-| Ubuntu | `sudo apt-get install build-essential libcairo2-dev libpango1.0-dev libjpeg-dev libgif-dev librsvg2-dev` |
-| Fedora | `sudo yum install gcc-c++ cairo-devel pango-devel libjpeg-turbo-devel giflib-devel` |
-| Solaris | `pkgin install cairo pango pkg-config xproto renderproto kbproto xextproto` |
-| OpenBSD | `doas pkg_add cairo pango png jpeg giflib` |
-| Windows | See the [wiki](https://github.com/Automattic/node-canvas/wiki/Installation:-Windows) |
-| Others | See the [wiki](https://github.com/Automattic/node-canvas/wiki) |
-
-#### Puppeteer
-
-e2e 使用到 Puppeteer, 默认情况下会直接安装
-
 ### 依赖安装
 
 ```basg
@@ -70,6 +50,30 @@ npm i
 
 ```bash
 yarn install
+```
+
+### 特殊依赖说明
+
+正常开发基本用不到下述特殊依赖,但是涉及到单元测试和 e2e 测试时需要使用
+
+#### Puppeteer
+
+e2e 使用到 Puppeteer, 默认情况下会直接安装
+
+国内加速可以在`.npmrc` 中添加
+
+```
+puppeteer_download_host=https://npm.taobao.org/mirrors
+```
+
+#### jest-electron
+
+开发中测试环境依赖模块 `jest-electron`
+
+国内加速可以在 `.npmrc` 添加
+
+```
+electron_mirror=https://cdn.npm.taobao.org/dist/electron/
 ```
 
 ## 架构说明
@@ -111,12 +115,12 @@ yarn install
 
 ```
 src
-├── index.ts                       # 索引
-├── type.ts                        # 相关类型定义文件
-├── function                       # 合成方法
-├── model                          # 设计对象实体
+├── function                       # 解析方法
 ├── parser                         # 解析器
+├── model                          # 对象实体
 └── utils                          # 工具函数
+├── index.ts                       # 索引
+├── type.ts                        # 类型定义
 ```
 
 #### 实现思路

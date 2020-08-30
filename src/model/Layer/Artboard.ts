@@ -8,7 +8,7 @@ import Color from '../Style/Color';
  * 画板对象
  * */
 class Artboard extends BaseLayer {
-  constructor(params: BaseLayerParams) {
+  constructor(params?: BaseLayerParams) {
     super(SketchFormat.ClassValue.Artboard, params);
   }
 

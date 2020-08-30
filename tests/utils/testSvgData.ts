@@ -1,17 +1,13 @@
 import SketchFormat from '@sketch-hq/sketch-file-format-ts';
 import { SVGPathData } from 'svg-pathdata';
-import {
-  behanceJSON,
-  dropboxJSON,
-  upCircleJSON,
-  plusJSON,
-  svgPathJSON,
-} from '@test-utils';
-import { Frame, Style } from '../../index';
-import { defaultExportOptions } from '../../utils';
-import { ShapePathType } from '../../type';
-
-import { SvgShape } from '../Svg';
+import { Frame, Style, ShapePathType } from 'html2sketch';
+import { defaultExportOptions } from 'html2sketch/model/utils';
+import { SvgShape } from 'html2sketch/model/Layer/Svg';
+import behanceJSON from './json/behance.json';
+import dropboxJSON from './json/dropbox.json';
+import upCircleJSON from './json/up-circle.json';
+import plusJSON from './json/plus.json';
+import svgPathJSON from './json/svg-path.json';
 
 interface TestPathData {
   path: string;
