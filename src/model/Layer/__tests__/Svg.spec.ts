@@ -24,7 +24,7 @@ describe('Svg 类', () => {
           x: -90,
           y: 4,
         });
-        expect(svg.toSketchJSON()).toMatchSnapshot();
+        // expect(svg.toSketchJSON()).toMatchSnapshot();
         if (isUpdate) {
           // 如果出现小数点的不一致 进行重新输出
           outputJSONData(svg.toSketchJSON(), 'svg-path');
@@ -39,7 +39,7 @@ describe('Svg 类', () => {
           y: 349,
           svgString: dropboxSvgPath.svgString,
         });
-        expect(svg.toSketchJSON()).toMatchSnapshot();
+        // expect(svg.toSketchJSON()).toMatchSnapshot();
         if (isUpdate) {
           // 如果出现小数点的不一致 进行重新输出
           outputJSONData(svg.toSketchJSON(), 'dropbox');
@@ -54,7 +54,7 @@ describe('Svg 类', () => {
           y: 18.01116071428572,
           svgString: behanceSvg.svgString,
         });
-        expect(svg.toSketchJSON()).toMatchSnapshot();
+        // expect(svg.toSketchJSON()).toMatchSnapshot();
         if (isUpdate) {
           // 如果出现小数点的不一致 进行重新输出
           outputJSONData(svg.toSketchJSON(), 'behance');
@@ -63,39 +63,40 @@ describe('Svg 类', () => {
       });
     });
 
-    describe('多条 path', () => {});
-    it('plusSvg 转换正常', () => {
-      const svg = new Svg({
-        height: 25,
-        width: 24,
-        x: 164,
-        y: 22,
-        svgString: plusSvg.svgString,
-      });
-      // 如果出现小数点的不一致 进行重新输出
-      expect(svg.toSketchJSON()).toMatchSnapshot();
-      if (isUpdate) {
+    describe('多条 path', () => {
+      it('plusSvg 转换正常', () => {
+        const svg = new Svg({
+          height: 25,
+          width: 24,
+          x: 164,
+          y: 22,
+          svgString: plusSvg.svgString,
+        });
         // 如果出现小数点的不一致 进行重新输出
-        outputJSONData(svg.toSketchJSON(), 'plus');
-      }
-      expect(svg.toSketchJSON()).toStrictEqual(plusSvg.sketchJSON);
-    });
+        // expect(svg.toSketchJSON()).toMatchSnapshot();
+        if (isUpdate) {
+          // 如果出现小数点的不一致 进行重新输出
+          outputJSONData(svg.toSketchJSON(), 'plus');
+        }
+        expect(svg.toSketchJSON()).toStrictEqual(plusSvg.sketchJSON);
+      });
 
-    describe('多条路径 upArrow 转换正常', () => {
-      const svg = new Svg({
-        svgString: upCircleSvg.svgString,
-        height: 300,
-        width: 300,
-        x: 25,
-        y: -102,
-      });
-      expect(svg.toSketchJSON()).toMatchSnapshot();
-      // 如果出现小数点的不一致 进行重新输出
-      if (isUpdate) {
+      it('多条路径 upArrow 转换正常', () => {
+        const svg = new Svg({
+          svgString: upCircleSvg.svgString,
+          height: 300,
+          width: 300,
+          x: 25,
+          y: -102,
+        });
+        // expect(svg.toSketchJSON()).toMatchSnapshot();
         // 如果出现小数点的不一致 进行重新输出
-        outputJSONData(svg.toSketchJSON(), 'up-circle');
-      }
-      expect(svg.toSketchJSON()).toStrictEqual(upCircleSvg.sketchJSON);
+        if (isUpdate) {
+          // 如果出现小数点的不一致 进行重新输出
+          outputJSONData(svg.toSketchJSON(), 'up-circle');
+        }
+        expect(svg.toSketchJSON()).toStrictEqual(upCircleSvg.sketchJSON);
+      });
     });
   });
 

@@ -6,7 +6,7 @@ describe('parseToGroup', () => {
     document.body.innerHTML = '';
   });
   beforeAll(() => {
-    document.body.innerHTML = `<div id="group">123</div>`;
+    document.body.innerHTML = `<div id="group" style="line-height: 22px">123</div>`;
   });
   it('文本正常解析', () => {
     const node = document.getElementById('group') as HTMLDivElement;
