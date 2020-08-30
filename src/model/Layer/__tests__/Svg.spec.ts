@@ -1,6 +1,6 @@
-import { isUpdate, outputJSONData } from '@test-utils';
-import Svg from '../Svg';
 import {
+  isUpdate,
+  outputJSONData,
   svgPath,
   rect,
   compPath,
@@ -11,7 +11,8 @@ import {
   upCircleSvg,
   plusSvg,
   plus,
-} from './commonSvgData';
+} from '@test-utils';
+import Svg from '../Svg';
 
 describe('Svg 类', () => {
   describe('toSketchJSON', () => {

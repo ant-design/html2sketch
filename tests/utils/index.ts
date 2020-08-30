@@ -29,6 +29,8 @@ export const nodeToGroupGroupJSON = nodeToGroupGroup;
 export const pseudoRadioJSON = pseudoRadio;
 export const pseudoTextJSON = pseudoText;
 
+export * from './testSvgData';
+
 /**
  * 打印出 JSON 数据到路径中
  *
