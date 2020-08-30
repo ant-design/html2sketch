@@ -11,6 +11,6 @@ describe('nodeToSketchSymbol', function () {
     const node = document.getElementById('group') as HTMLDivElement;
 
     const symbol = nodeToSketchSymbol(node);
-    expect(symbol.toSketchJSON()).toMatchSnapshot();
+    expect(symbol.toSketchJSON()._class).toBe('symbolMaster');
   });
 });

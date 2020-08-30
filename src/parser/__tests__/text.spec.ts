@@ -1,4 +1,4 @@
-import { isUpdate, outputJSONData, textJSON } from '@test-utils';
+import { isUpdate, outputJSONData } from '@test-utils';
 import { parseToText, Text } from 'html2sketch';
 
 describe('parseToText', () => {
@@ -6,7 +6,7 @@ describe('parseToText', () => {
     document.body.innerHTML = '';
   });
   beforeAll(() => {
-    document.body.innerHTML = `<div id="text" style="font-family:"PingFang TC"">123</div>`;
+    document.body.innerHTML = `<div id="text"">123</div>`;
   });
   it('文本正常解析', () => {
     const node = document.getElementById('text') as HTMLDivElement;
@@ -19,6 +19,20 @@ describe('parseToText', () => {
       outputJSONData(text.toSketchJSON(), 'text');
     }
 
-    expect(text.toSketchJSON()).toStrictEqual(textJSON);
+    expect(text.toSketchJSON().attributedString.string).toBe('123');
+  });
+  it('空文本不解析', () => {
+    const node = document.createElement('div');
+
+    const text = parseToText(node);
+    expect(text).toBeUndefined();
+  });
+  it('多个文本解析正常', () => {
+    // const node = document.createElement('div');
+    // node.innerHTML = `<div id="text" style="font-family:"PingFang TC""><span>13</span>123</div>`;
+    // console.log(node);
+    // const text = parseToText(node);
+    // expect(text).toBeTruthy();
+    // expect((text as Text[]).length).toBe(2);
   });
 });
