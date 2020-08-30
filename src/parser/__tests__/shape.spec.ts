@@ -1,9 +1,6 @@
 import { parseToShape } from 'html2sketch';
 
 describe('parseToShape', () => {
-  afterAll(() => {
-    document.body.innerHTML = '';
-  });
   beforeAll(() => {
     document.body.innerHTML = `
 <div id="shape" style="background: rgba(124,14,53,0.12);width:200px" />
@@ -11,6 +8,13 @@ describe('parseToShape', () => {
 <div id="border" style="border: 2px solid blue;" />
 <div id="dashed-border" style="border: 2px dashed blue;" />
 <div id="dotted-border" style="border: 2px dotted blue;" />
+<div id="single-border" style="
+  border-top: 3px solid red;
+  border-left: 2px solid blue;
+  border-right: 1px solid rgb(0,255,0);
+  border-bottom: 3px solid black;
+" />
+
 <div id="inner-shadow" style="box-shadow: 0 1px 2px red inset;" />
 <div id="multi-shadow" style="
   box-shadow: 0 3px 6px -4px rgba(0, 0, 0, 0.12), 0 6px 16px 0 rgba(0, 0, 0, 0.08), 0 9px 28px 8px rgba(0, 0, 0, 0.05);"
@@ -133,5 +137,31 @@ describe('parseToShape', () => {
     const node = document.getElementById('dotted-border') as HTMLDivElement;
     const borderJSON = parseToShape(node).toSketchJSON();
     expect(borderJSON.style?.borderOptions.dashPattern).toStrictEqual([2, 2]);
+  });
+  it('single-border 正常解析', () => {
+    const node = document.getElementById('single-border') as HTMLDivElement;
+    const borderJSON = parseToShape(node).toSketchJSON();
+    const shadows = borderJSON.style?.innerShadows;
+    expect(shadows?.length).toBe(4);
+    // 1 Top
+    const shadow1 = shadows?.[0];
+    expect(shadow1?.offsetY).toBe(3);
+    expect(shadow1?.color.red).toBe(1);
+    expect(shadow1?.blurRadius).toBe(0);
+    expect(shadow1?.spread).toBe(0);
+    // 2 Right
+    const shadow2 = shadows?.[1];
+    expect(shadow2?.offsetX).toBe(-1);
+    expect(shadow2?.color.green).toBe(1);
+    // 3 Bottom
+    const shadow3 = shadows?.[2];
+    expect(shadow3?.offsetY).toBe(-3);
+    expect(shadow3?.color.green).toBe(0);
+    expect(shadow3?.color.red).toBe(0);
+    expect(shadow3?.color.blue).toBe(0);
+    // 4 Left
+    const shadow4 = shadows?.[3];
+    expect(shadow4?.offsetX).toBe(2);
+    expect(shadow4?.color.blue).toBe(1);
   });
 });
