@@ -47,7 +47,7 @@ class Text extends BaseLayer {
    * 转换为 Sketch JSON 对象
    * */
   toSketchJSON = (): SketchFormat.Text => {
-    return {
+    const textJSON: SketchFormat.Text = {
       _class: 'text',
       do_objectID: this.id,
       booleanOperation: SketchFormat.BooleanOperation.NA,
@@ -63,7 +63,6 @@ class Text extends BaseLayer {
       resizingType: SketchFormat.ResizeType.Stretch,
       rotation: 0,
       shouldBreakMaskChain: false,
-      userInfo: this.userInfo ? this.userInfo : undefined,
       exportOptions: defaultExportOptions,
       frame: this.frame.toSketchJSON(),
       clippingMaskMode: 0,
@@ -77,6 +76,11 @@ class Text extends BaseLayer {
       textBehaviour: this.sketchTextBehaviour,
       glyphBounds: '',
     };
+
+    if (this.userInfo) {
+      textJSON.userInfo = this.userInfo;
+    }
+    return textJSON;
   };
 
   /**

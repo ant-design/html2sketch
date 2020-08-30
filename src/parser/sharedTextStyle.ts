@@ -3,7 +3,7 @@ import nodeToLayers from '../function/nodeToLayers';
 /**
  * 解析文本共享样式
  */
-const parserTextStyle = (node: HTMLElement) => {
+export const parseToSharedTextStyle = (node: HTMLElement) => {
   const styleName = node.innerText;
   const layer = nodeToLayers(node);
 
@@ -16,4 +16,3 @@ const parserTextStyle = (node: HTMLElement) => {
       };
     });
 };
-export default parserTextStyle;

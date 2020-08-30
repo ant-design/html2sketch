@@ -7,7 +7,7 @@ import { ColorParam } from '../model/Style/Color';
  * 将节点转换为 Shape 对象
  * @param node HTML Node
  */
-const transferToShape = (node: Element): Group | Rectangle => {
+export const parseToShape = (node: Element): Group | Rectangle => {
   const bcr = node.getBoundingClientRect();
   const style = new Style();
 
@@ -155,14 +155,14 @@ const transferToShape = (node: Element): Group | Rectangle => {
 
   // TODO borderRadius can be expressed in different formats and use various units - for simplicity we assume "X%"
   const cornerRadius = {
-    topLeft: Rectangle.parserBorderRadius(borderTopLeftRadius, width, height),
-    topRight: Rectangle.parserBorderRadius(borderTopRightRadius, width, height),
-    bottomLeft: Rectangle.parserBorderRadius(
+    topLeft: Rectangle.parseBorderRadius(borderTopLeftRadius, width, height),
+    topRight: Rectangle.parseBorderRadius(borderTopRightRadius, width, height),
+    bottomLeft: Rectangle.parseBorderRadius(
       borderBottomLeftRadius,
       width,
       height,
     ),
-    bottomRight: Rectangle.parserBorderRadius(
+    bottomRight: Rectangle.parseBorderRadius(
       borderBottomRightRadius,
       width,
       height,
@@ -240,5 +240,3 @@ const transferToShape = (node: Element): Group | Rectangle => {
   }
   return rect;
 };
-
-export default transferToShape;

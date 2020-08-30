@@ -40,6 +40,11 @@ abstract class BaseLayer {
   nodeType?: string;
 
   /**
+   * 来自节点的 ID
+   */
+  nodeId?: string;
+
+  /**
    * 来自样式的名称
    */
   className?: string;
@@ -191,6 +196,29 @@ abstract class BaseLayer {
   }
 
   /**
+   * 将基础的节点信息映射到对象中
+   * @param node
+   */
+  mapBasicInfo(node: Element) {
+    this.nodeType = node.nodeName.toLowerCase();
+    this.className = node.className;
+    this.nodeId = node.id;
+  }
+
+  /**
+   * 将自己的的样式转成 Sketch 的共享样式
+   * @param id
+   */
+  toSketchSharedStyle = (id?: string): SketchFormat.SharedStyle => {
+    return {
+      _class: 'sharedStyle',
+      do_objectID: id || uuid(),
+      name: this.name,
+      value: this.style?.toSketchJSON(),
+    };
+  };
+
+  /**
    * 获取所有子图层的尺寸
    */
   get childLayersSize() {
@@ -277,7 +305,7 @@ abstract class BaseLayer {
    * @param width
    * @param height
    */
-  static parserBorderRadius = (
+  static parseBorderRadius = (
     borderRadius: string,
     width: number,
     height: number,
@@ -292,6 +320,23 @@ abstract class BaseLayer {
       return Math.round(percentageApplied);
     }
     return parseInt(borderRadius, 10);
+  };
+
+  /**
+   * 将 layer 的样式转成 Sketch 的共享样式
+   * @param layer
+   * @param id
+   */
+  static layerToSketchSharedStyle = (
+    layer: AnyLayer,
+    id?: string,
+  ): SketchFormat.SharedStyle => {
+    return {
+      _class: 'sharedStyle',
+      do_objectID: id || uuid(),
+      name: layer.name,
+      value: layer.style?.toSketchJSON(),
+    };
   };
 }
 

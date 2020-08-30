@@ -43,7 +43,7 @@ class Group extends BaseLayer {
    * 转换为 Sketch JSON 对象
    */
   toSketchJSON = (): SketchFormat.Group => {
-    return {
+    const groupJSON: SketchFormat.Group = {
       _class: 'group',
       do_objectID: this.id,
       booleanOperation: SketchFormat.BooleanOperation.NA,
@@ -67,8 +67,12 @@ class Group extends BaseLayer {
       hasClickThrough: false,
       groupLayout: this.groupLayout,
       layers: this.layers.map((layer) => layer.toSketchJSON()),
-      userInfo: this.userInfo,
     };
+
+    if (this.userInfo) {
+      groupJSON.userInfo = this.userInfo;
+    }
+    return groupJSON;
   };
 }
 

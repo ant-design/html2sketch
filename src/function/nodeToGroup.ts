@@ -5,7 +5,7 @@ import { getChildNodeList } from '../utils/hierarchy';
 import { getName } from '../utils/name';
 import { Group, Style } from '../model';
 import { isExistPseudoText, isExistPseudoShape } from '../utils/shape';
-import { AnyLayer } from '../type';
+import { AnyLayer } from '..';
 
 export interface Options {
   postTransform?: (group: AnyLayer) => AnyLayer;
@@ -71,6 +71,7 @@ const nodeToGroup = (node: Element, options?: Options): Group => {
     group.layers.length === 1 &&
     (group.layers[0].class === 'rectangle' ||
       group.layers[0].class === 'text' ||
+      group.layers[0].class === 'bitmap' ||
       group.layers[0].class === 'svg' ||
       group.layers[0].class === 'group')
   ) {

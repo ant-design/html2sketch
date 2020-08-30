@@ -1,16 +1,15 @@
 import SketchFormat from '@sketch-hq/sketch-file-format-ts';
 import { SVGPathData } from 'svg-pathdata';
-import { writeFileSync } from 'fs';
-import { join } from 'path';
+import {
+  behanceJSON,
+  dropboxJSON,
+  upCircleJSON,
+  plusJSON,
+  svgPathJSON,
+} from '@test-utils';
 import { Frame, Style } from '../../index';
 import { defaultExportOptions } from '../../utils';
 import { ShapePathType } from '../../type';
-
-import svgPathJSON from './json/svg-path.json';
-import behanceJSON from './json/behance.json';
-import dropboxJSON from './json/dropbox.json';
-import plusJSON from './json/plus.json';
-import upCircleJSON from './json/up-circle.json';
 
 import { SvgShape } from '../Svg';
 
@@ -72,30 +71,6 @@ export const shapeGroupData = {
   hasClickThrough: false,
   windingRule: 1,
 };
-
-/**
- * 打印出 JSON 数据到路径中
- *
- * 如果出现不一致了,可以重新输出 JSON 对象
- * 类似 Enzyme 的快照功能
- *
- * @param json
- * @param name
- */
-export const outputJSONData = (
-  json: SketchFormat.Group | SketchFormat.ShapeGroup,
-  name?: string,
-) => {
-  writeFileSync(
-    join(__dirname, `./json/${name || 'json'}.json`),
-    JSON.stringify(json),
-  );
-};
-
-/**
- * 更新
- */
-export const isUpdate = process.env.UPDATE === '1';
 
 // ----------- Path 类 ------------- //
 

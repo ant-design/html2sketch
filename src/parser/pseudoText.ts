@@ -4,7 +4,10 @@ import { getTextContext } from '../utils/text';
 /**
  * 解析伪类
  */
-const parsePseudoText = (node: Element, pseudoElt: 'before' | 'after') => {
+export const parsePseudoToText = (
+  node: Element,
+  pseudoElt: 'before' | 'after',
+) => {
   // 判断一下是否有伪类
   const pseudoEl: CSSStyleDeclaration = getComputedStyle(node, `:${pseudoElt}`);
   const { content, display } = pseudoEl;
@@ -67,5 +70,3 @@ const parsePseudoText = (node: Element, pseudoElt: 'before' | 'after') => {
     multiline: false,
   });
 };
-
-export default parsePseudoText;

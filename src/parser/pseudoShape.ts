@@ -1,13 +1,16 @@
 import { Style, Rectangle, Shadow } from '../model';
 import { defaultNodeStyle } from '../model/utils';
-import { isVisibleShape } from '../utils/shape';
+import { isVisibleShape } from '../utils/visibility';
 
 /**
  * 解析图形类伪类
  */
 // @ts-ignore
 // eslint-disable-next-line consistent-return
-const parsePseudo = (node: Element, pseudoElt: 'before' | 'after') => {
+export const parsePseudoToShape = (
+  node: Element,
+  pseudoElt: 'before' | 'after',
+) => {
   // 判断一下是否有伪类
   const pseudoEl: CSSStyleDeclaration = getComputedStyle(node, `:${pseudoElt}`);
   const { content, display } = pseudoEl;
@@ -59,8 +62,7 @@ const parsePseudo = (node: Element, pseudoElt: 'before' | 'after') => {
     x: left,
     y: top,
   });
-
-  rect.nodeType = node.nodeName;
+  rect.mapBasicInfo(node);
 
   // support for one-side borders (using inner shadow because Sketch doesn't support that)
   if (borderWidth.indexOf(' ') === -1) {
@@ -146,14 +148,14 @@ const parsePseudo = (node: Element, pseudoElt: 'before' | 'after') => {
   // TODO borderRadius can be expressed in different formats and use various units -
   // for simplicity we assume "X%"
   const cornerRadius = {
-    topLeft: Rectangle.parserBorderRadius(borderTopLeftRadius, width, height),
-    topRight: Rectangle.parserBorderRadius(borderTopRightRadius, width, height),
-    bottomLeft: Rectangle.parserBorderRadius(
+    topLeft: Rectangle.parseBorderRadius(borderTopLeftRadius, width, height),
+    topRight: Rectangle.parseBorderRadius(borderTopRightRadius, width, height),
+    bottomLeft: Rectangle.parseBorderRadius(
       borderBottomLeftRadius,
       width,
       height,
     ),
-    bottomRight: Rectangle.parserBorderRadius(
+    bottomRight: Rectangle.parseBorderRadius(
       borderBottomRightRadius,
       width,
       height,
@@ -164,5 +166,3 @@ const parsePseudo = (node: Element, pseudoElt: 'before' | 'after') => {
 
   if (isVisibleShape(rect)) return rect;
 };
-
-export default parsePseudo;

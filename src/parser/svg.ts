@@ -5,7 +5,7 @@ import Svg from '../model/Layer/Svg';
  * 将 SVG node 节点转为 SVG Sketch对象
  * @param {SVGElement} node svg节点
  */
-const parserToSvg = (node: SVGElement) => {
+export const parseToSvg = (node: SVGElement) => {
   // sketch ignores padding and centering as defined by viewBox and preserveAspectRatio when
   // importing Svg, so instead of using BCR of the Svg, we are using BCR of its children
   const childrenBCR = Svg.getChildNodesFrame(Array.from(node.children));
@@ -32,4 +32,3 @@ const parserToSvg = (node: SVGElement) => {
   svg.name = node.getAttribute('data-icon') || 'svg';
   return svg;
 };
-export default parserToSvg;

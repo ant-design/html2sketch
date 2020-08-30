@@ -302,8 +302,8 @@ class TextStyle {
         paragraphStyle: {
           _class: 'paragraphStyle',
           alignment: this.getSketchHorizontalAlign(),
-          maximumLineHeight: this.lineHeight,
-          minimumLineHeight: this.lineHeight,
+          maximumLineHeight: this.lineHeight || 22,
+          minimumLineHeight: this.lineHeight || 22,
         },
         /**
          * 字宽

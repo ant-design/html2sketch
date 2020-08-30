@@ -1,7 +1,7 @@
 import { Group, Style } from '../model';
 import { getName } from '../utils/name';
 
-const transferToGroup = (node: Element) => {
+export const parseToGroup = (node: Element) => {
   const bcr = node.getBoundingClientRect();
   const x = bcr.left;
   const y = bcr.top;
@@ -21,6 +21,6 @@ const transferToGroup = (node: Element) => {
   // Set the group name to the node's name, unless there is a name provider in the options
   group.name = getName(node.nodeName);
 
+  group.mapBasicInfo(node);
   return group;
 };
-export default transferToGroup;
