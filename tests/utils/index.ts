@@ -39,7 +39,8 @@ export const outputJSONData = (
     | SketchFormat.Group
     | SketchFormat.ShapeGroup
     | SketchFormat.Text
-    | SketchFormat.Rectangle,
+    | SketchFormat.Rectangle
+    | any[],
   name?: string,
 ) => {
   writeFileSync(

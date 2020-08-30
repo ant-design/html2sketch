@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 import { AnyLayer } from '..';
-import { defaultNodeStyle } from '../model/utils';
+import { isDefaultStyles } from '../utils/style';
 import { Text } from '../model';
 
 import {
@@ -14,7 +14,7 @@ import {
 } from '../parser';
 
 import { isTextVisible } from '../utils/visibility';
-import { isExistPseudoText, isExistPseudoShape } from '../utils/shape';
+import { isExistPseudoText, isExistPseudoShape } from '../utils/pseudo';
 import {
   isCanvasNode,
   isImageNode,
@@ -22,19 +22,6 @@ import {
   isSvgNode,
   isTextNode,
 } from '../utils/nodeType';
-
-/**
- * 是否是默认样式
- */
-const isDefaultStyles = (styles: CSSStyleDeclaration) =>
-  Object.keys(defaultNodeStyle).every((key) => {
-    // @ts-ignore
-    const defaultValue = defaultNodeStyle[key];
-    // @ts-ignore
-    const value = styles[key];
-
-    return defaultValue === value;
-  });
 
 /**
  * 将节点转为 Layer 对象
@@ -69,31 +56,24 @@ const nodeToLayers = (node: Element): AnyLayer[] => {
   }
 
   // 图层存在样式(阴影 边框等) 使用 Rect 类
-  const isShape = !isDefaultStyles(styles);
+  const hasShape = !isDefaultStyles(styles);
 
+  const hasPseudoShape = isExistPseudoShape(node);
   // 如果图层存在样式(阴影 边框等 返回 shape 节点
-  if (isShape || isExistPseudoShape(node)) {
-    // 判断一下是否有伪类
+  if (hasPseudoShape.after) {
     const afterEl = parsePseudoToShape(node, 'after');
+    console.info('转换为:', afterEl);
+    layers.push(afterEl);
+  }
+  if (hasShape) {
+    const shape = parseToShape(node);
+    console.info('转换为:', shape);
+    layers.push(shape);
+  }
 
-    if (afterEl) {
-      console.info('转换为:', afterEl);
-      layers.push(afterEl);
-    }
-
-    if (isShape) {
-      const shape = parseToShape(node);
-      console.info('转换为:', shape);
-      layers.push(shape);
-    }
-
-    // 判断一下是否有伪类
+  if (hasPseudoShape.before) {
     const beforeEl = parsePseudoToShape(node, 'before');
-
-    if (beforeEl) {
-      console.info('转换为:', afterEl);
-      layers.push(beforeEl);
-    }
+    layers.push(beforeEl);
   }
 
   // 转换为 SVG
@@ -111,10 +91,11 @@ const nodeToLayers = (node: Element): AnyLayer[] => {
   }
 
   // 文本类型节点
-  const isText = isTextNode(node);
+  const isText = isTextNode(node); // 本身是文本节点
+  const hasPseudoText = isExistPseudoText(node); // 或者包含文本伪类
 
   // 转换为文本
-  if (isText || isExistPseudoText(node)) {
+  if (isText || hasPseudoText.exist) {
     let text;
     if (isText) {
       text = parseToText(node);
@@ -133,18 +114,18 @@ const nodeToLayers = (node: Element): AnyLayer[] => {
     }
 
     // 判断一下是否有伪类
-    const afterEl = parsePseudoToText(node, 'after');
 
-    if (afterEl) {
+    if (hasPseudoText.after) {
+      const afterEl = parsePseudoToText(node, 'after');
       layers.push(afterEl);
-      if (text instanceof Text) {
+      if (text instanceof Text && afterEl) {
         text.right = afterEl.x;
       }
     }
 
     // 判断一下是否有伪类
-    const beforeEl = parsePseudoToText(node, 'before');
-    if (beforeEl) {
+    if (hasPseudoText.before) {
+      const beforeEl = parsePseudoToText(node, 'before');
       layers.push(beforeEl);
     }
 
