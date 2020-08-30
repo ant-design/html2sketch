@@ -6,8 +6,12 @@ import { ColorParam } from '../model/Style/Color';
 /**
  * 将节点转换为 Shape 对象
  * @param node HTML Node
+ * @param styles
  */
-export const parseToShape = (node: Element): Group | Rectangle => {
+export const parseToShape = (
+  node: Element,
+  styles?: CSSStyleDeclaration,
+): Group | Rectangle => {
   const bcr = node.getBoundingClientRect();
   const style = new Style();
 
@@ -15,7 +19,9 @@ export const parseToShape = (node: Element): Group | Rectangle => {
   const width = bcr.right - bcr.left;
   const height = bcr.bottom - bcr.top;
 
-  const styles: CSSStyleDeclaration = getComputedStyle(node);
+  if (!styles) {
+    styles = getComputedStyle(node);
+  }
 
   const {
     // 背景颜色

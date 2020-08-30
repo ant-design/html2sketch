@@ -8,7 +8,7 @@ describe('parseToShape', () => {
   beforeAll(() => {
     document.body.innerHTML = `<div id="shape" style="background: aqua;width:200px"></div>`;
   });
-  it('文本正常解析', () => {
+  it('正常解析', () => {
     const node = document.getElementById('shape') as HTMLDivElement;
 
     const shape = parseToShape(node);

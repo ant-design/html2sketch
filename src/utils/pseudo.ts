@@ -11,7 +11,10 @@ export const isExistPseudoText = (node: Element): HasPseudoType => {
   const hasPseudoText = (style: CSSStyleDeclaration) => {
     const { display, content, color, opacity } = style;
 
-    const hasContent = content !== 'none'; // 存在文本内容
+    const pseudoText = content.replace(/"/g, '');
+
+    const hasContent =
+      content !== 'none' && content !== '""' && pseudoText.trim() !== ''; // 存在文本内容
 
     const isDisplayVisible = display !== 'none'; // display 属性可见
 
@@ -58,8 +61,9 @@ export const isExistPseudoShape: (node: Element) => HasPseudoType = (
   const afterPseudoEl: CSSStyleDeclaration = getComputedStyle(node, ':after');
 
   const hasPseudoShapeStyle = (style: CSSStyleDeclaration) => {
-    const { display, opacity } = style;
+    const { display, opacity, content } = style;
 
+    const hasContent = content !== 'none'; // 必须存在内容
     const isDisplayVisible = display !== 'none'; // display 属性可见
 
     const isDefaultStyle = isDefaultStyles(style);
@@ -67,7 +71,7 @@ export const isExistPseudoShape: (node: Element) => HasPseudoType = (
     const isOpacityVisible = Number(opacity) !== 0; // 图层不透明不为 0
     return (
       // 包含文本 且 不隐藏 且 文本不透明不为 0
-      isDisplayVisible && isOpacityVisible && !isDefaultStyle
+      hasContent && isDisplayVisible && isOpacityVisible && !isDefaultStyle
     );
   };
 

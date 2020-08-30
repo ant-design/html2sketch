@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`parseToShape 文本正常解析 1`] = `
+exports[`parseToShape 正常解析 1`] = `
 Object {
   "_class": "rectangle",
   "booleanOperation": -1,

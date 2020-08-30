@@ -12,6 +12,8 @@ import shape from './json/shape.json';
 import group from './json/group.json';
 import nodeToGroup from './json/node-to-group.json';
 import nodeToGroupGroup from './json/node-to-group-group.json';
+import pseudoRadio from './json/pseudo-radio.json';
+import pseudoText from './json/pseudo-text.json';
 
 export const svgJSON = svg;
 export const behanceJSON = behance;
@@ -24,6 +26,8 @@ export const shapeJSON = shape;
 export const groupJSON = group;
 export const nodeToGroupJSON = nodeToGroup;
 export const nodeToGroupGroupJSON = nodeToGroupGroup;
+export const pseudoRadioJSON = pseudoRadio;
+export const pseudoTextJSON = pseudoText;
 
 /**
  * 打印出 JSON 数据到路径中

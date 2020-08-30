@@ -59,7 +59,7 @@ describe('nodeToLayers', () => {
       });
       outputJSONData(obj, 'node-to-layers-pseudo');
     }
-    expect(layers.length).toBe(0);
+    expect(layers.length).toBe(1);
   });
 
   it('canvas 正常解析', () => {

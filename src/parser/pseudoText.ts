@@ -10,19 +10,9 @@ export const parsePseudoToText = (
 ) => {
   // 判断一下是否有伪类
   const pseudoEl: CSSStyleDeclaration = getComputedStyle(node, `:${pseudoElt}`);
-  const { content, display } = pseudoEl;
+  const { content } = pseudoEl;
   const pseudoNode = node.cloneNode(true);
   const pseudoText = content.replace(/"/g, '');
-
-  if (
-    content === 'none' ||
-    // 如果修剪一下没东西,也直接去掉
-    !pseudoText.trim() ||
-    content === '' ||
-    display === 'none'
-  ) {
-    return null;
-  }
 
   const {
     // 边框

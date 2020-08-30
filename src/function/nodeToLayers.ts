@@ -65,6 +65,7 @@ const nodeToLayers = (node: Element): AnyLayer[] => {
     console.info('转换为:', afterEl);
     layers.push(afterEl);
   }
+
   if (hasShape) {
     const shape = parseToShape(node);
     console.info('转换为:', shape);
