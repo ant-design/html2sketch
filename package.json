@@ -29,6 +29,7 @@
   "scripts": {
     "start": "UMI_ENV=e2e dumi dev",
     "build": "father-build && webpack",
+    "publish": "npm publish",
     "---------": "",
     "site": "dumi build && gh-pages -d ./dist",
     "site:dev": "dumi dev",
