@@ -11,7 +11,7 @@ import { getUseReplacement, inlineStyles } from '../../utils/svg';
 import { defaultExportOptions } from '../utils';
 import { getGroupLayout } from '../../utils/layout';
 import Style from '../Style/Style';
-import { ShapeGroupType, SvgShape, BaseLayerParams } from '../type';
+import { ShapeGroupType, SvgShape, BaseLayerParams, SvgEllipse } from '../type';
 
 interface SvgInitParams extends Partial<BaseLayerParams> {
   svgString: string;
@@ -33,7 +33,7 @@ class Svg extends BaseLayer {
     this.rawSVGString = svgString;
 
     // --------- 处理 Svg String 变成 Svg Shape ---------- //
-    const { children } = svgson.parseSync(svgString);
+    const { children } = svgson.parseSync(svgString, { camelcase: true });
     // --------- 处理 Svg 的 Frame ------- //
 
     // ------ 将 Svg 的子节点转换成内部格式 ------ //
@@ -372,6 +372,78 @@ class Svg extends BaseLayer {
       case 'desc':
       default:
     }
+  };
+
+  /**
+   * 将 svg node 转换为 svg Group 对象
+   */
+  static parseGNodeToGroup = (node: svgson.INode): SvgShape | undefined => {
+    if (node.name !== 'g') return;
+
+    const { attributes } = node;
+    const { fillRule } = attributes;
+
+    const layers = node.children.map(Svg.parseSvgsonToSvgShapes) as SvgShape[];
+
+    const style = Svg.parseNodeAttrToStyle(attributes); // 解析样式
+
+    return {
+      type: 'group',
+      layers: layers || [],
+      windingRule: Svg.normalizeWindingRule(fillRule),
+      style,
+      path: '',
+    };
+  };
+
+  /**
+   * 一致化缠绕规则参数
+   * @param ruleStr
+   */
+  static normalizeWindingRule = (ruleStr?: string) => {
+    const rule = ruleStr?.toLowerCase();
+    if (rule && ['nonzero', 'nozero', 'non-zero', 'no-zero'].includes(rule)) {
+      return SketchFormat.WindingRule.NonZero;
+    }
+    return SketchFormat.WindingRule.EvenOdd;
+  };
+
+  /**
+   * 解析 Node 的 Attribute 变成 style
+   * @param attributes node 的属性
+   */
+  static parseNodeAttrToStyle = (attributes: svgson.INode['attributes']) => {
+    const { stroke, strokeWidth, fill, style } = attributes;
+
+    const fills = [];
+    const strokes = [];
+    if (fill !== 'none') {
+      fills.push(fill);
+    }
+    if (stroke !== 'none') {
+      strokes.push({ stroke, width: strokeWidth });
+    }
+    return {
+      fills,
+      strokes,
+      style,
+    };
+  };
+
+  /**
+   * 将 ellipse 的节点解析为椭圆
+   * @param node
+   */
+  static parseNodeToEllipse = (node: svgson.INode): SvgEllipse | undefined => {
+    if (!node || (node && node.name !== 'ellipse')) return;
+
+    const { cx, cy, rx, ry } = node.attributes;
+    return {
+      type: 'ellipse',
+      frame: { width: rx * 2, height: ry * 2 },
+      style: Svg.parseNodeAttrToStyle(node.attributes),
+      layers: [],
+    };
   };
 }
 

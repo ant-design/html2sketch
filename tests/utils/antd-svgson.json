@@ -64,7 +64,7 @@
               "type": "element",
               "value": "",
               "attributes": {
-                "stop-color": "#4285EB",
+                "stopColor": "#4285EB",
                 "offset": "0%"
               },
               "children": []
@@ -74,7 +74,7 @@
               "type": "element",
               "value": "",
               "attributes": {
-                "stop-color": "#2EC7FF",
+                "stopColor": "#2EC7FF",
                 "offset": "100%"
               },
               "children": []
@@ -98,7 +98,7 @@
               "type": "element",
               "value": "",
               "attributes": {
-                "stop-color": "#29CDFF",
+                "stopColor": "#29CDFF",
                 "offset": "0%"
               },
               "children": []
@@ -108,7 +108,7 @@
               "type": "element",
               "value": "",
               "attributes": {
-                "stop-color": "#148EFF",
+                "stopColor": "#148EFF",
                 "offset": "37.8600687%"
               },
               "children": []
@@ -118,7 +118,7 @@
               "type": "element",
               "value": "",
               "attributes": {
-                "stop-color": "#0A60FF",
+                "stopColor": "#0A60FF",
                 "offset": "100%"
               },
               "children": []
@@ -142,7 +142,7 @@
               "type": "element",
               "value": "",
               "attributes": {
-                "stop-color": "#FA816E",
+                "stopColor": "#FA816E",
                 "offset": "0%"
               },
               "children": []
@@ -152,7 +152,7 @@
               "type": "element",
               "value": "",
               "attributes": {
-                "stop-color": "#F74A5C",
+                "stopColor": "#F74A5C",
                 "offset": "41.472606%"
               },
               "children": []
@@ -162,7 +162,7 @@
               "type": "element",
               "value": "",
               "attributes": {
-                "stop-color": "#F51D2C",
+                "stopColor": "#F51D2C",
                 "offset": "100%"
               },
               "children": []
@@ -186,7 +186,7 @@
               "type": "element",
               "value": "",
               "attributes": {
-                "stop-color": "#FA8E7D",
+                "stopColor": "#FA8E7D",
                 "offset": "0%"
               },
               "children": []
@@ -196,7 +196,7 @@
               "type": "element",
               "value": "",
               "attributes": {
-                "stop-color": "#F74A5C",
+                "stopColor": "#F74A5C",
                 "offset": "51.2635191%"
               },
               "children": []
@@ -206,7 +206,7 @@
               "type": "element",
               "value": "",
               "attributes": {
-                "stop-color": "#F51D2C",
+                "stopColor": "#F51D2C",
                 "offset": "100%"
               },
               "children": []
@@ -222,9 +222,9 @@
       "attributes": {
         "id": "Page-1",
         "stroke": "none",
-        "stroke-width": "1",
+        "strokeWidth": "1",
         "fill": "none",
-        "fill-rule": "evenodd",
+        "fillRule": "evenodd",
         "style": "color: rgba(0, 0, 0, 0.85); font-size: 14px; font-variant: tabular-nums; text-decoration: none solid rgba(0, 0, 0, 0.85);"
       },
       "children": [
@@ -263,7 +263,7 @@
                       "value": "",
                       "attributes": {
                         "id": "Group-25",
-                        "fill-rule": "nonzero",
+                        "fillRule": "nonzero",
                         "style": "fill: none; color: rgba(0, 0, 0, 0.85); font-size: 14px; font-variant: tabular-nums; text-decoration: none solid rgba(0, 0, 0, 0.85);"
                       },
                       "children": [

@@ -94,6 +94,8 @@ export type LinePoint = {
  */
 export type BezierPoint = StartPoint | CurvePoint | LinePoint;
 
+export type SvgShapeType = 'group' | 'ellipse';
+
 /**
  * Svg 内部 shape 包含的信息
  */
@@ -103,7 +105,7 @@ export interface SvgShape {
   /**
    * 图形类型
    */
-  type?: string;
+  type?: SvgShapeType;
   /**
    * 缠绕规则
    *
@@ -113,6 +115,19 @@ export interface SvgShape {
    */
   windingRule?: SketchFormat.WindingRule;
   layers: SvgShape[];
+}
+/**
+ * Svg 内部 shape 包含的信息
+ */
+export interface SvgPath extends SvgShape {
+  path: string;
+}
+
+/**
+ * Svg 内部的椭圆
+ */
+export interface SvgEllipse extends SvgShape {
+  frame?: FrameType;
 }
 
 export declare enum LayerClassValue {
@@ -152,7 +167,8 @@ export type LayerClassType =
   | 'gradient'
   | 'group'
   | 'innerShadow'
-  | 'oval'
+  | 'ellipse'
+  | 'oval' // sketch 中 用的是 oval
   | 'page'
   | 'polygon'
   | 'rect'

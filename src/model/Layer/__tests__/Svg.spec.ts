@@ -1,3 +1,4 @@
+import SketchFormat from '@sketch-hq/sketch-file-format-ts';
 import {
   isUpdate,
   outputJSONData,
@@ -219,81 +220,161 @@ describe('Svg 类', () => {
 
       expect(getSVGString(node1)).toEqual(outerHTML);
     });
-
-    // test('returns correct outher HTML of the DOM node with children', () => {
-    //   const dom = new JSDOM(`
-    // <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-    //   <circle cx="100" cy="100" r="100"/>
-    //   <rect x="10" y="10" width="30" height="30"/>
-    //   <g>
-    //     <ellipse cx="75" cy="75" rx="20" ry="5" stroke="red" fill="transparent" stroke-width="5"/>
-    //   </g>
-    // </svg>`);
-    //
-    //   const document = dom.window.document;
-    //   const node = (document.querySelector('svg') as unknown) as Element;
-    //
-    //   global['document'] = document;
-    //   global.SVGElement = dom.window.SVGElement;
-    //   global.getComputedStyle = dom.window.getComputedStyle;
-    //
-    //   expect(getSVGString(node))
-    //     .toEqual(`<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-    //   <circle cx="100" cy="100" r="100"></circle>
-    //   <rect x="10" y="10" width="30" height="30"></rect>
-    //   <g>
-    //     <ellipse cx="75" cy="75" rx="20" ry="5" stroke="red" fill="transparent" stroke-width="5"></ellipse>
-    //   </g>
-    // </svg>`);
-    // });
-    //
-    // test('inlines styles of the children, ignores styles with default values', () => {
-    //   const dom = new JSDOM(`
-    // <html>
-    // <head>
-    // <style>
-    //   #a {
-    //     fill: red;
-    //     overflow: visible; /* default value */
-    //     opacity: 1; /* default value */
-    //   }
-    //
-    //   #b {
-    //     fill: blue;
-    //     width: 40px;
-    //     height: 40px;
-    //   }
-    // </style>
-    // </head>
-    // <body>
-    // <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-    //   <circle cx="100" cy="100" r="100" id="a"></circle>
-    //   <g>
-    //     <rect x="10" y="10" width="30" height="30" id="b"></rect>
-    //   </g>
-    // </svg>`);
-    //
-    //   const document = dom.window.document;
-    //   const node = (document.querySelector('svg') as unknown) as Element;
-    //
-    //   global['document'] = document;
-    //   global.SVGElement = dom.window.SVGElement;
-    //   global.getComputedStyle = dom.window.getComputedStyle;
-    //
-    //   expect(getSVGString(node))
-    //     .toEqual(`<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-    //   <circle cx="100" cy="100" r="100" id="a" style="fill: red;"></circle>
-    //   <g>
-    //     <rect x="10" y="10" width="30" height="30" id="b" style="height: 40px; width: 40px; fill: blue;"></rect>
-    //   </g>
-    // </svg>`);
-    // });
   });
 
   describe('parseSvgonToSvgShape', () => {
     it('antd Svgson', () => {
       const data = Svg.parseSvgsonToSvgShape(antdSvgson);
       console.log(data);
+    });
+  });
+
+  describe('parseGNodeToGroup', () => {
+    it('不是 g 则返回空', () => {
+      const gNode = {
+        name: 'a',
+        type: 'element',
+        value: '',
+        attributes: {},
+        children: [],
+      };
+
+      expect(Svg.parseGNodeToGroup(gNode)).toBeUndefined();
+    });
+    it('没有 children 正常解析', () => {
+      const gNode = {
+        name: 'g',
+        type: 'element',
+        value: '',
+        attributes: {
+          id: 'Page-1',
+          stroke: 'none',
+          strokeWidth: '1',
+          fill: 'none',
+          fillRule: 'evenodd',
+          style: '',
+        },
+        children: [],
+      };
+
+      expect(Svg.parseGNodeToGroup(gNode)).toStrictEqual({
+        type: 'group',
+        layers: [],
+        path: '',
+        style: { fills: [], strokes: [], style: '' },
+        windingRule: SketchFormat.WindingRule.EvenOdd,
+      });
+    });
+    it('有 children 解析正常', () => {
+      const gNode = {
+        name: 'g',
+        type: 'element',
+        value: '',
+        attributes: {
+          id: 'Page-1',
+          stroke: 'none',
+          strokeWidth: '1',
+          fill: 'none',
+          fillRule: 'evenodd',
+          style: '',
+        },
+        children: [
+          {
+            name: 'ellipse',
+            type: 'element',
+            value: '',
+            attributes: {
+              id: 'Combined-Shape',
+              fill: 'url(#linearGradient-4)',
+              cx: '100.519339',
+              cy: '100.436681',
+              rx: '23.6001926',
+              ry: '23.580786',
+              style:
+                'cx: 100.519px; cy: 100.437px; rx: 23.6002px; ry: 23.5808px; fill: url(&quot;#linearGradient-4&quot;); color: rgba(0, 0, 0, 0.85); fill-rule: evenodd; font-size: 14px; font-variant: tabular-nums; text-decoration: none solid rgba(0, 0, 0, 0.85);',
+            },
+            children: [],
+          },
+        ],
+      };
+
+      expect(Svg.parseGNodeToGroup(gNode)).toStrictEqual({
+        type: 'group',
+        layers: [],
+        path: '',
+        style: { fills: [], strokes: [], style: '' },
+        windingRule: SketchFormat.WindingRule.EvenOdd,
+      });
+    });
+  });
+
+  describe('normalizeWindingRule', () => {
+    const { WindingRule } = SketchFormat;
+    it('不传参返回 EvenOdd', () => {
+      expect(Svg.normalizeWindingRule()).toBe(WindingRule.EvenOdd);
+    });
+    it('传不正确的参返回 EvenOdd', () => {
+      expect(Svg.normalizeWindingRule('123')).toBe(WindingRule.EvenOdd);
+      expect(Svg.normalizeWindingRule('dxwqs')).toBe(WindingRule.EvenOdd);
+      expect(Svg.normalizeWindingRule('sno-zero')).toBe(WindingRule.EvenOdd);
+    });
+    it('传EvenOdd 返回 EvenOdd', () => {
+      expect(Svg.normalizeWindingRule('EvenOdd')).toBe(WindingRule.EvenOdd);
+      expect(Svg.normalizeWindingRule('evenodd')).toBe(WindingRule.EvenOdd);
+      expect(Svg.normalizeWindingRule('even-odd')).toBe(WindingRule.EvenOdd);
+      expect(Svg.normalizeWindingRule('EVENODD')).toBe(WindingRule.EvenOdd);
+    });
+    it('传 NonZero 返回 NonZero', () => {
+      expect(Svg.normalizeWindingRule('NonZero')).toBe(WindingRule.NonZero);
+      expect(Svg.normalizeWindingRule('NONZERO')).toBe(WindingRule.NonZero);
+      expect(Svg.normalizeWindingRule('nonzero')).toBe(WindingRule.NonZero);
+      expect(Svg.normalizeWindingRule('non-zero')).toBe(WindingRule.NonZero);
+      expect(Svg.normalizeWindingRule('no-zero')).toBe(WindingRule.NonZero);
+      expect(Svg.normalizeWindingRule('nozero')).toBe(WindingRule.NonZero);
+    });
+  });
+
+  describe('parseNodeAttrToStyle', () => {
+    it('没有填充 没有描边', () => {
+      const attributes = {
+        stroke: 'none',
+        strokeWidth: '1',
+        fill: 'none',
+        fillRule: 'evenodd',
+        style: '',
+      };
+      expect(Svg.parseNodeAttrToStyle(attributes)).toStrictEqual({
+        fills: [],
+        strokes: [],
+        style: '',
+      });
+    });
+  });
+
+  describe('parseNodeToEllipse', () => {
+    it('没有填充 没有描边', () => {
+      const node = {
+        name: 'ellipse',
+        type: 'element',
+        value: '',
+        attributes: {
+          id: 'Combined-Shape',
+          fill: 'url(#linearGradient-4)',
+          cx: '100.519339',
+          cy: '100.436681',
+          rx: '23.6001926',
+          ry: '23.580786',
+          style:
+            'cx: 100.519px; cy: 100.437px; rx: 23.6002px; ry: 23.5808px; fill: url(&quot;#linearGradient-4&quot;); color: rgba(0, 0, 0, 0.85); fill-rule: evenodd; font-size: 14px; font-variant: tabular-nums; text-decoration: none solid rgba(0, 0, 0, 0.85);',
+        },
+        children: [],
+      };
+      expect(Svg.parseNodeToEllipse(node)).toStrictEqual({
+        type: 'ellipse',
+        fills: [],
+        strokes: [],
+        style: '',
+      });
     });
   });
 });

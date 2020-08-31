@@ -124,6 +124,30 @@ abstract class BaseLayer {
     this.frame.right = right;
   }
 
+  get top() {
+    return this.frame.top;
+  }
+
+  set top(top) {
+    this.frame.top = top;
+  }
+
+  get bottom() {
+    return this.frame.bottom;
+  }
+
+  set bottom(bottom) {
+    this.frame.bottom = bottom;
+  }
+
+  get left() {
+    return this.frame.left;
+  }
+
+  set left(left) {
+    this.frame.left = left;
+  }
+
   setFixedWidthAndHeight() {
     this.setResizingConstraint(
       ResizingConstraint.Width,
