@@ -1,4 +1,4 @@
-import { Rectangle, Frame } from 'html2sketch/model';
+import { Rectangle, Frame } from '../model';
 import { parseToShape } from './shape';
 import { isVisibleShape } from '../utils/visibility';
 

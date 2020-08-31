@@ -1,4 +1,4 @@
-import { Bitmap } from 'html2sketch';
+import { Bitmap } from '../model';
 import { isCanvasNode } from '../utils/nodeType';
 
 /**
