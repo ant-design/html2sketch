@@ -133,6 +133,17 @@ class Color extends BaseStyle {
   }
 
   /**
+   * RGBA 值
+   */
+  get rbga(): string {
+    const r = this.method.red();
+    const b = this.method.blue();
+    const g = this.method.green();
+    const a = this.method.alpha();
+    return `rgba(${r},${g},${b},${a})`;
+  }
+
+  /**
    * 转为 Sketch JSON对象
    * @returns {SketchFormat.Color} color json
    */
