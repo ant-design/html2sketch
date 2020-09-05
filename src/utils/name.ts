@@ -1,5 +1,5 @@
 export const getName = (nodeName: string) => {
-  switch (nodeName) {
+  switch (nodeName.toUpperCase()) {
     case 'DIV':
     case 'SPAN':
     case 'LABEL':

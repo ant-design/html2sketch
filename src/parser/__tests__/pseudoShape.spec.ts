@@ -1,4 +1,3 @@
-import { isUpdate, outputJSONData, pseudoRadioJSON } from '@test-utils';
 import { parsePseudoToShape, Rectangle } from 'html2sketch';
 
 describe('parseToShape', () => {
@@ -67,7 +66,7 @@ describe('parseToShape', () => {
     left: 0;
     background-color: #fff;
     border-radius: 9px;
-    box-shadow: 0 2px 4px 0 rgba(0, 35, 11, 0.2);
+    box-shadow: 0 2px 4px 0 rgba(0,255,0,0.2);
     content: '';
 }
   }
@@ -92,9 +91,24 @@ describe('parseToShape', () => {
     const shape = parsePseudoToShape(node, 'before') as Rectangle;
 
     const radio = shape.toSketchJSON();
-    if (isUpdate) {
-      outputJSONData(radio, 'pseudo-radio');
-    }
-    expect(radio).toStrictEqual(pseudoRadioJSON);
+    expect(radio.style?.fills?.[0].color).toStrictEqual({
+      _class: 'color',
+      red: 1,
+      green: 1,
+      blue: 1,
+      alpha: 1,
+    });
+    const shadow = radio.style?.shadows?.[0];
+    expect(shadow).toBeTruthy();
+    expect(shadow?.offsetX).toBe(0);
+    expect(shadow?.offsetY).toBe(2);
+    expect(shadow?.blurRadius).toBe(4);
+    expect(shadow?.color).toStrictEqual({
+      _class: 'color',
+      red: 0,
+      green: 1,
+      blue: 0,
+      alpha: 0.2,
+    });
   });
 });
