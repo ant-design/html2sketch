@@ -1,6 +1,7 @@
 import SketchFormat from '@sketch-hq/sketch-file-format-ts';
+import { BaseLayerParams } from '../type';
 
-import BaseLayer, { BaseLayerParams } from '../Base/BaseLayer';
+import BaseLayer from '../Base/BaseLayer';
 import { defaultExportOptions } from '../utils';
 
 type CornerRadius = {
@@ -30,7 +31,20 @@ class Rectangle extends BaseLayer {
     this.cornerRadius = cornerRadius;
   }
 
+  /**
+   * 圆角值
+   */
   cornerRadius: CornerRadius | number | number[] = 0;
+
+  toKonvaRadius = () => {
+    if (
+      typeof this.cornerRadius === 'number' ||
+      this.cornerRadius instanceof Array
+    ) {
+      return this.cornerRadius;
+    }
+    return Object.values(this.cornerRadius);
+  };
 
   /**
    * 转换为 Sketch JSON
