@@ -14,7 +14,7 @@ import {
   plus,
   antdSvg,
   antdJSON,
-  antdSvgson,
+  // antdSvgson,
 } from '@test-utils';
 import Svg from '../Svg';
 
@@ -222,91 +222,91 @@ describe('Svg 类', () => {
     });
   });
 
-  describe('parseSvgonToSvgShape', () => {
-    it('antd Svgson', () => {
-      const data = Svg.parseSvgsonToSvgShape(antdSvgson);
-      console.log(data);
-    });
-  });
+  // describe('parseSvgonToSvgShape', () => {
+  //   it('antd Svgson', () => {
+  //     const data = Svg.parseSvgsonToSvgShape(antdSvgson);
+  //     console.log(data);
+  //   });
+  // });
 
-  describe('parseGNodeToGroup', () => {
-    it('不是 g 则返回空', () => {
-      const gNode = {
-        name: 'a',
-        type: 'element',
-        value: '',
-        attributes: {},
-        children: [],
-      };
-
-      expect(Svg.parseGNodeToGroup(gNode)).toBeUndefined();
-    });
-    it('没有 children 正常解析', () => {
-      const gNode = {
-        name: 'g',
-        type: 'element',
-        value: '',
-        attributes: {
-          id: 'Page-1',
-          stroke: 'none',
-          strokeWidth: '1',
-          fill: 'none',
-          fillRule: 'evenodd',
-          style: '',
-        },
-        children: [],
-      };
-
-      expect(Svg.parseGNodeToGroup(gNode)).toStrictEqual({
-        type: 'group',
-        layers: [],
-        path: '',
-        style: { fills: [], strokes: [], style: '' },
-        windingRule: SketchFormat.WindingRule.EvenOdd,
-      });
-    });
-    it('有 children 解析正常', () => {
-      const gNode = {
-        name: 'g',
-        type: 'element',
-        value: '',
-        attributes: {
-          id: 'Page-1',
-          stroke: 'none',
-          strokeWidth: '1',
-          fill: 'none',
-          fillRule: 'evenodd',
-          style: '',
-        },
-        children: [
-          {
-            name: 'ellipse',
-            type: 'element',
-            value: '',
-            attributes: {
-              id: 'Combined-Shape',
-              fill: 'url(#linearGradient-4)',
-              cx: '100.519339',
-              cy: '100.436681',
-              rx: '23.6001926',
-              ry: '23.580786',
-              style:
-                'cx: 100.519px; cy: 100.437px; rx: 23.6002px; ry: 23.5808px; fill: url(&quot;#linearGradient-4&quot;); color: rgba(0, 0, 0, 0.85); fill-rule: evenodd; font-size: 14px; font-variant: tabular-nums; text-decoration: none solid rgba(0, 0, 0, 0.85);',
-            },
-            children: [],
-          },
-        ],
-      };
-
-      expect(Svg.parseGNodeToGroup(gNode)).toStrictEqual({
-        type: 'group',
-        layers: [],
-        path: '',
-        style: { fills: [], strokes: [], style: '' },
-        windingRule: SketchFormat.WindingRule.EvenOdd,
-      });
-    });
-  });
+  // describe('parseGNodeToGroup', () => {
+  //   it('不是 g 则返回空', () => {
+  //     const gNode = {
+  //       name: 'a',
+  //       type: 'element',
+  //       value: '',
+  //       attributes: {},
+  //       children: [],
+  //     };
+  //
+  //     expect(Svg.parseGNodeToGroup(gNode)).toBeUndefined();
+  //   });
+  //   it('没有 children 正常解析', () => {
+  //     const gNode = {
+  //       name: 'g',
+  //       type: 'element',
+  //       value: '',
+  //       attributes: {
+  //         id: 'Page-1',
+  //         stroke: 'none',
+  //         strokeWidth: '1',
+  //         fill: 'none',
+  //         fillRule: 'evenodd',
+  //         style: '',
+  //       },
+  //       children: [],
+  //     };
+  //
+  //     expect(Svg.parseGNodeToGroup(gNode)).toStrictEqual({
+  //       type: 'group',
+  //       layers: [],
+  //       path: '',
+  //       style: { fills: [], strokes: [], style: '' },
+  //       windingRule: SketchFormat.WindingRule.EvenOdd,
+  //     });
+  //   });
+  //   it('有 children 解析正常', () => {
+  //     const gNode = {
+  //       name: 'g',
+  //       type: 'element',
+  //       value: '',
+  //       attributes: {
+  //         id: 'Page-1',
+  //         stroke: 'none',
+  //         strokeWidth: '1',
+  //         fill: 'none',
+  //         fillRule: 'evenodd',
+  //         style: '',
+  //       },
+  //       children: [
+  //         {
+  //           name: 'ellipse',
+  //           type: 'element',
+  //           value: '',
+  //           attributes: {
+  //             id: 'Combined-Shape',
+  //             fill: 'url(#linearGradient-4)',
+  //             cx: '100.519339',
+  //             cy: '100.436681',
+  //             rx: '23.6001926',
+  //             ry: '23.580786',
+  //             style:
+  //               'cx: 100.519px; cy: 100.437px; rx: 23.6002px; ry: 23.5808px; fill: url(&quot;#linearGradient-4&quot;); color: rgba(0, 0, 0, 0.85); fill-rule: evenodd; font-size: 14px; font-variant: tabular-nums; text-decoration: none solid rgba(0, 0, 0, 0.85);',
+  //           },
+  //           children: [],
+  //         },
+  //       ],
+  //     };
+  //
+  //     expect(Svg.parseGNodeToGroup(gNode)).toStrictEqual({
+  //       type: 'group',
+  //       layers: [],
+  //       path: '',
+  //       style: { fills: [], strokes: [], style: '' },
+  //       windingRule: SketchFormat.WindingRule.EvenOdd,
+  //     });
+  //   });
+  // });
 
   describe('normalizeWindingRule', () => {
     const { WindingRule } = SketchFormat;
@@ -351,30 +351,30 @@ describe('Svg 类', () => {
     });
   });
 
-  describe('parseNodeToEllipse', () => {
-    it('没有填充 没有描边', () => {
-      const node = {
-        name: 'ellipse',
-        type: 'element',
-        value: '',
-        attributes: {
-          id: 'Combined-Shape',
-          fill: 'url(#linearGradient-4)',
-          cx: '100.519339',
-          cy: '100.436681',
-          rx: '23.6001926',
-          ry: '23.580786',
-          style:
-            'cx: 100.519px; cy: 100.437px; rx: 23.6002px; ry: 23.5808px; fill: url(&quot;#linearGradient-4&quot;); color: rgba(0, 0, 0, 0.85); fill-rule: evenodd; font-size: 14px; font-variant: tabular-nums; text-decoration: none solid rgba(0, 0, 0, 0.85);',
-        },
-        children: [],
-      };
-      expect(Svg.parseNodeToEllipse(node)).toStrictEqual({
-        type: 'ellipse',
-        fills: [],
-        strokes: [],
-        style: '',
-      });
-    });
-  });
+  // describe('parseNodeToEllipse', () => {
+  //   it('没有填充 没有描边', () => {
+  //     const node = {
+  //       name: 'ellipse',
+  //       type: 'element',
+  //       value: '',
+  //       attributes: {
+  //         id: 'Combined-Shape',
+  //         fill: 'url(#linearGradient-4)',
+  //         cx: '100.519339',
+  //         cy: '100.436681',
+  //         rx: '23.6001926',
+  //         ry: '23.580786',
+  //         style:
+  //           'cx: 100.519px; cy: 100.437px; rx: 23.6002px; ry: 23.5808px; fill: url(&quot;#linearGradient-4&quot;); color: rgba(0, 0, 0, 0.85); fill-rule: evenodd; font-size: 14px; font-variant: tabular-nums; text-decoration: none solid rgba(0, 0, 0, 0.85);',
+  //       },
+  //       children: [],
+  //     };
+  //     expect(Svg.parseNodeToEllipse(node)).toStrictEqual({
+  //       type: 'ellipse',
+  //       fills: [],
+  //       strokes: [],
+  //       style: '',
+  //     });
+  //   });
+  // });
 });

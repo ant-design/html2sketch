@@ -8,8 +8,22 @@ import Text from './Layer/Text';
 import Bitmap from './Layer/Bitmap';
 import Rectangle from './Layer/Rectangle';
 import ShapeGroup from './Layer/ShapeGroup';
-import { FrameType } from './Base/Frame';
 import SymbolMaster from './Layer/SymbolMaster';
+
+/**
+ * 定界框 Frame 初始化参数
+ */
+export interface FrameInitParams extends Partial<FrameType> {}
+
+/**
+ * 定界框类型
+ */
+export interface FrameType {
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+}
 
 /**
  * 基础图层初始化参数
@@ -94,13 +108,12 @@ export type LinePoint = {
  */
 export type BezierPoint = StartPoint | CurvePoint | LinePoint;
 
-export type SvgShapeType = 'group' | 'ellipse';
+/* **********    SVG     ************** */
 
 /**
  * Svg 内部 shape 包含的信息
  */
-export interface SvgShape {
-  path: string;
+export interface BaseSvgShape {
   style?: any;
   /**
    * 图形类型
@@ -114,20 +127,43 @@ export interface SvgShape {
    * @see https://www.yuque.com/arvinxx/fontend/7ad6671c-d309-40fc-a0a8-55888f508289
    */
   windingRule?: SketchFormat.WindingRule;
-  layers: SvgShape[];
+  layers: any[];
 }
+
+/**
+ * Svg Shape 类型
+ */
+export type SvgShapeType = 'group' | 'ellipse' | 'path';
+
+/**
+ * 所有相关的 Svg 类型
+ */
+export type AnySvgShape = SvgPath | SvgEllipse | SvgGroup;
+
 /**
  * Svg 内部 shape 包含的信息
  */
-export interface SvgPath extends SvgShape {
+export interface SvgGroup extends BaseSvgShape {
+  type: 'group';
+  layers: AnySvgShape[];
+}
+
+/**
+ * Svg 内部 shape 包含的信息
+ */
+export interface SvgPath extends BaseSvgShape {
+  type: 'path';
   path: string;
+  layers: [];
 }
 
 /**
  * Svg 内部的椭圆
  */
-export interface SvgEllipse extends SvgShape {
-  frame?: FrameType;
+export interface SvgEllipse extends BaseSvgShape {
+  type: 'ellipse';
+  frame: FrameType;
+  layers: [];
 }
 
 export declare enum LayerClassValue {

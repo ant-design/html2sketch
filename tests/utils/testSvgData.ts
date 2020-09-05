@@ -2,7 +2,6 @@ import SketchFormat from '@sketch-hq/sketch-file-format-ts';
 import { SVGPathData } from 'svg-pathdata';
 import { Frame, Style, ShapePathType } from 'html2sketch';
 import { defaultExportOptions } from 'html2sketch/model/utils';
-import { SvgShape } from 'html2sketch/model/Layer/Svg';
 import behanceJSON from './json/behance.json';
 import dropboxJSON from './json/dropbox.json';
 import upCircleJSON from './json/up-circle.json';
@@ -18,7 +17,7 @@ interface TestPathData {
 interface TestSvgData {
   svgString: string;
   sketchJSON: Object;
-  shapes?: SvgShape[];
+  shapes?: { path: string }[];
 }
 
 // 可复用的 shapePath 数据

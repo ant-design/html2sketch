@@ -1,8 +1,9 @@
 import SketchFormat from '@sketch-hq/sketch-file-format-ts';
 
-import BaseLayer, { BaseLayerParams } from '../Base/BaseLayer';
+import BaseLayer from '../Base/BaseLayer';
 import { defaultRuleData, defaultExportOptions } from '../utils';
 import Color from '../Style/Color';
+import { BaseLayerParams } from '../type';
 
 /**
  * 画板对象
