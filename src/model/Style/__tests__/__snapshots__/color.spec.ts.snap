@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Color 类 toSketchJSON 正常解析 1`] = `
+Object {
+  "_class": "color",
+  "alpha": 1,
+  "blue": 0,
+  "green": 0,
+  "red": 0,
+}
+`;

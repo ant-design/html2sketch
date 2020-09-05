@@ -3,6 +3,7 @@ import BaseStyle from '../Base/BaseStyle';
 
 /**
  * 图片资产
+ * 用于添加到 Fill 和 Border 的内容
  */
 class Image extends BaseStyle {
   constructor(url: string) {
@@ -10,13 +11,27 @@ class Image extends BaseStyle {
     this.url = url;
   }
 
-  url: string;
+  /**
+   * 外部传入的 URL
+   */
+  url?: string;
 
-  toSketchJSON(): SketchFormat.FileRef {
+  /**
+   * 转换成的 base64 数据
+   */
+  base64?: string;
+
+  toSketchJSON(): SketchFormat.DataRef {
     return {
-      _class: 'MSJSONFileReference',
+      _class: 'MSJSONOriginalDataReference',
       _ref_class: 'MSImageData',
-      _ref: `images/${this.url}`,
+      _ref: this.id,
+      data: {
+        _data: this.id,
+      },
+      sha1: {
+        _data: '',
+      },
     };
   }
 }

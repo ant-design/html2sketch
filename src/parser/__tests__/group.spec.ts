@@ -19,7 +19,7 @@ describe('parseToGroup', () => {
       outputJSONData(group.toSketchJSON(), 'group');
     }
 
-    const { userInfo, ...groupSketchJSON } = group.toSketchJSON();
+    const { userInfo, frame, ...groupSketchJSON } = group.toSketchJSON();
     expect(groupSketchJSON).toStrictEqual(groupJSON);
   });
 });
