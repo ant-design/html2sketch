@@ -23,6 +23,7 @@ Object {
     "x": 280,
     "y": 100,
   },
+  "hasClippingMask": false,
   "hasConvertedToNewRoundCorners": true,
   "isClosed": true,
   "isFixedToViewport": false,

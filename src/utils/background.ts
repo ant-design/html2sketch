@@ -96,6 +96,7 @@ export const parseBackgroundImage = (
 
   const urlMatches = value.match(/^url\("(.+)"\)$/i);
   const linearGradientMatches = value.match(/^linear-gradient\((.+)\)$/i);
+  const radialGradientMatches = value.match(/^radial-gradient\((.+)\)$/i);
 
   if (urlMatches && urlMatches.length === 2) {
     // Image
@@ -117,9 +118,22 @@ export const parseBackgroundImage = (
       };
     }
   }
+  if (radialGradientMatches && radialGradientMatches.length === 2) {
+    // 辐射渐变
+    // const linearGradientConfig = parseLinearGradient(linearGradientMatches[1]);
+
+    if (radialGradientMatches) {
+      // eslint-disable-next-line consistent-return
+      return {
+        type: 'radialGradient',
+        value: '',
+      };
+    }
+  }
 };
 
 /**
+ * 获取真实图像尺寸
  * @param {string} backgroundSize value of background-size CSS property
  * @param {{width: number, height: number}} imageSize natural size of the image
  * @param {{width: number, height: number}} containerSize size of the container

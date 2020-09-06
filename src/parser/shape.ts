@@ -1,9 +1,9 @@
 import Color from 'color';
 import { Style, Bitmap, Group, Rectangle, Shadow } from '../model';
-import { getActualImageSize, parseBackgroundImage } from '../utils/background';
 import { defaultNodeStyle } from '../model/utils';
 import { ColorParam } from '../model/Style/Color';
-import { waitForImageLoaded } from 'html2sketch/utils/image';
+import { getActualImageSize, parseBackgroundImage } from '../utils/background';
+import { waitForImageLoaded } from '../utils/image';
 
 /**
  * 将节点转换为 Shape 对象
@@ -244,9 +244,12 @@ export const parseToShape = async (
 
           const group = new Group({ x: left, y: top, width, height });
 
-          // position is relative to the group
-          group.addLayer(rect);
-          group.layers.push(bitmap);
+          rect.name = 'Mask';
+
+          group.name = '编组';
+          group.addLayer(rect); // 变成相对坐标
+
+          group.layers.push(bitmap); // 保留自身的位置
 
           return group;
         }
@@ -261,11 +264,12 @@ export const parseToShape = async (
           angle: string;
           stops: ColorParam[];
         };
+        console.log(backgroundImageResult);
         style.addGradientFill(angle, stops);
         break;
       default:
-        // Unsupported types:
-        // - radial gradient
+        // 暂不支持:
+        // - TODO radial gradient
         // - multiple background-image
         break;
     }

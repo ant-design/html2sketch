@@ -19,7 +19,7 @@ export interface FrameInitParams extends Partial<FrameType> {}
  * 节点的背景颜色类型
  */
 export type BackgroundImageType = {
-  type: 'Image' | 'LinearGradient';
+  type: 'Image' | 'LinearGradient' | 'radialGradient';
   value: any;
 };
 

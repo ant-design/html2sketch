@@ -118,6 +118,7 @@ describe('Rectangle 类', () => {
         isFixedToViewport: false,
         isFlippedHorizontal: false,
         isFlippedVertical: false,
+        hasClippingMask: false,
         isLocked: false,
         isVisible: true,
         layerListExpandedType: 0,
@@ -204,6 +205,13 @@ describe('Rectangle 类', () => {
           windingRule: 1,
         },
       });
+    });
+    it('蒙版正常', () => {
+      const rect = new Rectangle({ height: 100, width: 50, x: 280, y: 100 });
+      rect.hasClippingMask = true;
+
+      const json = rect.toSketchJSON();
+      expect(json.hasClippingMask).toBeTruthy();
     });
   });
 });

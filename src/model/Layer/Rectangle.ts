@@ -77,6 +77,7 @@ class Rectangle extends BaseLayer {
       shouldBreakMaskChain: false,
       clippingMaskMode: 0,
       isLocked: false,
+      hasClippingMask: this.hasClippingMask,
     };
   }
 
