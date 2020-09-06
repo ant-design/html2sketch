@@ -11,7 +11,7 @@ export const parsePseudoToText = (
   // 判断一下是否有伪类
   const pseudoEl: CSSStyleDeclaration = getComputedStyle(
     node,
-    `:${pseudoElt !== 'placeholder' ?? 'placeholder-shown'}`,
+    `:${pseudoElt !== 'placeholder' ? pseudoElt : 'placeholder'}`,
   );
   let pseudoText: string;
 

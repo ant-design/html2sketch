@@ -60,11 +60,11 @@ const nodeToLayers = async (node: Element): Promise<AnyLayer[]> => {
   const hasShape = !isDefaultStyles(styles);
 
   const hasPseudoShape = isExistPseudoShape(node);
-  // 如果图层存在样式(阴影 边框等 返回 shape 节点
-  if (hasPseudoShape.after) {
-    const afterEl = await parsePseudoToShape(node, 'after');
-    console.info('转换为:', afterEl);
-    layers.push(afterEl);
+
+  if (hasPseudoShape.before) {
+    const beforeEl = await parsePseudoToShape(node, 'before');
+    console.info('转换为:', beforeEl);
+    layers.push(beforeEl);
   }
 
   if (hasShape) {
@@ -72,11 +72,11 @@ const nodeToLayers = async (node: Element): Promise<AnyLayer[]> => {
     console.info('转换为:', shape);
     layers.push(shape);
   }
-
-  if (hasPseudoShape.before) {
-    const beforeEl = await parsePseudoToShape(node, 'before');
-    console.info('转换为:', beforeEl);
-    layers.push(beforeEl);
+  // 如果图层存在样式(阴影 边框等 返回 shape 节点
+  if (hasPseudoShape.after) {
+    const afterEl = await parsePseudoToShape(node, 'after');
+    console.info('转换为:', afterEl);
+    layers.push(afterEl);
   }
 
   // 转换为 SVG
