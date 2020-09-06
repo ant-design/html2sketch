@@ -74,7 +74,6 @@ export default () => {
         >
           1231253
         </div>
-        <input placeholder="请输入" />
       </div>
     </TestLayout>
   );

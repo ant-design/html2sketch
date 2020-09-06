@@ -41,6 +41,13 @@ export const isImageNode = (node: Element): boolean => {
 };
 
 /**
+ * 判断是否是输入框节点
+ */
+export const isInputNode = (node: Element): boolean => {
+  return isNodeType(node, 'input');
+};
+
+/**
  * 判断是否是图片节点
  */
 export const isCanvasNode = (node: Element): boolean => {

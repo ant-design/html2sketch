@@ -144,9 +144,13 @@ class Text extends BaseLayer {
   /**
    * 从节点中获取样式
    * @param node
+   * @param pseudoElt
    */
-  static getTextStyleFromNode = (node: Element): TextStyleParams => {
-    const styles: CSSStyleDeclaration = getComputedStyle(node);
+  static getTextStyleFromNode = (
+    node: Element,
+    pseudoElt?: string,
+  ): TextStyleParams => {
+    const styles: CSSStyleDeclaration = getComputedStyle(node, pseudoElt);
 
     const {
       // 字体

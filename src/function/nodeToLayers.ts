@@ -18,6 +18,7 @@ import { isExistPseudoText, isExistPseudoShape } from '../utils/pseudo';
 import {
   isCanvasNode,
   isImageNode,
+  isInputNode,
   isSVGChildNode,
   isSvgNode,
   isTextNode,
@@ -87,6 +88,11 @@ const nodeToLayers = async (node: Element): Promise<AnyLayer[]> => {
     return layers;
   }
 
+  if (isInputNode(node)) {
+    const text = parsePseudoToText(node, 'placeholder');
+
+    layers.push(text);
+  }
   // 判断一下文本是否可见 不可见直接返回
   if (!isTextVisible(styles)) {
     return layers;
