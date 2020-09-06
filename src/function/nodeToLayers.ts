@@ -74,6 +74,7 @@ const nodeToLayers = async (node: Element): Promise<AnyLayer[]> => {
 
   if (hasPseudoShape.before) {
     const beforeEl = await parsePseudoToShape(node, 'before');
+    console.info('转换为:', beforeEl);
     layers.push(beforeEl);
   }
 

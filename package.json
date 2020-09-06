@@ -45,7 +45,7 @@
     "e2e:local": "jest --config=jest.e2e.config.js",
     "e2e:update": "UPDATE=1 jest --config=jest.e2e.config.js --update-snapshot",
     "---------   ": "",
-    "clean": "rm -rf es lib dist build coverage tests/dist src/.umi .eslintcache",
+    "clean": "rm -rf es lib dist build coverage e2e/dist src/.umi .eslintcache",
     "lint": "npm run lint-eslint",
     "tsc": "tsc -p tsconfig-check.json",
     "lint-eslint": "eslint --cache --ext .js,.jsx,.ts,.tsx --format=pretty ./src",
@@ -80,6 +80,7 @@
   "devDependencies": {
     "@ant-design/charts": "^0.9.13",
     "@ant-design/pro-skeleton": "^1.0.0-beta.7",
+    "@ant-design/pro-table": "^2.6.3",
     "@babel/core": "^7.8.3",
     "@babel/plugin-proposal-object-rest-spread": "^7.8.3",
     "@babel/preset-env": "^7.8.3",
