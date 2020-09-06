@@ -16,6 +16,14 @@ import SymbolMaster from './Layer/SymbolMaster';
 export interface FrameInitParams extends Partial<FrameType> {}
 
 /**
+ * 节点的背景颜色类型
+ */
+export type BackgroundImageType = {
+  type: 'Image' | 'LinearGradient';
+  value: any;
+};
+
+/**
  * 定界框类型
  */
 export interface FrameType {
