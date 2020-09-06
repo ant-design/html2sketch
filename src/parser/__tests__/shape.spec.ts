@@ -1,7 +1,7 @@
 import { Bitmap, Group, parseToShape, Rectangle } from 'html2sketch';
 
 describe('parseToShape', () => {
-  beforeAll(() => {
+  beforeEach(() => {
     document.head.innerHTML = `
 <style>
 .background {

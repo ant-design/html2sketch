@@ -18,11 +18,13 @@ export const isNodeType = (node: Element, type: string | string[]): boolean => {
  * 判断是否是 Text 节点
  */
 export const isTextNode = (node: Element): boolean => {
-  return (
-    node &&
-    node.childNodes!.length > 0 &&
-    node.childNodes[0].nodeName.includes('text')
-  );
+  let textNode = false;
+  node.childNodes.forEach((node) => {
+    if (node.nodeName.includes('text')) {
+      textNode = true;
+    }
+  });
+  return node && node.childNodes!.length > 0 && textNode;
 };
 /**
  * 判断是否是 Group 节点
