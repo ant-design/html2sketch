@@ -22,11 +22,7 @@ export const parseToText = (node: Element): Text | Text[] | undefined => {
     )
     .map((childNode) => {
       const { lines, textBCR } = getTextContext(childNode);
-      const {
-        // x, y,
-        width: bcrWidth,
-        height,
-      } = getTextAbsBCR(node, childNode);
+      const { x, y, width: bcrWidth, height } = getTextAbsBCR(node, childNode);
       let textWidth = bcrWidth;
 
       const { display, whiteSpace, overflow, textOverflow, width } = styles;
@@ -53,8 +49,9 @@ export const parseToText = (node: Element): Text | Text[] | undefined => {
       }
 
       return new Text({
-        x: textBCR.x,
-        y: textBCR.y,
+        x: display === 'inline-block' ? x : textBCR.x,
+        // y: textBCR.y,
+        y,
         width: textWidth,
         height,
         text: textValue,

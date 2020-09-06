@@ -32,6 +32,19 @@ text-overflow: ellipsis;
 <div style="width: 100px;text-align: right;">
   <label id="label" class="label">亲作向</label>
 </div>
+<span id="tag" style="
+  color: rgb(24, 144, 255);
+  background: rgb(230, 247, 255);
+  border: 1px solid rgb(217, 217, 217);
+  padding: 0 7px;
+  height: 22px;
+  display: inline-block;
+  font-size: 12px;
+  line-height: 20px;
+  border-radius: 2px;
+">
+蓝色
+</span>
 </div>
 `;
   });
@@ -91,5 +104,11 @@ text-overflow: ellipsis;
     expect(text).toBeTruthy();
     expect(text.x).toBe(37.78125);
     expect(text.text).toBe('亲作向');
+  });
+  it('tag 文本解析正常', () => {
+    const node = document.getElementById('tag') as HTMLLabelElement;
+    const text = parseToText(node) as Text;
+    expect(text).toBeTruthy();
+    expect(text.y).toBe(157);
   });
 });
