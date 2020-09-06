@@ -14,8 +14,7 @@ export default () => {
           style={{
             width: 150,
             height: 200,
-            backgroundImage:
-              'url("https://gw.alipayobjects.com/zos/rmsportal/mZBWtboYbnMkTBaRIuWQ.png")',
+            backgroundImage: 'linear-gradient(red,green,blue)',
           }}
         />
       </div>

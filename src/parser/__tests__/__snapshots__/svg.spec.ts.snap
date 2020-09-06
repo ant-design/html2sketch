@@ -551,10 +551,10 @@ Object {
         "gradient": Object {
           "_class": "gradient",
           "elipseLength": 0,
-          "from": "{0, 0}",
+          "from": "{0.5, 0}",
           "gradientType": 0,
           "stops": Array [],
-          "to": "{1, 0}",
+          "to": "{0.5, 1}",
         },
         "isEnabled": true,
         "noiseIndex": 0,

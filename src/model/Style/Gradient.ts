@@ -43,7 +43,7 @@ class Gradient extends BaseStyle {
   /**
    * 起点
    */
-  from: CGPoint = { x: 0, y: 0 };
+  from: CGPoint = { x: 0.5, y: 0 };
 
   /**
    * 色彩节点
@@ -53,7 +53,7 @@ class Gradient extends BaseStyle {
   /**
    * 终点
    */
-  to: CGPoint = { x: 1, y: 0 };
+  to: CGPoint = { x: 0.5, y: 1 };
 
   /**
    * 渐变类型
@@ -83,7 +83,7 @@ class Gradient extends BaseStyle {
   getSketchStop = (color: Color, index: number): SketchFormat.GradientStop => ({
     _class: 'gradientStop',
     color: color.toSketchJSON(),
-    position: index,
+    position: index / (this.stops.length - 1),
   });
 }
 
