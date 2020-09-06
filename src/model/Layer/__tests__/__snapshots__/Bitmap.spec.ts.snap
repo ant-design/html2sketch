@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Bitmap 类 传入 base64 URL 后 可正常生成 Sketch JSON 1`] = `
+exports[`Bitmap 类 创建 传入 base64 URL 后 可正常生成 Sketch JSON 1`] = `
 Object {
   "_class": "bitmap",
   "booleanOperation": -1,

@@ -6,7 +6,7 @@ import { isVisibleShape } from '../utils/visibility';
  * 解析图形类伪类
  */
 // eslint-disable-next-line consistent-return
-export const parsePseudoToShape = (
+export const parsePseudoToShape = async (
   node: Element,
   pseudoElt: 'before' | 'after',
 ) => {
@@ -15,7 +15,7 @@ export const parsePseudoToShape = (
   const bcr = node.getBoundingClientRect();
   const { x, y, height, width } = bcr;
 
-  const rect = parseToShape(node, pseudoEl);
+  const rect = await parseToShape(node, pseudoEl);
 
   rect.frame = new Frame({ width, height, x, y });
 

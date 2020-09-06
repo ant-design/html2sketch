@@ -7,10 +7,10 @@ import { NodeToSketchSymbolOptions } from '../type';
 /**
  * 解析为 Symbol
  */
-export default (node: Element, options?: NodeToSketchSymbolOptions) => {
+export default async (node: Element, options?: NodeToSketchSymbolOptions) => {
   if (!node) throw Error('解析对象不存在 请检查传入对象');
 
-  const group = nodeToGroup(node);
+  const group = await nodeToGroup(node);
 
   const symbol = new SymbolMaster({
     x: group.x,

@@ -19,7 +19,10 @@ const consoleGroupStyle = `font-weight:bold;color:#666;`;
  * @param node
  * @param options
  */
-const nodeToGroup = (node: Element, options?: Options): Group => {
+const nodeToGroup = async (
+  node: Element,
+  options?: Options,
+): Promise<Group> => {
   if (!node) throw Error('解析对象不存在 请检查传入对象');
 
   const bcr = node.getBoundingClientRect();
@@ -29,24 +32,32 @@ const nodeToGroup = (node: Element, options?: Options): Group => {
 
   console.group('%c处理节点:', consoleGroupStyle, node);
 
-  const layers = nodeToLayers(node) || [];
+  const layers = (await nodeToLayers(node)) || [];
 
   // ---------- 处理父节点 ------ //
   if (node.nodeName !== 'svg') {
     const childNodeList = getChildNodeList(node);
 
     // Recursively collect child groups for child nodes
-    childNodeList.forEach((childNode) => {
-      layers.push(nodeToGroup(childNode, options));
+    for (let i = 0; i < childNodeList.length; i += 1) {
+      const childNode = childNodeList[i];
+      // eslint-disable-next-line no-await-in-loop
+      const l = await nodeToGroup(childNode, options);
+      layers.push(l);
 
       // Traverse the shadow DOM if present
       if (childNode.shadowRoot) {
-        Array.from(childNode.shadowRoot.children)
+        const promise = Array.from(childNode.shadowRoot.children)
           .filter((n) => isNodeVisible(n))
-          .map((n) => nodeToGroup(n))
-          .forEach((layer) => layers.push(layer));
+          .map(async (n) => {
+            const shadowGroup = await nodeToGroup(n);
+            return shadowGroup;
+          });
+        // eslint-disable-next-line no-await-in-loop
+        const shadowChild = await Promise.all(promise);
+        shadowChild.forEach((layer) => layers.push(layer));
       }
-    });
+    }
   }
 
   // Now build a group for all these children

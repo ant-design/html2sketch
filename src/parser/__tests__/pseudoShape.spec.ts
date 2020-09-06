@@ -1,6 +1,6 @@
 import { parsePseudoToShape, Rectangle } from 'html2sketch';
 
-describe('parseToShape', () => {
+describe('parsePseudoToShape', () => {
   beforeAll(() => {
     document.head.innerHTML = `
 <style>
@@ -69,7 +69,6 @@ describe('parseToShape', () => {
     box-shadow: 0 2px 4px 0 rgba(0,255,0,0.2);
     content: '';
 }
-  }
 </style>
     `;
     document.body.innerHTML = `
@@ -86,9 +85,9 @@ describe('parseToShape', () => {
 `;
   });
 
-  it('radio 可解析', () => {
+  it('radio 可解析', async () => {
     const node = document.getElementById('radio') as HTMLDivElement;
-    const shape = parsePseudoToShape(node, 'before') as Rectangle;
+    const shape = (await parsePseudoToShape(node, 'before')) as Rectangle;
 
     const radio = shape.toSketchJSON();
     expect(radio.style?.fills?.[0].color).toStrictEqual({

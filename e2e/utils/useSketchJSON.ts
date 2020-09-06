@@ -23,9 +23,11 @@ if (typeof window !== 'undefined') {
 const useSketchJSON = () => {
   const [sketchJSON, setJSON] = useState<object>();
 
-  const parserFactory = (
+  const parserFactory = async (
     elements: Element | Element[],
-    parserFunc: (el: Element) => SketchFormat.Group | SketchFormat.SymbolMaster,
+    parserFunc: (
+      el: Element,
+    ) => Promise<SketchFormat.Group | SketchFormat.SymbolMaster>,
   ) => {
     try {
       console.groupCollapsed('[html2sketch]开始转换...');
@@ -39,7 +41,7 @@ const useSketchJSON = () => {
         });
         result = objects;
       } else {
-        result = parserFunc(elements);
+        result = await parserFunc(elements);
       }
       console.groupEnd();
       console.log('解析结果:', result);
@@ -63,13 +65,15 @@ const useSketchJSON = () => {
 
   return {
     sketchJSON,
-    generateSymbol: (elements: Element | Element[]) => {
-      parserFactory(elements, (el: Element) =>
-        nodeToSketchSymbol(el).toSketchJSON(),
+    generateSymbol: async (elements: Element | Element[]) => {
+      await parserFactory(elements, async (el: Element) =>
+        (await nodeToSketchSymbol(el)).toSketchJSON(),
       );
     },
-    generateGroup: (elements: Element | Element[]) => {
-      parserFactory(elements, (el: Element) => nodeToGroup(el).toSketchJSON());
+    generateGroup: async (elements: Element | Element[]) => {
+      await parserFactory(elements, async (el: Element) =>
+        (await nodeToGroup(el)).toSketchJSON(),
+      );
     },
   };
 };

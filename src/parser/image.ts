@@ -6,7 +6,7 @@ import { getImageBase64URL, errorBase64Url } from '../utils/image';
  * 将图片 image 解析为图片
  * @param node HTMLImageElement
  */
-export const parseToBitmap = (node: HTMLImageElement) => {
+export const parseToBitmap = async (node: HTMLImageElement) => {
   if (!isImageNode(node)) {
     return;
   }
@@ -17,12 +17,13 @@ export const parseToBitmap = (node: HTMLImageElement) => {
   let url;
   // 网络 URL
   if (node.src.startsWith('http')) {
-    url = node.getAttribute('base64') || errorBase64Url;
+    url = node.getAttribute('src') || '';
     if (node.src.endsWith('.svg')) {
       try {
-        const svgStr = atob(url.replace('data:image/svg+xml;base64,', ''));
+        const data = await fetch(node.src);
+        const svgString = await data.text();
         const svg = new Svg({
-          svgString: svgStr,
+          svgString,
           x,
           y,
           width,
@@ -51,6 +52,7 @@ export const parseToBitmap = (node: HTMLImageElement) => {
   });
 
   bitmap.mapBasicInfo(node);
+  await bitmap.init();
 
   return bitmap;
 };

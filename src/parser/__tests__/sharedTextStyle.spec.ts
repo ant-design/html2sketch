@@ -10,9 +10,9 @@ describe('parseToSharedTextStyle', () => {
 </div>
 `;
   });
-  it('default 正常解析', () => {
+  it('default 正常解析', async () => {
     const node = document.getElementById('default') as HTMLDivElement;
-    const layers = parseToSharedTextStyle(node);
+    const layers = await parseToSharedTextStyle(node);
 
     expect(layers.length).toBe(1);
     expect(layers[0].name).toBe('aaa');

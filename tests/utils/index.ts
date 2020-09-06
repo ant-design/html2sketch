@@ -10,8 +10,6 @@ import plus from './json/plus.json';
 import text from './json/text.json';
 import shape from './json/shape.json';
 import antd from './json/antd.json';
-import nodeToGroup from './json/node-to-group.json';
-import nodeToGroupGroup from './json/node-to-group-group.json';
 import pseudoText from './json/pseudo-text.json';
 
 export const svgJSON = svg;
@@ -23,8 +21,6 @@ export const plusJSON = plus;
 export const svgPathJSON = svgPath;
 export const textJSON = text;
 export const shapeJSON = shape;
-export const nodeToGroupJSON = nodeToGroup;
-export const nodeToGroupGroupJSON = nodeToGroupGroup;
 export const pseudoTextJSON = pseudoText;
 
 export * from './testSvgData';
