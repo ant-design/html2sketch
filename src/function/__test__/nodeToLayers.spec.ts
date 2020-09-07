@@ -19,7 +19,10 @@ describe('nodeToLayers', () => {
     }
 </style>
     `;
-    document.body.innerHTML = `
+
+    const node = document.createElement('div');
+
+    node.innerHTML = `
 <div>
    <img
       id="png"
@@ -44,6 +47,8 @@ describe('nodeToLayers', () => {
 
 </div>
 `;
+
+    document.body.append(node);
   });
   it('default 图层正常解析', async () => {
     const node = document.getElementById('default') as HTMLDivElement;

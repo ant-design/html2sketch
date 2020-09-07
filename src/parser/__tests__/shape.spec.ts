@@ -18,7 +18,9 @@ describe('parseToShape', () => {
 
 </style>
     `;
-    document.body.innerHTML = `
+    const node = document.createElement('div');
+
+    node.innerHTML = `
 <div
   id="radial-gradient"
   class="radial-gradient"
@@ -71,6 +73,8 @@ describe('parseToShape', () => {
   box-shadow: 0 3px 6px -4px rgba(0, 0, 0, 0.12), 0 6px 16px 0 rgba(0, 0, 0, 0.08), 0 9px 28px 8px rgba(0, 0, 0, 0.05);"
 />
 `;
+
+    document.body.append(node);
   });
   it('shape 正常解析', async () => {
     const node = document.getElementById('shape') as HTMLDivElement;
