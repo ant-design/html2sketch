@@ -16,5 +16,5 @@ describe('测试 Svg icon 类型', () => {
       outputJSONData(symbol, 'svg-icon');
     }
     expect(symbol).toStrictEqual(SvgIcon);
-  });
+  }, 15000);
 });
