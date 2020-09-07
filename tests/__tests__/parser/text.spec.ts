@@ -17,6 +17,7 @@ margin:0;
 `;
     document.body.innerHTML = `
 <div>
+
 <span id="tag" style="
   color: rgb(24, 144, 255);
   background: rgb(230, 247, 255);
@@ -30,6 +31,7 @@ margin:0;
 ">
 蓝色
 </span>
+<div id="text">123</div>
 
 <div id="row-text" >规划应用<a id="row-text-a">123</a>创建应用<a>应用管理</a>配置资源<a>应用实例</a></div>
 
@@ -54,7 +56,7 @@ text-overflow: ellipsis;
   it('文本正常解析', () => {
     const node = document.getElementById('text') as HTMLDivElement;
 
-    const text = (parseToText(node) as unknown) as Text;
+    const text = parseToText(node) as Text;
     expect(text).toBeTruthy();
 
     expect(text.toSketchJSON().attributedString.string).toBe('123');
