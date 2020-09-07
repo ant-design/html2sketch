@@ -29,19 +29,26 @@ describe('parseToShape', () => {
   .empty-text:before{
     content: '   ';
   }
+
+  .input::placeholder{
+    color:red;
+  }
 </style>
     `;
     document.body.innerHTML = `
-      <div>
-          <div id="normal-text"></div>
-          <div id="before" class="before"></div>
-          <div id="after" class="after"></div>
-          <div id="mix" class="mix"></div>
-          <div id="opacity" class="opacity"></div>
-          <div id="none" class="none-text"></div>
-          <div id="text" class="text"></div>
-          <div id="empty-text" class="empty-text"></div>
-      </div>
+<div>
+    <div id="normal-text"></div>
+    <div id="before" class="before"></div>
+    <div id="after" class="after"></div>
+    <div id="mix" class="mix"></div>
+    <div id="opacity" class="opacity"></div>
+    <div id="none" class="none-text"></div>
+    <div id="text" class="text"></div>
+    <div id="empty-text" class="empty-text"></div>
+    <input id="input" />
+    <input id="input-placeholder" class="input" placeholder="测试输入框" />
+    <input id="input-value" placeholder="测试输入框" value="这是值" />
+</div>
 `;
   });
 
@@ -74,5 +81,31 @@ describe('parseToShape', () => {
     expect(beforeJSON.attributedString.string).toBe('mix-before');
     expect(afterJSON._class).toBe('text');
     expect(afterJSON.attributedString.string).toBe('mix-after');
+  });
+  describe('输入框 Input Placeholder', () => {
+    it('input 不返回', () => {
+      const node = document.getElementById('input') as HTMLInputElement;
+      const input = parsePseudoToText(node, 'placeholder');
+
+      expect(input).toBeUndefined();
+    });
+
+    it('input-placeholder 解析成文本', () => {
+      const node = document.getElementById(
+        'input-placeholder',
+      ) as HTMLInputElement;
+      const input = parsePseudoToText(node, 'placeholder') as Text;
+      expect(input.textStyle.color.red).toBe(255);
+      const json = input.toSketchJSON();
+      expect(json._class).toBe('text');
+      expect(json.attributedString.string).toBe('测试输入框');
+    });
+    it('input-value 解析成文本', () => {
+      const node = document.getElementById('input-value') as HTMLInputElement;
+      const input = parsePseudoToText(node, 'placeholder') as Text;
+      const json = input.toSketchJSON();
+      expect(json._class).toBe('text');
+      expect(json.attributedString.string).toBe('这是值');
+    });
   });
 });

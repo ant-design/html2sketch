@@ -1,4 +1,5 @@
 import { Bitmap, Svg, parseToBitmap } from 'html2sketch';
+// import { errorBase64Url, getBase64ImageString } from 'html2sketch/utils/image';
 import { antdSvg } from '@test-utils';
 
 const dataUrl =
@@ -39,9 +40,14 @@ describe('parseToBitmap', () => {
       const imageLayer = await parseToBitmap(img);
       expect(imageLayer).toBeUndefined();
     });
+    // TODO 如何 MOCK 网络有问题的环境
     // it('如果网络有问题,则解析失败', async () => {
     //   const img = document.getElementById('img') as HTMLImageElement;
     //   const imageLayer = await parseToBitmap(img);
+    //
+    //   if (imageLayer) {
+    //     outputJSONData((imageLayer as Bitmap).toSketchJSON(), 'image-error');
+    //   }
     //   expect((imageLayer as Bitmap)?.base64).toBe(
     //     getBase64ImageString(errorBase64Url),
     //   );

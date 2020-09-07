@@ -37,6 +37,6 @@ describe('多个解析', () => {
     const node = document.getElementById('row-text') as HTMLDivElement;
     const layers = await nodeToGroup(node);
 
-    expect(layers.layers.length).toBe(5);
+    expect(layers.layers.length).toBe(14);
   });
 });

@@ -1,3 +1,5 @@
+/* istanbul ignore file */
+
 import SketchFormat from '@sketch-hq/sketch-file-format-ts';
 import { readFileSync, writeFileSync } from 'fs';
 import { join, resolve } from 'path';
@@ -40,6 +42,7 @@ export const outputJSONData = (
     | SketchFormat.ShapeGroup
     | SketchFormat.Text
     | SketchFormat.Rectangle
+    | SketchFormat.Bitmap
     | any[],
   name?: string,
 ) => {

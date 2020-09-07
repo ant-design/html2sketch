@@ -12,11 +12,7 @@ module.exports = {
     html2sketch: '<rootDir>/src',
     '@test-utils': '<rootDir>/tests/utils',
   },
-  setupFilesAfterEnv: [
-    './tests/setupTests.ts',
-    // https://www.npmjs.com/package/jest-canvas-mock#setup
-    // 'jest-canvas-mock'
-  ],
+  setupFilesAfterEnv: ['./tests/setupTests.ts'],
   testMatch: ['**/?(*.)+(spec|test).ts'],
   testPathIgnorePatterns: ['/node_modules/', '/e2e/'],
   moduleFileExtensions: ['js', 'ts', 'tsx', 'json', 'node'],

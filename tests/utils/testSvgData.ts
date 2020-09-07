@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 import SketchFormat from '@sketch-hq/sketch-file-format-ts';
 import { SVGPathData } from 'svg-pathdata';
 import { Frame, Style, ShapePathType } from 'html2sketch';
