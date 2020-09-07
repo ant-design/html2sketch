@@ -39,7 +39,7 @@ class Color extends BaseStyle {
   constructor(color?: ColorParam) {
     super();
     if (!color) {
-      this.method = ColorCls('#fff');
+      this.method = ColorCls();
     }
     if (color instanceof Array) {
       this.method = ColorCls.rgb(color);
@@ -130,6 +130,17 @@ class Color extends BaseStyle {
    */
   get brightness(): number {
     return this.method.value();
+  }
+
+  /**
+   * RGBA 值
+   */
+  get rgba(): string {
+    const r = this.method.red();
+    const b = this.method.blue();
+    const g = this.method.green();
+    const a = this.method.alpha();
+    return `rgba(${r},${g},${b},${a})`;
   }
 
   /**

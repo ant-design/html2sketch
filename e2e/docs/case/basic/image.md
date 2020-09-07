@@ -37,3 +37,7 @@ order: 40
 ## image 节点 + svg 网址
 
 <code src="./demos/SvgImage.tsx" />
+
+## 背景图片为 image 节点
+
+<code src="./demos/BackgroundImage.tsx" />

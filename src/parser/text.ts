@@ -49,7 +49,8 @@ export const parseToText = (node: Element): Text | Text[] | undefined => {
       }
 
       return new Text({
-        x,
+        x: display === 'inline-block' ? x : textBCR.x,
+        // y: textBCR.y,
         y,
         width: textWidth,
         height,

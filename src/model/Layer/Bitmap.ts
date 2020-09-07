@@ -1,8 +1,14 @@
 import SketchFormat from '@sketch-hq/sketch-file-format-ts';
-import BaseLayer, { BaseLayerParams } from '../Base/BaseLayer';
+import BaseLayer from '../Base/BaseLayer';
 import { defaultExportOptions } from '../utils';
-import { getBase64ImageString } from '../../utils/url';
 import { uuid } from '../../utils/utils';
+
+import {
+  blobToBase64,
+  initImageURL,
+  getBase64ImageString,
+} from '../../utils/image';
+import { BaseLayerParams } from '../type';
 
 interface BitmapInitParams extends BaseLayerParams {
   url: string;
@@ -17,14 +23,40 @@ class Bitmap extends BaseLayer {
     if (!url) {
       throw Error('没有传入 URL 请检查参数');
     }
-    this.url =
-      url.indexOf('data:') === 0 ? Bitmap.ensureBase64DataURL(url) : url;
+    const { url: safeURL, base64 } = initImageURL(url);
+
+    this.url = safeURL;
+    this.base64 = base64;
   }
 
   /**
-   * base64 的
+   * 线上 url
    */
   url: string;
+
+  /**
+   * 转换成的 base64 数据
+   */
+  base64: string;
+
+  /**
+   * 针对 http的 url 进行资源的初始化
+   */
+  async init() {
+    if (!this.url.startsWith('http')) return;
+
+    try {
+      const data = await fetch(this.url);
+      const blob = await data.blob();
+      const dataURL = await blobToBase64(blob);
+      const base64 = getBase64ImageString(dataURL);
+      if (base64) {
+        this.base64 = base64;
+      }
+    } catch (e) {
+      console.warn('网络或图片资源可能存在问题...');
+    }
+  }
 
   /**
    * 转为 Sketch JSON 对象
@@ -60,47 +92,17 @@ class Bitmap extends BaseLayer {
    * 转换为 Sketch 引用 JSON 对象
    * */
   toSketchImageJSON = (): SketchFormat.DataRef => {
-    const base64 = getBase64ImageString(this.url);
-    if (!base64) throw Error(`不正确的图像网址:${base64}`);
     return {
       _class: 'MSJSONOriginalDataReference',
       _ref_class: 'MSImageData',
       _ref: `images/${uuid()}`,
       data: {
-        _data: base64,
+        _data: this.base64,
       },
       sha1: {
         _data: '',
       },
     };
-  };
-
-  /**
-   * 将传入的 data:类型的数值 转成 Base64 类型的字符串
-   * @param url
-   */
-  static ensureBase64DataURL = (url: string) => {
-    const imageData = url.match(/data:(.+?)(;(.+))?,(.+)/i);
-
-    // 确保传入的 data:类型的参数都是 base64 的
-    if (imageData && imageData[3] !== 'base64') {
-      // Solve for an NSURL bug that can't handle plaintext data: URLs
-      const type = imageData[1];
-      const data = decodeURIComponent(imageData[4]);
-      const encodingMatch = imageData[3] && imageData[3].match(/^charset=(.*)/);
-      let buffer: Buffer;
-
-      if (encodingMatch) {
-        // @ts-ignore
-        buffer = Buffer.from(data, encodingMatch[1]);
-      } else {
-        buffer = Buffer.from(data);
-      }
-
-      return `data:${type};base64,${buffer.toString('base64')}`;
-    }
-
-    return url;
   };
 }
 

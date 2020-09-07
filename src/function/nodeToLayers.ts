@@ -18,6 +18,7 @@ import { isExistPseudoText, isExistPseudoShape } from '../utils/pseudo';
 import {
   isCanvasNode,
   isImageNode,
+  isInputNode,
   isSVGChildNode,
   isSvgNode,
   isTextNode,
@@ -27,7 +28,7 @@ import {
  * 将节点转为 Layer 对象
  * @param {HTMLElement} node 节点
  */
-const nodeToLayers = (node: Element): AnyLayer[] => {
+const nodeToLayers = async (node: Element): Promise<AnyLayer[]> => {
   const layers: any[] = [];
   const styles: CSSStyleDeclaration = getComputedStyle(node);
 
@@ -41,7 +42,7 @@ const nodeToLayers = (node: Element): AnyLayer[] => {
 
   // 图片类型的节点(img)
   if (isImageNode(node)) {
-    const image = parseToBitmap(<HTMLImageElement>node);
+    const image = await parseToBitmap(<HTMLImageElement>node);
     console.info('转换为:', image);
     layers.push(image);
     return layers;
@@ -59,22 +60,23 @@ const nodeToLayers = (node: Element): AnyLayer[] => {
   const hasShape = !isDefaultStyles(styles);
 
   const hasPseudoShape = isExistPseudoShape(node);
-  // 如果图层存在样式(阴影 边框等 返回 shape 节点
-  if (hasPseudoShape.after) {
-    const afterEl = parsePseudoToShape(node, 'after');
-    console.info('转换为:', afterEl);
-    layers.push(afterEl);
+
+  if (hasPseudoShape.before) {
+    const beforeEl = await parsePseudoToShape(node, 'before');
+    console.info('转换为:', beforeEl);
+    layers.push(beforeEl);
   }
 
   if (hasShape) {
-    const shape = parseToShape(node);
+    const shape = await parseToShape(node);
     console.info('转换为:', shape);
     layers.push(shape);
   }
-
-  if (hasPseudoShape.before) {
-    const beforeEl = parsePseudoToShape(node, 'before');
-    layers.push(beforeEl);
+  // 如果图层存在样式(阴影 边框等 返回 shape 节点
+  if (hasPseudoShape.after) {
+    const afterEl = await parsePseudoToShape(node, 'after');
+    console.info('转换为:', afterEl);
+    layers.push(afterEl);
   }
 
   // 转换为 SVG
@@ -86,6 +88,11 @@ const nodeToLayers = (node: Element): AnyLayer[] => {
     return layers;
   }
 
+  if (isInputNode(node)) {
+    const text = parsePseudoToText(node, 'placeholder');
+
+    layers.push(text);
+  }
   // 判断一下文本是否可见 不可见直接返回
   if (!isTextVisible(styles)) {
     return layers;
@@ -100,17 +107,19 @@ const nodeToLayers = (node: Element): AnyLayer[] => {
     let text;
     if (isText) {
       text = parseToText(node);
-      console.info('转换为:', text);
-      if (text instanceof Array) {
-        for (let i = 0; i < text.length; i += 1) {
-          const textElement = text[i];
-          if (i !== 0) {
-            textElement.x = text[i - 1].right;
+      if (text) {
+        console.info('转换为:', text);
+        if (text instanceof Array) {
+          for (let i = 0; i < text.length; i += 1) {
+            const textElement = text[i];
+            if (i !== 0) {
+              textElement.x = text[i - 1].right;
+            }
+            layers.push(textElement);
           }
-          layers.push(textElement);
+        } else {
+          layers.push(text);
         }
-      } else {
-        layers.push(text);
       }
     }
 

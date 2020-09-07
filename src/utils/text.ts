@@ -22,6 +22,9 @@ export const getTextContext = (textNode: Node) => {
 
 /**
  * 获取文本的绝对 BCR 定位值
+ *
+ * 使用场景 : 存在对齐等情况
+ *
  * @param parentNode
  * @param textNode
  */

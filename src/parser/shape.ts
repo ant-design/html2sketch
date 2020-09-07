@@ -1,18 +1,19 @@
 import Color from 'color';
 import { Style, Bitmap, Group, Rectangle, Shadow } from '../model';
-import { getActualImageSize, parseBackgroundImage } from '../utils/background';
 import { defaultNodeStyle } from '../model/utils';
 import { ColorParam } from '../model/Style/Color';
+import { getActualImageSize, parseBackgroundImage } from '../utils/background';
+import { waitForImageLoaded } from '../utils/image';
 
 /**
  * 将节点转换为 Shape 对象
  * @param node HTML Node
  * @param styles
  */
-export const parseToShape = (
+export const parseToShape = async (
   node: Element,
   styles?: CSSStyleDeclaration,
-): Group | Rectangle => {
+): Promise<Group | Rectangle> => {
   const bcr = node.getBoundingClientRect();
 
   const { left, top } = bcr;
@@ -204,8 +205,9 @@ export const parseToShape = (
           // 边框
         } = styles;
 
-        img.src = <string>backgroundImageResult.value;
-
+        const url = backgroundImageResult.value as string;
+        img.src = url;
+        await waitForImageLoaded(img);
         // TODO add support for % values
         const bitmapX = parseFloat(backgroundPositionX);
         const bitmapY = parseFloat(backgroundPositionY);
@@ -216,35 +218,38 @@ export const parseToShape = (
           { width, height },
         );
 
+        // 背景图片与填充的比例一直
+        // 所以可以直接使用 image 填充
         if (
           bitmapX === 0 &&
           bitmapY === 0 &&
-          actualImgSize.width === img.width &&
-          actualImgSize.height === img.height
+          actualImgSize.width / actualImgSize.height === width / height
         ) {
-          // background image fits entirely inside the node,
-          // so we can represent it with a (cheaper) image fill
-          style.addImageFill(<string>backgroundImageResult.value);
+          await style.addImageFill(url);
         } else {
           // use a Group(Shape + Bitmap) to correctly represent
           // clipping of the background image
-          const bm = new Bitmap({
-            url: <string>backgroundImageResult.value,
+          const bitmap = new Bitmap({
+            url,
             x: bitmapX,
             y: bitmapY,
             width: actualImgSize.width,
             height: actualImgSize.height,
           });
 
-          bm.name = 'background-image';
+          await bitmap.init();
+
+          bitmap.name = 'background-image';
           rect.hasClippingMask = true;
 
           const group = new Group({ x: left, y: top, width, height });
 
-          // position is relative to the group
-          group.setPosition({ x: 0, y: 0 });
-          group.addLayer(group);
-          group.addLayer(bm);
+          rect.name = 'Mask';
+
+          group.name = '编组';
+          group.addLayer(rect); // 变成相对坐标
+
+          group.layers.push(bitmap); // 保留自身的位置
 
           return group;
         }
@@ -259,11 +264,12 @@ export const parseToShape = (
           angle: string;
           stops: ColorParam[];
         };
+        console.log(backgroundImageResult);
         style.addGradientFill(angle, stops);
         break;
       default:
-        // Unsupported types:
-        // - radial gradient
+        // 暂不支持:
+        // - TODO radial gradient
         // - multiple background-image
         break;
     }

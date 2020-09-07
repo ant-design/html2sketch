@@ -1,6 +1,7 @@
 import SketchFormat from '@sketch-hq/sketch-file-format-ts';
-import BaseLayer, { BaseLayerParams } from '../Base/BaseLayer';
+import BaseLayer from '../Base/BaseLayer';
 import { defaultRuleData, defaultExportOptions } from '../utils';
+import { BaseLayerParams } from '../type';
 
 interface PageInitParams extends Pick<BaseLayerParams, 'height' | 'width'> {}
 
@@ -11,8 +12,8 @@ class Page extends BaseLayer {
 
   toSketchJSON(): SketchFormat.Page {
     return {
-      horizontalRulerData: defaultRuleData(),
-      verticalRulerData: defaultRuleData(),
+      horizontalRulerData: defaultRuleData,
+      verticalRulerData: defaultRuleData,
       hasClickThrough: true,
       includeInCloudUpload: true,
       _class: 'page',

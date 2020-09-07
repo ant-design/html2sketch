@@ -1,16 +1,23 @@
-// Parser for a linear gradient:
-// ---
-// <linear-gradient> = linear-gradient(
-//   [ [ <angle> | to <side-or-corner> ] ,]?
-//   <color-stop>[, <color-stop>]+
-// )
-//
-// <side-or-corner> = [left | right] || [top | bottom]
-// ---
-// Source: https://www.w3.org/TR/css3-images/#linear-gradients
-// ---
-// Example: "to top, rgba(67, 90, 111, 0.04), white"
-const parseLinearGradient = (value: string) => {
+import { BackgroundImageType } from '../type';
+
+/**
+ * 解析线性渐变
+ *
+ * ---
+ * <linear-gradient> = linear-gradient(
+ * [ [ <angle> | to <side-or-corner> ] ,]?
+ * <color-stop>[, <color-stop>]+
+ * )
+ *
+ * <side-or-corner> = [left | right] || [top | bottom]
+ *
+ * ---
+ * * Example: "to top, rgba(67, 90, 111, 0.04), white"
+ *
+ * @param value
+ * @see https://www.w3.org/TR/css3-images/#linear-gradients
+ */
+export const parseLinearGradient = (value: string) => {
   const parts = [];
   let currentPart = [];
   let i = 0;
@@ -47,6 +54,12 @@ const parseLinearGradient = (value: string) => {
     };
   }
   if (parts.length > 2) {
+    // 如果 parts 的第一个对象 不包含 deg 和 to
+    // 那就意味着全部都是 stops
+    if (!parts[0].includes('deg') && !parts[0].includes('to')) {
+      return { angle: '180deg', stops: parts };
+    }
+
     // angle + n stops
     const [angle, ...stops] = parts;
 
@@ -60,29 +73,30 @@ const parseLinearGradient = (value: string) => {
   return null;
 };
 
-type BackgroundImageType = {
-  type: 'Image' | 'LinearGradient';
-  value: any;
-};
-
-// Parses the background-image. The structure is as follows:
-// (Supports images and gradients)
-// ---
-// <background-image> = <bg-image> [ , <bg-image> ]*
-// <bg-image> = <image> | none
-// <image> = <url> | <image-list> | <element-reference> | <image-combination> | <gradient>
-// ---
-// Source: https://www.w3.org/TR/css-backgrounds-3/#the-background-image
-// ---
-// These functions should be pure to make it easy
-// to write test cases in the future.
-const parseBackgroundImage = (value: string): BackgroundImageType | void => {
+/**
+ * 解析背景图片
+ * The structure is as follows:
+ * (Supports images and gradients)
+ *
+ * ---
+ * <background-image> = <bg-image> [ , <bg-image> ]*
+ * <bg-image> = <image> | none
+ * <image> = <url> | <image-list> | <element-reference> | <image-combination> | <gradient>
+ * ---
+ * @param value
+ * @see: https://www.w3.org/TR/css-backgrounds-3/#the-background-image
+ * ---
+ */
+export const parseBackgroundImage = (
+  value: string,
+): BackgroundImageType | void => {
   if (value === 'none') {
     return;
   }
 
   const urlMatches = value.match(/^url\("(.+)"\)$/i);
   const linearGradientMatches = value.match(/^linear-gradient\((.+)\)$/i);
+  const radialGradientMatches = value.match(/^radial-gradient\((.+)\)$/i);
 
   if (urlMatches && urlMatches.length === 2) {
     // Image
@@ -104,15 +118,28 @@ const parseBackgroundImage = (value: string): BackgroundImageType | void => {
       };
     }
   }
+  if (radialGradientMatches && radialGradientMatches.length === 2) {
+    // 辐射渐变
+    // const linearGradientConfig = parseLinearGradient(linearGradientMatches[1]);
+
+    if (radialGradientMatches) {
+      // eslint-disable-next-line consistent-return
+      return {
+        type: 'radialGradient',
+        value: '',
+      };
+    }
+  }
 };
 
 /**
+ * 获取真实图像尺寸
  * @param {string} backgroundSize value of background-size CSS property
  * @param {{width: number, height: number}} imageSize natural size of the image
  * @param {{width: number, height: number}} containerSize size of the container
  * @return {{width: number, height: number}} actual image size
  */
-const getActualImageSize = (
+export const getActualImageSize = (
   backgroundSize: string,
   imageSize: { width: number; height: number },
   containerSize: { width: any; height: any },
@@ -197,5 +224,3 @@ const getActualImageSize = (
     height,
   };
 };
-
-export { parseBackgroundImage, getActualImageSize };

@@ -1,5 +1,5 @@
 export const getName = (nodeName: string) => {
-  switch (nodeName) {
+  switch (nodeName.toUpperCase()) {
     case 'DIV':
     case 'SPAN':
     case 'LABEL':
@@ -16,6 +16,8 @@ export const getName = (nodeName: string) => {
       return '单元格';
     case 'TBODY':
       return '表内容';
+    case 'INPUT':
+      return '输入框';
     default:
       return nodeName.toString();
   }

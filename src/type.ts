@@ -63,6 +63,7 @@ export interface LayerSelector {
   value: string;
   match?: LayerSelectorMatchMethod;
 }
+
 /**
  * 对 symbol 的相关配置项调整的参数
  */

@@ -3,17 +3,9 @@ import { uuid } from '../../utils/utils';
 import Frame from './Frame';
 import Style from '../Style/Style';
 import { calcResizingConstraint, ResizingConstraint } from '../../utils/layout';
-import { AnyLayer, LayerClassType } from '../type';
+import { AnyLayer, LayerClassType, BaseLayerParams } from '../type';
 
 const DEFAULT_USER_INFO_SCOPE = 'html2sketch';
-
-export interface BaseLayerParams {
-  x?: number;
-  y?: number;
-  width?: number;
-  height?: number;
-  name?: string;
-}
 
 abstract class BaseLayer {
   protected constructor(type: LayerClassType, params?: BaseLayerParams) {
@@ -130,6 +122,30 @@ abstract class BaseLayer {
 
   set right(right) {
     this.frame.right = right;
+  }
+
+  get top() {
+    return this.frame.top;
+  }
+
+  set top(top) {
+    this.frame.top = top;
+  }
+
+  get bottom() {
+    return this.frame.bottom;
+  }
+
+  set bottom(bottom) {
+    this.frame.bottom = bottom;
+  }
+
+  get left() {
+    return this.frame.left;
+  }
+
+  set left(left) {
+    this.frame.left = left;
   }
 
   setFixedWidthAndHeight() {

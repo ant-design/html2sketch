@@ -1,8 +1,9 @@
 import SketchFormat from '@sketch-hq/sketch-file-format-ts';
-import BaseLayer, { BaseLayerParams } from '../Base/BaseLayer';
+import BaseLayer from '../Base/BaseLayer';
 import { ResizingConstraint } from '../../utils/layout';
 import { defaultExportOptions } from '../utils';
 import TextStyle, { TextStyleParams } from '../Style/TextStyle';
+import { BaseLayerParams } from '../type';
 
 interface TextInitParams extends BaseLayerParams {
   text: string;
@@ -143,9 +144,13 @@ class Text extends BaseLayer {
   /**
    * 从节点中获取样式
    * @param node
+   * @param pseudoElt
    */
-  static getTextStyleFromNode = (node: Element): TextStyleParams => {
-    const styles: CSSStyleDeclaration = getComputedStyle(node);
+  static getTextStyleFromNode = (
+    node: Element,
+    pseudoElt?: string,
+  ): TextStyleParams => {
+    const styles: CSSStyleDeclaration = getComputedStyle(node, pseudoElt);
 
     const {
       // 字体

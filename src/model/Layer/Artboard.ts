@@ -1,8 +1,9 @@
 import SketchFormat from '@sketch-hq/sketch-file-format-ts';
 
-import BaseLayer, { BaseLayerParams } from '../Base/BaseLayer';
+import BaseLayer from '../Base/BaseLayer';
 import { defaultRuleData, defaultExportOptions } from '../utils';
 import Color from '../Style/Color';
+import { BaseLayerParams } from '../type';
 
 /**
  * 画板对象
@@ -73,8 +74,8 @@ class Artboard extends BaseLayer {
       nameIsFixed: this.nameIsFixed,
       resizesContent: this.resizesContent,
       shouldBreakMaskChain: this.shouldBreakMaskChain,
-      horizontalRulerData: defaultRuleData(),
-      verticalRulerData: defaultRuleData(),
+      horizontalRulerData: defaultRuleData,
+      verticalRulerData: defaultRuleData,
       hasClickThrough: true,
       includeInCloudUpload: true,
       resizingConstraint: 1,

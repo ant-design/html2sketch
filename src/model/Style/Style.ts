@@ -132,11 +132,16 @@ class Style extends BaseStyle {
   /**
    * 添加图片填充
    * */
-  addImageFill(image: string) {
+  async addImageFill(image: string) {
     const fill = new Fill({
       type: SketchFormat.FillType.Pattern,
       image,
     });
+
+    // 将图片资源初始化
+    if (fill.image) {
+      await fill.image.init();
+    }
 
     this.fills.push(fill);
   }

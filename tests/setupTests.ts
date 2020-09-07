@@ -13,10 +13,10 @@ const localStorageMock = (() => {
   let store = {};
 
   return {
-    getItem(key) {
+    getItem(key: string | number) {
       return store[key] || null;
     },
-    setItem(key, value) {
+    setItem(key: string | number, value: { toString: () => any }) {
       store[key] = value.toString();
     },
     clear() {

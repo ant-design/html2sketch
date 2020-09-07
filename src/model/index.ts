@@ -8,6 +8,7 @@ export { default as Rectangle } from './Layer/Rectangle';
 export { default as Svg } from './Layer/Svg';
 export { default as Text } from './Layer/Text';
 export { default as Group } from './Layer/Group';
+export { default as Ellipse } from './Layer/Ellipse';
 export { default as SymbolMaster } from './Layer/SymbolMaster';
 export { default as Bitmap } from './Layer/Bitmap';
 export { default as ShapeGroup } from './Layer/ShapeGroup';

@@ -106,15 +106,27 @@ export const isVisibleShape = (shape: Rectangle) => {
 
   // 没任何样式的话,就返回不可见
   const hasNoStyle =
-    shape.style.fills.length === 0 && shape.style.borders.length === 0;
+    shape.style.fills.length === 0 &&
+    shape.style.borders.length === 0 &&
+    shape.style.innerShadows.length === 0 &&
+    shape.style.shadows.length === 0;
+
   if (hasNoStyle) return false;
 
   const isInvalidFills = shape.style.fills.every(
     (fill) => fill.opacity.toString() === '0',
   );
-  const isInvalidBorders = shape.style.borders.every(
-    (border) => border.opacity === 0 || border.thickness === 0,
-  );
+  const isInvalidBorders =
+    shape.style.borders.every(
+      (border) => border.opacity === 0 || border.thickness === 0,
+    ) &&
+    // TODO 需要用 tab 补一下测试用例
+    shape.style.innerShadows.every((shadow) => {
+      return (
+        shadow.opacity.toString() === '0' ||
+        shadow.color.hex.toLowerCase() === '#fffff'
+      );
+    });
 
   return !(isInvalidFills && isInvalidBorders);
 };

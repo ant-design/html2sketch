@@ -1,13 +1,6 @@
 import SketchFormat from '@sketch-hq/sketch-file-format-ts';
+import { FrameInitParams } from 'html2sketch/model/type';
 
-export interface FrameInitParams extends Partial<FrameType> {}
-
-export interface FrameType {
-  x: number;
-  y: number;
-  width: number;
-  height: number;
-}
 /**
  * @class
  * Frame 类型

@@ -1,13 +1,12 @@
 import SketchFormat from '@sketch-hq/sketch-file-format-ts';
 import { getGroupLayout } from '../../utils/layout';
-import BaseLayer, { BaseLayerParams } from '../Base/BaseLayer';
+import BaseLayer from '../Base/BaseLayer';
 import Color from '../Style/Color';
 import SymbolInstance from './SymbolInstance';
 import { uuid } from '../../utils/utils';
 import { defaultExportOptions, defaultRuleData } from '../utils';
-import { AnyLayer } from '../type';
+import { AnyLayer, BaseLayerParams, FrameType } from '../type';
 import { GroupLayoutType } from '../../type';
-import { FrameType } from '../Base/Frame';
 
 /**
  * Sketch 的 Symbol 对象
@@ -156,8 +155,8 @@ class SymbolMaster extends BaseLayer {
       includeBackgroundColorInInstance: false,
       nameIsFixed: this.nameIsFixed,
       shouldBreakMaskChain: this.shouldBreakMaskChain,
-      horizontalRulerData: defaultRuleData(),
-      verticalRulerData: defaultRuleData(),
+      horizontalRulerData: defaultRuleData,
+      verticalRulerData: defaultRuleData,
 
       resizingConstraint: 1,
       resizingType: 1,

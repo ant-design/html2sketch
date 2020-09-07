@@ -34,11 +34,11 @@ export const defaultColorControls: FileFormat.ColorControls = {
 /**
  * SKetch 默认规则数据
  * */
-export const defaultRuleData = (): FileFormat.RulerData => ({
+export const defaultRuleData: FileFormat.RulerData = {
   _class: 'rulerData',
   base: 0,
   guides: [],
-});
+};
 
 /**
  * SKetch 默认blend 样式
