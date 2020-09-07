@@ -21,6 +21,14 @@ export const parseToText = (node: Element): Text | Text[] | undefined => {
         child.nodeType === Node.TEXT_NODE && child.nodeValue!.trim().length > 0,
     )
     .map((childNode) => {
+      // 💩 这里的代码写的有点屎
+      // 主要问题在于 text 在不同 display 模式下的位置问题
+      // 影响因素:
+      // 1. 自身的 display 和 text-align
+      // 2. 父级的 display 和 布局参数
+      // 上述 4 个要素综合影响文本的 x y 坐标
+      // 有待重构
+
       const { lines, textBCR } = getTextContext(childNode);
       const { x, y, width: bcrWidth, height } = getTextAbsBCR(node, childNode);
       let textWidth = bcrWidth;
@@ -49,7 +57,7 @@ export const parseToText = (node: Element): Text | Text[] | undefined => {
       }
 
       return new Text({
-        x: display === 'inline-block' ? x : textBCR.x,
+        x: ['inline-block'].includes(display) ? x : textBCR.x,
         // y: textBCR.y,
         y,
         width: textWidth,

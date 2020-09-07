@@ -88,11 +88,13 @@ const nodeToLayers = async (node: Element): Promise<AnyLayer[]> => {
     return layers;
   }
 
+  // 输入框节点
   if (isInputNode(node)) {
     const text = parsePseudoToText(node, 'placeholder');
 
     layers.push(text);
   }
+
   // 判断一下文本是否可见 不可见直接返回
   if (!isTextVisible(styles)) {
     return layers;
@@ -112,9 +114,14 @@ const nodeToLayers = async (node: Element): Promise<AnyLayer[]> => {
         if (text instanceof Array) {
           for (let i = 0; i < text.length; i += 1) {
             const textElement = text[i];
-            if (i !== 0) {
-              textElement.x = text[i - 1].right;
-            }
+            // 在 row-text 测试用例中
+            // 不应该有赋值左边的情况
+            // ----
+            // 但是在某些情况 仍然需要执行这个情况?
+            // 下述代码暂时保留 遇到相应的问题时再看
+            // if (i !== 0) {
+            //   textElement.x = text[i - 1].right;
+            // }
             layers.push(textElement);
           }
         } else {

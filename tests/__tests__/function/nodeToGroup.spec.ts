@@ -1,4 +1,5 @@
 import { nodeToGroup } from 'html2sketch';
+import { outputJSONData } from '@test-utils';
 
 describe('单个', () => {
   afterEach(() => {
@@ -37,6 +38,7 @@ describe('多个解析', () => {
     const node = document.getElementById('row-text') as HTMLDivElement;
     const layers = await nodeToGroup(node);
 
+    outputJSONData(layers.toSketchJSON(), 'row-text');
     expect(layers.layers.length).toBe(14);
   });
 });
