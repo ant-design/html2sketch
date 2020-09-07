@@ -12,8 +12,8 @@ class Page extends BaseLayer {
 
   toSketchJSON(): SketchFormat.Page {
     return {
-      horizontalRulerData: defaultRuleData(),
-      verticalRulerData: defaultRuleData(),
+      horizontalRulerData: defaultRuleData,
+      verticalRulerData: defaultRuleData,
       hasClickThrough: true,
       includeInCloudUpload: true,
       _class: 'page',

@@ -155,8 +155,8 @@ class SymbolMaster extends BaseLayer {
       includeBackgroundColorInInstance: false,
       nameIsFixed: this.nameIsFixed,
       shouldBreakMaskChain: this.shouldBreakMaskChain,
-      horizontalRulerData: defaultRuleData(),
-      verticalRulerData: defaultRuleData(),
+      horizontalRulerData: defaultRuleData,
+      verticalRulerData: defaultRuleData,
 
       resizingConstraint: 1,
       resizingType: 1,
