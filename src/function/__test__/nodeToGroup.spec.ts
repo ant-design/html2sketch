@@ -15,7 +15,7 @@ describe('单个', async () => {
   });
 });
 
-describe('多个解析', async () => {
+describe('多个解析', () => {
   afterEach(() => {
     document.body.innerHTML = '';
   });
