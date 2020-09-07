@@ -21,7 +21,9 @@ export const parseToBitmap = async (node: HTMLImageElement) => {
     if (node.src.endsWith('.svg')) {
       try {
         const data = await fetch(node.src);
-        const svgString = await data.text();
+        const svgText = await data.text();
+        const svgString = /(<svg.*<\/svg>)/gms.exec(svgText)?.[1] || svgText;
+
         const svg = new Svg({
           svgString,
           x,
