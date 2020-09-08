@@ -41,9 +41,9 @@ const ButtonCanvas: FC = () => {
             fill={fill.color.hex}
             strokeEnabled={style.borders.length > 0}
             strokeWidth={border.thickness}
-            stroke={border.color.rbga}
+            stroke={border.color.rgba}
             shadowBlur={shadow.blurRadius}
-            shadowColor={shadow.color.rbga}
+            shadowColor={shadow.color.rgba}
             shadowOffsetX={shadow.offsetX}
             shadowOffsetY={shadow.offsetY}
             shadowEnabled={style.shadows.length > 0}
@@ -59,7 +59,7 @@ const ButtonCanvas: FC = () => {
             onDragMove={(e) => {
               console.log(e);
             }}
-            fill={textStyle.color.rbga}
+            fill={textStyle.color.rgba}
             lineHeight={textStyle.lineHeight! / textStyle.fontSize || undefined}
             fontSize={textStyle.fontSize}
             fontFamily={textStyle.fontFamily}
@@ -80,8 +80,8 @@ const ButtonCanvas: FC = () => {
       <Divider />
       <Button
         type={'primary'}
-        onClick={(e) => {
-          const group = nodeToGroup(ref.current!);
+        onClick={async () => {
+          const group = await nodeToGroup(ref.current!);
           group.x = 4;
           group.y = 4;
           setModel(group);
