@@ -52,7 +52,14 @@ export const outputJSONData = (
   );
 };
 
-export const antdSvg = readFileSync(resolve(__dirname, './antd.svg'), 'utf8');
+export const illustrationSvg = readFileSync(
+  resolve(__dirname, './svg/illustration.svg'),
+  'utf8',
+);
+export const antdSvg = readFileSync(
+  resolve(__dirname, './svg/antd.svg'),
+  'utf8',
+);
 
 export const antdSvgson = JSON.parse(
   readFileSync(resolve(__dirname, './antd-svgson.json'), 'utf8'),

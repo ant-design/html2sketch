@@ -1,3 +1,6 @@
+// @ts-ignore
+import getSvgoInstance from 'svgo-browser/lib/get-svgo-instance';
+
 // based on https://www.w3.org/TR/SVG2/styling.html and defaults taken from Chrome
 const SVG_STYLE_PROPERTIES = [
   // name, default value
@@ -135,3 +138,51 @@ export function getUseReplacement(node: SVGUseElement) {
     return resultNode;
   }
 }
+
+/**
+ * 压缩和优化 Svg
+ * @param svg svg 字符串
+ */
+export const optimizeSvgString = async (svg: string) => {
+  const svgo = getSvgoInstance({
+    cleanupAttrs: true,
+    removeDoctype: true,
+    removeXMLProcInst: true,
+    removeComments: true,
+    removeMetadata: true,
+    removeTitle: true,
+    removeDesc: true,
+    removeUselessDefs: true,
+    removeEditorsNSData: true,
+    removeEmptyAttrs: true,
+    removeHiddenElems: true,
+    removeEmptyText: true,
+    removeEmptyContainers: true,
+    removeViewBox: true,
+    cleanupEnableBackground: true,
+    convertStyleToAttrs: true,
+    convertColors: true,
+    convertPathData: true,
+    convertTransform: true,
+    removeUnknownsAndDefaults: true,
+    removeNonInheritableGroupAttrs: true,
+    removeUselessStrokeAndFill: true,
+    removeUnusedNS: true,
+    cleanupIDs: true,
+    cleanupNumericValues: true,
+    moveElemsAttrsToGroup: true,
+    moveGroupAttrsToElems: true,
+    collapseGroups: true,
+    removeRasterImages: false,
+    mergePaths: true,
+    convertShapeToPath: true,
+    sortAttrs: true,
+    // convertEllipses: true,
+    removeDimensions: true,
+    removeAttrs: {
+      attrs: '(stroke|fill)',
+    },
+  });
+
+  return svgo.optimize(svg);
+};
