@@ -22,7 +22,7 @@ module.exports = {
         map: [
           ['html2sketch', './src/'],
           ['html2sketch/*', './src/*'],
-          ['@e2e-utils', './e2e/utils'],
+          ['@e2e-utils', './docs/__utils__'],
           ['@test-utils', './tests/utils'],
         ],
       },
