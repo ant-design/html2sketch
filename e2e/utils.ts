@@ -34,8 +34,8 @@ export const initHtml2Sketch = async (
   },
 ) => {
   const isOnline = process.env.ONLINE === '1';
-  const httpURL = `http://localhost:${port}/case`;
-  const fileURL = `file://${resolve(__dirname, '../dist')}/case`;
+  const httpURL = `http://localhost:${port}/e2e/case`;
+  const fileURL = `file://${resolve(__dirname, './dist')}/case`;
   const baseURL = isOnline ? fileURL : httpURL;
 
   const browser = await puppeteer.launch({
