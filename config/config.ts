@@ -1,4 +1,5 @@
 import { defineConfig } from 'umi';
+import { resolve } from 'path';
 
 export default defineConfig({
   title: 'html2sketch',
@@ -21,11 +22,14 @@ export default defineConfig({
     null,
     {
       title: 'GitHub',
-      path: 'https://github.com/arvinxx/html2sketch',
+      path: 'https://github.com/ant-design/html2sketch',
     },
   ],
   dynamicImport: {
     loading: '@ant-design/pro-skeleton',
+  },
+  alias: {
+    '@e2e-utils': resolve(__dirname, '../docs/__utils__'),
   },
   hash: true,
 });
