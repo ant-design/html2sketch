@@ -9,13 +9,13 @@
     "design",
     "c2d"
   ],
-  "homepage": "https://github.com/arvinxx/html2sketch",
+  "homepage": "https://github.com/ant-design/html2sketch",
   "bugs": {
-    "url": "https://github.com/arvinxx/html2sketch"
+    "url": "https://github.com/ant-design/html2sketch"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/arvinxx/html2sketch.git"
+    "url": "git+https://github.com/ant-design/html2sketch.git"
   },
   "license": "MIT",
   "main": "lib/index.js",
@@ -27,13 +27,12 @@
     "/dist"
   ],
   "scripts": {
-    "start": "UMI_ENV=e2e dumi dev",
+    "start": "dumi dev",
     "build": "father-build && webpack",
     "publish": "npm publish",
     "---------": "",
-    "site": "dumi build && gh-pages -d ./dist",
-    "site:dev": "dumi dev",
     "site:build": "dumi build",
+    "site:publish": "dumi build && gh-pages -d ./dist",
     "--------- ": "",
     "test": "umi-test",
     "test:update": "UPDATE=1 umi-test --update-snapshot",

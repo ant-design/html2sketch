@@ -1,6 +1,9 @@
 ---
 title: 画布
 order: 50
+nav:
+  title: 画布
+  order: 100
 ---
 
 ## TODO
