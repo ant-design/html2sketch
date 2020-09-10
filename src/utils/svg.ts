@@ -143,7 +143,7 @@ export function getUseReplacement(node: SVGUseElement) {
  * 压缩和优化 Svg
  * @param svg svg 字符串
  */
-export const optimizeSvgString = async (svg: string) => {
+export const optimizeSvgString = async (svg: string): Promise<string> => {
   const svgo = getSvgoInstance({
     cleanupAttrs: true,
     removeDoctype: true,
@@ -184,5 +184,6 @@ export const optimizeSvgString = async (svg: string) => {
     },
   });
 
-  return svgo.optimize(svg);
+  const { data } = await svgo.optimize(svg);
+  return data;
 };

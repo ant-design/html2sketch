@@ -142,9 +142,18 @@ describe('Svg 类', () => {
           y: 0,
           svgString,
         });
-        // outputJSONData(svg.toSketchJSON(), 'antd');
+
+        console.log(svg);
         expect(svg.layers.length).toBe(1);
-        // expect(svg.toSketchJSON()).toStrictEqual(antdJSON);
+        expect(svg.defs.length).toBe(4);
+
+        const group = svg.layers[0];
+        expect(group.class).toBe('group');
+        expect(group.layers).toHaveLength(2);
+
+        const [subGroup, ellipse] = group.layers;
+        expect(subGroup.layers).toHaveLength(3);
+        expect(ellipse.class).toBe('ellipse');
       });
     });
   });
@@ -240,14 +249,14 @@ describe('Svg 类', () => {
   describe('getSVGString', () => {
     const { getSVGString } = Svg;
 
-    it('返回节点的正确外层 HTML  w/o children', () => {
-      const outerHTML = 'pizza';
+    it('返回节点的正确外层 HTML  w/o children', async () => {
+      const outerHTML = '<svg><text>pizza</text></svg>';
       const node1 = ({
         children: [],
         outerHTML,
       } as unknown) as Element;
 
-      expect(getSVGString(node1)).toEqual(outerHTML);
+      expect(await getSVGString(node1)).toEqual(outerHTML);
     });
   });
 

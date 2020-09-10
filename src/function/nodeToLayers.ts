@@ -81,7 +81,7 @@ const nodeToLayers = async (node: Element): Promise<AnyLayer[]> => {
 
   // 转换为 SVG
   if (isSvgNode(node)) {
-    const svg = parseToSvg(node as SVGElement);
+    const svg = await parseToSvg(node as SVGElement);
     console.info('转换为:', svg);
     layers.push(svg);
 
