@@ -15,6 +15,11 @@ export default () => {
           src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
           style={{ width: 200, height: 200 }}
         />
+        <img
+          alt="Png"
+          src="//zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
+          style={{ width: 200, height: 200 }}
+        />
       </div>
     </TestLayout>
   );
