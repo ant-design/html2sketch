@@ -14,11 +14,13 @@ export const parseToBitmap = async (node: HTMLImageElement) => {
 
   // 如果解析失败, 则采用提前准备好的错误图片
 
-  let url;
+  let url = node.src;
   // 网络 URL
-  if (node.src.startsWith('http')) {
-    url = node.getAttribute('src') || '';
-    if (node.src.endsWith('.svg')) {
+  if (url.startsWith('//')) {
+    url = (location.protocol ? location.protocol : 'https') + url;
+  }
+  if (url.startsWith('http')) {
+    if (url.endsWith('.svg')) {
       try {
         const data = await fetch(node.src);
         const svgString = await data.text();
