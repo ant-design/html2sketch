@@ -34,6 +34,10 @@ order: 40
 
 <code src="./demos/PngImage.tsx" />
 
+## image 节点 + png 网址不带协议头
+
+<code src="./demos/NoProtocolImage.tsx" />
+
 ## image 节点 + svg 网址
 
 <code src="./demos/SvgImage.tsx" />
