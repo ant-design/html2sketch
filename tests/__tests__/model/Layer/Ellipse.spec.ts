@@ -20,6 +20,18 @@ describe('Ellipse', () => {
     expect(ellipse.ry).toBe(50);
   });
 
+  it('以 rx ry cx cy 创建', () => {
+    const ellipse = new Ellipse({
+      cx: 100,
+      cy: 100,
+      rx: 25,
+      ry: 25,
+    });
+    expect(ellipse.cx).toBe(100);
+    expect(ellipse.cy).toBe(100);
+    expect(ellipse.rx).toBe(25);
+    expect(ellipse.ry).toBe(25);
+  });
   it('修改 rx 正常响应', () => {
     const ellipse = new Ellipse({ x: 0, y: 50, width: 200, height: 100 });
 

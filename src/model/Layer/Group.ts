@@ -40,6 +40,29 @@ class Group extends BaseLayer {
   }
 
   /**
+   * 获取 group 子级的尺寸
+   */
+  getSize() {
+    let { width, height } = this;
+
+    if (width === 0 || height === 0) {
+      this.layers.forEach((layer) => {
+        const layerWidth = layer.x + layer.width;
+        const layerHeight = layer.y + layer.height;
+
+        if (width < layerWidth) {
+          width = layerWidth;
+        }
+        if (height < layerHeight) {
+          height = layerHeight;
+        }
+      });
+    }
+
+    return { width, height };
+  }
+
+  /**
    * 转换为 Sketch JSON 对象
    */
   toSketchJSON = (): SketchFormat.Group => {

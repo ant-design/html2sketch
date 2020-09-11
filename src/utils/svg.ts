@@ -179,11 +179,9 @@ export const optimizeSvgString = async (svg: string): Promise<string> => {
     sortAttrs: true,
     // convertEllipses: true,
     removeDimensions: true,
-    removeAttrs: {
-      attrs: '(stroke|fill)',
-    },
   });
 
   const { data } = await svgo.optimize(svg);
+  console.log(data);
   return data;
 };
