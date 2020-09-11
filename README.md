@@ -1,4 +1,4 @@
-<h1 align="center"><a href="">html2sketch</a>](https://ant-design.github.io/html2sketch/)</h1>
+<h1 align="center"><a href="https://ant-design.github.io/html2sketch/">html2sketch</a></h1>
 
 <div align="center">
 
