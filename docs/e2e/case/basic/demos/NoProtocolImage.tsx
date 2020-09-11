@@ -12,7 +12,7 @@ export default () => {
       <div ref={ref} id="png-url">
         <img
           alt="Png"
-          src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
+          src="//zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
           style={{ width: 200, height: 200 }}
         />
       </div>
