@@ -42,7 +42,7 @@ const SVG_STYLE_PROPERTIES = [
   ['flood-color', 'rgb(0, 0, 0)'],
   ['flood-opacity', '1'],
   ['font-family', 'Times'],
-  ['font-size', '16px'],
+  ['font-size', '14px'],
   ['font-size-adjust', 'none'],
   ['font-stretch', '100%'],
   ['font-style', 'normal'],
@@ -85,6 +85,12 @@ const SVG_STYLE_PROPERTIES = [
   ['writing-mode', 'horizontal-tb'],
 ];
 
+/**
+ * 将样式直接 inline 到 Style 中
+ *
+ * TODO: 针对 class 的样式似乎并不生效?
+ * @param node
+ */
 export function inlineStyles(node: SVGElement) {
   const styles = getComputedStyle(node);
 

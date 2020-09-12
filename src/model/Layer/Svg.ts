@@ -20,7 +20,7 @@ import {
 } from '../../utils/svg';
 import { getGroupLayout } from '../../utils/layout';
 import Style from '../Style/Style';
-import { BaseLayerParams, FrameType, ShapeGroupType } from '../type';
+import { AnyLayer, BaseLayerParams, FrameType, ShapeGroupType } from '../type';
 import Fill from '../Style/Fill';
 
 interface SvgInitParams extends Partial<BaseLayerParams> {
@@ -69,6 +69,12 @@ class Svg extends BaseLayer {
     this.layers = children.map(this.parseSvgson).filter((c) => c) as [];
     this.layers.unshift(background);
 
+    // 根据 viewBox 进行相应的偏移操作
+    this.layers.forEach((layer) => {
+      layer.frame.offset(-this.viewBox.x, -this.viewBox.y);
+    });
+
+    this.layers.forEach(this.scaleLayersToFrame);
     // 对内部每个图层都进行坐标变换 //
   }
 
@@ -84,9 +90,9 @@ class Svg extends BaseLayer {
 
   /**
    * Svg 包含的图层对象
-   * 每一个对象都是 Group 或者 ShapeGroup 类型
+   * 每一个对象都是 SvgLayer 类型
    */
-  layers: (ShapeGroup | Group | Rectangle)[] = [];
+  layers: AnyLayer[] = [];
 
   /**
    * 全局描述
@@ -250,7 +256,9 @@ class Svg extends BaseLayer {
       }
 
       inlineStyles(node);
-
+      if (node.nodeName === 'text') {
+        console.log(node);
+      }
       Array.from(node.children).forEach((child) => queue.push(child));
     }
 
@@ -268,6 +276,16 @@ class Svg extends BaseLayer {
     }
     return SketchFormat.WindingRule.EvenOdd;
   }
+
+  /**
+   * 将图层
+   */
+  scaleLayersToFrame = (layer: AnyLayer) => {
+    layer.frame.scale(this.aspectRatio);
+    if (layer.layers.length > 0) {
+      layer.layers.forEach(this.scaleLayersToFrame);
+    }
+  };
 
   // ---------- Svgson 解析方法群 ---------- //
   // ------------------------------------- //
@@ -368,7 +386,7 @@ class Svg extends BaseLayer {
         });
       case 'style':
         // eslint-disable-next-line no-case-declarations
-        const style = children?.[0].value?.split(',');
+        const style = children?.[0]?.value;
         console.log(style);
         return style;
       default:

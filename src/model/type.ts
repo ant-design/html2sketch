@@ -5,6 +5,7 @@ import Group from './Layer/Group';
 import Svg from './Layer/Svg';
 import ShapePath from './Layer/ShapePath';
 import Text from './Layer/Text';
+import Ellipse from './Layer/Ellipse';
 import Bitmap from './Layer/Bitmap';
 import Rectangle from './Layer/Rectangle';
 import ShapeGroup from './Layer/ShapeGroup';
@@ -54,7 +55,8 @@ export type AnyLayer =
   | ShapeGroup
   | Rectangle
   | ShapePath
-  | Svg;
+  | Svg
+  | Ellipse;
 
 /**
  * 任意可以成为编组的对象
