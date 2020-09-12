@@ -3,6 +3,7 @@ import * as svgson from 'svgson';
 import { SVGPathData } from 'svg-pathdata';
 
 import BaseLayer from '../Base/BaseLayer';
+import Frame from '../Base/Frame';
 import ShapePath from './ShapePath';
 import ShapeGroup from './ShapeGroup';
 import Ellipse from './Ellipse';
@@ -42,86 +43,50 @@ class Svg extends BaseLayer {
     this.rawSVGString = svgString;
 
     // --------- 处理 Svg String 变成 Svg Shape ---------- //
-    const { children } = svgson.parseSync(svgString, { camelcase: true });
+    const result = svgson.parseSync(svgString, { camelcase: true });
 
-    // ------ 将 Svg 的子节点转换成内部格式 ------ //
+    const { children, attributes } = result;
+    const { viewBox } = attributes;
+
+    // 解析获得 viewBox 值
+    const [viewX, viewY, viewWidth, viewHeight] = viewBox
+      .split(' ')
+      .map(parseFloat);
+    this.viewBox = new Frame({
+      x: viewX,
+      height: viewHeight,
+      width: viewWidth,
+      y: viewY,
+    });
+    this.aspectRatio = Svg.calcFrameScale(
+      this.viewBox.toJSON(),
+      this.frame.toJSON(),
+    );
+    const background = new Rectangle(this.viewBox.toJSON());
+    background.name = '容器';
+
+    // ------ 将 Svg 的子节点转换成子图层 ------ //
     this.layers = children.map(this.parseSvgson).filter((c) => c) as [];
+    this.layers.unshift(background);
 
-    // @ts-ignore
-    // let shapes: { path: string; style?: string }[] = children
-    //
-    //   // eslint-disable-next-line array-callback-return
-    //   .map((node) => {
-    //     const { attributes, name } = node;
-    //     switch (name) {
-    //       case 'path':
-    //         return {
-    //           path: attributes.d,
-    //           style: attributes.style,
-    //           layers: [],
-    //         };
-    //       default:
-    //     }
-    //   })
-    //   .filter((n) => n);
-    //
-    // // 如果没有对象的话 就直接结束
-    // if (shapes.length === 0) return;
-    //
-    // const fullPathString = shapes.reduce((prev, current) => {
-    //   return { path: prev.path + current.path, layers: [] };
-    // }).path;
-    //
-    // // 计算定界框的缩放尺寸
-    // const shapeGroupFrame = Svg.getSvgPathGroupFrame(fullPathString);
-    // const scaleShapeGroupToFrame = Svg.calcFrameScale(
-    //   shapeGroupFrame,
-    //   this.frame.toJSON(),
-    // );
-    // // ------ 进行统一的坐标和尺寸变换 -------- //
-    // shapes = shapes.map((s) => ({
-    //   ...s,
-    //   path: new SVGPathData(s.path)
-    //     // 将 shapeGroup 的坐标设为 0,0
-    //     .translate(-shapeGroupFrame.x, -shapeGroupFrame.y)
-    //     // 将 shapeGroup 与给定定界框 match 变成符合外部画板的尺寸
-    //     .scale(scaleShapeGroupToFrame, scaleShapeGroupToFrame)
-    //     .encode(),
-    // }));
-    //
-    // this.shapes = shapes;
-    //
-    // // ----- 对处理后的 shape 进行图形解析 ------ //
-    //
-    // shapes.forEach((shape) => {
-    //   const { path, style: styleString } = shape;
-    //
-    //   const shapeGroupType = Svg.pathToShapeGroup(path);
-    //
-    //   const shapePaths = this.shapeGroupDataToLayers(shapeGroupType);
-    //
-    //   const shapeGroup = new ShapeGroup(shapeGroupType.frame);
-    //
-    //   // 添加样式
-    //   if (styleString) {
-    //     const styleObj = Style.parserStyleString(styleString);
-    //     const style = new Style();
-    //     if (styleObj) {
-    //       style.addColorFill(styleObj.fill);
-    //     }
-    //     shapeGroup.style = style;
-    //   }
-    //   shapeGroup.addLayers(shapePaths);
-    //
-    //   this.addLayer(shapeGroup);
-    // });
+    // 对内部每个图层都进行坐标变换 //
   }
+
+  /**
+   * 缩放比例
+   */
+  aspectRatio: number;
+
+  /**
+   * svg 的 ViewBox
+   */
+  viewBox: Frame;
 
   /**
    * Svg 包含的图层对象
    * 每一个对象都是 Group 或者 ShapeGroup 类型
    */
-  layers: (ShapeGroup | Group)[] = [];
+  layers: (ShapeGroup | Group | Rectangle)[] = [];
 
   /**
    * 全局描述
@@ -177,34 +142,10 @@ class Svg extends BaseLayer {
   }
 
   /**
-   * ShapeGroup 转子图层方法
-   * @param shapeGroup
-   */
-  shapeGroupDataToLayers = (shapeGroup: ShapeGroupType) => {
-    const { shapes } = shapeGroup;
-
-    return shapes.map((shape) => {
-      const { points, isClose, frame } = shape;
-
-      return new ShapePath({
-        points,
-        isClose,
-
-        width: frame.width,
-        height: frame.height,
-        // 需要计算与 innerFrame 的相对坐标
-        // https://www.yuque.com/design-engineering/sketch-dev/hsbz8m#OPWbw
-        x: frame.x,
-        y: frame.y,
-      });
-    });
-  };
-
-  /**
    * 将 Path 转为贝赛尔曲线
    * @param svgPath 路径
    */
-  static pathToShapeGroup = (svgPath: string): ShapeGroupType => {
+  static pathToShapeGroup(svgPath: string): ShapeGroupType {
     // ------ 第一步: 获取有效的 Path 数组 ---------- //
     // 将 多个 svg 通过 M 符号进行分割
     const pathStr = svgPath.split(/([Mm])/).filter((s) => s);
@@ -222,14 +163,7 @@ class Svg extends BaseLayer {
     // ------ 第二步: 获取这组Path的 frame ---------- //
 
     // 获取 shapeGroup 的 frame
-    const shapeGroup = new SVGPathData(svgPath);
-    const bounds = shapeGroup.getBounds();
-    const groupFrame = {
-      width: bounds.maxX - bounds.minX,
-      height: bounds.maxY - bounds.minY,
-      x: bounds.minX,
-      y: bounds.minY,
-    };
+    const groupFrame = Svg.getSvgPathGroupFrame(svgPath);
 
     // 解析每个路径中的shape
     const shapes = paths.map(ShapePath.svgPathToShapePath).filter((shape) => {
@@ -248,13 +182,13 @@ class Svg extends BaseLayer {
       shapes,
       frame: groupFrame,
     };
-  };
+  }
 
   /**
    * 获取 svgPath 的内部定界框
    * @param svgPath svg 的path路径
    */
-  static getSvgPathGroupFrame = (svgPath: string) => {
+  static getSvgPathGroupFrame(svgPath: string) {
     const shapeGroup = new SVGPathData(svgPath);
     const bounds = shapeGroup.getBounds();
     return {
@@ -263,12 +197,12 @@ class Svg extends BaseLayer {
       x: bounds.minX,
       y: bounds.minY,
     };
-  };
+  }
 
   /**
    * 计算 Frame 的缩放比例
    */
-  static calcFrameScale = (originFrame: FrameType, targetFrame: FrameType) => {
+  static calcFrameScale(originFrame: FrameType, targetFrame: FrameType) {
     const targetAspectRatio = targetFrame.width / targetFrame.height;
     const originAspectRatio = originFrame.width / originFrame.height;
     // 确定缩放比例
@@ -283,7 +217,7 @@ class Svg extends BaseLayer {
     }
 
     return scale;
-  };
+  }
 
   /**
    * 将 Svg Node 转为 SvgString
@@ -324,6 +258,21 @@ class Svg extends BaseLayer {
   };
 
   /**
+   * 一致化缠绕规则参数
+   * @param ruleStr
+   */
+  static normalizeWindingRule(ruleStr?: string) {
+    const rule = ruleStr?.toLowerCase();
+    if (rule && ['nonzero', 'nozero', 'non-zero', 'no-zero'].includes(rule)) {
+      return SketchFormat.WindingRule.NonZero;
+    }
+    return SketchFormat.WindingRule.EvenOdd;
+  }
+
+  // ---------- Svgson 解析方法群 ---------- //
+  // ------------------------------------- //
+
+  /**
    * 解析 Svgson 变成 layer
    * @param node
    */
@@ -339,7 +288,7 @@ class Svg extends BaseLayer {
         return this.parseNodeToGroup(node);
       // 路径
       case 'path':
-        return this.parseSvgsonToPath(node);
+        return this.parseSvgsonPathToShape(node);
       // 椭圆
       case 'ellipse':
         return this.parseNodeToEllipse(node);
@@ -353,49 +302,36 @@ class Svg extends BaseLayer {
       case 'polygon':
         // return Svg.parseNodeToPolygon(node);
         break;
-      // 直线
-      case 'line':
-        break;
       // 文本
       case 'text':
         break;
       default:
     }
-
-    // 完成全量解析后 还需要进行坐标变换
   };
 
   /**
    * 将节点解析为 pathShape
    * @param node
    */
-  parseSvgsonToPath(node: svgson.INode) {
+  parseSvgsonPathToShape(node: svgson.INode) {
     const { attributes, name } = node;
     // 如果没有对象的话 就直接结束
     if (name !== 'path') return;
 
-    // 计算定界框的缩放尺寸
-    // const shapeGroupFrame = Svg.getSvgPathGroupFrame(attributes.d);
-    // const scaleShapeGroupToFrame = Svg.calcFrameScale(
-    //   shapeGroupFrame,
-    //   this.frame.toJSON(),
-    // );
     // ------ 进行统一的坐标和尺寸变换 -------- //
-    const path = new SVGPathData(attributes.d)
-      // // 将 shapeGroup 的坐标设为 0,0
-      // .translate(-shapeGroupFrame.x, -shapeGroupFrame.y)
-      // // 将 shapeGroup 与给定定界框 match 变成符合外部画板的尺寸
-      // .scale(scaleShapeGroupToFrame, scaleShapeGroupToFrame)
-      .encode();
+    const path = new SVGPathData(attributes.d).toAbs().encode();
 
     const shapeGroupType = Svg.pathToShapeGroup(path);
 
     const shapePaths = this.shapeGroupDataToLayers(shapeGroupType);
 
+    if (shapePaths.length === 1) {
+      const shapePath = shapePaths[0];
+      shapePath.style = this.parseNodeAttrToStyle(node.attributes);
+    }
     const shapeGroup = new ShapeGroup(shapeGroupType.frame);
 
     shapeGroup.addLayers(shapePaths);
-
     shapeGroup.style = this.parseNodeAttrToStyle(node.attributes);
 
     return shapeGroup;
@@ -406,7 +342,7 @@ class Svg extends BaseLayer {
    * @param defsNode
    */
   static parseSvgDefs(defsNode: svgson.INode) {
-    const { attributes, name } = defsNode;
+    const { attributes, name, children } = defsNode;
     switch (name) {
       case 'linearGradient':
         return new Gradient({
@@ -430,21 +366,14 @@ class Svg extends BaseLayer {
             return stopColor;
           }),
         });
+      case 'style':
+        // eslint-disable-next-line no-case-declarations
+        const style = children?.[0].value?.split(',');
+        console.log(style);
+        return style;
       default:
     }
   }
-
-  /**
-   * 一致化缠绕规则参数
-   * @param ruleStr
-   */
-  static normalizeWindingRule = (ruleStr?: string) => {
-    const rule = ruleStr?.toLowerCase();
-    if (rule && ['nonzero', 'nozero', 'non-zero', 'no-zero'].includes(rule)) {
-      return SketchFormat.WindingRule.NonZero;
-    }
-    return SketchFormat.WindingRule.EvenOdd;
-  };
 
   /**
    * 解析 Node 的 Attribute 变成 style
@@ -569,6 +498,29 @@ class Svg extends BaseLayer {
     rect.style = style;
     return rect;
   }
+
+  /**
+   * ShapeGroup 转子图层方法
+   * @param shapeGroup
+   */
+  shapeGroupDataToLayers = (shapeGroup: ShapeGroupType) => {
+    const { shapes } = shapeGroup;
+
+    return shapes.map((shape) => {
+      const { points, isClose, frame } = shape;
+      return new ShapePath({
+        points,
+        isClose,
+
+        width: frame.width,
+        height: frame.height,
+        // 需要计算与 innerFrame 的相对坐标
+        // https://www.yuque.com/design-engineering/sketch-dev/hsbz8m#OPWbw
+        x: frame.x,
+        y: frame.y,
+      });
+    });
+  };
 }
 
 export default Svg;

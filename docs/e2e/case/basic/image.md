@@ -1,5 +1,5 @@
 ---
-title: 图片解析测试
+title: 图片解析
 order: 40
 ---
 
@@ -40,7 +40,7 @@ order: 40
 
 ## image 节点 + svg 网址
 
-<code src="./demos/SvgImage.tsx" />
+<code src="./demos/ImageSvg.tsx" />
 
 ## 背景图片为 image 节点
 
