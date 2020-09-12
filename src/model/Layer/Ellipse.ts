@@ -1,5 +1,7 @@
+import SketchFormat from '@sketch-hq/sketch-file-format-ts';
 import BaseLayer from '../Base/BaseLayer';
 import { BaseLayerParams } from '../type';
+import { defaultExportOptions } from '../utils';
 
 interface EllipseParams extends BaseLayerParams {
   /**
@@ -19,6 +21,7 @@ interface EllipseParams extends BaseLayerParams {
    */
   ry?: number;
 }
+
 /**
  * 椭圆图形
  */
@@ -26,19 +29,21 @@ class Ellipse extends BaseLayer {
   constructor(params?: EllipseParams) {
     super('ellipse', params);
 
+    this.name = 'ellipse';
+
     if (params) {
       const { cx, cy, rx, ry } = params;
-      if (cx) {
-        this.cx = cx;
-      }
-      if (cy) {
-        this.cy = cy;
-      }
       if (rx) {
         this.rx = rx;
       }
       if (ry) {
         this.ry = ry;
+      }
+      if (cx) {
+        this.cx = cx;
+      }
+      if (cy) {
+        this.cy = cy;
       }
     }
   }
@@ -83,6 +88,75 @@ class Ellipse extends BaseLayer {
   set ry(ry: number) {
     this.top = this.x + (this.height / 2 - ry);
     this.height = ry * 2;
+  }
+
+  toSketchJSON(): SketchFormat.Oval {
+    return {
+      _class: 'oval',
+      name: this.name,
+      resizingConstraint: this.resizingConstraint,
+      frame: this.frame.toSketchJSON(),
+      do_objectID: this.id,
+      style: this.style.toSketchJSON(),
+      edited: false,
+      isVisible: true,
+      isFixedToViewport: false,
+      isFlippedHorizontal: false,
+      isFlippedVertical: false,
+      layerListExpandedType: 0,
+      nameIsFixed: false,
+      resizingType: 0,
+      rotation: 0,
+      shouldBreakMaskChain: false,
+      clippingMaskMode: 0,
+      isLocked: false,
+      booleanOperation: SketchFormat.BooleanOperation.None,
+      exportOptions: defaultExportOptions,
+      isClosed: true,
+      points: [
+        {
+          _class: 'curvePoint',
+          cornerRadius: 0,
+          curveFrom: '{0.77614237490000004, 1}',
+          curveMode: 2,
+          curveTo: '{0.22385762510000001, 1}',
+          hasCurveFrom: true,
+          hasCurveTo: true,
+          point: '{0.5, 1}',
+        },
+        {
+          _class: 'curvePoint',
+          cornerRadius: 0,
+          curveFrom: '{1, 0.22385762510000001}',
+          curveMode: 2,
+          curveTo: '{1, 0.77614237490000004}',
+          hasCurveFrom: true,
+          hasCurveTo: true,
+          point: '{1, 0.5}',
+        },
+        {
+          _class: 'curvePoint',
+          cornerRadius: 0,
+          curveFrom: '{0.22385762510000001, 0}',
+          curveMode: 2,
+          curveTo: '{0.77614237490000004, 0}',
+          hasCurveFrom: true,
+          hasCurveTo: true,
+          point: '{0.5, 0}',
+        },
+        {
+          _class: 'curvePoint',
+          cornerRadius: 0,
+          curveFrom: '{0, 0.77614237490000004}',
+          curveMode: 2,
+          curveTo: '{0, 0.22385762510000001}',
+          hasCurveFrom: true,
+          hasCurveTo: true,
+          point: '{0, 0.5}',
+        },
+      ],
+      pointRadiusBehaviour: 1,
+    };
   }
 }
 export default Ellipse;

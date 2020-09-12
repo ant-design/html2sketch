@@ -36,7 +36,7 @@ export const parseToText = (node: Element): Text | Text[] | undefined => {
       const { display, whiteSpace, overflow, textOverflow, width } = styles;
 
       if (display === 'inline') {
-        textStyle.lineHeight = textBCR.height;
+        textStyle.lineHeight = textBCR.height / lines;
       }
       // **** 处理文本 ****** //
 

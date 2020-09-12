@@ -28,6 +28,10 @@ class Text extends BaseLayer {
     this.sketchTextBehaviour = multiline
       ? SketchFormat.TextBehaviour.Fixed
       : SketchFormat.TextBehaviour.Flexible;
+
+    if (style?.opacity) {
+      this.style.opacity = style.opacity;
+    }
   }
 
   textStyle: TextStyle;
@@ -69,7 +73,6 @@ class Text extends BaseLayer {
       clippingMaskMode: 0,
       hasClippingMask: this.hasClippingMask,
       style: this.style.toSketchJSON(),
-
       attributedString: this.getSketchAttributedString(),
       automaticallyDrawOnUnderlyingPath: false,
       dontSynchroniseWithSymbol: false,
@@ -162,6 +165,7 @@ class Text extends BaseLayer {
       textTransform,
       textDecorationLine,
       color,
+      opacity,
     } = styles;
 
     return {
@@ -177,6 +181,7 @@ class Text extends BaseLayer {
       textAlign: TextStyle.parseTextHorizontalAlign(styles),
       verticalAlign: TextStyle.parseTextVerticalAlign(styles),
       skipSystemFonts: true,
+      opacity: parseFloat(opacity),
     };
   };
 }

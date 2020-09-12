@@ -19,6 +19,7 @@ export interface GradientProps {
 class Gradient extends BaseStyle {
   constructor(props?: GradientProps) {
     super();
+
     if (!props) {
       this.name = 'gradient';
       return;
@@ -39,6 +40,8 @@ class Gradient extends BaseStyle {
     }
     this.name = name || 'gradient';
   }
+
+  class: 'gradient' = 'gradient';
 
   /**
    * 起点

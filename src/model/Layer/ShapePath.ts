@@ -117,7 +117,7 @@ class ShapePath extends BaseLayer {
     // 判断 CurveFrom
 
     // 如果下一个点是 Curve 点
-    if (nextPoint.type === SVGPathData.CURVE_TO) {
+    if (nextPoint && nextPoint.type === SVGPathData.CURVE_TO) {
       hasCurveFrom = true;
       curveFromPoint = { x: nextPoint.x1, y: nextPoint.y1 };
     }

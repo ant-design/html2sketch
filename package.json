@@ -1,6 +1,6 @@
 {
   "name": "html2sketch",
-  "version": "0.3.1",
+  "version": "0.4.0-0",
   "author": "arvinxx(arvinx@foxmail.com)",
   "description": "parser HTML to Sketch",
   "keywords": [
@@ -69,10 +69,15 @@
     ],
     "**/*.{js,ts,tsx}": "npm run lint-staged:js"
   },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org"
+  },
   "dependencies": {
     "@sketch-hq/sketch-file-format-ts": "5.1.1",
     "color": "^3.1.2",
+    "css": "^3.0.0",
     "svg-pathdata": "^5.0.5",
+    "svgo-browser": "^1.3.7",
     "svgson": "^4.1.0",
     "uuid": "^8.2.0"
   },
@@ -90,6 +95,7 @@
     "@testing-library/react-hooks": "^3.2.1",
     "@types/classnames": "^2.2.7",
     "@types/color": "^3.0.1",
+    "@types/css": "0.0.31",
     "@types/fs-extra": "^9.0.1",
     "@types/jest": "^26.0.0",
     "@types/jsdom": "^16.2.3",

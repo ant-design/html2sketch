@@ -50,6 +50,7 @@ export interface TextStyleParams {
   fontFamily?: string;
   fontWeight?: number | string;
   lineHeight?: number;
+  opacity?: number;
   letterSpacing?: number;
   textTransform?: string;
   textDecoration?: string;

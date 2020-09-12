@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 
-import { UpCircleOutlined, PlusOutlined } from '@ant-design/icons';
+import { PlusOutlined } from '@ant-design/icons';
 import { TestLayout, useElements } from '@e2e-utils';
 
 const IconTest: FC = () => {
@@ -9,7 +9,6 @@ const IconTest: FC = () => {
   return (
     <TestLayout elements={elements}>
       <div id="icons" ref={ref}>
-        <UpCircleOutlined />
         <PlusOutlined />
       </div>
     </TestLayout>

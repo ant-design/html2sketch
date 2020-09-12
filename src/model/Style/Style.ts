@@ -1,5 +1,5 @@
 import SketchFormat from '@sketch-hq/sketch-file-format-ts';
-
+import { Declaration, parse as cssParse, Rule } from 'css';
 import { defaultBorderOptions, defaultColorControls } from '../utils';
 import { ColorParam } from './Color';
 import BaseStyle from '../Base/BaseStyle';
@@ -258,7 +258,7 @@ class Style extends BaseStyle {
    * 从样式字符串获得样式的 JSON 对象
    * @param style
    */
-  static parserStyleString = (style: string): StyleType | undefined => {
+  static parseStyleString = (style: string): StyleType | undefined => {
     if (!style || style === '') {
       return;
     }
@@ -282,6 +282,49 @@ class Style extends BaseStyle {
     str = `{${str}}`;
 
     return JSON.parse(str);
+  };
+
+  /**
+   * 从类字符串获得样式的 JSON 对象
+   * @param classStyle
+   */
+  static parseClassStyle = (classStyle: string) => {
+    const { stylesheet } = cssParse(classStyle);
+    const rules: {
+      className: string;
+      styles: { [x: string]: string };
+    }[] = [];
+
+    stylesheet?.rules.forEach((rule: Rule) => {
+      const { selectors, declarations } = rule;
+      const styles = {};
+      declarations
+        // 过滤出所有的声明类型
+        ?.filter((d) => d.type === 'declaration')
+        .forEach((declaration: Declaration) => {
+          const { property, value } = declaration;
+          if (!property) return;
+
+          // 将 key 转为小驼峰模式
+          const key = property.replace(/-(\w)/g, (_, letter) =>
+            letter.toUpperCase(),
+          );
+
+          Object.assign(styles, { [key]: value });
+        });
+
+      // 如果 styles 中存在元素
+      if (Object.keys(styles).length > 0) {
+        selectors?.forEach((selector) => {
+          rules.push({
+            className: selector,
+            styles,
+          });
+        });
+      }
+    });
+
+    return rules;
   };
 }
 

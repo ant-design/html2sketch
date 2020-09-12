@@ -6,6 +6,16 @@ import { FrameInitParams } from '../type';
  * Frame 类型
  */
 class Frame {
+  constructor(params?: FrameInitParams) {
+    if (params) {
+      const { height = 0, width = 0, x = 0, y = 0 } = params;
+      this.x = x;
+      this.y = y;
+      this.width = width;
+      this.height = height;
+    }
+  }
+
   x: number = 0;
 
   y: number = 0;
@@ -46,14 +56,25 @@ class Frame {
     this.y = top;
   }
 
-  constructor(params?: FrameInitParams) {
-    if (params) {
-      const { height = 0, width = 0, x = 0, y = 0 } = params;
-      this.x = x;
-      this.y = y;
-      this.width = width;
-      this.height = height;
-    }
+  /**
+   * 按比例缩放宽高
+   * @param ratio
+   */
+  scale(ratio: number) {
+    this.x *= ratio;
+    this.y *= ratio;
+    this.width *= ratio;
+    this.height *= ratio;
+  }
+
+  /**
+   * 偏移
+   * @param x X坐标
+   * @param y Y坐标
+   */
+  offset(x: number, y: number) {
+    this.x += x;
+    this.y += y;
   }
 
   /**

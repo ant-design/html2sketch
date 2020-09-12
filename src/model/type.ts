@@ -1,10 +1,10 @@
 /* eslint-disable no-shadow */
 import { SVGPathData } from 'svg-pathdata';
-import SketchFormat from '@sketch-hq/sketch-file-format-ts';
 import Group from './Layer/Group';
 import Svg from './Layer/Svg';
 import ShapePath from './Layer/ShapePath';
 import Text from './Layer/Text';
+import Ellipse from './Layer/Ellipse';
 import Bitmap from './Layer/Bitmap';
 import Rectangle from './Layer/Rectangle';
 import ShapeGroup from './Layer/ShapeGroup';
@@ -54,7 +54,8 @@ export type AnyLayer =
   | ShapeGroup
   | Rectangle
   | ShapePath
-  | Svg;
+  | Svg
+  | Ellipse;
 
 /**
  * 任意可以成为编组的对象
@@ -117,63 +118,14 @@ export type LinePoint = {
 export type BezierPoint = StartPoint | CurvePoint | LinePoint;
 
 /* **********    SVG     ************** */
-
-/**
- * Svg 内部 shape 包含的信息
- */
-export interface BaseSvgShape {
-  style?: any;
-  /**
-   * 图形类型
-   */
-  type?: SvgShapeType;
-  /**
-   * 缠绕规则
-   *
-   * 奇偶缠绕和非零缠绕
-   * 详情见
-   * @see https://www.yuque.com/arvinxx/fontend/7ad6671c-d309-40fc-a0a8-55888f508289
-   */
-  windingRule?: SketchFormat.WindingRule;
-  layers: any[];
+export interface SvgDefsStyle {
+  class: 'classStyle';
+  rules: CssStyleRule[];
 }
-
-/**
- * Svg Shape 类型
- */
-export type SvgShapeType = 'group' | 'ellipse' | 'path';
-
-/**
- * 所有相关的 Svg 类型
- */
-export type AnySvgShape = SvgPath | SvgEllipse | SvgGroup;
-
-/**
- * Svg 内部 shape 包含的信息
- */
-export interface SvgGroup extends BaseSvgShape {
-  type: 'group';
-  layers: AnySvgShape[];
+export interface CssStyleRule {
+  className: string;
+  styles: { [key: string]: string };
 }
-
-/**
- * Svg 内部 shape 包含的信息
- */
-export interface SvgPath extends BaseSvgShape {
-  type: 'path';
-  path: string;
-  layers: [];
-}
-
-/**
- * Svg 内部的椭圆
- */
-export interface SvgEllipse extends BaseSvgShape {
-  type: 'ellipse';
-  frame: FrameType;
-  layers: [];
-}
-
 export declare enum LayerClassValue {
   Artboard = 'artboard',
   Bitmap = 'bitmap',

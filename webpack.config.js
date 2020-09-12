@@ -135,4 +135,5 @@ module.exports = {
       chunkFilename: '[id].css',
     }),
   ],
+  node: { fs: 'empty' },
 };
