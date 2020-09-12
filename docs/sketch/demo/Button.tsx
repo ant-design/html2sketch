@@ -39,15 +39,20 @@ const ButtonSymbolDemo: FC = () => {
     typeList.map((i) => ({ ...i, size: 'large' })),
   ];
 
-  const transformFunc = (transferFn: (node: Element) => Object) => {
+  const transformFunc = async (
+    transferFn: (node: Element) => Promise<Object>,
+  ) => {
     try {
       const els = document.getElementsByClassName('button');
       const buttons: Object[] = [];
 
-      Array.from(els).forEach((el) => {
-        const sketchBtn = transferFn(el);
+      const list = Array.from(els);
+
+      for (let i = 0; i < list.length; i++) {
+        const sketchBtn = await transferFn(list[i]);
         buttons.push(sketchBtn);
-      });
+      }
+
       console.log('-------转换结束--------');
       console.log(buttons);
 
@@ -65,8 +70,8 @@ const ButtonSymbolDemo: FC = () => {
       text: '转换为 Group',
       type: 'default',
       onClick: () => {
-        transformFunc((node) => {
-          return nodeToGroup(node).toSketchJSON();
+        transformFunc(async (node) => {
+          return (await nodeToGroup(node)).toSketchJSON();
         });
       },
     },
@@ -74,10 +79,10 @@ const ButtonSymbolDemo: FC = () => {
       text: '转换为 Symbol',
       type: 'primary',
       onClick: () => {
-        transformFunc((node) => {
+        transformFunc(async (node) => {
           const symbolLayout = node.getAttribute('layout') as GroupLayoutType;
 
-          return nodeToSketchSymbol(node, {
+          const symbol = await nodeToSketchSymbol(node, {
             symbolLayout: symbolLayout || undefined,
             handleSymbol: (symbol) => {
               symbol.name = node.getAttribute('symbol-name') || 'symbol';
@@ -92,7 +97,9 @@ const ButtonSymbolDemo: FC = () => {
               };
               symbol.layers.forEach(renameBG);
             },
-          }).toSketchJSON();
+          });
+
+          return symbol.toSketchJSON();
         });
       },
     },

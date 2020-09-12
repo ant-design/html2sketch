@@ -22,7 +22,7 @@
       "html2sketch": ["./src"],
       "html2sketch/*": ["./src/*"],
       "@test-utils": ["./tests/utils"],
-      "@e2e-utils": ["./e2e/utils"]
+      "@e2e-utils": ["./docs/__utils__"]
     }
   },
   "include": ["src/"]

@@ -1,5 +1,5 @@
 import SketchFormat from '@sketch-hq/sketch-file-format-ts';
-import { FrameInitParams } from 'html2sketch/model/type';
+import { FrameInitParams } from '../type';
 
 /**
  * @class
