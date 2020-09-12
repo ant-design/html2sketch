@@ -4,6 +4,7 @@ import { defaultNodeStyle } from '../model/utils';
 import { ColorParam } from '../model/Style/Color';
 import { getActualImageSize, parseBackgroundImage } from '../utils/background';
 import { waitForImageLoaded } from '../utils/image';
+import { optimizeSvgString } from 'html2sketch/utils/svg';
 
 /**
  * 将节点转换为 Shape 对象
@@ -229,7 +230,9 @@ export const parseToShape = async (
           if (url.endsWith('svg')) {
             try {
               const data = await fetch(url);
-              const svgString = await data.text();
+              let svgString = await data.text();
+              svgString = await optimizeSvgString(svgString);
+
               const svg = new Svg({
                 svgString,
                 x: 0,

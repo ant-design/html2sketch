@@ -32,10 +32,15 @@ class Border extends BaseStyle {
 
     this.name = name || 'Border';
     this.type = type;
-    this.position = position || SketchFormat.BorderPosition.Inside;
+
     this.thickness = thickness || 0;
     this.color = new Color(color);
     this.gradient = new Gradient(gradient);
+
+    if (position?.toString()) {
+      this.position = position;
+    }
+
     if (image) {
       this.image = new Image(image);
     }
@@ -68,7 +73,7 @@ class Border extends BaseStyle {
   /**
    * 描边位置, 默认为内部描边
    * */
-  position: SketchFormat.BorderPosition;
+  position: SketchFormat.BorderPosition = SketchFormat.BorderPosition.Inside;
 
   /**
    * 描边宽度 默认为 0

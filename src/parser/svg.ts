@@ -8,6 +8,7 @@ export const parseToSvg = async (node: SVGElement) => {
   const nodeBCR = node.getBoundingClientRect();
 
   const svgString = await Svg.getSVGString(node);
+
   const svg = new Svg({
     x: nodeBCR.left,
     y: nodeBCR.top,
