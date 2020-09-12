@@ -52,7 +52,7 @@ describe('parseToBitmap', () => {
       expect((imageLayer as Bitmap)?.base64).toBe(
         getBase64ImageString(errorBase64Url),
       );
-    }, 15000);
+    }, 30000);
 
     it('网络没问题 则解析成功', async () => {
       const img = document.getElementById('png') as HTMLImageElement;

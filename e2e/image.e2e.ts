@@ -14,7 +14,6 @@ describe('测试图片', () => {
       selector,
     );
     expect(image).toBeTruthy();
-    expect(image).toMatchSnapshot();
 
     if (isUpdate) {
       outputJSONData(image, 'inline-image');
@@ -33,7 +32,6 @@ describe('测试图片', () => {
       selector,
     );
     expect(image).toBeTruthy();
-    expect(image).toMatchSnapshot();
 
     if (isUpdate) {
       outputJSONData(image, 'png-url-image');
