@@ -3,21 +3,34 @@ import * as svgson from 'svgson';
 import { SVGPathData } from 'svg-pathdata';
 
 import BaseLayer from '../Base/BaseLayer';
+import Frame from '../Base/Frame';
 import ShapePath from './ShapePath';
 import ShapeGroup from './ShapeGroup';
+import Ellipse from './Ellipse';
+import Rectangle from './Rectangle';
+import Group from './Group';
+import Text from './Text';
 
-import { getUseReplacement, inlineStyles } from '../../utils/svg';
-import { defaultExportOptions } from '../utils';
-import { getGroupLayout } from '../../utils/layout';
 import Style from '../Style/Style';
+import TextStyle from '../Style/TextStyle';
+import Gradient from '../Style/Gradient';
+import Fill from '../Style/Fill';
+import Color from '../Style/Color';
+
+import { defaultExportOptions } from '../utils';
 import {
-  ShapeGroupType,
+  getUseReplacement,
+  inlineStyles,
+  optimizeSvgString,
+} from '../../utils/svg';
+import { getGroupLayout } from '../../utils/layout';
+
+import {
+  AnyLayer,
   BaseLayerParams,
   FrameType,
-  // SvgEllipse,
-  // BaseSvgShape,
-  // AnySvgShape,
-  // SvgPath,
+  ShapeGroupType,
+  SvgDefsStyle,
 } from '../type';
 
 interface SvgInitParams extends Partial<BaseLayerParams> {
@@ -40,86 +53,63 @@ class Svg extends BaseLayer {
     this.rawSVGString = svgString;
 
     // --------- 处理 Svg String 变成 Svg Shape ---------- //
-    const { children } = svgson.parseSync(svgString, { camelcase: true });
-    // --------- 处理 Svg 的 Frame ------- //
+    const result = svgson.parseSync(svgString, { camelcase: true });
 
-    // ------ 将 Svg 的子节点转换成内部格式 ------ //
+    const { children, attributes } = result;
+    const { viewBox } = attributes;
 
-    // @ts-ignore
-    let shapes: { path: string; style?: string }[] = children
-
-      // eslint-disable-next-line array-callback-return
-      .map((node) => {
-        const { attributes, name } = node;
-        switch (name) {
-          case 'path':
-            return {
-              path: attributes.d,
-              style: attributes.style,
-              layers: [],
-            };
-          default:
-        }
-      })
-      .filter((n) => n);
-
-    // 如果没有对象的话 就直接结束
-    if (shapes.length === 0) return;
-
-    const fullPathString = shapes.reduce((prev, current) => {
-      return { path: prev.path + current.path, layers: [] };
-    }).path;
-
-    // 计算定界框的缩放尺寸
-    const shapeGroupFrame = Svg.getSvgPathGroupFrame(fullPathString);
-    const scaleShapeGroupToFrame = Svg.calcFrameScale(
-      shapeGroupFrame,
+    // 解析获得 viewBox 值
+    const [viewX, viewY, viewWidth, viewHeight] = viewBox
+      .split(' ')
+      .map(parseFloat);
+    this.viewBox = new Frame({
+      x: viewX,
+      height: viewHeight,
+      width: viewWidth,
+      y: viewY,
+    });
+    this.aspectRatio = Svg.calcFrameScale(
+      this.viewBox.toJSON(),
       this.frame.toJSON(),
     );
-    // ------ 进行统一的坐标和尺寸变换 -------- //
-    shapes = shapes.map((s) => ({
-      ...s,
-      path: new SVGPathData(s.path)
-        // 将 shapeGroup 的坐标设为 0,0
-        .translate(-shapeGroupFrame.x, -shapeGroupFrame.y)
-        // 将 shapeGroup 与给定定界框 match 变成符合外部画板的尺寸
-        .scale(scaleShapeGroupToFrame, scaleShapeGroupToFrame)
-        .encode(),
-    }));
+    const background = new Rectangle(this.viewBox.toJSON());
+    background.name = '容器';
+    background.hasClippingMask = true;
 
-    this.shapes = shapes;
+    // ------ 将 Svg 的子节点转换成子图层 ------ //
+    this.layers = children.map(this.parseSvgson).filter((c) => c) as [];
+    this.layers.unshift(background);
 
-    // ----- 对处理后的 shape 进行图形解析 ------ //
-
-    shapes.forEach((shape) => {
-      const { path, style: styleString } = shape;
-
-      const shapeGroupType = Svg.pathToShapeGroup(path);
-
-      const shapePaths = this.shapeGroupDataToLayers(shapeGroupType);
-
-      const shapeGroup = new ShapeGroup(shapeGroupType.frame);
-
-      // 添加样式
-      if (styleString) {
-        const styleObj = Style.parserStyleString(styleString);
-        const style = new Style();
-        if (styleObj) {
-          style.addColorFill(styleObj.fill);
-        }
-        shapeGroup.style = style;
-      }
-      shapeGroup.addLayers(shapePaths);
-
-      this.addLayer(shapeGroup);
+    // 根据 viewBox 进行相应的偏移操作
+    this.layers.forEach((layer) => {
+      layer.frame.offset(-this.viewBox.x, -this.viewBox.y);
     });
+
+    // 对内部每个图层都进行坐标变换 //
+    this.layers.forEach(this.scaleLayersToFrame);
   }
 
   /**
-   * Svg 包含的图层对象
-   * 每一个对象都是 ShapeGroup 类型
+   * 缩放比例
    */
-  layers: ShapeGroup[] = [];
+  aspectRatio: number;
+
+  /**
+   * svg 的 ViewBox
+   */
+  viewBox: Frame;
+
+  /**
+   * Svg 包含的图层对象
+   * 每一个对象都是 SvgLayer 类型
+   */
+  layers: AnyLayer[] = [];
+
+  /**
+   * 全局描述
+   * @private
+   */
+  defs: (Gradient | SvgDefsStyle)[] = [];
 
   shapes: { path: string; style?: string }[] = [];
 
@@ -169,34 +159,10 @@ class Svg extends BaseLayer {
   }
 
   /**
-   * ShapeGroup 转子图层方法
-   * @param shapeGroup
-   */
-  shapeGroupDataToLayers = (shapeGroup: ShapeGroupType) => {
-    const { shapes } = shapeGroup;
-
-    return shapes.map((shape) => {
-      const { points, isClose, frame } = shape;
-
-      return new ShapePath({
-        points,
-        isClose,
-
-        width: frame.width,
-        height: frame.height,
-        // 需要计算与 innerFrame 的相对坐标
-        // https://www.yuque.com/design-engineering/sketch-dev/hsbz8m#OPWbw
-        x: frame.x,
-        y: frame.y,
-      });
-    });
-  };
-
-  /**
    * 将 Path 转为贝赛尔曲线
    * @param svgPath 路径
    */
-  static pathToShapeGroup = (svgPath: string): ShapeGroupType => {
+  static pathToShapeGroup(svgPath: string): ShapeGroupType {
     // ------ 第一步: 获取有效的 Path 数组 ---------- //
     // 将 多个 svg 通过 M 符号进行分割
     const pathStr = svgPath.split(/([Mm])/).filter((s) => s);
@@ -214,14 +180,7 @@ class Svg extends BaseLayer {
     // ------ 第二步: 获取这组Path的 frame ---------- //
 
     // 获取 shapeGroup 的 frame
-    const shapeGroup = new SVGPathData(svgPath);
-    const bounds = shapeGroup.getBounds();
-    const groupFrame = {
-      width: bounds.maxX - bounds.minX,
-      height: bounds.maxY - bounds.minY,
-      x: bounds.minX,
-      y: bounds.minY,
-    };
+    const groupFrame = Svg.getSvgPathGroupFrame(svgPath);
 
     // 解析每个路径中的shape
     const shapes = paths.map(ShapePath.svgPathToShapePath).filter((shape) => {
@@ -240,13 +199,13 @@ class Svg extends BaseLayer {
       shapes,
       frame: groupFrame,
     };
-  };
+  }
 
   /**
    * 获取 svgPath 的内部定界框
    * @param svgPath svg 的path路径
    */
-  static getSvgPathGroupFrame = (svgPath: string) => {
+  static getSvgPathGroupFrame(svgPath: string) {
     const shapeGroup = new SVGPathData(svgPath);
     const bounds = shapeGroup.getBounds();
     return {
@@ -255,12 +214,12 @@ class Svg extends BaseLayer {
       x: bounds.minX,
       y: bounds.minY,
     };
-  };
+  }
 
   /**
    * 计算 Frame 的缩放比例
    */
-  static calcFrameScale = (originFrame: FrameType, targetFrame: FrameType) => {
+  static calcFrameScale(originFrame: FrameType, targetFrame: FrameType) {
     const targetAspectRatio = targetFrame.width / targetFrame.height;
     const originAspectRatio = originFrame.width / originFrame.height;
     // 确定缩放比例
@@ -275,13 +234,13 @@ class Svg extends BaseLayer {
     }
 
     return scale;
-  };
+  }
 
   /**
    * 将 Svg Node 转为 SvgString
    * @param svgNode
    */
-  static getSVGString = (svgNode: Element): string => {
+  static getSVGString = async (svgNode: Element): Promise<string> => {
     // NOTE: this code modifies the original node by inlining all styles
     // this is not ideal and probably fixable
     const queue = Array.from(svgNode.children);
@@ -312,169 +271,410 @@ class Svg extends BaseLayer {
       Array.from(node.children).forEach((child) => queue.push(child));
     }
 
-    return svgNode.outerHTML;
+    return optimizeSvgString(svgNode.outerHTML);
   };
-
-  /**
-   * 将 svgon 解析出来的 node 转变为 svgShape
-   * @param node
-   */
-  // static parseSvgsonToSvgShapes = (
-  //   node?: svgson.INode,
-  // ): BaseSvgShape | BaseSvgShape[] | undefined => {
-  //   if (!node) return;
-  //   const { children } = node;
-  //   if (children.length > 0) {
-  //     const svgShapes = children.map(Svg.parseSvgsonToSvgShape);
-  //     return svgShapes.filter((s) => s) as BaseSvgShape[];
-  //   }
-  //   return Svg.parseSvgsonToSvgShape(node);
-  // };
-
-  // static parseSvgsonToSvgShape = (
-  //   node: svgson.INode,
-  // ): AnySvgShape | AnySvgShape[] | undefined => {
-  //   const { children, attributes, name } = node;
-  //
-  //   let layers: BaseSvgShape[] = [];
-  //
-  //   switch (name) {
-  //     // 入口
-  //     case 'svg':
-  //       if (children.length > 0) {
-  //         const svgShapes = children.map(Svg.parseSvgsonToSvgShape);
-  //         layers = svgShapes.filter((s) => s) as BaseSvgShape[];
-  //       }
-  //       return layers;
-  //     // 编组
-  //     case 'g':
-  //       if (children.length > 0) {
-  //         const svgShapes = children.map(Svg.parseSvgsonToSvgShape);
-  //         layers = svgShapes.filter((s) => s) as BaseSvgShape[];
-  //       }
-  //       return {
-  //         type: 'group',
-  //         layers,
-  //         style: attributes.style,
-  //       };
-  //     case 'defs':
-  //       return {};
-  //
-  //     // path
-  //     case 'path':
-  //       return {
-  //         path: attributes.d,
-  //         style: attributes.style,
-  //         layers,
-  //       };
-  //     // 圆形
-  //     case 'ellipse':
-  //       return {
-  //         style: attributes.style,
-  //       };
-  //
-  //     // 两者是无关紧要的信息
-  //     case 'title':
-  //     case 'desc':
-  //     default:
-  //   }
-  // };
-
-  /**
-   * 将 svg node 转换为 svg Group 对象
-   */
-  // static parseGNodeToGroup = (node: svgson.INode): BaseSvgShape | undefined => {
-  //   if (node.name !== 'g') return;
-  //
-  //   const { attributes } = node;
-  //   const { fillRule } = attributes;
-  //
-  //   const layers = node.children.map(
-  //     Svg.parseSvgsonToSvgShapes,
-  //   ) as BaseSvgShape[];
-  //
-  //   const style = Svg.parseNodeAttrToStyle(attributes); // 解析样式
-  //
-  //   return {
-  //     type: 'group',
-  //     layers: layers || [],
-  //     windingRule: Svg.normalizeWindingRule(fillRule),
-  //     style,
-  //   };
-  // };
 
   /**
    * 一致化缠绕规则参数
    * @param ruleStr
    */
-  static normalizeWindingRule = (ruleStr?: string) => {
+  static normalizeWindingRule(ruleStr?: string) {
     const rule = ruleStr?.toLowerCase();
     if (rule && ['nonzero', 'nozero', 'non-zero', 'no-zero'].includes(rule)) {
       return SketchFormat.WindingRule.NonZero;
     }
     return SketchFormat.WindingRule.EvenOdd;
+  }
+
+  /**
+   * 将图层
+   */
+  scaleLayersToFrame = (layer: AnyLayer) => {
+    layer.frame.scale(this.aspectRatio);
+    if (layer.class === 'text') {
+      (layer as Text).textStyle.fontSize *= this.aspectRatio;
+    }
+    if (layer.layers.length > 0) {
+      layer.layers.forEach(this.scaleLayersToFrame);
+    }
   };
+
+  // ---------- Svgson 解析方法群 ---------- //
+  // ------------------------------------- //
+
+  /**
+   * 解析 Svgson 变成 layer
+   * @param node
+   */
+  parseSvgson = (node: svgson.INode) => {
+    switch (node.name) {
+      // 全局定义
+      case 'defs':
+        this.defs = node.children.map(Svg.parseSvgDefs) as [];
+        break;
+      // 编组
+      case 'g':
+        return this.parseNodeToGroup(node);
+      // 路径
+      case 'path':
+        return this.parseSvgsonPathToShape(node);
+      // 椭圆
+      case 'ellipse':
+        return this.parseNodeToEllipse(node);
+      // 圆形
+      case 'circle':
+        return this.parseNodeToCircle(node);
+      // 矩形
+      case 'rect':
+        return this.parseNodeToRectangle(node);
+      // 多边形
+      case 'polygon':
+        // return Svg.parseNodeToPolygon(node);
+        break;
+      // 文本
+      case 'text':
+        return this.parseNodeToText(node);
+      default:
+    }
+  };
+
+  /**
+   * 将节点解析为 pathShape
+   * @param node
+   */
+  parseSvgsonPathToShape(node: svgson.INode) {
+    const { attributes, name } = node;
+    // 如果没有对象的话 就直接结束
+    if (name !== 'path') return;
+
+    // ------ 进行统一的坐标和尺寸变换 -------- //
+    const path = new SVGPathData(attributes.d).toAbs().encode();
+
+    const shapeGroupType = Svg.pathToShapeGroup(path);
+
+    const shapePaths = this.shapeGroupDataToLayers(shapeGroupType);
+
+    if (shapePaths.length === 1) {
+      const shapePath = shapePaths[0];
+      shapePath.style = this.parseNodeAttrToStyle(node.attributes);
+    }
+    const shapeGroup = new ShapeGroup(shapeGroupType.frame);
+
+    shapeGroup.addLayers(shapePaths);
+    shapeGroup.style = this.parseNodeAttrToStyle(node.attributes);
+
+    return shapeGroup;
+  }
+
+  /**
+   * 将 svg 的 Defs 解析成相应的对象
+   * @param defsNode
+   */
+  static parseSvgDefs(defsNode: svgson.INode) {
+    const { attributes, name, children } = defsNode;
+    switch (name) {
+      case 'linearGradient':
+        return new Gradient({
+          name: attributes.id,
+          from: {
+            // 解析得到的是 109% 这样的值
+            x: parseFloat(attributes.x1) / 100,
+            y: parseFloat(attributes.y1) / 100,
+          },
+          to: {
+            x: parseFloat(attributes.x2) / 100,
+            y: parseFloat(attributes.y2) / 100,
+          },
+          stops: defsNode.children.map((item) => {
+            const {
+              // TODO 有待改造 Stop 方法
+              // offset,
+              stopColor,
+            } = item.attributes;
+            // const color = new Color(stopColor);
+            return stopColor;
+          }),
+        });
+      case 'style':
+        // eslint-disable-next-line no-case-declarations
+        const style = children?.[0]?.value;
+        if (!style) return;
+
+        // eslint-disable-next-line no-case-declarations
+        const rules = Style.parseClassStyle(style);
+        return { class: 'classStyle', rules };
+      default:
+    }
+  }
 
   /**
    * 解析 Node 的 Attribute 变成 style
    * @param attributes node 的属性
    */
-  static parseNodeAttrToStyle = (attributes: svgson.INode['attributes']) => {
-    const { stroke, strokeWidth, fill, style } = attributes;
+  parseNodeAttrToStyle = (attributes: svgson.INode['attributes']) => {
+    const {
+      stroke,
+      strokeWidth,
+      fill: fillStr,
+      style: styleString,
+      class: className,
+    } = attributes;
 
-    const fills = [];
-    const strokes = [];
-    if (fill !== 'none') {
-      fills.push(fill);
+    const style = new Style();
+    const styleObj = Style.parseStyleString(styleString);
+
+    const baseFill = this.getFillByString(fillStr);
+    if (baseFill) {
+      style.fills.push(baseFill);
     }
+
+    if (styleObj?.fill) {
+      style.addColorFill(styleObj?.fill);
+    }
+
     if (stroke !== 'none') {
-      strokes.push({ stroke, width: strokeWidth });
+      style.addBorder({ thickness: parseFloat(strokeWidth), color: stroke });
     }
-    return {
-      fills,
-      strokes,
-      style,
-    };
+
+    const rule = this.getCssRuleByClassName(className);
+    // 获得具体的规则
+    if (rule) {
+      const { styles } = rule;
+
+      if (styles.fill) {
+        const fill = this.getFillByString(styles.fill);
+        if (fill) {
+          style.fills.push(fill);
+        }
+      }
+    }
+
+    return style;
+  };
+
+  /**
+   * 解析 Node 的 Attribute 变成 textStyle
+   * @param attributes node 的属性
+   */
+  parseNodeAttrToTextStyle = (attributes: svgson.INode['attributes']) => {
+    const {
+      fontSize,
+      lineHeight,
+      class: className,
+      style: styleString,
+    } = attributes;
+
+    const style = new TextStyle({
+      fontSize: parseFloat(fontSize) || 14,
+      lineHeight: parseFloat(lineHeight) || 22,
+    });
+    const styleObj = Style.parseStyleString(styleString);
+
+    if (styleObj) {
+      // console.log(styleObj);
+    }
+
+    const rule = this.getCssRuleByClassName(className);
+    // 获得具体的规则
+    if (rule) {
+      const { styles } = rule;
+
+      if (styles.fill) {
+        style.color = new Color(styles.fill);
+      }
+
+      if (styles.fontSize) {
+        style.fontSize = parseFloat(styles.fontSize);
+      }
+
+      if (styles.lineHeight) {
+        style.lineHeight = parseFloat(styles.lineHeight);
+      }
+    }
+
+    return style;
+  };
+
+  /**
+   * 将 g 节点解析为 Group
+   * @param node
+   */
+  parseNodeToGroup = (node: svgson.INode): Group => {
+    const group = new Group();
+
+    const layers = node.children.map(this.parseSvgson).filter((c) => c);
+    if (layers && layers.length > 0) {
+      group.addLayers(layers as []);
+    }
+
+    const { height, width } = group.getSize();
+
+    group.height = height;
+    group.width = width;
+    group.name = '编组';
+
+    // const { fillRule } = node.attributes;
+    // group.windingRule = Svg.normalizeWindingRule(fillRule);
+    return group;
   };
 
   /**
    * 将 ellipse 的节点解析为椭圆
    * @param node
    */
-  // static parseNodeToEllipse = (node: svgson.INode): SvgEllipse | undefined => {
-  //   if (!node || (node && node.name !== 'ellipse')) return;
-  //
-  //   const { rx, ry } = node.attributes;
-  //   return {
-  //     type: 'ellipse',
-  //     frame: { width: rx * 2, height: ry * 2 },
-  //     style: Svg.parseNodeAttrToStyle(node.attributes),
-  //     layers: [],
-  //   };
-  // };
+  parseNodeToEllipse(node: svgson.INode): Ellipse | undefined {
+    if (!node || (node && node.name !== 'ellipse')) return;
 
-  // static parsePathToShape = (shapes: SvgPath[]) => {
-  //   const fullPathString = shapes.reduce((prev, current) => {
-  //     return { path: prev.path + current.path, layers: [] };
-  //   }).path;
-  //
-  //   // 计算定界框的缩放尺寸
-  //   const shapeGroupFrame = Svg.getSvgPathGroupFrame(fullPathString);
-  //   const scaleShapeGroupToFrame = Svg.calcFrameScale(
-  //     shapeGroupFrame,
-  //     this.frame.toJSON(),
-  //   );
-  //   // ------ 进行统一的坐标和尺寸变换 -------- //
-  //   shapes = shapes.map((s) => ({
-  //     ...s,
-  //     path: new SVGPathData(s.path)
-  //       // 将 shapeGroup 的坐标设为 0,0
-  //       .translate(-shapeGroupFrame.x, -shapeGroupFrame.y)
-  //       // 将 shapeGroup 与给定定界框 match 变成符合外部画板的尺寸
-  //       .scale(scaleShapeGroupToFrame, scaleShapeGroupToFrame)
-  //       .encode(),
-  //   }));
-  // };
+    const { rx, ry, cx, cy } = node.attributes;
+    const style = this.parseNodeAttrToStyle(node.attributes);
+
+    const ellipse = new Ellipse({
+      cx: parseFloat(cx),
+      cy: parseFloat(cy),
+      rx: parseFloat(rx),
+      ry: parseFloat(ry),
+    });
+    ellipse.name = '椭圆';
+    ellipse.style = style;
+
+    return ellipse;
+  }
+
+  /**
+   * 将 ellipse 的节点解析为圆
+   * @param node
+   */
+  parseNodeToCircle(node: svgson.INode): Ellipse | undefined {
+    if (!node || (node && node.name !== 'circle')) return;
+
+    const { r, cx, cy } = node.attributes;
+    const style = this.parseNodeAttrToStyle(node.attributes);
+
+    const ellipse = new Ellipse({
+      cx: parseFloat(cx),
+      cy: parseFloat(cy),
+      rx: parseFloat(r),
+      ry: parseFloat(r),
+    });
+
+    ellipse.style = style;
+
+    return ellipse;
+  }
+
+  /**
+   * 将 ellipse 的节点解析为矩形
+   * @param node
+   */
+  parseNodeToRectangle(node: svgson.INode) {
+    const { name, attributes } = node;
+    if (name !== 'rect') return;
+
+    const { x, y, width, height, rx } = attributes;
+    const style = this.parseNodeAttrToStyle(attributes);
+
+    const rect = new Rectangle({
+      cornerRadius: parseFloat(rx),
+      width: parseFloat(width),
+      height: parseFloat(height),
+      x: parseFloat(x),
+      y: parseFloat(y),
+    });
+    rect.style = style;
+    return rect;
+  }
+
+  /**
+   * 将 text 的节点解析为文本
+   * @param node
+   */
+  parseNodeToText(node: svgson.INode): Text | undefined {
+    const { name, attributes, children } = node;
+    if (name !== 'text') return;
+
+    const { transform } = attributes;
+    const positionStr = /translate\((.*)\)/.exec(transform)?.[1];
+
+    const position = positionStr?.split(' ');
+
+    const style = this.parseNodeAttrToTextStyle(attributes);
+
+    const text = new Text({
+      width: 0,
+      height: 0,
+      x: parseFloat(position?.[0] || '0'),
+      y: parseFloat(position?.[1] || '0'),
+      text: children?.[0]?.value,
+    });
+    text.textStyle = style;
+    return text;
+  }
+
+  /**
+   * ShapeGroup 转子图层方法
+   * @param shapeGroup
+   */
+  shapeGroupDataToLayers = (shapeGroup: ShapeGroupType) => {
+    const { shapes } = shapeGroup;
+
+    return shapes.map((shape) => {
+      const { points, isClose, frame } = shape;
+      return new ShapePath({
+        points,
+        isClose,
+
+        width: frame.width,
+        height: frame.height,
+        // 需要计算与 innerFrame 的相对坐标
+        // https://www.yuque.com/design-engineering/sketch-dev/hsbz8m#OPWbw
+        x: frame.x,
+        y: frame.y,
+      });
+    });
+  };
+
+  /**
+   * 从 Defs 中获取样式表
+   * @param className
+   */
+  private getCssRuleByClassName = (className: string | undefined) => {
+    if (!className) return;
+    // 拿到样式表
+    const classStyle = this.defs.find(
+      (d) => d.class === 'classStyle',
+    ) as SvgDefsStyle;
+
+    // 获得具体的规则
+    return classStyle?.rules.find((r) => r.className === `.${className}`);
+  };
+
+  private getFillByString = (fill: string) => {
+    if (!(fill && fill !== 'none')) return;
+
+    if (fill.startsWith('url')) {
+      // 说明来自 defs
+      const id = /url\(#(.*)\)/.exec(fill)?.[1];
+      // 从 defs 中拿到相应的配置项
+      const defsFill = this.defs.find(
+        (def) => def.class === 'gradient' && def.name === id,
+      );
+
+      switch (defsFill?.class) {
+        case 'gradient':
+          // eslint-disable-next-line no-case-declarations
+          const newFill = new Fill({});
+          newFill.type = SketchFormat.FillType.Gradient;
+          newFill.gradient = defsFill;
+          return newFill;
+        default:
+      }
+    } else {
+      return new Fill({
+        type: SketchFormat.FillType.Color,
+        color: fill,
+      });
+    }
+  };
 }
 
 export default Svg;

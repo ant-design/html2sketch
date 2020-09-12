@@ -1,5 +1,12 @@
-// based on https://www.w3.org/TR/SVG2/styling.html and defaults taken from Chrome
-const SVG_STYLE_PROPERTIES = [
+// @ts-ignore
+import getSvgoInstance from 'svgo-browser/lib/get-svgo-instance';
+
+/**
+ * svg 基本样式
+ * defaults taken from Chrome
+ * @see https://www.w3.org/TR/SVG2/styling.html
+ */
+export const SvgStyleProperties = [
   // name, default value
   ['cx', '0px'],
   ['cy', '0px'],
@@ -39,7 +46,7 @@ const SVG_STYLE_PROPERTIES = [
   ['flood-color', 'rgb(0, 0, 0)'],
   ['flood-opacity', '1'],
   ['font-family', 'Times'],
-  ['font-size', '16px'],
+  ['font-size', '14px'],
   ['font-size-adjust', 'none'],
   ['font-stretch', '100%'],
   ['font-style', 'normal'],
@@ -82,10 +89,16 @@ const SVG_STYLE_PROPERTIES = [
   ['writing-mode', 'horizontal-tb'],
 ];
 
+/**
+ * 将样式直接 inline 到 Style 中
+ *
+ * TODO: 针对 class 的样式似乎并不生效?
+ * @param node
+ */
 export function inlineStyles(node: SVGElement) {
   const styles = getComputedStyle(node);
 
-  SVG_STYLE_PROPERTIES.forEach((prop) => {
+  SvgStyleProperties.forEach((prop) => {
     const propName = prop[0] as string;
     const propDefaultValue = prop[1];
     const propCurrentValue = styles[propName];
@@ -135,3 +148,49 @@ export function getUseReplacement(node: SVGUseElement) {
     return resultNode;
   }
 }
+
+/**
+ * 压缩和优化 Svg
+ * @param svgStr
+ */
+export const optimizeSvgString = async (svgStr: string): Promise<string> => {
+  const svgo = getSvgoInstance({
+    cleanupAttrs: true,
+    removeDoctype: true,
+    removeXMLProcInst: true,
+    removeComments: true,
+    removeMetadata: true,
+    removeTitle: true,
+    removeDesc: true,
+    removeUselessDefs: true,
+    removeEditorsNSData: true,
+    removeEmptyAttrs: true,
+    removeHiddenElems: true,
+    removeEmptyText: true,
+    removeEmptyContainers: true,
+    removeViewBox: true,
+    cleanupEnableBackground: true,
+    convertStyleToAttrs: true,
+    convertColors: true,
+    convertPathData: true,
+    convertTransform: true,
+    removeUnknownsAndDefaults: true,
+    removeNonInheritableGroupAttrs: true,
+    removeUselessStrokeAndFill: true,
+    removeUnusedNS: true,
+    cleanupIDs: true,
+    cleanupNumericValues: true,
+    moveElemsAttrsToGroup: true,
+    moveGroupAttrsToElems: true,
+    collapseGroups: true,
+    removeRasterImages: false,
+    mergePaths: true,
+    convertShapeToPath: true,
+    sortAttrs: true,
+    removeDimensions: true,
+  });
+
+  const svg = await svgo.optimize(svgStr);
+
+  return svg.data;
+};

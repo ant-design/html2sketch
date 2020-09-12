@@ -4,7 +4,7 @@ describe('Style 类', () => {
   describe('parserStyleString', () => {
     it('', () => {
       const string = 'fill: rgba(0, 0, 0, 0.65); color: rgba(0, 0, 0, 0.65);';
-      expect(Style.parserStyleString(string)).toBeTruthy();
+      expect(Style.parseStyleString(string)).toBeTruthy();
     });
   });
 });
