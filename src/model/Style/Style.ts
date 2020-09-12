@@ -149,11 +149,20 @@ class Style extends BaseStyle {
   /**
    * 添加描边
    * */
-  addBorder({ color, thickness }: { thickness: number; color: ColorParam }) {
+  addBorder({
+    color,
+    thickness,
+    position,
+  }: {
+    thickness: number;
+    color: ColorParam;
+    position?: SketchFormat.BorderPosition;
+  }) {
     const border = new Border({
       type: SketchFormat.FillType.Color,
       color,
       thickness,
+      position,
     });
 
     this.borders.push(border);

@@ -423,30 +423,34 @@ class Svg extends BaseLayer {
     const style = new Style();
     const styleObj = Style.parseStyleString(styleString);
 
-    const baseFill = this.getFillByString(fillStr);
-    if (baseFill) {
-      style.fills.push(baseFill);
-    }
-
-    if (styleObj?.fill) {
-      style.addColorFill(styleObj?.fill);
-    }
-
-    if (stroke !== 'none') {
-      style.addBorder({ thickness: parseFloat(strokeWidth), color: stroke });
-    }
-
+    // 获得具体的 class 规则
     const rule = this.getCssRuleByClassName(className);
-    // 获得具体的规则
     if (rule) {
       const { styles } = rule;
 
+      // 处理 fill
       if (styles.fill) {
         const fill = this.getFillByString(styles.fill);
-        if (fill) {
-          style.fills.push(fill);
-        }
+        if (fill) style.fills.push(fill);
       }
+    }
+
+    // 直接使用自带的 fill
+
+    const baseFill = this.getFillByString(fillStr);
+    if (baseFill) style.fills.push(baseFill);
+
+    // 如果存在currentColor 则采用 inline Style 的 fill
+    if (fillStr === 'currentColor' && styleObj?.fill) {
+      style.addColorFill(styleObj.fill);
+    }
+
+    if (stroke && stroke !== 'none') {
+      style.addBorder({
+        thickness: parseFloat(strokeWidth || '1'),
+        color: stroke,
+        position: SketchFormat.BorderPosition.Center,
+      });
     }
 
     return style;
@@ -649,7 +653,10 @@ class Svg extends BaseLayer {
   };
 
   private getFillByString = (fill: string) => {
-    if (!(fill && fill !== 'none')) return;
+    if (fill === 'none') return;
+
+    if (!fill)
+      return new Fill({ type: SketchFormat.FillType.Color, color: '#000' });
 
     if (fill.startsWith('url')) {
       // 说明来自 defs

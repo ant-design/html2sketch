@@ -1,9 +1,10 @@
 import Color from 'color';
-import { Style, Bitmap, Group, Rectangle, Shadow } from '../model';
+import { Style, Bitmap, Group, Rectangle, Shadow, Svg } from '../model';
 import { defaultNodeStyle } from '../model/utils';
 import { ColorParam } from '../model/Style/Color';
 import { getActualImageSize, parseBackgroundImage } from '../utils/background';
 import { waitForImageLoaded } from '../utils/image';
+import { optimizeSvgString } from 'html2sketch/utils/svg';
 
 /**
  * 将节点转换为 Shape 对象
@@ -225,7 +226,37 @@ export const parseToShape = async (
           bitmapY === 0 &&
           actualImgSize.width / actualImgSize.height === width / height
         ) {
-          await style.addImageFill(url);
+          // 如果是 svg 图像
+          if (url.endsWith('svg')) {
+            try {
+              const data = await fetch(url);
+              let svgString = await data.text();
+              svgString = await optimizeSvgString(svgString);
+
+              const svg = new Svg({
+                svgString,
+                x: 0,
+                y: 0,
+                width,
+                height,
+              });
+
+              svg.mapBasicInfo(node);
+              const group = new Group({ x: 0, y: 0, width, height });
+
+              group.name = '编组';
+              group.addLayer(rect); // 变成相对坐标
+              group.layers.push(svg); // 保留自身的位置
+
+              return group;
+            } catch (e) {
+              console.warn(e);
+              // url = errorBase64Url;
+              return rect;
+            }
+          } else {
+            await style.addImageFill(url);
+          }
         } else {
           // use a Group(Shape + Bitmap) to correctly represent
           // clipping of the background image

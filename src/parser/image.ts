@@ -1,6 +1,7 @@
 import { Bitmap, Svg } from '../model';
 import { isImageNode } from '../utils/nodeType';
 import { getImageBase64URL, errorBase64Url } from '../utils/image';
+import { optimizeSvgString } from '../utils/svg';
 
 /**
  * 将图片 image 解析为图片
@@ -23,7 +24,10 @@ export const parseToBitmap = async (node: HTMLImageElement) => {
     if (url.endsWith('.svg')) {
       try {
         const data = await fetch(node.src);
-        const svgString = await data.text();
+        const svgText = await data.text();
+        let svgString = /(<svg.*<\/svg>)/gms.exec(svgText)?.[1] || svgText;
+        svgString = await optimizeSvgString(svgString);
+
         const svg = new Svg({
           svgString,
           x,

@@ -1,5 +1,6 @@
 import { Bitmap, Svg, parseToBitmap } from 'html2sketch';
-// import { errorBase64Url, getBase64ImageString } from 'html2sketch/utils/image';
+import { optimizeSvgString } from 'html2sketch/utils/svg';
+import { errorBase64Url, getBase64ImageString } from 'html2sketch/utils/image';
 import { antdSvg } from '@test-utils';
 
 const dataUrl =
@@ -12,6 +13,7 @@ beforeAll(() => {
   <div id="div"></div>
   <img id='img' alt="Ant Design" src=${dataUrl} />
   <img id='png' alt="Ant Design" src="https://gw.alipayobjects.com/zos/rmsportal/mZBWtboYbnMkTBaRIuWQ.png" />
+  <img id='error-img' alt="error" src="https://gw-office.alipayobjects.com/basement_prod/5fc703c1-7249-40b7-954a-e036a65ac50a.svg" />
   <img id='no-protocol-png' alt="Ant Design" src="//gw.alipayobjects.com/zos/rmsportal/mZBWtboYbnMkTBaRIuWQ.png" />
   <img id='svg' alt="Ant Design" src="https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg" />
   `;
@@ -41,18 +43,16 @@ describe('parseToBitmap', () => {
       const imageLayer = await parseToBitmap(img);
       expect(imageLayer).toBeUndefined();
     });
-    // TODO 如何 MOCK 网络有问题的环境
-    // it('如果网络有问题,则解析失败', async () => {
-    //   const img = document.getElementById('img') as HTMLImageElement;
-    //   const imageLayer = await parseToBitmap(img);
-    //
-    //   if (imageLayer) {
-    //     outputJSONData((imageLayer as Bitmap).toSketchJSON(), 'image-error');
-    //   }
-    //   expect((imageLayer as Bitmap)?.base64).toBe(
-    //     getBase64ImageString(errorBase64Url),
-    //   );
-    // });
+
+    it('如果解析svg网络有问题,则解析失败', async () => {
+      const img = document.getElementById('error-img') as HTMLImageElement;
+
+      const imageLayer = await parseToBitmap(img);
+
+      expect((imageLayer as Bitmap)?.base64).toBe(
+        getBase64ImageString(errorBase64Url),
+      );
+    }, 15000);
 
     it('网络没问题 则解析成功', async () => {
       const img = document.getElementById('png') as HTMLImageElement;
@@ -77,7 +77,9 @@ describe('parseToBitmap', () => {
     it('正常解析出 Svg', async () => {
       const img = document.getElementById('svg') as HTMLImageElement;
       const imageLayer = await parseToBitmap(img);
-      expect((imageLayer as Svg)?.rawSVGString).toBe(antdSvg);
+
+      const svg = await optimizeSvgString(antdSvg);
+      expect((imageLayer as Svg)?.rawSVGString).toBe(svg);
     });
   });
 });
