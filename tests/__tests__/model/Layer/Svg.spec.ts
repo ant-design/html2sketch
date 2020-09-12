@@ -13,8 +13,8 @@ import {
   upCircleSvg,
   plusSvg,
   plus,
-  antdSvg,
-  antdJSON,
+  // antdSvg,
+  // antdJSON,
 } from '@test-utils';
 
 describe('Svg 类', () => {
@@ -104,19 +104,7 @@ describe('Svg 类', () => {
     });
 
     describe('解析复杂插画', () => {
-      it('antd Logo 可正常解析', () => {
-        const svg = new Svg({
-          height: 100,
-          width: 100,
-          x: 0,
-          y: 0,
-          svgString: antdSvg,
-        });
-        // outputJSONData(svg.toSketchJSON(), 'antd');
-
-        expect(svg.toSketchJSON()).toStrictEqual(antdJSON);
-      });
-      it('精简版 svgString 可正常解析', () => {
+      it('antd 可正常解析', () => {
         const svgString = `
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
 <defs>
@@ -144,10 +132,14 @@ describe('Svg 类', () => {
         });
 
         console.log(svg);
-        expect(svg.layers.length).toBe(1);
+        expect(svg.layers.length).toBe(2);
         expect(svg.defs.length).toBe(4);
 
-        const group = svg.layers[0];
+        const [container, group] = svg.layers;
+        expect(container.width).toBe(100);
+        expect(container.height).toBe(100);
+        expect(container.x).toBe(0);
+        expect(container.y).toBe(0);
         expect(group.class).toBe('group');
         expect(group.layers).toHaveLength(2);
 
@@ -369,23 +361,6 @@ describe('Svg 类', () => {
       expect(Svg.normalizeWindingRule('non-zero')).toBe(WindingRule.NonZero);
       expect(Svg.normalizeWindingRule('no-zero')).toBe(WindingRule.NonZero);
       expect(Svg.normalizeWindingRule('nozero')).toBe(WindingRule.NonZero);
-    });
-  });
-
-  describe('parseNodeAttrToStyle', () => {
-    it('没有填充 没有描边', () => {
-      const attributes = {
-        stroke: 'none',
-        strokeWidth: '1',
-        fill: 'none',
-        fillRule: 'evenodd',
-        style: '',
-      };
-      expect(Svg.parseNodeAttrToStyle(attributes)).toStrictEqual({
-        fills: [],
-        strokes: [],
-        style: '',
-      });
     });
   });
 

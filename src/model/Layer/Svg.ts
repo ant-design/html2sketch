@@ -74,6 +74,7 @@ class Svg extends BaseLayer {
     );
     const background = new Rectangle(this.viewBox.toJSON());
     background.name = '容器';
+    background.hasClippingMask = true;
 
     // ------ 将 Svg 的子节点转换成子图层 ------ //
     this.layers = children.map(this.parseSvgson).filter((c) => c) as [];
