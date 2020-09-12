@@ -29,8 +29,10 @@
   "scripts": {
     "start": "dumi dev",
     "build": "father-build && webpack",
-    "publish": "npm publish",
     "---------": "",
+    "publish": "npm publish",
+    "publish:next": "npm publish --tag next",
+    "---------    ": "",
     "site:build": "dumi build",
     "site:publish": "dumi build && gh-pages -d ./dist",
     "--------- ": "",
