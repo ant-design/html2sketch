@@ -48,8 +48,7 @@ text-overflow: ellipsis;
 <span id="span-align-right" style=" display:block; width: 190px;text-align: right;">眼位全</span>
 <div style="width: 100px;text-align: right;">
 <label id="label" class="label">亲作向</label>
-
-</div>
+<span id="multi-line" style="width: 50px;">位全眼等越子亲作向下入第金社准。</span>
 </div>
 `;
   });
@@ -124,5 +123,13 @@ text-overflow: ellipsis;
     const aText = parseToText(aNode) as Text;
     expect(text.length).toBe(3);
     expect(text[1].left - text[0].right).toBe(aText.width);
+  });
+
+  it('multi-line 文本解析正常', () => {
+    const node = document.getElementById('multi-line') as HTMLDivElement;
+
+    const text = parseToText(node) as Text;
+    expect(text.textStyle.lineHeight).toBe(22);
+    expect(text.multiline).toBe(true);
   });
 });
