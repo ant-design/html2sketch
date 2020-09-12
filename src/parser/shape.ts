@@ -4,7 +4,7 @@ import { defaultNodeStyle } from '../model/utils';
 import { ColorParam } from '../model/Style/Color';
 import { getActualImageSize, parseBackgroundImage } from '../utils/background';
 import { waitForImageLoaded } from '../utils/image';
-import { optimizeSvgString } from 'html2sketch/utils/svg';
+import { optimizeSvgString } from '../utils/svg';
 
 /**
  * 将节点转换为 Shape 对象
