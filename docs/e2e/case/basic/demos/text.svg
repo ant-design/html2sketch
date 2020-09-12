@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 50">
+  <defs>
+    <style>
+     .text{font-size:8px;fill:#aeaeae;font-family:PingFangSC-Light-GBpc-EUC-H,
+      PingFang SC;}
+    </style>
+  </defs>
+  <text class="text" transform="translate(0 30)">03</text>
+  <text class="text" transform="translate(20 30)">05</text>
+  <text class="text" transform="translate(40 30)">07</text>
+  <text class="text" transform="translate(60 30)">09</text>
+  <text class="text" transform="translate(80 30)">11</text>
+  <text class="text" transform="translate(100 30)">13</text>
+  <text class="text" transform="translate(120 30)">15</text>
+  <text class="text" transform="translate(140 30)">17</text>
+  <text class="text" transform="translate(160 30)">19</text>
+  <text class="text" transform="translate(180 30)">21</text>
+</svg>

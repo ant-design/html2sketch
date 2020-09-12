@@ -1,8 +1,12 @@
 // @ts-ignore
 import getSvgoInstance from 'svgo-browser/lib/get-svgo-instance';
 
-// based on https://www.w3.org/TR/SVG2/styling.html and defaults taken from Chrome
-const SVG_STYLE_PROPERTIES = [
+/**
+ * svg 基本样式
+ * defaults taken from Chrome
+ * @see https://www.w3.org/TR/SVG2/styling.html
+ */
+export const SvgStyleProperties = [
   // name, default value
   ['cx', '0px'],
   ['cy', '0px'],
@@ -94,7 +98,7 @@ const SVG_STYLE_PROPERTIES = [
 export function inlineStyles(node: SVGElement) {
   const styles = getComputedStyle(node);
 
-  SVG_STYLE_PROPERTIES.forEach((prop) => {
+  SvgStyleProperties.forEach((prop) => {
     const propName = prop[0] as string;
     const propDefaultValue = prop[1];
     const propCurrentValue = styles[propName];

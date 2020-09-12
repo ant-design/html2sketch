@@ -9,8 +9,13 @@ import ShapeGroup from './ShapeGroup';
 import Ellipse from './Ellipse';
 import Rectangle from './Rectangle';
 import Group from './Group';
+import Text from './Text';
 
+import Style from '../Style/Style';
+import TextStyle from '../Style/TextStyle';
 import Gradient from '../Style/Gradient';
+import Fill from '../Style/Fill';
+import Color from '../Style/Color';
 
 import { defaultExportOptions } from '../utils';
 import {
@@ -19,9 +24,14 @@ import {
   optimizeSvgString,
 } from '../../utils/svg';
 import { getGroupLayout } from '../../utils/layout';
-import Style from '../Style/Style';
-import { AnyLayer, BaseLayerParams, FrameType, ShapeGroupType } from '../type';
-import Fill from '../Style/Fill';
+
+import {
+  AnyLayer,
+  BaseLayerParams,
+  FrameType,
+  ShapeGroupType,
+  SvgDefsStyle,
+} from '../type';
 
 interface SvgInitParams extends Partial<BaseLayerParams> {
   svgString: string;
@@ -74,8 +84,8 @@ class Svg extends BaseLayer {
       layer.frame.offset(-this.viewBox.x, -this.viewBox.y);
     });
 
-    this.layers.forEach(this.scaleLayersToFrame);
     // 对内部每个图层都进行坐标变换 //
+    this.layers.forEach(this.scaleLayersToFrame);
   }
 
   /**
@@ -98,7 +108,7 @@ class Svg extends BaseLayer {
    * 全局描述
    * @private
    */
-  defs: Gradient[] = [];
+  defs: (Gradient | SvgDefsStyle)[] = [];
 
   shapes: { path: string; style?: string }[] = [];
 
@@ -256,9 +266,7 @@ class Svg extends BaseLayer {
       }
 
       inlineStyles(node);
-      if (node.nodeName === 'text') {
-        console.log(node);
-      }
+
       Array.from(node.children).forEach((child) => queue.push(child));
     }
 
@@ -282,6 +290,9 @@ class Svg extends BaseLayer {
    */
   scaleLayersToFrame = (layer: AnyLayer) => {
     layer.frame.scale(this.aspectRatio);
+    if (layer.class === 'text') {
+      (layer as Text).textStyle.fontSize *= this.aspectRatio;
+    }
     if (layer.layers.length > 0) {
       layer.layers.forEach(this.scaleLayersToFrame);
     }
@@ -295,7 +306,6 @@ class Svg extends BaseLayer {
    * @param node
    */
   parseSvgson = (node: svgson.INode) => {
-    console.log(node);
     switch (node.name) {
       // 全局定义
       case 'defs':
@@ -322,7 +332,7 @@ class Svg extends BaseLayer {
         break;
       // 文本
       case 'text':
-        break;
+        return this.parseNodeToText(node);
       default:
     }
   };
@@ -387,8 +397,11 @@ class Svg extends BaseLayer {
       case 'style':
         // eslint-disable-next-line no-case-declarations
         const style = children?.[0]?.value;
-        console.log(style);
-        return style;
+        if (!style) return;
+
+        // eslint-disable-next-line no-case-declarations
+        const rules = Style.parseClassStyle(style);
+        return { class: 'classStyle', rules };
       default:
     }
   }
@@ -398,33 +411,86 @@ class Svg extends BaseLayer {
    * @param attributes node 的属性
    */
   parseNodeAttrToStyle = (attributes: svgson.INode['attributes']) => {
-    const { stroke, strokeWidth, fill } = attributes;
+    const {
+      stroke,
+      strokeWidth,
+      fill: fillStr,
+      style: styleString,
+      class: className,
+    } = attributes;
 
     const style = new Style();
+    const styleObj = Style.parseStyleString(styleString);
 
-    if (fill && fill !== 'none') {
-      // 说明来自 defs
-      if (fill.startsWith('url')) {
-        const id = /url\(#(.*)\)/.exec(fill)?.[1];
-        // 从 defs 中拿到相应的配置项
-        const defsFill = this.defs.find((def) => def.name === id);
-        switch (defsFill?.class) {
-          case 'gradient':
-            // eslint-disable-next-line no-case-declarations
-            const newFill = new Fill({});
-            newFill.type = SketchFormat.FillType.Gradient;
-            newFill.gradient = defsFill;
-            style.fills.push(newFill);
-            break;
-          default:
-        }
-      } else {
-        style.addColorFill(fill);
-      }
+    const baseFill = this.getFillByString(fillStr);
+    if (baseFill) {
+      style.fills.push(baseFill);
     }
+
+    if (styleObj?.fill) {
+      style.addColorFill(styleObj?.fill);
+    }
+
     if (stroke !== 'none') {
       style.addBorder({ thickness: parseFloat(strokeWidth), color: stroke });
     }
+
+    const rule = this.getCssRuleByClassName(className);
+    // 获得具体的规则
+    if (rule) {
+      const { styles } = rule;
+
+      if (styles.fill) {
+        const fill = this.getFillByString(styles.fill);
+        if (fill) {
+          style.fills.push(fill);
+        }
+      }
+    }
+
+    return style;
+  };
+
+  /**
+   * 解析 Node 的 Attribute 变成 textStyle
+   * @param attributes node 的属性
+   */
+  parseNodeAttrToTextStyle = (attributes: svgson.INode['attributes']) => {
+    const {
+      fontSize,
+      lineHeight,
+      class: className,
+      style: styleString,
+    } = attributes;
+
+    const style = new TextStyle({
+      fontSize: parseFloat(fontSize) || 14,
+      lineHeight: parseFloat(lineHeight) || 22,
+    });
+    const styleObj = Style.parseStyleString(styleString);
+
+    if (styleObj) {
+      // console.log(styleObj);
+    }
+
+    const rule = this.getCssRuleByClassName(className);
+    // 获得具体的规则
+    if (rule) {
+      const { styles } = rule;
+
+      if (styles.fill) {
+        style.color = new Color(styles.fill);
+      }
+
+      if (styles.fontSize) {
+        style.fontSize = parseFloat(styles.fontSize);
+      }
+
+      if (styles.lineHeight) {
+        style.lineHeight = parseFloat(styles.lineHeight);
+      }
+    }
+
     return style;
   };
 
@@ -518,6 +584,32 @@ class Svg extends BaseLayer {
   }
 
   /**
+   * 将 text 的节点解析为文本
+   * @param node
+   */
+  parseNodeToText(node: svgson.INode): Text | undefined {
+    const { name, attributes, children } = node;
+    if (name !== 'text') return;
+
+    const { transform } = attributes;
+    const positionStr = /translate\((.*)\)/.exec(transform)?.[1];
+
+    const position = positionStr?.split(' ');
+
+    const style = this.parseNodeAttrToTextStyle(attributes);
+
+    const text = new Text({
+      width: 0,
+      height: 0,
+      x: parseFloat(position?.[0] || '0'),
+      y: parseFloat(position?.[1] || '0'),
+      text: children?.[0]?.value,
+    });
+    text.textStyle = style;
+    return text;
+  }
+
+  /**
    * ShapeGroup 转子图层方法
    * @param shapeGroup
    */
@@ -538,6 +630,49 @@ class Svg extends BaseLayer {
         y: frame.y,
       });
     });
+  };
+
+  /**
+   * 从 Defs 中获取样式表
+   * @param className
+   */
+  private getCssRuleByClassName = (className: string | undefined) => {
+    if (!className) return;
+    // 拿到样式表
+    const classStyle = this.defs.find(
+      (d) => d.class === 'classStyle',
+    ) as SvgDefsStyle;
+
+    // 获得具体的规则
+    return classStyle?.rules.find((r) => r.className === `.${className}`);
+  };
+
+  private getFillByString = (fill: string) => {
+    if (!(fill && fill !== 'none')) return;
+
+    if (fill.startsWith('url')) {
+      // 说明来自 defs
+      const id = /url\(#(.*)\)/.exec(fill)?.[1];
+      // 从 defs 中拿到相应的配置项
+      const defsFill = this.defs.find(
+        (def) => def.class === 'gradient' && def.name === id,
+      );
+
+      switch (defsFill?.class) {
+        case 'gradient':
+          // eslint-disable-next-line no-case-declarations
+          const newFill = new Fill({});
+          newFill.type = SketchFormat.FillType.Gradient;
+          newFill.gradient = defsFill;
+          return newFill;
+        default:
+      }
+    } else {
+      return new Fill({
+        type: SketchFormat.FillType.Color,
+        color: fill,
+      });
+    }
   };
 }
 
