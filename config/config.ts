@@ -1,13 +1,16 @@
 import { defineConfig } from 'umi';
 import { resolve } from 'path';
-const isProd = process.env.NODE_ENV === 'production';
+const isProdSite =
+  // 不是预览模式 同时是生产环境
+  process.env.PREVIEW !== '1' && process.env.NODE_ENV === 'production';
+
 export default defineConfig({
   title: 'html2sketch',
   logo: 'https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg',
   mode: 'site',
   // 部署在非根目录时, base 和 publicPath 都需要配置
-  base: isProd ? '/html2sketch/' : '/',
-  publicPath: isProd ? '/html2sketch/' : '/',
+  base: isProdSite ? '/html2sketch/' : '/',
+  publicPath: isProdSite ? '/html2sketch/' : '/',
   extraBabelPlugins: [
     [
       'import',

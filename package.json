@@ -33,6 +33,7 @@
     "publish": "npm publish",
     "publish:next": "npm publish --tag next",
     "---------    ": "",
+    "site:preview": "PREVIEW=1 dumi build",
     "site:build": "dumi build",
     "site:publish": "dumi build && gh-pages -d ./dist",
     "--------- ": "",
