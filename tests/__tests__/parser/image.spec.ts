@@ -13,7 +13,7 @@ beforeAll(() => {
   <div id="div"></div>
   <img id='img' alt="Ant Design" src=${dataUrl} />
   <img id='png' alt="Ant Design" src="https://gw.alipayobjects.com/zos/rmsportal/mZBWtboYbnMkTBaRIuWQ.png" />
-  <img id='error-img' alt="error" src="https://gw-office.alipayobjects.com/basement_prod/5fc703c1-7249-40b7-954a-e036a65ac50a.svg" />
+  <img id='error-img' alt="error" src="https://xssd.5ac50a.svg" />
   <img id='no-protocol-png' alt="Ant Design" src="//gw.alipayobjects.com/zos/rmsportal/mZBWtboYbnMkTBaRIuWQ.png" />
   <img id='svg' alt="Ant Design" src="https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg" />
   `;
@@ -44,6 +44,7 @@ describe('parseToBitmap', () => {
       expect(imageLayer).toBeUndefined();
     });
 
+    // TODO 如果网路存在问题 如何控制其超时呢?
     it('如果解析svg网络有问题,则解析失败', async () => {
       const img = document.getElementById('error-img') as HTMLImageElement;
 
@@ -52,7 +53,7 @@ describe('parseToBitmap', () => {
       expect((imageLayer as Bitmap)?.base64).toBe(
         getBase64ImageString(errorBase64Url),
       );
-    }, 15000);
+    }, 120000);
 
     it('网络没问题 则解析成功', async () => {
       const img = document.getElementById('png') as HTMLImageElement;

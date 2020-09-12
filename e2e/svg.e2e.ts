@@ -10,7 +10,6 @@ describe('测试 Svg icon 类型', () => {
 
     const symbol = await html2Sketch.nodeToSketchSymbol('/basic/svg', selector);
     expect(symbol).toBeTruthy();
-    expect(symbol).toMatchSnapshot();
 
     if (isUpdate) {
       outputJSONData(symbol, 'svg-icon');
