@@ -5,21 +5,27 @@ import { isVisibleShape } from '../utils/visibility';
 /**
  * 解析图形类伪类
  */
-// eslint-disable-next-line consistent-return
 export const parsePseudoToShape = async (
   node: Element,
   pseudoElt: 'before' | 'after',
 ) => {
   // 判断一下是否有伪类
   const pseudoEl: CSSStyleDeclaration = getComputedStyle(node, `:${pseudoElt}`);
+  const bcr = node.getBoundingClientRect();
+  const { left, top, height, width } = bcr;
+  let x = left;
+  let y = top;
 
   const pseudoW = parseFloat(pseudoEl.width);
   const pseudoH = parseFloat(pseudoEl.height);
 
-  const bcr = node.getBoundingClientRect();
-  const { x, y, height, width } = bcr;
-
   const rect = await parseToShape(node, pseudoEl);
+
+  // 如果采用绝对定位的话
+  if (pseudoEl.position === 'absolute') {
+    x += parseFloat(pseudoEl.left);
+    y += parseFloat(pseudoEl.top);
+  }
 
   rect.frame = new Frame({
     width: pseudoW !== width ? pseudoW : width,
