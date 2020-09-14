@@ -73,7 +73,7 @@ class Rectangle extends BaseLayer {
       layerListExpandedType: 0,
       nameIsFixed: false,
       resizingType: 0,
-      rotation: 0,
+      rotation: this.rotation,
       shouldBreakMaskChain: false,
       clippingMaskMode: 0,
       isLocked: false,
