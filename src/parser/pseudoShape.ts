@@ -56,7 +56,9 @@ export const parsePseudoToShape = async (
       rect.y += f;
       // 解析旋转角度
       const rotation = matrixToRotation(a, b, c, d);
-      rect.rotation = -rotation; // 很奇怪 这里需要用负数才能转成正的值?
+      // TODO 有待研究
+      // 很奇怪 这里需要用负才能转成正的值
+      rect.rotation = -rotation;
     }
   }
 
