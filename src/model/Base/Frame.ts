@@ -24,6 +24,11 @@ class Frame {
 
   height: number = 0;
 
+  /**
+   * 旋转角度
+   */
+  rotation: number = 0;
+
   get right() {
     return this.x + this.width;
   }
