@@ -148,6 +148,15 @@ abstract class BaseLayer {
     this.frame.left = left;
   }
 
+  get rotation() {
+    return this.frame.rotation;
+  }
+
+  set rotation(deg) {
+    console.log(deg);
+    this.frame.rotation = deg;
+  }
+
   setFixedWidthAndHeight() {
     this.setResizingConstraint(
       ResizingConstraint.Width,
