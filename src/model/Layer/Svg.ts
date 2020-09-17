@@ -60,13 +60,13 @@ class Svg extends BaseLayer {
 
     // 解析获得 viewBox 值
     const [viewX, viewY, viewWidth, viewHeight] = viewBox
-      .split(' ')
+      ?.split(' ')
       .map(parseFloat);
     this.viewBox = new Frame({
-      x: viewX,
-      height: viewHeight,
-      width: viewWidth,
-      y: viewY,
+      x: viewX || 0,
+      height: viewHeight || height,
+      width: viewWidth || width,
+      y: viewY || 0,
     });
     this.aspectRatio = Svg.calcFrameScale(
       this.viewBox.toJSON(),
