@@ -449,7 +449,7 @@ class Svg extends BaseLayer {
     if (baseFill) style.fills.push(baseFill);
 
     // 如果存在currentColor 则采用 inline Style 的 fill
-    if ((!fillStr || fillStr === 'currentColor') && styleObj?.fill) {
+    if (fillStr === 'currentColor' && styleObj?.fill) {
       style.addColorFill(styleObj.fill);
     }
 
