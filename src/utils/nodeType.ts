@@ -41,10 +41,12 @@ export const isImageNode = (node: Element): boolean => {
 };
 
 /**
- * 判断是否是输入框节点
+ * 判断是否是带文本的输入框节点
  */
-export const isInputNode = (node: Element): boolean => {
-  return isNodeType(node, 'input');
+export const isTextInputNode = (node: Element): boolean => {
+  return (
+    isNodeType(node, 'input') && (node as HTMLInputElement).type !== 'checkbox'
+  );
 };
 
 /**
