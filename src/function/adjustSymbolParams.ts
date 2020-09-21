@@ -132,7 +132,6 @@ const adjustSymbolParams = (
 
   const { symbolLayout, layerParams, symbolName, selector } = symbolParams;
 
-  console.log(symbol, selector);
   const selectedSymbol = selectorLayer<SymbolMaster>(symbol, selector);
 
   if (!selectedSymbol) return;
