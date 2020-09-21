@@ -2,7 +2,7 @@
 
 <div align="center">
 
-[![NPM version][npm-image]][npm-url] [![NPM downloads][download-image]][download-url] [![install size][npm-size]][npm-size-url] [![install size][npm-size]][npm-size-url]
+[![NPM version][npm-image]][npm-url] [![NPM version][npm-next-image]][npm-url] [![NPM downloads][download-image]][download-url]  [![install size][npm-size]][npm-size-url]
 
 [![Test CI status][test-ci]][test-ci-url] ![Deploy CI][deploy-ci] [![Coverage][coverage]][codecov-url]
 
