@@ -20,8 +20,8 @@ export const uuid = () => {
  * 排序 Object Keys
  * @param obj JSON 对象
  */
-export const sortObjectKeys = (obj: Object) => {
-  const keys = Object.keys(obj).sort();
-
-  return keys.reduce((acc, key) => ({ ...acc, [key]: obj[key] }), {});
-};
+// export const sortObjectKeys = (obj: Object) => {
+//   const keys = Object.keys(obj).sort();
+//
+//   return keys.reduce((acc, key) => ({ ...acc, [key]: obj[key] }), {});
+// };

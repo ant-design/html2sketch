@@ -13,6 +13,9 @@ describe('getName', () => {
     const button = 'Button';
     expect(getName(button)).toBe('按钮');
   });
+  it('输入框', () => {
+    expect(getName('Input')).toBe('输入框');
+  });
   it('表格相关', () => {
     expect(getName('table')).toBe('表格');
     expect(getName('Th')).toBe('表头');
