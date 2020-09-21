@@ -2,7 +2,7 @@
 
 <div align="center">
 
-[![NPM version][npm-image]][npm-url] [![NPM downloads][download-image]][download-url]
+[![NPM version][npm-image]][npm-url] [![NPM version][npm-next-image]][npm-url] [![NPM downloads][download-image]][download-url]
 
 [![Test CI status][test-ci]][test-ci-url] ![Deploy CI][deploy-ci] [![Coverage][coverage]][codecov-url]
 
@@ -15,7 +15,8 @@
 
 <!-- npm url -->
 
-[npm-image]: http://img.shields.io/npm/v/html2sketch.svg?style=flat-square
+[npm-image]: http://img.shields.io/npm/v/html2sketch.svg?style=flat-square&color=deepgreen&label=latest
+[npm-next-image]: https://img.shields.io/npm/v/html2sketch/next?label=next&style=flat-square
 [npm-url]: http://npmjs.org/package/html2sketch
 
 <!-- coverage -->
