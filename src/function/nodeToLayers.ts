@@ -18,7 +18,7 @@ import { isExistPseudoText, isExistPseudoShape } from '../utils/pseudo';
 import {
   isCanvasNode,
   isImageNode,
-  isInputNode,
+  isTextInputNode,
   isSVGChildNode,
   isSvgNode,
   isTextNode,
@@ -89,9 +89,9 @@ const nodeToLayers = async (node: Element): Promise<AnyLayer[]> => {
   }
 
   // 输入框节点
-  if (isInputNode(node)) {
+  if (isTextInputNode(node)) {
     const text = parsePseudoToText(node, 'placeholder');
-
+    console.info('转换为:', text);
     layers.push(text);
   }
 
