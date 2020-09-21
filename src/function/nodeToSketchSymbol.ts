@@ -33,6 +33,10 @@ export default async (node: Element, options?: NodeToSketchSymbolOptions) => {
           // 对所有的文本都添加
           symbol.addOverride(layer.id, 'text');
           break;
+        case 'bitmap':
+          // 对所有的图片都添加 override
+          symbol.addOverride(layer.id, 'image');
+          break;
         default:
           break;
       }
