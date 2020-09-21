@@ -153,7 +153,6 @@ abstract class BaseLayer {
   }
 
   set rotation(deg) {
-    console.log(deg);
     this.frame.rotation = deg;
   }
 

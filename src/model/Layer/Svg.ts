@@ -53,20 +53,25 @@ class Svg extends BaseLayer {
     this.rawSVGString = svgString;
 
     // --------- 处理 Svg String 变成 Svg Shape ---------- //
-    const result = svgson.parseSync(svgString, { camelcase: true });
+
+    let result = svgson.parseSync(svgString, { camelcase: true });
+    // 排除一下 svg 的循环嵌套的问题
+    while (result.children.length === 1 && result.children[0].name === 'svg') {
+      [result] = result.children;
+    }
 
     const { children, attributes } = result;
     const { viewBox } = attributes;
 
     // 解析获得 viewBox 值
     const [viewX, viewY, viewWidth, viewHeight] = viewBox
-      .split(' ')
+      ?.split(' ')
       .map(parseFloat);
     this.viewBox = new Frame({
-      x: viewX,
-      height: viewHeight,
-      width: viewWidth,
-      y: viewY,
+      x: viewX || 0,
+      height: viewHeight || height,
+      width: viewWidth || width,
+      y: viewY || 0,
     });
     this.aspectRatio = Svg.calcFrameScale(
       this.viewBox.toJSON(),
@@ -266,9 +271,10 @@ class Svg extends BaseLayer {
         continue;
       }
 
-      inlineStyles(node);
-
-      Array.from(node.children).forEach((child) => queue.push(child));
+      if (node) {
+        inlineStyles(<SVGElement>node);
+        Array.from(node.children).forEach((child) => queue.push(child));
+      }
     }
 
     return optimizeSvgString(svgNode.outerHTML);
@@ -306,7 +312,7 @@ class Svg extends BaseLayer {
    * 解析 Svgson 变成 layer
    * @param node
    */
-  parseSvgson = (node: svgson.INode) => {
+  parseSvgson = (node: svgson.INode): any => {
     switch (node.name) {
       // 全局定义
       case 'defs':
@@ -334,6 +340,8 @@ class Svg extends BaseLayer {
       // 文本
       case 'text':
         return this.parseNodeToText(node);
+      case 'svg':
+        return node.children.map(this.parseSvgson);
       default:
     }
   };

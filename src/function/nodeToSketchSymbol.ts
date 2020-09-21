@@ -2,7 +2,7 @@ import { SymbolMaster } from '../model';
 import { defaultSymbolParamsList } from '../utils/sketchSymbolParams';
 import nodeToGroup from './nodeToGroup';
 import adjustSymbolParams from './adjustSymbolParams';
-import { NodeToSketchSymbolOptions } from '../type';
+import { AnyLayer, NodeToSketchSymbolOptions } from '../type';
 
 /**
  * 解析为 Symbol
@@ -27,17 +27,7 @@ export default async (node: Element, options?: NodeToSketchSymbolOptions) => {
   if (group.class !== 'group') {
     symbol.addLayer(group);
   } else {
-    group.layers.forEach((layer) => {
-      switch (layer.class) {
-        case 'text':
-          // 对所有的文本都添加
-          symbol.addOverride(layer.id, 'text');
-          break;
-        default:
-          break;
-      }
-      symbol.layers.push(layer);
-    });
+    symbol.addLayers(group.layers);
   }
 
   if (options) {
@@ -55,6 +45,31 @@ export default async (node: Element, options?: NodeToSketchSymbolOptions) => {
       adjustSymbolParams(symbol, { layerParams });
     }
   }
+
+  /**
+   * 递归添加 Override
+   * @param layer
+   */
+  const addOverride = (layer: AnyLayer) => {
+    if (layer.layers.length > 0) {
+      layer.layers.forEach(addOverride);
+    }
+
+    switch (layer.class) {
+      case 'text':
+        // 对所有的文本都添加
+        symbol.addOverride(layer.id, 'text');
+        break;
+      case 'bitmap':
+        // 对所有的图片都添加 override
+        symbol.addOverride(layer.id, 'image');
+        break;
+      default:
+    }
+  };
+
+  // 处理 override
+  symbol.layers.forEach(addOverride);
 
   /**
    * 设置一些内置的的 symbol 配置项
