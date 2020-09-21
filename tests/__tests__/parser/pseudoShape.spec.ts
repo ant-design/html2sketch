@@ -68,10 +68,63 @@ describe('parsePseudoToShape', () => {
     border-radius: 9px;
     box-shadow: 0 2px 4px 0 rgba(0,255,0,0.2);
     content: '';
+  }
+  .ant-checkbox-inner {
+    position: relative;
+    top: 0;
+    left: 0;
+    display: block;
+    width: 16px;
+    height: 16px;
+    direction: ltr;
+    background-color: #fff;
+    border: 1px solid #d9d9d9;
+    border-radius: 2px;
+    border-collapse: separate;
+    transition: all 0.3s;
+  }
+  .ant-checkbox-checked .ant-checkbox-inner {
+    background-color: #1890ff;
+    border-color: #1890ff;
+  }
+  .ant-checkbox-checked .ant-checkbox-inner::after {
+    position: absolute;
+    display: table;
+    border: 2px solid #fff;
+    border-top: 0;
+    border-left: 0;
+    transform: rotate(45deg) scale(1) translate(-50%, -50%);
+    opacity: 1;
+    transition: all 0.2s cubic-bezier(0.12, 0.4, 0.29, 1.46) 0.1s;
+    content: ' ';
+  }
+  .ant-checkbox-checked .ant-checkbox-inner::after {
+    position: absolute;
+    display: table;
+    border: 2px solid #fff;
+    border-top: 0;
+    border-left: 0;
+    transform: rotate(45deg) scale(1) translate(-50%, -50%);
+    opacity: 1;
+    transition: all 0.2s cubic-bezier(0.12, 0.4, 0.29, 1.46) 0.1s;
+    content: ' ';
 }
+.ant-checkbox-inner::after {
+    position: absolute;
+    top: 50%;
+    left: 22%;
+    display: table;
+    width: 5.71428571px;
+    height: 9.14285714px;
+    border: 2px solid #fff;
+    border-top: 0;
+    border-left: 0;
 </style>
     `;
-    document.body.innerHTML = `
+
+    const node = document.createElement('div');
+
+    node.innerHTML = `
 <div>
     <div id="normal"></div>
     <div id="text" class="text"></div>
@@ -81,8 +134,15 @@ describe('parsePseudoToShape', () => {
     <div id="no-content" class="no-content" />
     <div id="inline" class="inline" />
     <div id="radio" class="radio" />
+
+
+    <span class="ant-checkbox ant-checkbox-checked">
+      <input type="checkbox" class="ant-checkbox-input" value="" checked="">
+      <span id="checkbox" class="ant-checkbox-inner"/>
+    </span>
 </div>
 `;
+    document.body.append(node);
   });
 
   it('radio 可解析', async () => {
@@ -109,5 +169,12 @@ describe('parsePseudoToShape', () => {
       blue: 0,
       alpha: 0.2,
     });
+  });
+  it('checkbox 可解析', async () => {
+    const node = document.getElementById('checkbox') as HTMLDivElement;
+    const shape = (await parsePseudoToShape(node, 'after')) as Rectangle;
+    const checkbox = shape.toSketchJSON();
+
+    expect(checkbox.rotation).toBe(-45);
   });
 });

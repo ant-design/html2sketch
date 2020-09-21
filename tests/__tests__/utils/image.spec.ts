@@ -2,6 +2,7 @@ import {
   getImageBase64URL,
   ensureBase64DataURL,
   getBase64ImageString,
+  base64ToSvgString,
 } from 'html2sketch/utils/image';
 
 describe('getImageBase64URL', () => {
@@ -53,5 +54,14 @@ describe('getBase64ImageString', () => {
     expect(getBase64ImageString(url)).toBe(
       'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mM8w8DwHwAEOQHNmnaaOAAAAABJRU5ErkJggg==',
     );
+  });
+});
+
+describe('base64ToSvgString', () => {
+  it('符合 Base64', () => {
+    const base64 =
+      'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB3aWR0aD0iMTQiIGhlaWdodD0iMTQiPjxkZWZzPjxwYXRoIGlkPSJhIiBkPSJNNS43IDguM0wyLjkgNS41IDEuNSA2LjlsNC4yIDQuMiA2LjQtNi40LTEuNC0xLjQtNSA1eiIvPjwvZGVmcz48dXNlIHhsaW5rOmhyZWY9IiNhIiBvdmVyZmxvdz0idmlzaWJsZSIgZmlsbC1ydWxlPSJldmVub2RkIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiIGZpbGw9IiNmZmYiLz48L3N2Zz4=';
+    const output = `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="14" height="14"><defs><path id="a" d="M5.7 8.3L2.9 5.5 1.5 6.9l4.2 4.2 6.4-6.4-1.4-1.4-5 5z"/></defs><use xlink:href="#a" overflow="visible" fill-rule="evenodd" clip-rule="evenodd" fill="#fff"/></svg>`;
+    expect(base64ToSvgString(base64)).toBe(output);
   });
 });
