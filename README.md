@@ -2,7 +2,7 @@
 
 <div align="center">
 
-[![NPM version][npm-image]][npm-url] [![NPM version][npm-next-image]][npm-url] [![NPM downloads][download-image]][download-url]  [![install size][npm-size]][npm-size-url]
+[![NPM version][npm-image]][npm-url] [![NPM version][npm-next-image]][npm-url] [![NPM downloads][download-image]][download-url] [![install size][npm-size]][npm-size-url]
 
 [![Test CI status][test-ci]][test-ci-url] ![Deploy CI][deploy-ci] [![Coverage][coverage]][codecov-url]
 
@@ -18,7 +18,7 @@
 [npm-image]: http://img.shields.io/npm/v/html2sketch.svg?style=flat-square&color=deepgreen&label=latest
 [npm-next-image]: https://img.shields.io/npm/v/html2sketch/next?label=next&style=flat-square
 [npm-url]: http://npmjs.org/package/html2sketch
-[npm-size]: https://packagephobia.com/badge?p=html2sketch
+[npm-size]: https://img.shields.io/bundlephobia/minzip/html2sketch?color=deepgreen&label=gizpped%20size&style=flat-square
 [npm-size-url]: https://packagephobia.com/result?p=html2sketch
 
 <!-- coverage -->
