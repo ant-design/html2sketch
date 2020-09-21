@@ -12,7 +12,10 @@ const SvgIcons: FC = () => {
   return (
     <TestLayout elements={elements}>
       <SvgLink />
-      <div ref={ref}>
+      <div
+        ref={ref}
+        style={{ background: '#3f3f3f', color: 'rgba(255,255,255,0.65)' }}
+      >
         <Svg />
       </div>
     </TestLayout>
