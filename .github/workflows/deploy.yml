@@ -12,7 +12,7 @@ jobs:
         uses: actions/checkout@master
       - run: yarn
       - run: yarn run lint
-      # - run: yarn run tsc
+      - run: yarn run site:build
       - name: Build and Deploy
         uses: JamesIves/github-pages-deploy-action@master
         env:
