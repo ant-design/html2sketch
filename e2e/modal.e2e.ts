@@ -9,7 +9,7 @@ describe('测试 Modal 类型', () => {
     }
 
     const symbol = await html2Sketch.nodeToSketchSymbol(
-      '/basic/modal',
+      '/components/modal',
       selector,
     );
     expect(symbol).toBeTruthy();

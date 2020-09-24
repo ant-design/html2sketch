@@ -194,3 +194,55 @@ export const optimizeSvgString = async (svgStr: string): Promise<string> => {
 
   return svg.data;
 };
+
+/**
+ * 根据 Svg String 字符串 渲染出需要的样式
+ * @param rawString
+ * @param width
+ * @param height
+ */
+export const getRenderedSvgString = async (
+  rawString: string,
+  { width, height }: { width: number; height: number },
+) => {
+  const divNode = document.createElement('div');
+  divNode.innerHTML = rawString;
+  const svgNode = divNode.children[0] as SVGElement;
+
+  svgNode.style.width = `${width}px`;
+  svgNode.style.height = `${height}px`;
+
+  document.body.append(divNode);
+
+  const queue = Array.from(svgNode.children);
+
+  while (queue.length) {
+    const node = queue.pop();
+
+    if (
+      !(node instanceof SVGElement) ||
+      node instanceof SVGDefsElement ||
+      node instanceof SVGTitleElement
+    ) {
+      continue;
+    }
+
+    if (node instanceof SVGUseElement) {
+      const replacement = getUseReplacement(node);
+
+      if (replacement) {
+        node.parentNode!.replaceChild(replacement, node);
+        queue.push(replacement);
+      }
+      continue;
+    }
+
+    if (node) {
+      inlineStyles(<SVGElement>node);
+      Array.from(node.children).forEach((child) => queue.push(child));
+    }
+  }
+  divNode.remove();
+
+  return optimizeSvgString(svgNode.outerHTML);
+};
