@@ -74,7 +74,7 @@ export const parseLinearGradient = (value: string) => {
 };
 
 /**
- * 解析背景图片
+ * 解析背景图片类型
  * The structure is as follows:
  * (Supports images and gradients)
  *
@@ -87,7 +87,7 @@ export const parseLinearGradient = (value: string) => {
  * @see: https://www.w3.org/TR/css-backgrounds-3/#the-background-image
  * ---
  */
-export const parseBackgroundImage = (
+export const parseBackgroundImageType = (
   value: string,
 ): BackgroundImageType | void => {
   if (value === 'none') {

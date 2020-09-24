@@ -1,7 +1,7 @@
 import { BackgroundImageType } from 'html2sketch';
 import {
   getActualImageSize,
-  parseBackgroundImage,
+  parseBackgroundImageType,
   parseLinearGradient,
 } from 'html2sketch/utils/background';
 
@@ -163,7 +163,7 @@ describe('parseBackgroundImage', () => {
   describe('渐变', () => {
     it('解析三种颜色', () => {
       const str = 'linear-gradient(red, yellow, blue)';
-      const result = parseBackgroundImage(str) as BackgroundImageType;
+      const result = parseBackgroundImageType(str) as BackgroundImageType;
       expect(result.type).toStrictEqual('LinearGradient');
     });
   });
