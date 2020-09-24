@@ -112,7 +112,7 @@ export const ensureBase64DataURL = (url: string) => {
 
 /**
  * 初始化图片的 URL
- * @param inputURL
+ * @param inputURL 输入 url
  */
 export const initImageURL = (inputURL: string) => {
   if (!inputURL.startsWith('data:') && !inputURL.startsWith('http')) {

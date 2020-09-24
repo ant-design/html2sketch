@@ -19,6 +19,7 @@ import Color from '../Style/Color';
 
 import { defaultExportOptions } from '../utils';
 import {
+  getRenderedSvgString,
   getUseReplacement,
   inlineStyles,
   optimizeSvgString,
@@ -239,6 +240,38 @@ class Svg extends BaseLayer {
     }
 
     return scale;
+  }
+
+  /**
+   * 从 Url 初始化 Svg
+   * @param url Url
+   * @param frame 尺寸
+   */
+  static async initFromUrl(url: string, frame: Frame) {
+    let data;
+    try {
+      data = await fetch(url, {
+        mode: 'cors',
+      });
+    } catch (error) {
+      const maybeCorsError = error.toString().includes('Failed to fetch');
+      if (maybeCorsError) {
+        const corsPrefix = `https://cors-anywhere.herokuapp.com/`;
+        data = await fetch(corsPrefix + url, {
+          mode: 'cors',
+        });
+        console.log(data);
+      }
+    }
+    if (!data) return;
+
+    let svgString = await data.text();
+
+    const { x, y, width, height } = frame;
+
+    svgString = await getRenderedSvgString(svgString, { width, height });
+
+    return new Svg({ svgString, x, y, width, height });
   }
 
   /**
