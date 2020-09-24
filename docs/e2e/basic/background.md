@@ -17,7 +17,11 @@ order: 42
 - svg
 - png
 
-## 背景图片为 image
+## 背景图片为 image 不限制尺寸
+
+<code src="./demos/ImageBackgroundWithoutSize.tsx" />
+
+## 背景图片为 image 限制尺寸
 
 <code src="./demos/ImageBackground.tsx" />
 
