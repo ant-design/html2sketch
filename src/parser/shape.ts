@@ -201,12 +201,6 @@ export const parseToShape = async (
     switch (backgroundImageResult.type) {
       // Image 类型的背景填充
       case 'Image': {
-        const {
-          backgroundPositionX,
-          backgroundPositionY,
-          backgroundSize,
-        } = styles;
-
         let url = backgroundImageResult.value as string;
 
         // 没有带协议头的话
@@ -220,30 +214,33 @@ export const parseToShape = async (
         await waitForImageLoaded(img); // 加载下这个图片来获取真实图片尺寸
 
         const actualImgSize = getActualImageSize(
-          backgroundSize,
+          styles.backgroundSize,
           { width: img.width, height: img.height },
           { width, height },
         );
 
-        // 获取图片真实坐标
+        ///  获取图片真实坐标  ///
+
         const getPositionNum = (position: string, type: 'x' | 'y') => {
           // 解析百分比值
           // 这个百分比应该是图片中心的百分比值
           if (position.endsWith('%')) {
             const { width: aW, height: aH } = actualImgSize;
-            // X 坐标
-            if (type === 'x') {
-              return (width * parseFloat(position)) / 100 - aW / 2;
+
+            const unit = type === 'x' ? width : height;
+            const size = type === 'x' ? aW : aH;
+
+            if (unit * parseFloat(position) !== 0) {
+              return (unit * parseFloat(position)) / 100 - size / 2;
             }
-            // Y 坐标
-            return (height * parseFloat(position)) / 100 - aH / 2;
+            return unit * parseFloat(position);
           }
           // 解析实际值
           return parseFloat(position);
         };
 
-        const bitmapX = getPositionNum(backgroundPositionX, 'x');
-        const bitmapY = getPositionNum(backgroundPositionY, 'y');
+        const bitmapX = getPositionNum(styles.backgroundPositionX, 'x');
+        const bitmapY = getPositionNum(styles.backgroundPositionY, 'y');
 
         /// 针对 svg 类型的 background 进行解析 ///
         let isSvgBackground = false;
@@ -263,18 +260,11 @@ export const parseToShape = async (
           // 如果是 svg类型的 data image
           const rawString = base64ToSvgString(url);
           if (rawString) {
-            const svgStr = await getRenderedSvgString(rawString, {
+            const svgString = await getRenderedSvgString(rawString, {
               width,
               height,
             });
-            svg = new Svg({
-              svgString: svgStr,
-              x: rect.x,
-              y: rect.y,
-              height,
-              width,
-            });
-
+            svg = new Svg({ svgString, x: rect.x, y: rect.y, height, width });
             svg.mapBasicInfo(node);
             isSvgBackground = true;
           }

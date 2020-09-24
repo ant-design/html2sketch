@@ -260,7 +260,10 @@ class Svg extends BaseLayer {
         data = await fetch(corsPrefix + url, {
           mode: 'cors',
         });
-        console.log(data);
+        console.warn(
+          '该图片存在跨域问题! 请在服务器端设置允许图片跨域,以提升解析速度:',
+          url,
+        );
       }
     }
     if (!data) return;
