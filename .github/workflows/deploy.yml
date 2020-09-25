@@ -17,8 +17,8 @@ jobs:
           yarn run site:build
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@3.6.1
-          with:
-            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-            BRANCH: gh-pages # The branch the action should deploy to.
-            FOLDER: build # The folder the action should deploy.
-            CLEAN: true # Automatically remove deleted files from the deploy branch
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BRANCH: gh-pages # The branch the action should deploy to.
+          FOLDER: build # The folder the action should deploy.
+          CLEAN: true # Automatically remove deleted files from the deploy branch
