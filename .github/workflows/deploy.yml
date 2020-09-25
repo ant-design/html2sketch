@@ -8,20 +8,17 @@ jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
+      - name: Checkout 🛎️
         uses: actions/checkout@master
-      - run: yarn
-      - run: yarn run lint
-      - run: yarn run site:build
-      - name: Build and Deploy
-        uses: JamesIves/github-pages-deploy-action@master
-        env:
-          CI: true
-          PROGRESS: none
-          GIT_CONFIG_NAME: arvinxx
-          GIT_CONFIG_EMAIL: arvinx@foxmail.com
-          NODE_OPTIONS: --max_old_space_size=4096
-          GITHUB_TOKEN: ${{ secrets.ACTION_TOKEN }}
-          BRANCH: gh-pages
-          FOLDER: 'dist/'
-          BUILD_SCRIPT: yarn && npm uninstall husky && npm run site:build && git checkout . && git clean -df
+      - name: Install and Build 🔧
+        run: |
+          yarn
+          yarn run lint
+          yarn run site:build
+      - name: Deploy 🚀
+        uses: JamesIves/github-pages-deploy-action@3.6.1
+          with:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            BRANCH: gh-pages # The branch the action should deploy to.
+            FOLDER: build # The folder the action should deploy.
+            CLEAN: true # Automatically remove deleted files from the deploy branch
