@@ -1,8 +1,8 @@
 ---
 title: 画布
-order: 50
+order: 4
 nav:
-  title: 画布
+  title: 实验室
   order: 100
 ---
 
