@@ -78,8 +78,9 @@ describe('parseToText', () => {
   it('tag 文本解析正常', () => {
     const node = document.getElementById('tag') as HTMLLabelElement;
     const text = parseToText(node) as Text;
+    const group = parseToGroup(node);
     expect(text.text).toBe('蓝色');
-    expect(text.y).toBe(3);
+    expect(text.y - group.y).toBe(1);
   });
   // 单个 div 中包含多个文本对象
   it('row-text 文本解析正常', () => {
