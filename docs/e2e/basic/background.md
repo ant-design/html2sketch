@@ -1,6 +1,6 @@
 ---
 title: 背景图片解析
-order: 42
+order: 6
 ---
 
 ## 说明
@@ -19,20 +19,16 @@ order: 42
 
 ## 背景图片为 image 不限制尺寸
 
-<code src="./demos/ImageBackgroundWithoutSize.tsx" />
+<code src="./demos/BackgroundImage/WithoutSize.tsx" />
 
 ## 背景图片为 image 限制尺寸
 
-<code src="./demos/ImageBackground.tsx" />
-
-## 背景为 Svg
-
-<code src="./demos/ImageBackgroundSvg.tsx" />
+<code src="./demos/BackgroundImage/WithSize.tsx" />
 
 ## 背景内联 Svg
 
-<code src="./demos/ImageBackgroundInlineSvg.tsx" />
+<code src="./demos/BackgroundImage/InlineSvg.tsx" />
 
 ## 背景内联 Png
 
-<code src="./demos/ImageBackgroundInlinePng.tsx" />
+<code src="./demos/BackgroundImage/InlinePng.tsx" />

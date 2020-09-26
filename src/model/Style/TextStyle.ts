@@ -12,6 +12,50 @@ const SYSTEM_FONTS = [
   'Roboto',
 ];
 
+type FontWeightEnum = {
+  normal: FontWeightType;
+  bold: FontWeightType;
+  bolder: FontWeightType;
+  '100': FontWeightType;
+  '200': FontWeightType;
+  '300': FontWeightType;
+  '400': FontWeightType;
+  '500': FontWeightType;
+  '600': FontWeightType;
+  '700': FontWeightType;
+  '800': FontWeightType;
+  '900': FontWeightType;
+};
+
+type FontWeightType =
+  | 'Regular'
+  | 'Bold'
+  | 'Semibold'
+  | 'UltraLight'
+  | 'Thin'
+  | 'Light'
+  | 'Medium'
+  | 'Heavy'
+  | 'Black';
+
+/**
+ * 字体权重
+ * */
+export const FONT_WEIGHTS: FontWeightEnum = {
+  normal: 'Regular',
+  bold: 'Bold',
+  bolder: 'Semibold',
+  '100': 'UltraLight',
+  '200': 'Thin',
+  '300': 'Light',
+  '400': 'Regular',
+  '500': 'Medium',
+  '600': 'Semibold',
+  '700': 'Bold',
+  '800': 'Heavy',
+  '900': 'Black',
+};
+
 // 输入: -apple-system, "Helvetica Neue", Helvetica, Arial, sans-serif
 // 输出: PingFang SC
 function getFirstFont(fonts: string, skipSystemFonts?: boolean) {
@@ -169,23 +213,6 @@ class TextStyle {
   textDecoration?: string;
 
   /**
-   * 字体权重
-   * */
-  FONT_WEIGHTS = {
-    normal: 'Regular',
-    bold: 'Bold',
-    '100': 'UltraLight',
-    '200': 'Thin',
-    '300': 'Light',
-    '400': 'Regular',
-    '500': 'Medium',
-    '600': 'Semibold',
-    '700': 'Bold',
-    '800': 'Heavy',
-    '900': 'Black',
-  };
-
-  /**
    * 字体类型
    * */
   FONT_STYLES = {
@@ -265,21 +292,30 @@ class TextStyle {
     weight?: string,
     // _fontStyle?: string,
   ): string => {
-    // const defaultFontFamily = 'PingFangSC';
+    const defaultFontFamily = 'PingFangSC';
 
-    const defaultFontWeight = this.FONT_WEIGHTS.normal;
+    const defaultFontWeight: FontWeightType = FONT_WEIGHTS.normal;
 
-    const fontWeight = weight ? this.FONT_WEIGHTS[weight] : defaultFontWeight;
+    let fontWeight: FontWeightType = weight
+      ? FONT_WEIGHTS[weight]
+      : defaultFontWeight;
     // Default to PingFangSC if fonts are missing
 
     // let isItalic = false;
 
     // let isCondensed = false;
 
-    // let familyName: string = defaultFontFamily;
+    const familyName: string = defaultFontFamily;
     // if (family && family !== '-apple-system') {
     // familyName = family;
     // }
+
+    // 针对苹方的字体 处理下 bold 的问题
+    if (familyName === defaultFontFamily) {
+      if (fontWeight === 'Bold') {
+        fontWeight = 'Semibold';
+      }
+    }
 
     // if (fontStyle) {
     //   isItalic = this.FONT_STYLES[fontStyle] || false;
@@ -287,7 +323,7 @@ class TextStyle {
 
     // console.log('是否斜体:', isItalic);
     // return `${familyName}-${fontWeight}`;
-    return `PingFangSC-${fontWeight}`;
+    return `${familyName}-${fontWeight}`;
   };
 
   /**

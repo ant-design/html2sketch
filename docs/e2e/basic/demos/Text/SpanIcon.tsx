@@ -1,19 +1,21 @@
-import React, { FC } from 'react';
-// @ts-ignore
-import { ReactComponent as Svg } from './text.svg';
-
+import React from 'react';
 import { useElements, TestLayout } from '@e2e-utils';
+import { AppleOutlined } from '@ant-design/icons';
 
-const SvgIcons: FC = () => {
+/**
+ *
+ */
+export default () => {
   const { elements, ref } = useElements();
 
   return (
     <TestLayout elements={elements}>
       <div ref={ref}>
-        <Svg />
+        <span>
+          <AppleOutlined />
+          Tab 1
+        </span>
       </div>
     </TestLayout>
   );
 };
-
-export default SvgIcons;

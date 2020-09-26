@@ -67,17 +67,42 @@ yarn add html2sketch
 
 ### 使用
 
-`html2sketch` 包含 2 个主要方法 `nodeToGroup` 和 `nodeToSketchSymbol` 。
+`html2sketch` 包含 3 个主要方法 `nodeToLayer` 、 `nodeToGroup` 和 `nodeToSketchSymbol` 。
+
+#### nodeToLayer
+
+将 DOM 节点转成 Sketch 的对象,转换时不处理节点的子级
+
+```js
+import { nodeToLayer } from 'html2sketch';
+
+const fn = async () => {
+  // 1. 获取 DOM 节点
+  const node = document.getElementById('id');
+
+  // 2. 调用转换方法
+  const layer = await nodeToLayer(node);
+
+  // 3. 生成为 Sketch JSON
+  const sketchJSON = layer.toSketchJSON();
+
+  return sketchJSON;
+};
+
+fn().then((json) => {
+  console.log(json);
+});
+```
 
 #### nodeToGroup
 
-将 html 节点转 Sketch 的 Group 对象
+将 DOM 节点以及它的子级整体转成 Sketch 的 Group 对象
 
 ```js
 import { nodeToGroup } from 'html2sketch';
 
 const fn = async () => {
-  // 1. 获取 Dom 节点
+  // 1. 获取 DOM 节点
   const node = document.getElementById('id');
 
   // 2. 调用转换方法
@@ -86,21 +111,23 @@ const fn = async () => {
   // 3. 生成为 Sketch JSON
   const sketchJSON = group.toSketchJSON();
 
-  console.log(sketchJSON);
+  return sketchJSON;
 };
 
-fn();
+fn().then((json) => {
+  console.log(json);
+});
 ```
 
 #### nodeToSketchSymbol
 
-将 html 节点转 Sketch Symbol
+将 DOM 节点转 Sketch 的 Symbol 对象
 
 ```js
 import { nodeToSketchSymbol } from 'html2sketch';
 
 const fn = async () => {
-  // 1. 获取 Dom 节点
+  // 1. 获取 DOM 节点
   const node = document.getElementById('id');
 
   // 2. 调用转换方法
@@ -109,10 +136,12 @@ const fn = async () => {
   // 3. 生成为 Sketch JSON
   const sketchJSON = symbol.toSketchJSON();
 
-  console.log(sketchJSON);
+  return sketchJSON;
 };
 
-fn();
+fn().then((json) => {
+  console.log(json);
+});
 ```
 
 ## 有了 Sketch JSON 的下一步?

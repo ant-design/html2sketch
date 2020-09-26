@@ -1,15 +1,18 @@
 import React from 'react';
 import { useElements, TestLayout } from '@e2e-utils';
-// @ts-ignore
-import styles from './ImageBackgroundInline.less';
 
+/**
+ *
+ */
 export default () => {
   const { elements, ref } = useElements();
 
   return (
     <TestLayout elements={elements}>
       <div ref={ref}>
-        <span className={styles.checkSvg} />
+        <span>
+          共 <strong>2</strong> 条
+        </span>
       </div>
     </TestLayout>
   );

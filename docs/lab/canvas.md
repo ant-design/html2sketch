@@ -3,7 +3,7 @@ title: 画布
 order: 4
 nav:
   title: 实验室
-  order: 100
+  order: 3
 ---
 
 ## TODO

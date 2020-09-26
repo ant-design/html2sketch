@@ -1,7 +1,7 @@
 import React from 'react';
 import { useElements, TestLayout } from '@e2e-utils';
 // @ts-ignore
-import styles from './ImageBackgroundSvg.less';
+import styles from './Inline.less';
 
 export default () => {
   const { elements, ref } = useElements();
@@ -9,7 +9,7 @@ export default () => {
   return (
     <TestLayout elements={elements}>
       <div ref={ref}>
-        <input type="checkbox" className={styles.checkbox} />
+        <span className={styles.checkPng} />
       </div>
     </TestLayout>
   );

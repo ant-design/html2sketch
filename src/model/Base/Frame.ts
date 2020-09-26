@@ -24,6 +24,22 @@ class Frame {
 
   height: number = 0;
 
+  get centerX() {
+    return this.x + this.width / 2;
+  }
+
+  set centerX(centerX) {
+    this.x = centerX - this.width / 2;
+  }
+
+  get centerY() {
+    return this.y + this.height / 2;
+  }
+
+  set centerY(centerY) {
+    this.y = centerY - this.height / 2;
+  }
+
   /**
    * 旋转角度
    */
