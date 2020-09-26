@@ -1,5 +1,5 @@
 import Text from '../model/Layer/Text';
-import { getTextContext } from '../utils/text';
+import { getTextLinesAndRange } from '../utils/text';
 
 /**
  * 解析伪类
@@ -43,12 +43,12 @@ export const parsePseudoToText = (
 
   document.body.append(pseudoNode); // 插入到 dom 中 用于获取文本宽度
 
-  const { textBCR } = getTextContext(pseudoNode);
+  const { rangeBCR } = getTextLinesAndRange(pseudoNode);
 
   let x = nodeBCR.left;
   switch (pseudoElt) {
     case 'after':
-      x = nodeBCR.right - parseFloat(marginRight) - textBCR.width;
+      x = nodeBCR.right - parseFloat(marginRight) - rangeBCR.width;
       break;
     case 'placeholder':
       x = nodeBCR.left + parseFloat(paddingLeft);
@@ -64,9 +64,9 @@ export const parsePseudoToText = (
     const nodeDisplay = getComputedStyle(node).display;
     // 处理垂直居中的样式
     if (nodeDisplay !== 'inline') {
-      y += (nodeBCR.height - textBCR.height) / 2;
+      y += (nodeBCR.height - rangeBCR.height) / 2;
     } else {
-      y += (nodeBCR.height - textBCR.height) / 2;
+      y += (nodeBCR.height - rangeBCR.height) / 2;
     }
   }
 
@@ -107,12 +107,12 @@ export const parsePseudoToText = (
   } else {
     textStyle = Text.getTextStyleFromNode(node);
   }
-  textStyle.lineHeight = textBCR.height;
+  textStyle.lineHeight = rangeBCR.height;
 
   return new Text({
     x,
     y,
-    width: textBCR.width,
+    width: rangeBCR.width,
     height: nodeBCR.height,
     text: pseudoText,
     style: textStyle,

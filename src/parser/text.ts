@@ -1,7 +1,7 @@
 import Text from '../model/Layer/Text';
 
 import {
-  getTextContext,
+  getTextLinesAndRange,
   getTextAbsBCR,
   getLineTextWithWidth,
 } from '../utils/text';
@@ -29,24 +29,35 @@ export const parseToText = (node: Element): Text | Text[] | undefined => {
       // 上述 4 个要素综合影响文本的 x y 坐标
       // 有待重构
 
-      const { lines, textBCR } = getTextContext(childNode);
-      const { x, y, width: bcrWidth, height } = getTextAbsBCR(node, childNode);
+      // 大部分时候可以直接使用 rangeBCR 作为文本的 BCR
+      const { lines, rangeBCR } = getTextLinesAndRange(childNode);
+
+      const {
+        // x,
+        y,
+        width: bcrWidth,
+        height,
+      } = getTextAbsBCR(node, childNode);
       let textWidth = bcrWidth;
 
       const { display, whiteSpace, overflow, textOverflow, width } = styles;
 
-      if (display === 'inline') {
-        textStyle.lineHeight = textBCR.height / lines;
+      if ('inline'.includes(display)) {
+        textStyle.lineHeight = rangeBCR.height / lines;
       }
-      // **** 处理文本 ****** //
+      // **** 处理文本带省略的情况 ****** //
 
       let textValue = Text.fixWhiteSpace(childNode.nodeValue || '', whiteSpace);
       const originText = textValue;
       // 针对隐藏或者带省略号的
       if (overflow === 'hidden') {
-        textWidth = parseFloat(width); // 修改其宽度
-
+        // 修改宽度
+        textWidth = parseFloat(width);
+        // 并对比修改后的文本内容
         textValue = getLineTextWithWidth(childNode, textWidth);
+
+        // 如果是 ellipsis 类型且存在省略号
+        // 按省略号添加
         if (
           textOverflow === 'ellipsis' &&
           originText.length !== textValue.length
@@ -57,7 +68,8 @@ export const parseToText = (node: Element): Text | Text[] | undefined => {
       }
 
       return new Text({
-        x: ['inline-block'].includes(display) ? x : textBCR.x,
+        // x: ['inline-block'].includes(display) ? x : rangeBCR.x,
+        x: rangeBCR.x,
         // y: textBCR.y,
         y,
         width: textWidth,
