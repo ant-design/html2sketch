@@ -4,7 +4,7 @@ import {
   outputJSONData,
   svgButtonJSON,
   svgIconJSON,
-} from '@e2e';
+} from '@e2e-utils';
 
 describe('测试 Svg Icon', () => {
   test('Svg icon', async () => {

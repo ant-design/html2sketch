@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useElements, TestLayout } from '@e2e-utils';
+import { useElements, TestLayout } from '@docs-utils';
 
 /**
  *

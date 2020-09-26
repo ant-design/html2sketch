@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import { Button } from 'antd';
 import { UpCircleOutlined } from '@ant-design/icons';
-import { useElements, TestLayout } from '@e2e-utils';
+import { useElements, TestLayout } from '@docs-utils';
 
 /**
  * Button demos

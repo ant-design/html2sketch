@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { TestLayout, useElements } from '@e2e-utils';
+import { TestLayout, useElements } from '@docs-utils';
 import { PlusOutlined } from '@ant-design/icons';
 
 const IconTest: FC = () => {

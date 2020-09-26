@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 // @ts-ignore
 import { ReactComponent as Svg } from './svg/illustration.svg';
 
-import { useElements, TestLayout } from '@e2e-utils';
+import { useElements, TestLayout } from '@docs-utils';
 
 /**
  * 插画解析 demos
