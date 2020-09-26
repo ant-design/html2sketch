@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://github.com/ant-design/html2sketch">
-   <img src="https://gw.alipayobjects.com/zos/antfincdn/we4CyGTiVq/Logo.png" height="200" width="200" alt="html2sketch"/>
+   <img src="https://gw.alipayobjects.com/zos/antfincdn/Q0VnKtVzuB/Logo.png" height="200" width="200" alt="html2sketch"/>
   </a>
 </p>
 
