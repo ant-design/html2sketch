@@ -23,6 +23,7 @@ module.exports = {
           ['html2sketch', './src/'],
           ['html2sketch/*', './src/*'],
           ['@e2e-utils', './docs/__utils__'],
+          ['@e2e', './e2e/__utils__'],
           ['@test-utils', './tests/utils'],
         ],
       },
