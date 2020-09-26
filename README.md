@@ -47,93 +47,82 @@
 
 </div>
 
-## 开发
+## 简介
 
-### 依赖安装
+一个将网页转 sketch 的模块
 
-```basg
-npm i
-```
+## 快速上手
 
-或者
+### 安装
 
 ```bash
-yarn install
+npm i html2sketch --save
+// or
+yarn add html2sketch
 ```
 
-### 特殊依赖说明
+### 使用
 
-正常开发基本用不到下述特殊依赖,但是涉及到单元测试和 e2e 测试时需要使用
+html2sketch 包含 2 个主要方法 `nodeToGroup` 和 `nodeToSketchSymbol` 。
 
-#### Puppeteer
+#### nodeToGroup
 
-e2e 使用到 Puppeteer, 默认情况下会直接安装
+将 html 节点转 Group 对象
 
-国内加速可以在`.npmrc` 中添加
+```js
+import { nodeToGroup } from 'html2sketch';
 
-```
-puppeteer_download_host=https://npm.taobao.org/mirrors
-```
+const fn = async () => {
+  // 1. 获取 Dom 节点
+  const node = document.getElementById('id');
 
-#### jest-electron
+  // 2. 调用转换方法
+  const group = await nodeToGroup(node);
 
-开发中测试环境依赖模块 `jest-electron`
+  // 3. 生成为 Sketch JSON
+  const sketchJSON = group.toSketchJSON();
 
-国内加速可以在 `.npmrc` 添加
+  console.log(sketchJSON);
+};
 
-```
-electron_mirror=https://cdn.npm.taobao.org/dist/electron/
-```
-
-## 架构说明
-
-### 开发框架
-
-开发框架采用 [dumi](https://d.umi.org) , 兼具模块开发 打包 说明文档 demo 展示于一体
-
-相关开发指令:
-
-- 模块打包: `npm run build`
-- 文档开发: `npm run site:dev`
-- 单元测试: `npm run test`
-- E2E 测试: `npm run e2e`
-
-### 目录架构
-
-```
-├── src                            # 源代码
-├── docs                           # 说明网站与演示 demo
-├── e2e                            # e2e 测试文件夹
-├── tests                          # 单元测试文件夹
-├── config                         # Dumi 配置文件夹
-├── public                         # 静态资源文件
-├── tsconfig-check.json            # ts lint 静态资源文件
-├── jest.config.js                 # Jest 单元测试配置
-├── jest.e2e.config.js             # Jest e2e 测试配置
-├── package.json                   # package.json
-├── jsconfig.json                  # jsconfig 配置
-├── tsconfig.json                  # tsconfig 配置
-├── tsconfig-check.json            # 为 lint 使用的 tsconfig
-└── webpack.config.js              # webpack 打包配置
-├── README.md                      # 说明文档
-├── changelog.en-US.md             # 更新日志
-├── changelog.zh-CN.md             # 更新日志
+fn();
 ```
 
-### 模块架构
+#### nodeToSketchSymbol
 
+将 html 节点转 Sketch Symbol
+
+```js
+import { nodeToSketchSymbol } from 'html2sketch';
+
+const fn = async () => {
+  // 1. 获取 Dom 节点
+  const node = document.getElementById('id');
+
+  // 2. 调用转换方法
+  const symbol = await nodeToSketchSymbol(node);
+
+  // 3. 生成为 Sketch JSON
+  const sketchJSON = symbol.toSketchJSON();
+
+  console.log(sketchJSON);
+};
+
+fn();
 ```
-src
-├── function                       # 解析方法
-├── parser                         # 解析器
-├── model                          # 对象实体
-└── utils                          # 工具函数
-├── index.ts                       # 索引
-├── type.ts                        # 类型定义
-```
 
-#### 实现思路
+## 有了 Sketch JSON 的下一步?
 
-DOM -> 解析器 -> DIM -> SketchJSON
+生成的 Sketch JSON 严格符合 [Sketch FileFormat](https://developer.sketch.com/file-format/) 结构，因此只需要简单地将相应的 JSON 按照 Sketch 文件规范合成 `.sketch` 文件，即可获得 Sketch 文件。
 
-![解析流程](https://user-images.githubusercontent.com/28616219/91637898-379b0680-ea3e-11ea-95e6-74694ed72a57.png)
+社区相关 API 模块:
+
+- [sketch-json-api](https://github.com/ant-design/sketch-json-api)
+- [node-sketch](https://github.com/oscarotero/node-sketch)
+- [sketch-constructor](https://github.com/amzn/sketch-constructor)
+
+如果希望直接使用该 JSON 对象，可以使用 [Sketch JSON](https://github.com/arvinxx/sketch-json) 插件，一键粘贴 JSON 进入 Sketch 中。
+
+## 开发
+
+查看 [开发止指南](https://github.com/ant-design/html2sketch/guide)
