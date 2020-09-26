@@ -114,7 +114,7 @@ describe('parseToText', () => {
     );
 
     expect(last.text).toBe(' 条');
-    expect(last.x).toBeGreaterThan(33);
+    expect(last.x).toBeGreaterThan(30);
     expect(last.x).toBeLessThan(34);
 
     const strongNode = document.getElementById('strong') as HTMLSpanElement;
