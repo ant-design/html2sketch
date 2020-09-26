@@ -61,10 +61,6 @@ export const antdSvg = readFileSync(
   'utf8',
 );
 
-export const antdSvgson = JSON.parse(
-  readFileSync(resolve(__dirname, './antd-svgson.json'), 'utf8'),
-);
-
 /**
  * 更新
  */
