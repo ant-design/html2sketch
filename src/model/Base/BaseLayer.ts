@@ -100,6 +100,22 @@ abstract class BaseLayer {
     this.frame.y = y;
   }
 
+  get centerX() {
+    return this.x + this.width / 2;
+  }
+
+  set centerX(centerX) {
+    this.x = centerX - this.width / 2;
+  }
+
+  get centerY() {
+    return this.y + this.height / 2;
+  }
+
+  set centerY(centerY) {
+    this.y = centerY - this.height / 2;
+  }
+
   get width() {
     return this.frame.width;
   }
@@ -198,8 +214,7 @@ abstract class BaseLayer {
   /**
    * 将对象转为 JSON
    */
-  // @ts-ignore
-  toJSON() {
+  toJSON(): any {
     return {
       id: this.id,
       name: this.name,
@@ -320,46 +335,6 @@ abstract class BaseLayer {
       bottom: groupBCR.bottom,
       width: groupBCR.right - groupBCR.left,
       height: groupBCR.bottom - groupBCR.top,
-    };
-  };
-
-  /**
-   * 解析 Border string 圆角
-   * @param borderRadius
-   * @param width
-   * @param height
-   */
-  static parseBorderRadius = (
-    borderRadius: string,
-    width: number,
-    height: number,
-  ) => {
-    const matches = borderRadius.match(/^([0-9.]+)(.+)$/);
-
-    // Sketch uses 'px' units for border radius, so we need to convert % to px
-    if (matches && matches[2] === '%') {
-      const baseVal = Math.max(width, height);
-      const percentageApplied = baseVal * (parseInt(matches[1], 10) / 100);
-
-      return Math.round(percentageApplied);
-    }
-    return parseInt(borderRadius, 10);
-  };
-
-  /**
-   * 将 layer 的样式转成 Sketch 的共享样式
-   * @param layer
-   * @param id
-   */
-  static layerToSketchSharedStyle = (
-    layer: AnyLayer,
-    id?: string,
-  ): SketchFormat.SharedStyle => {
-    return {
-      _class: 'sharedStyle',
-      do_objectID: id || uuid(),
-      name: layer.name,
-      value: layer.style?.toSketchJSON(),
     };
   };
 }

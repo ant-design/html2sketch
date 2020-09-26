@@ -53,4 +53,34 @@ describe('Base图层 类', () => {
     // eslint-disable-next-line no-bitwise
     expect(a.toJSON().resizingConstraint).toBe(Width & Height);
   });
+
+  test('setPosition', () => {
+    const a = new TestGroup();
+    a.setPosition({ x: 100, y: 50 });
+
+    expect(a.x).toBe(100);
+    expect(a.y).toBe(50);
+  });
+
+  test('childLayersSize', () => {
+    const a = new TestGroup();
+
+    expect(a.childLayersSize).toStrictEqual({ width: 0, height: 0 });
+  });
+  describe('userInfo', () => {
+    test('setUserInfo', () => {
+      const a = new TestGroup();
+      a.setUserInfo('xxx', 123);
+      expect(a.userInfo).toStrictEqual({
+        html2sketch: {
+          xxx: 123,
+        },
+      });
+    });
+    test('getUserInfo', () => {
+      const a = new TestGroup();
+      a.setUserInfo('xxx', 123);
+      expect(a.getUserInfo('xxx')).toBe(123);
+    });
+  });
 });

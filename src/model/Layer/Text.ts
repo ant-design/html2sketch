@@ -128,10 +128,13 @@ class Text extends BaseLayer {
     switch (whiteSpace) {
       case 'normal':
       case 'nowrap':
-        return text
-          .trim()
-          .replace(/\n/g, ' ') // replace newline characters with space
-          .replace(/\s+/g, ' '); // collapse whitespace
+        return (
+          text
+            // replace newline characters with space
+            .replace(/\n/g, ' ')
+            // collapse whitespace
+            .replace(/\s+/g, ' ')
+        );
       case 'pre-line':
         return text
           .replace(/(^[^\S\n]+)|([^\S\n]+$)/g, '') // trim but leave \n

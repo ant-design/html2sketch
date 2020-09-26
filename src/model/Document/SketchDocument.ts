@@ -3,6 +3,7 @@ import { uuid } from '../../utils/utils';
 import Group from '../Layer/Group';
 import Page from './Page';
 import Color from '../Style/Color';
+import Style from '../Style/Style';
 import ColorAsset from '../Style/ColorAsset';
 import { AnyLayer } from '../type';
 
@@ -77,11 +78,11 @@ class SketchDocument {
   }
 
   addTextStyle(textLayer: AnyLayer, id?: string) {
-    this.textStyles.push(Group.layerToSketchSharedStyle(textLayer, id));
+    this.textStyles.push(Style.layerToSketchSharedStyle(textLayer, id));
   }
 
   addLayerStyle(layer: Group, id: string) {
-    this.layerStyles.push(Group.layerToSketchSharedStyle(layer, id));
+    this.layerStyles.push(Style.layerToSketchSharedStyle(layer, id));
   }
 
   addColor(color: Color) {

@@ -1,5 +1,6 @@
 export { parsePseudoToShape } from './pseudoShape';
 export { parsePseudoToText } from './pseudoText';
+export { parseInputTextToText } from './inputText';
 export { parseCanvasToBitmap } from './canvas';
 export { parseToBitmap } from './image';
 export { parseToShape } from './shape';

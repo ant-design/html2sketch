@@ -1,7 +1,7 @@
 import React from 'react';
 import { Tag } from 'antd';
 import ProTable from '@ant-design/pro-table';
-import { useElements, TestLayout } from '@e2e-utils';
+import { useElements, TestLayout } from '@docs-utils';
 
 const dataSource = [
   {

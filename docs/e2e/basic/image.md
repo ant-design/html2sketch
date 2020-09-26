@@ -1,6 +1,6 @@
 ---
 title: 图片解析
-order: 40
+order: 5
 ---
 
 ## 说明
@@ -19,20 +19,20 @@ order: 40
 
 ## 内联 Png 图片
 
-<code src="./demos/ImageInline.tsx" />
+<code src="./demos/Image/ImageInline.tsx" />
 
 ## 内联 两个 Png 图片
 
-<code src="./demos/TwoInlineImage.tsx" />
+<code src="./demos/Image/TwoInlineImage.tsx" />
 
 ## 外联 png 网址
 
-<code src="./demos/ImagePng.tsx" />
+<code src="./demos/Image/ImagePng.tsx" />
 
 ## png 网址不带协议头
 
-<code src="./demos/ImageNoProtocol.tsx" />
+<code src="./demos/Image/ImageNoProtocol.tsx" />
 
 ## 外联 svg 网址
 
-<code src="./demos/ImageSvg.tsx" />
+<code src="./demos/Image/ImageSvg.tsx" />

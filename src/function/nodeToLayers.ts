@@ -11,6 +11,7 @@ import {
   parseToShape,
   parsePseudoToShape,
   parsePseudoToText,
+  parseInputTextToText,
 } from '../parser';
 
 import { isTextVisible } from '../utils/visibility';
@@ -90,9 +91,11 @@ const nodeToLayers = async (node: Element): Promise<AnyLayer[]> => {
 
   // 输入框节点
   if (isTextInputNode(node)) {
-    const text = parsePseudoToText(node, 'placeholder');
-    console.info('转换为:', text);
-    layers.push(text);
+    const text = parseInputTextToText(<HTMLInputElement>node);
+    if (text) {
+      console.info('转换为:', text);
+      layers.push(text);
+    }
   }
 
   // 判断一下文本是否可见 不可见直接返回

@@ -45,6 +45,23 @@ describe('Frame 类', () => {
     });
   });
 
+  describe('center', () => {
+    it('centerX', () => {
+      const frame = new Frame({ height: 100, width: 100, x: 0, y: 0 });
+      expect(frame.centerX).toBe(50);
+
+      frame.centerX = 100;
+      expect(frame.x).toBe(50);
+    });
+    it('centerY', () => {
+      const frame = new Frame({ height: 100, width: 100, x: 0, y: 0 });
+      expect(frame.centerY).toBe(50);
+
+      frame.centerY = 100;
+      expect(frame.y).toBe(50);
+    });
+  });
+
   describe('ToSketchJSON', () => {
     it('不传参导出正常', () => {
       const frame = new Frame();
