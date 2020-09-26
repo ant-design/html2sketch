@@ -1,5 +1,5 @@
 import Text from '../model/Layer/Text';
-
+import { parseToGroup } from './group';
 import {
   getTextLinesAndRange,
   getTextAbsBCR,
@@ -10,8 +10,11 @@ import {
  * 将 Node 转为 Text 对象
  * */
 export const parseToText = (node: Element): Text | Text[] | undefined => {
+  const group = parseToGroup(node);
+
   // 添加文本
   const styles: CSSStyleDeclaration = getComputedStyle(node);
+
   const textStyle = Text.getTextStyleFromNode(node);
   // 处理内部Text节点
   const textNode = Array.from(node.childNodes)
@@ -29,37 +32,34 @@ export const parseToText = (node: Element): Text | Text[] | undefined => {
       // 上述 4 个要素综合影响文本的 x y 坐标
       // 有待重构
 
-      // 大部分时候可以直接使用 rangeBCR 作为文本的 BCR
       const { lines, rangeBCR } = getTextLinesAndRange(childNode);
 
-      const {
-        // x,
-        y,
-        width: bcrWidth,
-        height,
-      } = getTextAbsBCR(node, childNode);
-      let textWidth = bcrWidth;
+      const absBCR = getTextAbsBCR(node, childNode);
 
-      const { display, whiteSpace, overflow, textOverflow, width } = styles;
+      let textWidth = absBCR.width;
 
-      if ('inline'.includes(display)) {
+      // 修正 inline 模式下的行高
+      if (styles.display === 'inline') {
         textStyle.lineHeight = rangeBCR.height / lines;
       }
       // **** 处理文本带省略的情况 ****** //
 
-      let textValue = Text.fixWhiteSpace(childNode.nodeValue || '', whiteSpace);
+      let textValue = Text.fixWhiteSpace(
+        childNode.nodeValue!,
+        styles.whiteSpace,
+      );
       const originText = textValue;
       // 针对隐藏或者带省略号的
-      if (overflow === 'hidden') {
+      if (styles.overflow === 'hidden') {
         // 修改宽度
-        textWidth = parseFloat(width);
+        textWidth = parseFloat(styles.width);
         // 并对比修改后的文本内容
         textValue = getLineTextWithWidth(childNode, textWidth);
 
         // 如果是 ellipsis 类型且存在省略号
         // 按省略号添加
         if (
-          textOverflow === 'ellipsis' &&
+          styles.textOverflow === 'ellipsis' &&
           originText.length !== textValue.length
         ) {
           textValue = textValue.slice(0, textValue.length - 2);
@@ -67,17 +67,86 @@ export const parseToText = (node: Element): Text | Text[] | undefined => {
         }
       }
 
-      return new Text({
-        // x: ['inline-block'].includes(display) ? x : rangeBCR.x,
-        x: rangeBCR.x,
-        // y: textBCR.y,
-        y,
+      const text = new Text({
+        x: absBCR.x,
+        y: absBCR.y,
         width: textWidth,
-        height,
+        height: absBCR.height,
         text: textValue,
         style: textStyle,
         multiline: lines > 1,
       });
+
+      // 处理居中的样式
+      if (styles.verticalAlign === 'middle') {
+        text.centerY = group.centerY;
+      }
+
+      // TODO 把方法抽象出来成为一个通用方法
+      // 处理 flex 布局的样式
+      if (styles.display.includes('flex')) {
+        const { flexDirection, alignItems, justifyContent } = styles;
+
+        switch (flexDirection) {
+          case 'row':
+          default:
+            switch (alignItems) {
+              case 'flex-start':
+                text.top = group.top;
+                break;
+              case 'center':
+                text.centerY = group.centerY;
+                break;
+              case 'flex-end':
+                text.bottom = group.bottom;
+                break;
+              default:
+            }
+
+            switch (justifyContent) {
+              case 'flex-start':
+                text.left = group.left;
+                break;
+              case 'center':
+                text.centerX = group.centerX;
+                break;
+              case 'flex-end':
+                text.right = group.right;
+                break;
+              default:
+            }
+
+            break;
+          case 'column':
+            switch (alignItems) {
+              case 'flex-start':
+                text.left = group.left;
+                break;
+              case 'center':
+                text.centerX = group.centerX;
+                break;
+              case 'flex-end':
+                text.right = group.right;
+                break;
+              default:
+            }
+
+            switch (justifyContent) {
+              case 'flex-start':
+                text.top = group.top;
+                break;
+              case 'center':
+                text.centerY = group.centerY;
+                break;
+              case 'flex-end':
+                text.bottom = group.bottom;
+                break;
+              default:
+            }
+        }
+      }
+
+      return text;
     });
 
   if (textNode.length === 0) {

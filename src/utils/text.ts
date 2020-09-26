@@ -16,7 +16,6 @@ export const getTextLinesAndRange = (textNode: Node) => {
   return {
     rangeBCR,
     lines,
-    textRanges,
   };
 };
 
@@ -32,21 +31,13 @@ export const getTextAbsBCR = (parentNode: Element, textNode: Node) => {
   const styles: CSSStyleDeclaration = getComputedStyle(parentNode);
   const nodeBCR = parentNode.getBoundingClientRect();
 
-  let { x } = nodeBCR;
-  let { y } = nodeBCR;
-
   const { lines, rangeBCR } = getTextLinesAndRange(textNode);
 
-  const {
-    lineHeight,
-    display,
-    textAlign,
-    paddingRight,
-    paddingLeft,
-    borderLeftWidth,
-    paddingTop,
-    borderTopWidth,
-  } = styles;
+  let { y } = nodeBCR;
+  // 大部分时候可以直接使用 rangeBCR 作为文本的 BCR
+  const { x } = rangeBCR;
+
+  const { lineHeight, display, paddingTop, borderTopWidth } = styles;
 
   const textWidth = rangeBCR.width;
   const lineHeightInt = parseInt(lineHeight, 10);
@@ -60,27 +51,6 @@ export const getTextAbsBCR = (parentNode: Element, textNode: Node) => {
   }
 
   if (display !== 'inline') {
-    // 如果是左对齐
-    if (textAlign === 'left' || textAlign === 'start') {
-      // 确认下 padding 的距离
-      const pl = parseFloat(paddingLeft);
-      x += pl;
-    }
-    // 如果是居中对齐
-    if (textAlign === 'center') {
-      x = x + nodeBCR.width / 2 - textWidth / 2;
-    }
-    // 如果是右对齐
-    if (textAlign === 'right') {
-      // 确认下 padding 的距离
-      const pl = parseFloat(paddingRight);
-      x = nodeBCR.right - textWidth;
-      x -= pl;
-    }
-
-    // 添加左侧的 border 宽度
-    x += parseFloat(borderLeftWidth);
-
     // 处理内部高度
     const pt = parseFloat(paddingTop);
     y += pt;
@@ -90,11 +60,6 @@ export const getTextAbsBCR = (parentNode: Element, textNode: Node) => {
   }
 
   const textHeight = fixY < 0 ? textBCRHeight - fixY * 2 : textBCRHeight;
-
-  // 处理垂直居中的样式
-  if (display === 'flex' || display === 'inline-flex') {
-    y += (nodeBCR.height - textHeight) / 2;
-  }
 
   return { x, y, height: textHeight, width: textWidth };
 };

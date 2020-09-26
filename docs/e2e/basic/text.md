@@ -99,6 +99,6 @@ placeholder 和输入的值都在伪类里
 
 <code src="./demos/Text/Input.tsx" />
 
-## Input 文本居中
+### Input 文本居中
 
-<code src="./demos/Text/InputCenter.tsx" />
+<code src="./demos/Text/InputAligin.tsx" />
