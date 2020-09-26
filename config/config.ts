@@ -6,7 +6,7 @@ const isProdSite =
 
 export default defineConfig({
   title: 'html2sketch',
-  logo: 'https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg',
+  logo: 'https://gw.alipayobjects.com/zos/antfincdn/nOX9AAwXfj/Logo.svg',
   mode: 'site',
   // 部署在非根目录时, base 和 publicPath 都需要配置
   base: isProdSite ? '/html2sketch/' : '/',
