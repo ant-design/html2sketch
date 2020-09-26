@@ -170,22 +170,18 @@ export const parseToShape = async (
   // for simplicity we assume "X%"
 
   rect.cornerRadius = {
-    topLeft: Rectangle.parseBorderRadius(
-      styles.borderTopLeftRadius,
-      width,
-      height,
-    ),
-    topRight: Rectangle.parseBorderRadius(
+    topLeft: Style.parseBorderRadius(styles.borderTopLeftRadius, width, height),
+    topRight: Style.parseBorderRadius(
       styles.borderTopRightRadius,
       width,
       height,
     ),
-    bottomLeft: Rectangle.parseBorderRadius(
+    bottomLeft: Style.parseBorderRadius(
       styles.borderBottomLeftRadius,
       width,
       height,
     ),
-    bottomRight: Rectangle.parseBorderRadius(
+    bottomRight: Style.parseBorderRadius(
       styles.borderBottomRightRadius,
       width,
       height,

@@ -1,19 +1,16 @@
-import React, { FC } from 'react';
-// @ts-ignore
-import { ReactComponent as Svg } from './test.svg';
-
+import React from 'react';
 import { useElements, TestLayout } from '@e2e-utils';
+// @ts-ignore
+import styles from './Inline.less';
 
-const SvgIcons: FC = () => {
+export default () => {
   const { elements, ref } = useElements();
 
   return (
     <TestLayout elements={elements}>
       <div ref={ref}>
-        <Svg />
+        <span className={styles.checkSvg} />
       </div>
     </TestLayout>
   );
 };
-
-export default SvgIcons;

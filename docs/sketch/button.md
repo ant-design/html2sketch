@@ -3,7 +3,7 @@ title: 按钮
 order: 10
 nav:
   title: Sketch 组件
-  order: 10
+  order: 2
 ---
 
 ## 按钮

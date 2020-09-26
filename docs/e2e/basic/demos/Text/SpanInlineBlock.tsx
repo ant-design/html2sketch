@@ -1,6 +1,6 @@
 import React from 'react';
 import { useElements, TestLayout } from '@e2e-utils';
-
+import './Text.less';
 /**
  *
  */
@@ -10,8 +10,8 @@ export default () => {
   return (
     <TestLayout elements={elements}>
       <div ref={ref}>
-        <span style={{ verticalAlign: 'middle' }}>
-          共 <strong>2</strong> 条
+        <span className="inline-block">
+          共 <strong>1000</strong> 条
         </span>
       </div>
     </TestLayout>
