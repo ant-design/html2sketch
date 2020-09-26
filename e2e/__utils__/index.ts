@@ -4,6 +4,18 @@ import SketchFormat from '@sketch-hq/sketch-file-format-ts';
 import { writeFileSync } from 'fs';
 import { NodeToSketchSymbolOptions, SymbolMaster } from 'html2sketch';
 
+import defaultModal from './json/default-modal.json';
+import inlineImage from './json/inline-image.json';
+import pngURLImage from './json/png-url-image.json';
+import svgButton from './json/svg-button.json';
+import svgIcon from './json/svg-icon.json';
+
+export const defaultModalJSON = defaultModal;
+export const inlineImageJSON = inlineImage;
+export const pngURLImageJSON = pngURLImage;
+export const svgButtonJSON = svgButton;
+export const svgIconJSON = svgIcon;
+
 export type HandleSymbolFn = (symbol: SymbolMaster) => void;
 
 interface Options {
@@ -35,7 +47,7 @@ export const initHtml2Sketch = async (
 ) => {
   const isOnline = process.env.ONLINE === '1';
   const httpURL = `http://localhost:${port}/e2e`;
-  const fileURL = `file://${resolve(__dirname, './dist')}`;
+  const fileURL = `file://${resolve(__dirname, '../dist')}`;
   const baseURL = isOnline ? fileURL : httpURL;
 
   const browser = await puppeteer.launch({

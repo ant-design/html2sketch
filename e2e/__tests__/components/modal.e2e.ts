@@ -1,5 +1,5 @@
 import SketchFormat from '@sketch-hq/sketch-file-format-ts';
-import { initHtml2Sketch, isUpdate, outputJSONData } from './utils';
+import { initHtml2Sketch, isUpdate, outputJSONData } from '@e2e';
 
 describe('测试 Modal 类型', () => {
   test('Modal 正常', async () => {
@@ -30,5 +30,5 @@ describe('测试 Modal 类型', () => {
       axis: 0,
       layoutAnchor: 0,
     });
-  });
+  }, 30000);
 });
