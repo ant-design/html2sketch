@@ -7,8 +7,8 @@ import Fill from './Fill';
 import Shadow from './Shadow';
 import InnerShadow from './InnerShadow';
 import Border from './Border';
-import { AnyLayer } from 'html2sketch/model/type';
-import { uuid } from 'html2sketch/utils/utils';
+import { AnyLayer } from '../type';
+import { uuid } from '../../utils/utils';
 
 interface ShadowInput {
   color: ColorParam;
