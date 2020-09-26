@@ -7,10 +7,10 @@ module.exports = {
   moduleNameMapper: {
     uuid: '<rootDir>/test/__mocks__/uuid.ts',
     html2sketch: '<rootDir>/src',
-    '@e2e-utils': '<rootDir>/docs/__utils__',
+    '@e2e': '<rootDir>/e2e/__utils__',
   },
   setupFilesAfterEnv: ['./e2e/setupE2E.ts'],
-  testMatch: ['**/e2e/?(*.)+(e2e).ts'],
+  testMatch: ['**/e2e/**/?(*.)+(e2e).ts'],
   testPathIgnorePatterns: ['/node_modules/'],
   moduleFileExtensions: ['js', 'ts'],
   globals: {
