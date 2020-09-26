@@ -10,7 +10,7 @@ describe('fixWhiteSpace', () => {
 
 
   your      father `;
-    const output = "Luke, I'm your father";
+    const output = " Luke, I'm your father ";
 
     expect(fixWhiteSpace(input, 'normal')).toEqual(output);
     expect(fixWhiteSpace(input, 'nowrap')).toEqual(output);

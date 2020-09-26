@@ -2,7 +2,7 @@
  * 获取文本定界框与行数
  * @param textNode
  */
-export const getTextContext = (textNode: Node) => {
+export const getTextLinesAndRange = (textNode: Node) => {
   // 创建Range 对象
   const rangeHelper = document.createRange();
   rangeHelper.selectNodeContents(textNode); // 选中文本节点
@@ -10,11 +10,11 @@ export const getTextContext = (textNode: Node) => {
   const textRanges = Array.from(rangeHelper.getClientRects());
 
   const lines = textRanges.length;
-  const textBCR = rangeHelper.getBoundingClientRect();
+  const rangeBCR = rangeHelper.getBoundingClientRect();
 
   rangeHelper.detach();
   return {
-    textBCR,
+    rangeBCR,
     lines,
     textRanges,
   };
@@ -35,7 +35,7 @@ export const getTextAbsBCR = (parentNode: Element, textNode: Node) => {
   let { x } = nodeBCR;
   let { y } = nodeBCR;
 
-  const { lines, textBCR } = getTextContext(textNode);
+  const { lines, rangeBCR } = getTextLinesAndRange(textNode);
 
   const {
     lineHeight,
@@ -48,9 +48,9 @@ export const getTextAbsBCR = (parentNode: Element, textNode: Node) => {
     borderTopWidth,
   } = styles;
 
-  const textWidth = textBCR.width;
+  const textWidth = rangeBCR.width;
   const lineHeightInt = parseInt(lineHeight, 10);
-  const textBCRHeight = textBCR.height;
+  const textBCRHeight = rangeBCR.height;
 
   let fixY = 0;
 
@@ -113,9 +113,9 @@ export const getLineTextWithWidth = (textNode: ChildNode, width: number) => {
     const charNode = textNode.cloneNode(true);
     charNode.textContent = textContent;
     document.body.appendChild(charNode);
-    const { textBCR } = getTextContext(charNode);
+    const { rangeBCR } = getTextLinesAndRange(charNode);
     document.body.removeChild(charNode);
-    if (textBCR.width < width) {
+    if (rangeBCR.width < width) {
       textContent += text[i];
     }
   }
