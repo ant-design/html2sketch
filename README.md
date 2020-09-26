@@ -49,7 +49,7 @@
 
 ## 简介
 
-一个将网页转 sketch 的模块
+一个将 HTML 转 sketch 的模块
 
 ## 快速上手
 
@@ -57,17 +57,21 @@
 
 ```bash
 npm i html2sketch --save
-// or
+```
+
+或
+
+```
 yarn add html2sketch
 ```
 
 ### 使用
 
-html2sketch 包含 2 个主要方法 `nodeToGroup` 和 `nodeToSketchSymbol` 。
+`html2sketch` 包含 2 个主要方法 `nodeToGroup` 和 `nodeToSketchSymbol` 。
 
 #### nodeToGroup
 
-将 html 节点转 Group 对象
+将 html 节点转 Sketch 的 Group 对象
 
 ```js
 import { nodeToGroup } from 'html2sketch';
@@ -113,7 +117,7 @@ fn();
 
 ## 有了 Sketch JSON 的下一步?
 
-生成的 Sketch JSON 严格符合 [Sketch FileFormat](https://developer.sketch.com/file-format/) 结构，因此只需要简单地将相应的 JSON 按照 Sketch 文件规范合成 `.sketch` 文件，即可获得 Sketch 文件。
+生成的 Sketch JSON 严格符合 [Sketch File Format](https://developer.sketch.com/file-format/) 结构，因此只需要简单地将相应的 JSON 按照 Sketch 文件规范合成 `.sketch` 文件，即可获得 Sketch 文件。
 
 社区相关 API 模块:
 
@@ -125,4 +129,8 @@ fn();
 
 ## 开发
 
-查看 [开发止指南](https://github.com/ant-design/html2sketch/guide)
+查看 [开发指南](https://github.com/ant-design/html2sketch/guide)
+
+## License
+
+[MIT](./LICENSE)
