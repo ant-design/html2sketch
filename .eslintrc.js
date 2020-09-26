@@ -22,8 +22,8 @@ module.exports = {
         map: [
           ['html2sketch', './src/'],
           ['html2sketch/*', './src/*'],
-          ['@e2e-utils', './docs/__utils__'],
-          ['@e2e', './e2e/__utils__'],
+          ['@docs-utils', './docs/__utils__'],
+          ['@e2e-utils', './e2e/__utils__'],
           ['@test-utils', './tests/__utils__'],
         ],
       },
