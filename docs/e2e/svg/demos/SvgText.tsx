@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { useElements, TestLayout } from '@e2e-utils';
+import { useElements, TestLayout } from '@docs-utils';
 // @ts-ignore
 import { ReactComponent as Svg } from './svg/text.svg';
 

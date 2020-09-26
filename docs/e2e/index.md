@@ -16,8 +16,8 @@ nav:
 
 演示: ![demo](https://gw.alipayobjects.com/zos/antfincdn/TrL5ejOKSE/demo.gif)
 
-### @e2e-layout
+### @docs-utils
 
-用例代码显示上并不包括 `@e2e-layout` 的代码
+用例代码显示上并不包括 `@docs-utils` 的代码
 
-如果需要查看 `@e2e-layout` 的代码, 请到 `docs/__utils__` 文件夹 [查看](https://github.com/ant-design/html2sketch/tree/master/docs/__utils__)
+如果需要查看 `@docs-utils` 的代码, 请到 `docs/__utils__` 文件夹 [查看](https://github.com/ant-design/html2sketch/tree/master/docs/__utils__)

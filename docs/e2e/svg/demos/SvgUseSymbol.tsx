@@ -4,7 +4,7 @@ import { ReactComponent as SvgLink } from './svg/symbolLink.svg';
 // @ts-ignore
 import { ReactComponent as Svg } from './svg/useSymbol.svg';
 
-import { useElements, TestLayout } from '@e2e-utils';
+import { useElements, TestLayout } from '@docs-utils';
 
 const SvgIcons: FC = () => {
   const { elements, ref } = useElements();

@@ -32,7 +32,10 @@ export default defineConfig({
     loading: '@ant-design/pro-skeleton',
   },
   alias: {
-    '@e2e-utils': resolve(__dirname, '../docs/__utils__'),
+    '@docs-utils': resolve(__dirname, '../docs/__utils__'),
   },
   hash: true,
+  theme: {
+    '@c-primary': '#ff9800',
+  },
 });

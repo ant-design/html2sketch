@@ -1,6 +1,6 @@
 import React from 'react';
 import { Line } from '@ant-design/charts';
-import { useElements, TestLayout } from '@e2e-utils';
+import { useElements, TestLayout } from '@docs-utils';
 
 const data = [
   {

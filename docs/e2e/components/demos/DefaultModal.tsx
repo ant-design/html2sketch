@@ -1,6 +1,6 @@
 import React, { FC, useEffect } from 'react';
 import { Modal } from 'antd';
-import { useElements, TestLayout } from '@e2e-utils';
+import { useElements, TestLayout } from '@docs-utils';
 // @ts-ignore
 import styles from './Modal.less';
 

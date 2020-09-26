@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { useElements, TestLayout } from '@e2e-utils';
+import { useElements, TestLayout } from '@docs-utils';
 import { DropboxOutlined, BehanceOutlined } from '@ant-design/icons';
 
 const SvgIcons: FC = () => {
