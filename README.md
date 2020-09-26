@@ -1,3 +1,9 @@
+<p align="center">
+  <a href="https://github.com/ant-design/html2sketch">
+   <img src="https://gw.alipayobjects.com/zos/antfincdn/we4CyGTiVq/Logo.png" height="200" width="200" alt="html2sketch"/>
+  </a>
+</p>
+
 <h1 align="center"><a href="https://ant-design.github.io/html2sketch/">html2sketch</a></h1>
 
 <div align="center">
