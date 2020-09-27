@@ -1,3 +1,5 @@
+[![Gitpod ready-to-code](https://img.shields.io/badge/Gitpod-ready--to--code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/ant-design/html2sketch)
+
 <p align="center">
   <a href="https://github.com/ant-design/html2sketch">
    <img src="https://gw.alipayobjects.com/zos/antfincdn/Q0VnKtVzuB/Logo.png" height="200" width="200" alt="html2sketch"/>
