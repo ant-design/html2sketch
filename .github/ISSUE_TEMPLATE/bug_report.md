@@ -28,7 +28,10 @@ assignees: ''
 
 <!--
 提供可复现的代码，仓库，或线上示例
+(可在下方 codesandbox 链接中添加你的最小可复现 demo)
 -->
+
+[可复现 demo](https://codesandbox.io/s/html2ksetch-demo-m53be?file=/src/Demo.tsx)
 
 ### © 版本信息
 
