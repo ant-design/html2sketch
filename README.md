@@ -16,6 +16,15 @@
 
 [![ docs by dumi][dumi-url]](https://d.umijs.org/) [![Build With father][father-url]](https://github.com/umijs/father/)
 
+[![Gitpod ready-to-code][gitpod-badge]][gitpod-url]
+
+<!-- gitpod url -->
+
+[gitpod-badge]: https://img.shields.io/badge/Gitpod-ready--to--code-blue?logo=gitpod
+[gitpod-url]: https://gitpod.io/#https://github.com/ant-design/html2sketch
+
+<!-- umi url -->
+
 [dumi-url]: https://img.shields.io/badge/docs%20by-dumi-blue
 [father-url]: https://img.shields.io/badge/build%20with-father-028fe4.svg
 
