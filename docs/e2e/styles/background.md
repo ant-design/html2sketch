@@ -9,19 +9,19 @@ order: 6
 
 加载方式:
 
-- 网址
-- Base64
+- 网址(外联)
+- Base64(内联)
 
 图片类型
 
 - svg
 - png
 
-## 背景图片为 image 不限制尺寸
+## 外联 Png 不限制尺寸
 
 <code src="./demos/BackgroundImage/WithoutSize.tsx" />
-
-## 背景图片为 image 限制尺寸
+ 
+## 外联 Png 限制尺寸
 
 <code src="./demos/BackgroundImage/WithSize.tsx" />
 
