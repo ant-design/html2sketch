@@ -65,3 +65,13 @@ export const antdSvg = readFileSync(
  * 更新
  */
 export const isUpdate = process.env.UPDATE === '1';
+
+/**
+ * 初始化测试节点
+ * @param innerHTML
+ */
+export const setupTestNode = (innerHTML: string) => {
+  const node = document.createElement('div');
+  node.innerHTML = innerHTML;
+  document.body.append(node);
+};

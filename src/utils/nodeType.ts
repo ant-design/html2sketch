@@ -26,6 +26,7 @@ export const isTextNode = (node: Element): boolean => {
   });
   return node && node.childNodes!.length > 0 && textNode;
 };
+
 /**
  * 判断是否是 Group 节点
  */
