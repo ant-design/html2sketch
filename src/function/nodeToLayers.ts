@@ -43,7 +43,7 @@ const nodeToLayers = async (node: Element): Promise<AnyLayer[]> => {
 
   // 图片类型的节点(img)
   if (isImageNode(node)) {
-    const image = await parseToBitmap(<HTMLImageElement>node);
+    const image = await parseToBitmap(node);
     console.info('转换为:', image);
     layers.push(image);
     return layers;
@@ -51,7 +51,7 @@ const nodeToLayers = async (node: Element): Promise<AnyLayer[]> => {
 
   // 画布类型节点(canvas)
   if (isCanvasNode(node)) {
-    const canvas = parseCanvasToBitmap(<HTMLCanvasElement>node);
+    const canvas = parseCanvasToBitmap(node);
     console.info('转换为:', canvas);
     layers.push(canvas);
     return layers;
@@ -82,7 +82,7 @@ const nodeToLayers = async (node: Element): Promise<AnyLayer[]> => {
 
   // 转换为 SVG
   if (isSvgNode(node)) {
-    const svg = await parseToSvg(node as SVGElement);
+    const svg = await parseToSvg(node);
     console.info('转换为:', svg);
     layers.push(svg);
 
@@ -91,7 +91,7 @@ const nodeToLayers = async (node: Element): Promise<AnyLayer[]> => {
 
   // 输入框节点
   if (isTextInputNode(node)) {
-    const text = parseInputTextToText(<HTMLInputElement>node);
+    const text = parseInputTextToText(node);
     if (text) {
       console.info('转换为:', text);
       layers.push(text);

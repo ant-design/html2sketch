@@ -19,13 +19,14 @@ export const isNodeType = (node: Element, type: string | string[]): boolean => {
  */
 export const isTextNode = (node: Element): boolean => {
   let textNode = false;
-  node.childNodes.forEach((node) => {
-    if (node.nodeName.includes('text')) {
+  node.childNodes.forEach((childNode) => {
+    if (childNode.nodeName.includes('text')) {
       textNode = true;
     }
   });
   return node && node.childNodes!.length > 0 && textNode;
 };
+
 /**
  * 判断是否是 Group 节点
  */
@@ -36,23 +37,25 @@ export const isGroupNode = (node: Element): boolean => {
 /**
  * 判断是否是图片节点
  */
-export const isImageNode = (node: Element): boolean => {
+export const isImageNode = (node: Element): node is HTMLImageElement => {
   return isNodeType(node, 'img');
 };
 
 /**
  * 判断是否是带文本的输入框节点
  */
-export const isTextInputNode = (node: Element): boolean => {
+export const isTextInputNode = (node: Element): node is HTMLInputElement => {
   return (
-    isNodeType(node, 'input') && (node as HTMLInputElement).type !== 'checkbox'
+    isNodeType(node, 'input') &&
+    (node as HTMLInputElement).type !== 'checkbox' &&
+    (node as HTMLInputElement).type !== 'radio'
   );
 };
 
 /**
  * 判断是否是图片节点
  */
-export const isCanvasNode = (node: Element): boolean => {
+export const isCanvasNode = (node: Element): node is HTMLCanvasElement => {
   return isNodeType(node, 'canvas');
 };
 
@@ -65,6 +68,6 @@ export const isSVGChildNode = (node: Element) =>
 /**
  * 判断是否是Svg节点
  */
-export const isSvgNode = (node: Element): boolean => {
+export const isSvgNode = (node: Element): node is SVGElement => {
   return isNodeType(node, 'svg');
 };
