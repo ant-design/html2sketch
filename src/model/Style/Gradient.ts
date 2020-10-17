@@ -1,17 +1,8 @@
 import SketchFormat from '@sketch-hq/sketch-file-format-ts';
 
-import { GradientType } from '@sketch-hq/sketch-file-format-ts/dist/cjs/v3-types';
-import Color, { ColorParam } from './Color';
+import Color from './Color';
 import BaseStyle from '../Base/BaseStyle';
-import { CGPoint } from '../../type';
-
-export interface GradientProps {
-  type?: SketchFormat.GradientType;
-  to?: CGPoint;
-  from?: CGPoint;
-  stops?: ColorParam[];
-  name?: string;
-}
+import { CGPoint, ColorStop, GradientProps } from '../../type';
 
 /**
  * 渐变对象
@@ -24,7 +15,7 @@ class Gradient extends BaseStyle {
       this.name = 'gradient';
       return;
     }
-    const { from, to, stops, type, name } = props;
+    const { from, to, stops, type, name, radius } = props;
 
     if (from) {
       this.from = from;
@@ -33,10 +24,26 @@ class Gradient extends BaseStyle {
       this.to = to;
     }
     if (stops) {
-      this.stops = stops.map((color) => new Color(color));
+      this.stops = stops.map((stopParam, index) => {
+        // 判断是对象类型的 stop 参数
+        if (typeof stopParam === 'object' && 'color' in stopParam) {
+          return {
+            color: new Color(stopParam.color),
+            offset: stopParam.offset
+              ? stopParam.offset
+              : index / (this.stops.length - 1),
+          };
+        }
+
+        // 不然就是颜色类型的 stop 参数
+        return { color: new Color(stopParam) };
+      });
     }
     if (type) {
       this.type = type;
+    }
+    if (type === SketchFormat.GradientType.Radial && radius) {
+      this.ellipseLength = radius;
     }
     this.name = name || 'gradient';
   }
@@ -51,7 +58,7 @@ class Gradient extends BaseStyle {
   /**
    * 色彩节点
    */
-  stops: Color[] = [];
+  stops: ColorStop[] = [];
 
   /**
    * 终点
@@ -61,7 +68,12 @@ class Gradient extends BaseStyle {
   /**
    * 渐变类型
    * */
-  type: SketchFormat.GradientType = GradientType.Linear;
+  type: SketchFormat.GradientType = SketchFormat.GradientType.Linear;
+
+  /**
+   * 如果是 Radial 渐变,由这个参数控制椭圆长轴
+   */
+  ellipseLength: number = 1;
 
   /**
    * 转为 Sketch JSON 对象
@@ -72,7 +84,7 @@ class Gradient extends BaseStyle {
 
     return {
       _class: SketchFormat.ClassValue.Gradient,
-      elipseLength: 0, // 这个字段应该是废弃字段
+      elipseLength: this.ellipseLength,
       from: `{${from.x}, ${from.y}}`,
       gradientType: this.type,
       to: `{${to.x}, ${to.y}}`,
@@ -83,10 +95,19 @@ class Gradient extends BaseStyle {
   /**
    * 将 stop 数组转换为 Sketch 使用的对象
    * */
-  getSketchStop = (color: Color, index: number): SketchFormat.GradientStop => ({
+  getSketchStop = (
+    colorStop: ColorStop,
+    index: number,
+  ): SketchFormat.GradientStop => ({
     _class: 'gradientStop',
-    color: color.toSketchJSON(),
-    position: index / (this.stops.length - 1),
+    color: colorStop.color.toSketchJSON(),
+
+    position:
+      // 如果有 offset 则使用 offset
+      colorStop.offset
+        ? colorStop.offset
+        : // 否则均分
+          index / (this.stops.length - 1),
   });
 }
 
