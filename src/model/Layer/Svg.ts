@@ -18,12 +18,7 @@ import Fill from '../Style/Fill';
 import Color from '../Style/Color';
 
 import { defaultExportOptions } from '../utils';
-import {
-  getRenderedSvgString,
-  getUseReplacement,
-  inlineStyles,
-  optimizeSvgString,
-} from '../../utils/svg';
+
 import { getGroupLayout } from '../../utils/layout';
 
 import {
@@ -32,6 +27,7 @@ import {
   FrameType,
   ShapeGroupType,
   SvgDefsStyle,
+  SvgLayerType,
 } from '../type';
 
 interface SvgInitParams extends Partial<BaseLayerParams> {
@@ -243,80 +239,6 @@ class Svg extends BaseLayer {
   }
 
   /**
-   * 从 Url 初始化 Svg
-   * @param url Url
-   * @param frame 尺寸
-   */
-  static async initFromUrl(url: string, frame: Frame) {
-    let data;
-    try {
-      data = await fetch(url, {
-        mode: 'cors',
-      });
-    } catch (error) {
-      const maybeCorsError = error.toString().includes('Failed to fetch');
-      if (maybeCorsError) {
-        const corsPrefix = `https://cors-anywhere.herokuapp.com/`;
-        data = await fetch(corsPrefix + url, {
-          mode: 'cors',
-        });
-        console.warn(
-          '该图片存在跨域问题! 请在服务器端设置允许图片跨域,以提升解析速度:',
-          url,
-        );
-      }
-    }
-    if (!data) return;
-
-    let svgString = await data.text();
-
-    const { x, y, width, height } = frame;
-
-    svgString = await getRenderedSvgString(svgString, { width, height });
-
-    return new Svg({ svgString, x, y, width, height });
-  }
-
-  /**
-   * 将 Svg Node 转为 SvgString
-   * @param svgNode
-   */
-  static getSVGString = async (svgNode: Element): Promise<string> => {
-    // NOTE: this code modifies the original node by inlining all styles
-    // this is not ideal and probably fixable
-    const queue = Array.from(svgNode.children);
-
-    while (queue.length) {
-      const node = queue.pop();
-
-      if (
-        !(node instanceof SVGElement) ||
-        node instanceof SVGDefsElement ||
-        node instanceof SVGTitleElement
-      ) {
-        continue;
-      }
-
-      if (node instanceof SVGUseElement) {
-        const replacement = getUseReplacement(node);
-
-        if (replacement) {
-          node.parentNode!.replaceChild(replacement, node);
-          queue.push(replacement);
-        }
-        continue;
-      }
-
-      if (node) {
-        inlineStyles(<SVGElement>node);
-        Array.from(node.children).forEach((child) => queue.push(child));
-      }
-    }
-
-    return optimizeSvgString(svgNode.outerHTML);
-  };
-
-  /**
    * 一致化缠绕规则参数
    * @param ruleStr
    */
@@ -348,7 +270,7 @@ class Svg extends BaseLayer {
    * 解析 Svgson 变成 layer
    * @param node
    */
-  parseSvgson = (node: svgson.INode): any => {
+  parseSvgson = (node: svgson.INode): SvgLayerType => {
     switch (node.name) {
       // 全局定义
       case 'defs':
@@ -396,16 +318,17 @@ class Svg extends BaseLayer {
 
     const shapeGroupType = Svg.pathToShapeGroup(path);
 
+    const isClose = !shapeGroupType.shapes.every((shape) => !shape.isClose);
     const shapePaths = this.shapeGroupDataToLayers(shapeGroupType);
 
     if (shapePaths.length === 1) {
       const shapePath = shapePaths[0];
-      shapePath.style = this.parseNodeAttrToStyle(node.attributes);
+      shapePath.style = this.parseNodeAttrToStyle(node.attributes, isClose);
     }
     const shapeGroup = new ShapeGroup(shapeGroupType.frame);
 
     shapeGroup.addLayers(shapePaths);
-    shapeGroup.style = this.parseNodeAttrToStyle(node.attributes);
+    shapeGroup.style = this.parseNodeAttrToStyle(node.attributes, isClose);
 
     return shapeGroup;
   }
@@ -430,13 +353,52 @@ class Svg extends BaseLayer {
             y: parseFloat(attributes.y2) / 100,
           },
           stops: defsNode.children.map((item) => {
-            const {
-              // TODO 有待改造 Stop 方法
-              // offset,
-              stopColor,
-            } = item.attributes;
-            // const color = new Color(stopColor);
-            return stopColor;
+            const { offset, stopColor, stopOpacity } = item.attributes;
+            const color = new Color(stopColor);
+
+            return {
+              color: [
+                color.red,
+                color.green,
+                color.blue,
+                Number(stopOpacity) || 1,
+              ],
+              offset: parseFloat(offset) / 100,
+            };
+          }),
+        });
+      case 'radialGradient':
+        console.log(attributes);
+        return new Gradient({
+          type: SketchFormat.GradientType.Radial,
+          name: attributes.id,
+          from: {
+            // 解析得到的是 109% 这样的值
+            x: parseFloat(attributes.fx) / 100,
+            y: parseFloat(attributes.fy) / 100,
+          },
+          to: {
+            x: (parseFloat(attributes.cx) + parseFloat(attributes.r)) / 100,
+            y: parseFloat(attributes.cy) / 100,
+          },
+          // radius: parseFloat(attributes.r) / 100,
+          stops: defsNode.children.map((item) => {
+            const { offset, stopColor, stopOpacity } = item.attributes;
+            const color = new Color(stopColor);
+
+            console.log(stopOpacity);
+
+            const opacity = Number(stopOpacity);
+
+            return {
+              color: [
+                color.red,
+                color.green,
+                color.blue,
+                isNaN(opacity) ? 1 : opacity,
+              ],
+              offset: parseFloat(offset) / 100,
+            };
           }),
         });
       case 'style':
@@ -454,14 +416,19 @@ class Svg extends BaseLayer {
   /**
    * 解析 Node 的 Attribute 变成 style
    * @param attributes node 的属性
+   * @param isClose
    */
-  parseNodeAttrToStyle = (attributes: svgson.INode['attributes']) => {
+  parseNodeAttrToStyle = (
+    attributes: svgson.INode['attributes'],
+    isClose: boolean = true,
+  ) => {
     const {
       stroke,
       strokeWidth,
       fill: fillStr,
       style: styleString,
       class: className,
+      opacity,
     } = attributes;
 
     const style = new Style();
@@ -479,10 +446,12 @@ class Svg extends BaseLayer {
       }
     }
 
-    // 直接使用自带的 fill
-
-    const baseFill = this.getFillByString(fillStr);
-    if (baseFill) style.fills.push(baseFill);
+    // 如果闭合了的话
+    // 直接使用默认填充
+    if (isClose) {
+      const baseFill = this.getFillByString(fillStr);
+      if (baseFill) style.fills.push(baseFill);
+    }
 
     // 如果存在currentColor 则采用 inline Style 的 fill
     if (fillStr === 'currentColor' && styleObj?.fill) {
@@ -497,6 +466,8 @@ class Svg extends BaseLayer {
       });
     }
 
+    // 设置不透明度
+    style.opacity = Number(opacity) || 1;
     return style;
   };
 
@@ -696,18 +667,24 @@ class Svg extends BaseLayer {
     return classStyle?.rules.find((r) => r.className === `.${className}`);
   };
 
+  /**
+   * 根据 fill 字符填充 Fill 对象
+   * @param fill 填充文本
+   */
   private getFillByString = (fill: string) => {
     if (fill === 'none') return;
 
-    if (!fill)
+    // TODO 针对 path 类型的对象 如果没有 fill 不能默认填充黑色
+    if (!fill) {
       return new Fill({ type: SketchFormat.FillType.Color, color: '#000' });
+    }
 
     if (fill.startsWith('url')) {
       // 说明来自 defs
       const id = /url\(#(.*)\)/.exec(fill)?.[1];
       // 从 defs 中拿到相应的配置项
       const defsFill = this.defs.find(
-        (def) => def.class === 'gradient' && def.name === id,
+        (def) => def?.class === 'gradient' && def.name === id,
       );
 
       switch (defsFill?.class) {

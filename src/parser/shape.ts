@@ -7,7 +7,8 @@ import {
   parseBackgroundImageType,
 } from '../utils/background';
 import { base64ToSvgString, waitForImageLoaded } from '../utils/image';
-import { getRenderedSvgString } from '../utils/svg';
+import { StrToRenderSVG } from '../utils/svg';
+import { parseURLToSvg } from './svg';
 
 /**
  * 将节点转换为 Shape 对象
@@ -244,7 +245,7 @@ export const parseToShape = async (
 
         // 外联型 svg
         if (url.startsWith('http') && url.endsWith('svg')) {
-          svg = await Svg.initFromUrl(
+          svg = await parseURLToSvg(
             url,
             new Frame({ x: rect.x, y: rect.y, width, height }),
           );
@@ -256,7 +257,7 @@ export const parseToShape = async (
           // 如果是 svg类型的 data image
           const rawString = base64ToSvgString(url);
           if (rawString) {
-            const svgString = await getRenderedSvgString(rawString, {
+            const svgString = await StrToRenderSVG(rawString, {
               width,
               height,
             });

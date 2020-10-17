@@ -5,6 +5,7 @@ import {
   TextHorizontalAlign,
   TextVerticalAlign,
 } from './model/Style/TextStyle';
+import Color, { ColorParam } from 'html2sketch/model/Style/Color';
 
 // *** 统一的类型定义收口文件 *** //
 export * from './model/type';
@@ -112,4 +113,56 @@ export interface NodeToSketchSymbolOptions {
    * symbol 内部图层的配置项
    */
   layerParams?: SymbolAdjustParams[];
+}
+
+/**
+ *  =====渐变定义=====
+ */
+
+/**
+ * 传入颜色间隔点的参数
+ */
+export interface ColorStopParam {
+  color: ColorParam;
+  offset: number;
+}
+
+export type StopParam = ColorParam | ColorStopParam;
+
+export interface GradientProps {
+  /**
+   * 渐变类型
+   */
+  type?: SketchFormat.GradientType;
+  /**
+   * 终点
+   */
+  to?: CGPoint;
+  /**
+   * 起点
+   */
+  from?: CGPoint;
+  /**
+   * 色彩间隔点
+   */
+  stops?: StopParam[];
+  /**
+   * 渐变名称
+   */
+  name?: string;
+  /**
+   * 如果是圆形渐变 则需要传入 radius 值
+   */
+  radius?: number;
+}
+
+export interface ColorStop {
+  /**
+   * 偏移位置 取值 0-1
+   */
+  offset?: number;
+  /**
+   * 颜色对象
+   */
+  color: Color;
 }

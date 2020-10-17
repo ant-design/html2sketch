@@ -122,6 +122,15 @@ export interface SvgDefsStyle {
   class: 'classStyle';
   rules: CssStyleRule[];
 }
+export type SvgLayerType =
+  | Group
+  | ShapeGroup
+  | Ellipse
+  | Rectangle
+  | Text
+  | undefined
+  | SvgLayerType[];
+
 export interface CssStyleRule {
   className: string;
   styles: { [key: string]: string };
