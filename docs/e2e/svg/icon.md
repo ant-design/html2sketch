@@ -1,6 +1,6 @@
 ---
 title: Icon Svg 解析
-order: 1
+order: 2
 group:
   order: 4
   title: Svg
@@ -21,10 +21,6 @@ icon 定义: 只包含一条或若干条 path 的 svg
 ## 测试 路径 的 svg
 
 <code src="./demos/SvgTest.tsx" />
-
-## 使用 use Symbol 的 svg
-
-<code src="./demos/SvgUseSymbol.tsx" />
 
 ## 多组 Icon 组合的 svg
 

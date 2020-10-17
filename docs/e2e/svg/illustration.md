@@ -1,6 +1,6 @@
 ---
 title: Illustration 解析
-order: 2
+order: 3
 ---
 
 ## 定义说明
@@ -9,13 +9,13 @@ order: 2
 
 常见包含 `g` `rect` `text` 等等其他 svg 元素
 
-## 一个常规的例子
+## Ant Design logo
 
 <code src="./demos/SvgSimpleIllustration.tsx" />
 
-## svg 文本元素
+## 渐变和 Mask 对象的 svg
 
-<code src="./demos/SvgText.tsx" />
+<code src="./demos/SvgBackground.tsx" />
 
 ## 超复杂的例子
 
