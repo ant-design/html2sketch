@@ -1,16 +1,16 @@
-import SketchFormat from '@sketch-hq/sketch-file-format-ts';
 import { SVGPathData } from 'svg-pathdata';
 import { CommandC, CommandL, SVGCommand } from 'svg-pathdata/lib/types';
 import BaseLayer from '../Base/BaseLayer';
 import { defaultExportOptions } from '../utils';
 
-import { CGPoint } from '../../type';
 import {
+  CGPoint,
   ShapePathType,
   BezierPoint,
   StartPoint,
   BaseLayerParams,
-} from '../type';
+  SketchFormat,
+} from '../../types';
 
 interface ContextPoints {
   thisPoint: BezierPoint;

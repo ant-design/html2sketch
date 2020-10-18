@@ -1,4 +1,3 @@
-import SketchFormat from '@sketch-hq/sketch-file-format-ts';
 import BaseLayer from '../Base/BaseLayer';
 import { defaultExportOptions } from '../utils';
 import { uuid } from '../../utils/utils';
@@ -8,7 +7,7 @@ import {
   initImageURL,
   getBase64ImageString,
 } from '../../utils/image';
-import { BaseLayerParams } from '../type';
+import { BaseLayerParams, SketchFormat } from '../../types';
 
 interface BitmapInitParams extends BaseLayerParams {
   url: string;

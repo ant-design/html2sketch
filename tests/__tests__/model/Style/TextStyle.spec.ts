@@ -1,7 +1,7 @@
 import TextStyle, {
   TextHorizontalAlign,
   TextVerticalAlign,
-} from 'html2sketch/model/Style/TextStyle';
+} from 'html2sketch/models/Style/TextStyle';
 
 describe('TextStyle 类', () => {
   describe('parseTextHorizontalAlign', () => {

@@ -1,8 +1,8 @@
 import {
   calcResizingConstraint,
-  ResizingConstraint,
   getGroupLayout,
 } from 'html2sketch/utils/layout';
+import { ResizingConstraint } from 'html2sketch';
 
 describe('calcResizingConstraint', () => {
   it('约束:左 右 顶 高度', () => {

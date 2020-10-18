@@ -44,8 +44,12 @@ order: 2
 .src
 ├── function                       # 解析方法
 ├── parser                         # 解析器
-├── model                          # 对象实体
+├── models                         # 对象实体
+├── types                          # 类型定义
 ├── utils                          # 工具函数
-├── index.ts                       # 索引
-└── type.ts                        # 类型定义
+└── index.ts                       # 索引
 ```
+
+#### types
+
+包含相关类型定义文件

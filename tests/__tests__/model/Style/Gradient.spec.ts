@@ -1,4 +1,4 @@
-import Gradient from 'html2sketch/model/Style/Gradient';
+import Gradient from 'html2sketch/models/Style/Gradient';
 
 describe('Gradient 类', () => {
   describe('线性渐变', () => {

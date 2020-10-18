@@ -1,9 +1,14 @@
-import SketchFormat from '@sketch-hq/sketch-file-format-ts';
 import { uuid } from '../../utils/utils';
 import Frame from './Frame';
 import Style from '../Style/Style';
-import { calcResizingConstraint, ResizingConstraint } from '../../utils/layout';
-import { AnyLayer, LayerClassType, BaseLayerParams } from '../type';
+import { calcResizingConstraint } from '../../utils/layout';
+import {
+  AnyLayer,
+  LayerClassType,
+  BaseLayerParams,
+  SketchFormat,
+  ResizingConstraint,
+} from '../../types';
 
 const DEFAULT_USER_INFO_SCOPE = 'html2sketch';
 

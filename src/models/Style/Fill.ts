@@ -1,8 +1,6 @@
-import SketchFormat from '@sketch-hq/sketch-file-format-ts';
-
 import Color, { ColorParam } from './Color';
 import BaseStyle from '../Base/BaseStyle';
-import { CGPoint } from '../../type';
+import { CGPoint, SketchFormat } from '../../types';
 import { defaultContextSettings } from '../utils';
 import Gradient from './Gradient';
 import Image from './Image';

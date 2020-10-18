@@ -1,8 +1,8 @@
-import { SymbolMaster } from '../model';
+import { SymbolMaster } from '../models';
 import { defaultSymbolParamsList } from '../utils/sketchSymbolParams';
 import nodeToGroup from './nodeToGroup';
 import adjustSymbolParams from './adjustSymbolParams';
-import { AnyLayer, NodeToSketchSymbolOptions } from '../type';
+import { AnyLayer, NodeToSketchSymbolOptions } from '../types';
 
 /**
  * 解析为 Symbol

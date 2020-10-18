@@ -1,28 +1,28 @@
 import * as svgson from 'svgson';
 import { SVGPathData } from 'svg-pathdata';
-import { SketchFormat } from '../types';
 
-import Frame from '../model/Base/Frame';
-import ShapePath from '../model/Layer/ShapePath';
-import ShapeGroup from '../model/Layer/ShapeGroup';
-import Ellipse from '../model/Layer/Ellipse';
-import Rectangle from '../model/Layer/Rectangle';
-import Group from '../model/Layer/Group';
-import Text from '../model/Layer/Text';
+import Frame from '../models/Base/Frame';
+import ShapePath from '../models/Layer/ShapePath';
+import ShapeGroup from '../models/Layer/ShapeGroup';
+import Ellipse from '../models/Layer/Ellipse';
+import Rectangle from '../models/Layer/Rectangle';
+import Group from '../models/Layer/Group';
+import Text from '../models/Layer/Text';
 
-import Style from '../model/Style/Style';
-import TextStyle from '../model/Style/TextStyle';
-import Gradient from '../model/Style/Gradient';
-import Fill from '../model/Style/Fill';
-import Color from '../model/Style/Color';
+import Style from '../models/Style/Style';
+import TextStyle from '../models/Style/TextStyle';
+import Gradient from '../models/Style/Gradient';
+import Fill from '../models/Style/Fill';
+import Color from '../models/Style/Color';
 
 import {
+  SketchFormat,
   AnyLayer,
   FrameType,
   ShapeGroupType,
   SvgDefsStyle,
   SvgLayerType,
-} from '../type';
+} from '../types';
 
 /**
  * 计算 Frame 的缩放比例

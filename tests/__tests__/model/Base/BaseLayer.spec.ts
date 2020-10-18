@@ -1,5 +1,5 @@
 import { ResizingConstraint } from 'html2sketch';
-import BaseLayer from 'html2sketch/model/Base/BaseLayer';
+import BaseLayer from 'html2sketch/models/Base/BaseLayer';
 
 class TestGroup extends BaseLayer {
   constructor() {

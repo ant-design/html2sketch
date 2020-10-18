@@ -1,7 +1,6 @@
-import SketchFormat from '@sketch-hq/sketch-file-format-ts';
 import BaseLayer from '../Base/BaseLayer';
 import { defaultRuleData, defaultExportOptions } from '../utils';
-import { BaseLayerParams } from '../type';
+import { BaseLayerParams, SketchFormat } from '../../types';
 
 interface PageInitParams extends Pick<BaseLayerParams, 'height' | 'width'> {}
 

@@ -1,4 +1,4 @@
-import ColorAsset from 'html2sketch/model/Style/ColorAsset';
+import ColorAsset from 'html2sketch/models/Style/ColorAsset';
 
 describe('ColorAsset 类', () => {
   it('默认创建', () => {

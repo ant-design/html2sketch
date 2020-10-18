@@ -1,4 +1,4 @@
-import { Bitmap, Frame } from '../model';
+import { Bitmap, Frame } from '../models';
 import { parseURLToSvg } from './svg';
 import { getImageBase64URL, errorBase64Url } from '../utils/image';
 import { isImageNode } from '../utils/nodeType';

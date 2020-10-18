@@ -1,5 +1,5 @@
-import Svg from '../model/Layer/Svg';
-import Frame from '../model/Base/Frame';
+import Svg from '../models/Layer/Svg';
+import Frame from '../models/Base/Frame';
 import { nodeToRawSVG, StrToRenderSVG, urlToRawSVG } from '../utils/svg';
 
 /**

@@ -1,4 +1,4 @@
-import { Bitmap } from '../model';
+import { Bitmap } from '../models';
 import { isCanvasNode } from '../utils/nodeType';
 import { errorBase64Url } from '../utils/image';
 

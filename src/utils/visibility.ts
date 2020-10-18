@@ -1,4 +1,4 @@
-import Rectangle from '../model/Layer/Rectangle';
+import Rectangle from '../models/Layer/Rectangle';
 
 /**
  * 判断文本是否可见
