@@ -9,10 +9,14 @@ import { nodeToRawSVG, StrToRenderSVG, urlToRawSVG } from '../utils/svg';
 export const parseToSvg = async (node: SVGElement) => {
   const { height, width, left, top } = node.getBoundingClientRect();
 
-  const svgString = await StrToRenderSVG(nodeToRawSVG(node), {
-    width,
-    height,
-  });
+  const svgString = await StrToRenderSVG(
+    nodeToRawSVG(node),
+    {
+      width,
+      height,
+    },
+    node,
+  );
 
   const svg = new Svg({
     x: left,

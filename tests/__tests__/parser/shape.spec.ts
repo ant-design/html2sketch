@@ -1,4 +1,5 @@
 import { Bitmap, Group, parseToShape, Rectangle } from 'html2sketch';
+import { setupTestNode } from '@test-utils';
 
 describe('parseToShape', () => {
   beforeEach(() => {
@@ -18,9 +19,8 @@ describe('parseToShape', () => {
 
 </style>
     `;
-    const node = document.createElement('div');
 
-    node.innerHTML = `
+    const innerHTML = `
 <div
   id="radial-gradient"
   class="radial-gradient"
@@ -74,7 +74,7 @@ describe('parseToShape', () => {
 />
 `;
 
-    document.body.append(node);
+    setupTestNode(innerHTML);
   });
   it('shape 正常解析', async () => {
     const node = document.getElementById('shape') as HTMLDivElement;

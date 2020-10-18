@@ -1,4 +1,4 @@
-import { SketchFormat } from 'html2sketch';
+import { SketchFormat, Svgson } from 'html2sketch';
 import {
   calcFrameScale,
   normalizeWindingRule,
@@ -127,108 +127,81 @@ describe('normalizeWindingRule', () => {
 });
 
 describe('Svgson 解析器', () => {
-  // describe('parseGNodeToGroup', () => {
-  //   it('不是 g 则返回空', () => {
-  //     const gNode = {
-  //       name: 'a',
-  //       type: 'element',
-  //       value: '',
-  //       attributes: {},
-  //       children: [],
-  //     };
-  //
-  //     expect(Svgson.parseGNodeToGroup(gNode)).toBeUndefined();
-  //   });
-  //   it('没有 children 正常解析', () => {
-  //     const gNode = {
-  //       name: 'g',
-  //       type: 'element',
-  //       value: '',
-  //       attributes: {
-  //         id: 'Page-1',
-  //         stroke: 'none',
-  //         strokeWidth: '1',
-  //         fill: 'none',
-  //         fillRule: 'evenodd',
-  //         style: '',
-  //       },
-  //       children: [],
-  //     };
-  //
-  //     expect(Svg.parseGNodeToGroup(gNode)).toStrictEqual({
-  //       type: 'group',
-  //       layers: [],
-  //       path: '',
-  //       style: { fills: [], strokes: [], style: '' },
-  //       windingRule: SketchFormat.WindingRule.EvenOdd,
-  //     });
-  //   });
-  //   it('有 children 解析正常', () => {
-  //     const gNode = {
-  //       name: 'g',
-  //       type: 'element',
-  //       value: '',
-  //       attributes: {
-  //         id: 'Page-1',
-  //         stroke: 'none',
-  //         strokeWidth: '1',
-  //         fill: 'none',
-  //         fillRule: 'evenodd',
-  //         style: '',
-  //       },
-  //       children: [
-  //         {
-  //           name: 'ellipse',
-  //           type: 'element',
-  //           value: '',
-  //           attributes: {
-  //             id: 'Combined-Shape',
-  //             fill: 'url(#linearGradient-4)',
-  //             cx: '100.519339',
-  //             cy: '100.436681',
-  //             rx: '23.6001926',
-  //             ry: '23.580786',
-  //             style:
-  //               'cx: 100.519px; cy: 100.437px; rx: 23.6002px; ry: 23.5808px; fill: url(&quot;#linearGradient-4&quot;); color: rgba(0, 0, 0, 0.85); fill-rule: evenodd; font-size: 14px; font-variant: tabular-nums; text-decoration: none solid rgba(0, 0, 0, 0.85);',
-  //           },
-  //           children: [],
-  //         },
-  //       ],
-  //     };
-  //
-  //     expect(Svg.parseGNodeToGroup(gNode)).toStrictEqual({
-  //       type: 'group',
-  //       layers: [],
-  //       path: '',
-  //       style: { fills: [], strokes: [], style: '' },
-  //       windingRule: SketchFormat.WindingRule.EvenOdd,
-  //     });
-  //   });
-  // });
-  // describe('parseNodeToEllipse', () => {
-  //   it('没有填充 没有描边', () => {
-  //     const node = {
-  //       name: 'ellipse',
-  //       type: 'element',
-  //       value: '',
-  //       attributes: {
-  //         id: 'Combined-Shape',
-  //         fill: 'url(#linearGradient-4)',
-  //         cx: '100.519339',
-  //         cy: '100.436681',
-  //         rx: '23.6001926',
-  //         ry: '23.580786',
-  //         style:
-  //           'cx: 100.519px; cy: 100.437px; rx: 23.6002px; ry: 23.5808px; fill: url(&quot;#linearGradient-4&quot;); color: rgba(0, 0, 0, 0.85); fill-rule: evenodd; font-size: 14px; font-variant: tabular-nums; text-decoration: none solid rgba(0, 0, 0, 0.85);',
-  //       },
-  //       children: [],
-  //     };
-  //     expect(parseNodeToEllipse(node)).toStrictEqual({
-  //       type: 'ellipse',
-  //       fills: [],
-  //       strokes: [],
-  //       style: '',
-  //     });
-  //   });
-  // });
+  const svgson = Svgson.init();
+  describe('parseGNodeToGroup', () => {
+    it('没有 children 正常解析', () => {
+      const gNode = {
+        name: 'g',
+        type: 'element',
+        value: '',
+        attributes: {
+          id: 'Page-1',
+          stroke: 'none',
+          strokeWidth: '1',
+          fill: 'none',
+          fillRule: 'evenodd',
+          style: '',
+        },
+        children: [],
+      };
+
+      const group = svgson.parseNodeToGroup(gNode);
+      expect(group.layers).toHaveLength(0);
+    });
+    it('有 children 解析正常', () => {
+      const gNode = {
+        name: 'g',
+        type: 'element',
+        value: '',
+        attributes: {
+          id: 'Page-1',
+          stroke: 'none',
+          strokeWidth: '1',
+          fill: 'none',
+          fillRule: 'evenodd',
+          style: '',
+        },
+        children: [
+          {
+            name: 'ellipse',
+            type: 'element',
+            value: '',
+            attributes: {
+              id: 'Combined-Shape',
+              fill: '#f1232f',
+              cx: '100.519339',
+              cy: '100.436681',
+              rx: '23.6001926',
+              ry: '23.580786',
+            },
+            children: [],
+          },
+        ],
+      };
+      const group = svgson.parseNodeToGroup(gNode);
+      expect(group.layers).toHaveLength(1);
+    });
+  });
+  describe('parseNodeToEllipse', () => {
+    it('没有填充 没有描边', () => {
+      const node = {
+        name: 'ellipse',
+        type: 'element',
+        value: '',
+        attributes: {
+          id: 'Combined-Shape',
+          fill: '#f1232f',
+          cx: '100',
+          cy: '50',
+          rx: '25',
+          ry: '20',
+        },
+        children: [],
+      };
+      const ellipse = svgson.parseNodeToEllipse(node);
+
+      expect(ellipse?.cx).toBe(100);
+      expect(ellipse?.cy).toBe(50);
+    });
+  });
 });

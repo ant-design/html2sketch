@@ -247,10 +247,12 @@ const getUseReplacement = (node: SVGUseElement) => {
  * @param svgString
  * @param width
  * @param height
+ * @param node 需要挂载的节点位置
  */
 export const StrToRenderSVG = async (
   svgString: string,
   { width, height }: { width: number; height: number },
+  node?: Element,
 ) => {
   const divNode = document.createElement('div');
   divNode.innerHTML = svgString;
@@ -259,7 +261,11 @@ export const StrToRenderSVG = async (
   svgNode.style.width = `${width}px`;
   svgNode.style.height = `${height}px`;
 
-  document.body.append(divNode);
+  if (node) {
+    node.append(divNode);
+  } else {
+    document.body.append(divNode);
+  }
 
   const queue = Array.from(svgNode.children);
 
