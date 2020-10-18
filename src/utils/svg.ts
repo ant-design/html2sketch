@@ -126,7 +126,7 @@ export const urlToRawSVG = async (url: string) => {
 
   const svg = await data.text();
 
-  if (!svg.startsWith('<svg')) return;
+  if (!(svg.startsWith('<svg') || svg.startsWith('<?xml'))) return;
 
   return svg;
 };
