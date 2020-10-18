@@ -131,15 +131,18 @@ export class Svgson {
       height?: number;
     },
   ) {
+    if (!svgString) return;
     // --------- 处理 Svg String 变成 Svg Shape ---------- //
 
     let result = svgson.parseSync(svgString, { camelcase: true });
+
     // 排除一下 svg 的循环嵌套的问题
     while (result.children.length === 1 && result.children[0].name === 'svg') {
       [result] = result.children;
     }
 
     const { children, attributes } = result;
+
     const { viewBox } = attributes;
 
     // 解析获得 viewBox 值
@@ -158,6 +161,8 @@ export class Svgson {
       x: 0,
       y: 0,
     });
+    if (!children) return;
+
     const background = new Rectangle(this.viewBox.toJSON());
     background.name = '容器';
     background.hasClippingMask = true;
@@ -178,12 +183,12 @@ export class Svgson {
   /**
    * 缩放比例
    */
-  aspectRatio: number;
+  aspectRatio: number = 1;
 
   /**
    * svg 的 ViewBox
    */
-  viewBox: Frame;
+  viewBox = new Frame();
 
   /**
    * Svg 包含的图层对象
@@ -198,6 +203,10 @@ export class Svgson {
   defs: (Gradient | SvgDefsStyle)[] = [];
 
   shapes: { path: string; style?: string }[] = [];
+
+  static init(): Svgson {
+    return new Svgson('', {});
+  }
 
   /**
    * 将图层
