@@ -1,8 +1,7 @@
-import SketchFormat from '@sketch-hq/sketch-file-format-ts';
 import BaseLayer from '../Base/BaseLayer';
 import { defaultExportOptions } from '../utils';
 import ShapePath from './ShapePath';
-import { BaseLayerParams } from '../type';
+import { BaseLayerParams, SketchFormat } from '../../types';
 
 class ShapeGroup extends BaseLayer {
   constructor(params?: BaseLayerParams) {

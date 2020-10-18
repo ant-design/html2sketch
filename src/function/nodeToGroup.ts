@@ -3,7 +3,7 @@ import nodeToLayers from './nodeToLayers';
 import { isNodeVisible } from '../utils/visibility';
 import { getChildNodeList } from '../utils/hierarchy';
 import { getName } from '../utils/name';
-import { Group, Style } from '../model';
+import { Group, Style } from '../models';
 import { isExistPseudoText, isExistPseudoShape } from '../utils/pseudo';
 import { AnyLayer } from '..';
 

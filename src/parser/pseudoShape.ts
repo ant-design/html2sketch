@@ -1,4 +1,4 @@
-import { Rectangle, Frame } from '../model';
+import { Rectangle, Frame } from '../models';
 import { parseToShape } from './shape';
 import { isVisibleShape } from '../utils/visibility';
 import { matrixToRotation } from '../utils/matrix';

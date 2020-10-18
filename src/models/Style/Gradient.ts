@@ -1,8 +1,6 @@
-import SketchFormat from '@sketch-hq/sketch-file-format-ts';
-
 import Color from './Color';
 import BaseStyle from '../Base/BaseStyle';
-import { CGPoint, ColorStop, GradientProps } from '../../type';
+import { CGPoint, ColorStop, GradientProps, SketchFormat } from '../../types';
 
 /**
  * 渐变对象

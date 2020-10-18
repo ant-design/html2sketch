@@ -1,6 +1,5 @@
-import SketchFormat from '@sketch-hq/sketch-file-format-ts';
 import BaseLayer from '../Base/BaseLayer';
-import { BaseLayerParams } from '../type';
+import { BaseLayerParams, SketchFormat } from '../../types';
 import { defaultExportOptions } from '../utils';
 
 interface EllipseParams extends BaseLayerParams {

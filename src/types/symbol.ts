@@ -1,34 +1,10 @@
-import { SketchFormat } from './types';
-import { SymbolMaster } from './model';
-import { ResizingConstraint } from './utils/layout';
+import { SketchFormat } from './sketchFormat';
+import { SymbolMaster } from '../models';
+import { ResizingConstraint, GroupLayoutType } from './layout';
 import {
   TextHorizontalAlign,
   TextVerticalAlign,
-} from './model/Style/TextStyle';
-import Color, { ColorParam } from './model/Style/Color';
-
-// *** 统一的类型定义收口文件 *** //
-export * from './model/type';
-
-/**
- * 获得 CG 点的配置
- */
-export interface CGPoint {
-  x: number;
-  y: number;
-}
-
-/**
- * group 或 symbol 的 layout 参数类型
- */
-export type GroupLayoutType =
-  | 'BOTTOM_TO_TOP'
-  | 'HORIZONTALLY_CENTER'
-  | 'VERTICALLY_CENTER'
-  | 'RIGHT_TO_LEFT'
-  | 'LEFT_TO_RIGHT'
-  | 'TOP_TO_BOTTOM'
-  | 'NONE';
+} from '../models/Style/TextStyle';
 
 /**
  * 对 symbol 进行自定义处理的方法
@@ -113,56 +89,4 @@ export interface NodeToSketchSymbolOptions {
    * symbol 内部图层的配置项
    */
   layerParams?: SymbolAdjustParams[];
-}
-
-/**
- *  =====渐变定义=====
- */
-
-/**
- * 传入颜色间隔点的参数
- */
-export interface ColorStopParam {
-  color: ColorParam;
-  offset: number;
-}
-
-export type StopParam = ColorParam | ColorStopParam;
-
-export interface GradientProps {
-  /**
-   * 渐变类型
-   */
-  type?: SketchFormat.GradientType;
-  /**
-   * 终点
-   */
-  to?: CGPoint;
-  /**
-   * 起点
-   */
-  from?: CGPoint;
-  /**
-   * 色彩间隔点
-   */
-  stops?: StopParam[];
-  /**
-   * 渐变名称
-   */
-  name?: string;
-  /**
-   * 如果是圆形渐变 则需要传入 radius 值
-   */
-  radius?: number;
-}
-
-export interface ColorStop {
-  /**
-   * 偏移位置 取值 0-1
-   */
-  offset?: number;
-  /**
-   * 颜色对象
-   */
-  color: Color;
 }

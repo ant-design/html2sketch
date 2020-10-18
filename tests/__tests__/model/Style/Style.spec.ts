@@ -1,4 +1,4 @@
-import Style from 'html2sketch/model/Style/Style';
+import Style from 'html2sketch/models/Style/Style';
 
 describe('Style 类', () => {
   describe('parserStyleString', () => {

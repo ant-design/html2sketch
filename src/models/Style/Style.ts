@@ -1,4 +1,3 @@
-import SketchFormat from '@sketch-hq/sketch-file-format-ts';
 import { Declaration, parse as cssParse, Rule } from 'css';
 import { defaultBorderOptions, defaultColorControls } from '../utils';
 import { ColorParam } from './Color';
@@ -7,8 +6,8 @@ import Fill from './Fill';
 import Shadow from './Shadow';
 import InnerShadow from './InnerShadow';
 import Border from './Border';
-import { AnyLayer } from '../type';
 import { uuid } from '../../utils/utils';
+import { AnyLayer, SketchFormat } from '../../types';
 
 interface ShadowInput {
   color: ColorParam;

@@ -1,11 +1,11 @@
-import SketchFormat from '@sketch-hq/sketch-file-format-ts';
 import { uuid } from '../../utils/utils';
 import Group from '../Layer/Group';
 import Page from './Page';
 import Color from '../Style/Color';
 import Style from '../Style/Style';
 import ColorAsset from '../Style/ColorAsset';
-import { AnyLayer } from '../type';
+
+import { AnyLayer, SketchFormat } from '../../types';
 
 /**
  * Sketch 文档对象

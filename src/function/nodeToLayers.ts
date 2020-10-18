@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 import { AnyLayer } from '..';
 import { isDefaultStyles } from '../utils/style';
-import { Text } from '../model';
+import { Text } from '../models';
 
 import {
   parseCanvasToBitmap,

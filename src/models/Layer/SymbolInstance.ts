@@ -1,7 +1,6 @@
-import SketchFormat from '@sketch-hq/sketch-file-format-ts';
 import { defaultExportOptions } from '../utils';
 import BaseLayer from '../Base/BaseLayer';
-import { BaseLayerParams } from '../type';
+import { BaseLayerParams, SketchFormat } from '../../types';
 
 interface SymbolInstanceInitParams extends BaseLayerParams {
   symbolID: string;

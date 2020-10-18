@@ -1,4 +1,4 @@
-import { Group, Style } from '../model';
+import { Group, Style } from '../models';
 import { getName } from '../utils/name';
 
 export const parseToGroup = (node: Element) => {

@@ -1,9 +1,8 @@
-import SketchFormat from '@sketch-hq/sketch-file-format-ts';
 import BaseLayer from '../Base/BaseLayer';
-import { ResizingConstraint } from '../../utils/layout';
+
 import { defaultExportOptions } from '../utils';
 import TextStyle, { TextStyleParams } from '../Style/TextStyle';
-import { BaseLayerParams } from '../type';
+import { BaseLayerParams, SketchFormat, ResizingConstraint } from '../../types';
 
 interface TextInitParams extends BaseLayerParams {
   text: string;

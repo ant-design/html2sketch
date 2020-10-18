@@ -1,14 +1,14 @@
 /* eslint-disable no-shadow */
 import { SVGPathData } from 'svg-pathdata';
-import Group from './Layer/Group';
-import Svg from './Layer/Svg';
-import ShapePath from './Layer/ShapePath';
-import Text from './Layer/Text';
-import Ellipse from './Layer/Ellipse';
-import Bitmap from './Layer/Bitmap';
-import Rectangle from './Layer/Rectangle';
-import ShapeGroup from './Layer/ShapeGroup';
-import SymbolMaster from './Layer/SymbolMaster';
+import Group from '../models/Layer/Group';
+import Svg from '../models/Layer/Svg';
+import ShapePath from '../models/Layer/ShapePath';
+import Text from '../models/Layer/Text';
+import Ellipse from '../models/Layer/Ellipse';
+import Bitmap from '../models/Layer/Bitmap';
+import Rectangle from '../models/Layer/Rectangle';
+import ShapeGroup from '../models/Layer/ShapeGroup';
+import SymbolMaster from '../models/Layer/SymbolMaster';
 
 /**
  * 定界框 Frame 初始化参数

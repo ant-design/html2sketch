@@ -1,5 +1,4 @@
-import SketchFormat from '@sketch-hq/sketch-file-format-ts';
-import { FrameInitParams } from '../type';
+import { FrameInitParams, SketchFormat } from '../../types';
 
 /**
  * @class

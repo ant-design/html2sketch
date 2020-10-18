@@ -1,12 +1,17 @@
-import SketchFormat from '@sketch-hq/sketch-file-format-ts';
 import { getGroupLayout } from '../../utils/layout';
 import BaseLayer from '../Base/BaseLayer';
 import Color from '../Style/Color';
 import SymbolInstance from './SymbolInstance';
 import { uuid } from '../../utils/utils';
 import { defaultExportOptions, defaultRuleData } from '../utils';
-import { AnyLayer, BaseLayerParams, FrameType } from '../type';
-import { GroupLayoutType } from '../../type';
+
+import {
+  GroupLayoutType,
+  AnyLayer,
+  BaseLayerParams,
+  FrameType,
+  SketchFormat,
+} from '../../types';
 
 /**
  * Sketch 的 Symbol 对象

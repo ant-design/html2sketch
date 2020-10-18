@@ -1,8 +1,10 @@
 export { default as Frame } from './Base/Frame';
 
+// Sketch 文档
 export { default as SketchDocument } from './Document/SketchDocument';
 export { default as Page } from './Document/Page';
 
+// Sketch 对象
 export { default as Artboard } from './Layer/Artboard';
 export { default as Rectangle } from './Layer/Rectangle';
 export { default as Svg } from './Layer/Svg';
@@ -15,6 +17,7 @@ export { default as ShapeGroup } from './Layer/ShapeGroup';
 export { default as ShapePath } from './Layer/ShapePath';
 export { default as SymbolInstance } from './Layer/SymbolInstance';
 
+// Sketch 样式
 export { default as Style } from './Style/Style';
 export { default as ColorAsset } from './Style/ColorAsset';
 export { default as Shadow } from './Style/Shadow';
