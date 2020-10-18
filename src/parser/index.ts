@@ -8,3 +8,4 @@ export { parseToText } from './text';
 export { parseToSvg } from './svg';
 export { parseToSharedTextStyle } from './sharedTextStyle';
 export { parseToGroup } from './group';
+export { Svgson } from './svgson';

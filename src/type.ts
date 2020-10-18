@@ -1,11 +1,11 @@
-import SketchFormat from '@sketch-hq/sketch-file-format-ts';
+import { SketchFormat } from './types';
 import { SymbolMaster } from './model';
 import { ResizingConstraint } from './utils/layout';
 import {
   TextHorizontalAlign,
   TextVerticalAlign,
 } from './model/Style/TextStyle';
-import Color, { ColorParam } from 'html2sketch/model/Style/Color';
+import Color, { ColorParam } from './model/Style/Color';
 
 // *** 统一的类型定义收口文件 *** //
 export * from './model/type';

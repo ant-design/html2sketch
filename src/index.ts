@@ -6,5 +6,6 @@ export { default as adjustSymbolLayout } from './function/adjustSymbolParams';
 export * from './parser';
 export * from './model';
 export * from './type';
+export * from './types';
 
 export { ResizingConstraint } from './utils/layout';
