@@ -12,6 +12,7 @@ import {
   unclosedRect,
   plus,
 } from '@test-utils';
+import Gradient from 'html2sketch/models/Style/Gradient';
 
 describe('convertToCubicBezier', () => {
   it('svgPath转换正常', () => {
@@ -128,7 +129,7 @@ describe('normalizeWindingRule', () => {
 
 describe('Svgson 解析器', () => {
   const svgson = Svgson.init();
-  describe('parseGNodeToGroup', () => {
+  describe('parseNodeToGroup', () => {
     it('没有 children 正常解析', () => {
       const gNode = {
         name: 'g',
@@ -202,6 +203,94 @@ describe('Svgson 解析器', () => {
 
       expect(ellipse?.cx).toBe(100);
       expect(ellipse?.cy).toBe(50);
+    });
+  });
+  describe('parseNodeToCircle', () => {
+    it('没有填充 没有描边', () => {
+      const node = {
+        name: 'circle',
+        type: 'element',
+        value: '',
+        attributes: {
+          id: 'Combined-Shape',
+          fill: '#f1232f',
+          cx: '100',
+          cy: '50',
+          r: '25',
+        },
+        children: [],
+      };
+      const ellipse = svgson.parseNodeToCircle(node);
+
+      expect(ellipse?.cx).toBe(100);
+      expect(ellipse?.cy).toBe(50);
+      expect(ellipse?.width).toBe(50);
+    });
+  });
+  describe('parseSvgDefs', () => {
+    it('渐变', () => {
+      const node = {
+        name: 'radialGradient',
+        type: 'element',
+        value: '',
+        attributes: {
+          id: 'b',
+          cx: '50%',
+          cy: '50%',
+          r: '71.331%',
+          fx: '50%',
+          fy: '50%',
+          gradientTransform: 'matrix(0 1 -.98305 0 .992 0)',
+        },
+        children: [
+          {
+            name: 'stop',
+            type: 'element',
+            value: '',
+            attributes: {
+              offset: '0%',
+              stopColor: '#FFF',
+              stopOpacity: '0',
+            },
+            children: [],
+          },
+          {
+            name: 'stop',
+            type: 'element',
+            value: '',
+            attributes: {
+              offset: '36.751%',
+              stopColor: '#EBFFFF',
+              stopOpacity: '.021',
+            },
+            children: [],
+          },
+          {
+            name: 'stop',
+            type: 'element',
+            value: '',
+            attributes: {
+              offset: '100%',
+              stopColor: '#68FFFF',
+              stopOpacity: '.16',
+            },
+            children: [],
+          },
+        ],
+      };
+
+      const gradient = Svgson.parseSvgDefs(node) as Gradient;
+      expect(gradient.class).toBe('gradient');
+      expect(gradient.type).toBe(1);
+      expect(gradient.stops).toHaveLength(3);
+      const [s1, s2, s3] = gradient.stops;
+      expect(s1.color.hex).toBe('#FFFFFF');
+      expect(s2.color.hex).toBe('#EBFFFF');
+      expect(s2.color.alpha).toBe(0.021);
+      expect(s2.offset).toEqual(0.36751);
+      expect(s3.color.hex).toBe('#68FFFF');
+      expect(s3.offset).toEqual(1);
+      expect(s3.color.alpha).toBe(0.16);
     });
   });
 });

@@ -202,8 +202,6 @@ export class Svgson {
    */
   defs: (Gradient | SvgDefsStyle)[] = [];
 
-  shapes: { path: string; style?: string }[] = [];
-
   static init(): Svgson {
     return new Svgson('', {});
   }
@@ -237,6 +235,9 @@ export class Svgson {
       // 编组
       case 'g':
         return this.parseNodeToGroup(node);
+      // 蒙版 编组
+      // case 'mask':
+      //   return this.parseNodeToGroup(node, true);
       // 路径
       case 'path':
         return this.parseSvgsonPathToShape(node);
@@ -259,6 +260,7 @@ export class Svgson {
       case 'svg':
         return node.children.map(this.parseSvgson);
       default:
+        console.log(node);
     }
   };
 
@@ -297,6 +299,7 @@ export class Svgson {
    */
   static parseSvgDefs(defsNode: svgson.INode) {
     const { attributes, name, children } = defsNode;
+    console.log(defsNode);
     switch (name) {
       case 'linearGradient':
         return new Gradient({
@@ -326,7 +329,6 @@ export class Svgson {
           }),
         });
       case 'radialGradient':
-        console.log(attributes);
         return new Gradient({
           type: SketchFormat.GradientType.Radial,
           name: attributes.id,
@@ -343,11 +345,7 @@ export class Svgson {
           stops: defsNode.children.map((item) => {
             const { offset, stopColor, stopOpacity } = item.attributes;
             const color = new Color(stopColor);
-
-            console.log(stopOpacity);
-
             const opacity = Number(stopOpacity);
-
             return {
               color: [
                 color.red,
@@ -475,8 +473,9 @@ export class Svgson {
   /**
    * 将 g 节点解析为 Group
    * @param node
+   * @param isMask 是否使用剪切蒙版
    */
-  parseNodeToGroup = (node: svgson.INode): Group => {
+  parseNodeToGroup = (node: svgson.INode, isMask: boolean = false): Group => {
     const group = new Group();
 
     const layers = node.children.map(this.parseSvgson).filter((c) => c);
@@ -488,8 +487,9 @@ export class Svgson {
 
     group.height = height;
     group.width = width;
-    group.name = '编组';
+    group.name = isMask ? '蒙版' : '编组';
 
+    group.hasClippingMask = isMask;
     // TODO 确认缠绕规则
     // const { fillRule } = node.attributes;
     // group.windingRule = normalizeWindingRule(fillRule);
