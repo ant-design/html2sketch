@@ -1,12 +1,16 @@
 import { Declaration, parse as cssParse, Rule } from 'css';
-import { defaultBorderOptions, defaultColorControls } from '../utils';
-import { ColorParam } from './Color';
+
 import BaseStyle from '../Base/BaseStyle';
+import { ColorParam } from './Color';
 import Fill from './Fill';
 import Shadow from './Shadow';
 import InnerShadow from './InnerShadow';
 import Border from './Border';
+import SketchBorderOptions from './SketchBorderOptions';
+
 import { uuid } from '../../utils/utils';
+import { defaultColorControls } from '../utils';
+
 import { AnyLayer, SketchFormat } from '../../types';
 
 interface ShadowInput {
@@ -55,7 +59,7 @@ class Style extends BaseStyle {
   /**
    * Sketch 专属的描边属性
    * */
-  sketchBorderOptions: SketchFormat.BorderOptions = defaultBorderOptions;
+  sketchBorderOptions: SketchBorderOptions = new SketchBorderOptions();
 
   /**
    * 添加颜色填充
@@ -217,13 +221,15 @@ class Style extends BaseStyle {
     dash?: number;
     spacing?: number;
   } = {}) {
-    this.sketchBorderOptions = {
-      _class: 'borderOptions',
-      lineCapStyle: lineCapStyle || SketchFormat.LineCapStyle.Butt,
-      lineJoinStyle: lineJoinStyle || SketchFormat.LineJoinStyle.Miter,
-      dashPattern: [dash || 4, spacing || 4],
-      isEnabled: true,
-    };
+    if (lineCapStyle) {
+      this.sketchBorderOptions.lineCap = lineCapStyle;
+    }
+    if (lineJoinStyle) {
+      this.sketchBorderOptions.lineJoin = lineJoinStyle;
+    }
+    if (dash || spacing) {
+      this.sketchBorderOptions.dashPattern = [dash || 4, spacing || 4];
+    }
   }
 
   /**
@@ -237,7 +243,7 @@ class Style extends BaseStyle {
       miterLimit: 10,
       startMarkerType: SketchFormat.MarkerType.OpenArrow,
       windingRule: SketchFormat.WindingRule.EvenOdd,
-      borderOptions: this.sketchBorderOptions,
+      borderOptions: this.sketchBorderOptions.toSketchJSON(),
       colorControls: defaultColorControls,
       fills: this.fills.map((fill) => fill.toSketchJSON()),
       borders: this.borders.map((b) => b.toSketchJSON()),

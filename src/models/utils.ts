@@ -1,6 +1,7 @@
-import FileFormat from '@sketch-hq/sketch-file-format-ts';
+import SketchBorderOptions from './Style/SketchBorderOptions';
+import { SketchFormat } from '../types';
 
-export const defaultExportOptions: FileFormat.ExportOptions = {
+export const defaultExportOptions: SketchFormat.ExportOptions = {
   _class: 'exportOptions',
   includedLayerIds: [],
   layerOptions: 0,
@@ -9,20 +10,14 @@ export const defaultExportOptions: FileFormat.ExportOptions = {
 };
 
 /**
- * SKetch默认的圆角选项
+ * SKetch 默认的圆角选项
  * */
-export const defaultBorderOptions: FileFormat.BorderOptions = {
-  _class: 'borderOptions',
-  isEnabled: true,
-  dashPattern: [],
-  lineCapStyle: FileFormat.LineCapStyle.Butt,
-  lineJoinStyle: FileFormat.LineJoinStyle.Miter,
-};
+export const defaultBorderOptions: SketchFormat.BorderOptions = new SketchBorderOptions().toSketchJSON();
 
 /**
  * SKetch默认的色彩控制
  * */
-export const defaultColorControls: FileFormat.ColorControls = {
+export const defaultColorControls: SketchFormat.ColorControls = {
   _class: 'colorControls',
   isEnabled: false,
   brightness: 0,
@@ -34,7 +29,7 @@ export const defaultColorControls: FileFormat.ColorControls = {
 /**
  * SKetch 默认规则数据
  * */
-export const defaultRuleData: FileFormat.RulerData = {
+export const defaultRuleData: SketchFormat.RulerData = {
   _class: 'rulerData',
   base: 0,
   guides: [],
@@ -43,19 +38,19 @@ export const defaultRuleData: FileFormat.RulerData = {
 /**
  * SKetch 默认blend 样式
  * */
-export const defaultContextSettings: FileFormat.GraphicsContextSettings = {
+export const defaultContextSettings: SketchFormat.GraphicsContextSettings = {
   _class: 'graphicsContextSettings',
-  blendMode: FileFormat.BlendMode.Normal,
+  blendMode: SketchFormat.BlendMode.Normal,
   opacity: 1,
 };
 
-export const defaultGradient: FileFormat.Gradient = {
+export const defaultGradient: SketchFormat.Gradient = {
   _class: 'gradient',
   elipseLength: 0,
   from: '0.5 0',
   to: '0.5 0',
   stops: [],
-  gradientType: FileFormat.GradientType.Linear,
+  gradientType: SketchFormat.GradientType.Linear,
 };
 
 export const defaultNodeStyle: Partial<CSSStyleDeclaration> = {
