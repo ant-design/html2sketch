@@ -58,17 +58,8 @@ class Svg extends BaseLayer {
 
   /**
    * 转换为 Sketch 对象
-   * 会自动识别ShapeGroup 中是否只包含一个对象
-   * 从而清理无用的 ShapeGroup
    */
-  toSketchJSON(): SketchFormat.Group | SketchFormat.ShapeGroup {
-    if (this.layers.length === 1) {
-      const layer = this.layers[0];
-      layer.x = this.x;
-      layer.y = this.y;
-      layer.resizingConstraint = this.resizingConstraint;
-      return layer.toSketchJSON() as SketchFormat.ShapeGroup;
-    }
+  toSketchJSON(): SketchFormat.Group {
     return {
       _class: 'group',
       do_objectID: this.id,

@@ -146,6 +146,7 @@ export const parseToText = (node: Element): Text | Text[] | undefined => {
         }
       }
 
+      text.mapBasicInfo(node);
       return text;
     });
 
@@ -155,5 +156,6 @@ export const parseToText = (node: Element): Text | Text[] | undefined => {
   if (textNode.length === 1) {
     return textNode[0];
   }
+
   return textNode;
 };

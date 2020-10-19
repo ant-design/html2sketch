@@ -32,7 +32,7 @@ const nodeToGroup = async (
 
   console.group('%c处理节点:', consoleGroupStyle, node);
 
-  const layers = (await nodeToLayers(node)) || [];
+  const layers = await nodeToLayers(node);
 
   // ---------- 处理父节点 ------ //
   if (node.nodeName !== 'svg') {
@@ -95,6 +95,7 @@ const nodeToGroup = async (
     // 将父级的图层关系还给子集
     layer.x += group.x;
     layer.y += group.y;
+    layer.rotation += group.rotation;
     return layer as Group;
   }
 

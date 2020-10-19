@@ -131,10 +131,10 @@ const adjustSymbolParams = (
   if (!symbolParams) return;
 
   const { symbolLayout, layerParams, symbolName, selector } = symbolParams;
-
-  const selectedSymbol = selectorLayer<SymbolMaster>(symbol, selector);
-
-  if (!selectedSymbol) return;
+  if (selector) {
+    const selectedSymbol = selectorLayer<SymbolMaster>(symbol, selector);
+    if (!selectedSymbol) return;
+  }
   if (symbolName) {
     symbol.name = symbolName;
   }

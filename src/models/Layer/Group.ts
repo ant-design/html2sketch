@@ -19,6 +19,7 @@ class Group extends BaseLayer {
     // 因此在添加图层的时候需要减掉父级的位置,得到算出相对位置
     layer.x -= this.x;
     layer.y -= this.y;
+    layer.rotation -= this.rotation;
     super.addLayer(layer);
   }
 
