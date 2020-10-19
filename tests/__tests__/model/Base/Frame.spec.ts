@@ -62,6 +62,23 @@ describe('Frame 类', () => {
     });
   });
 
+  describe('矩阵', () => {
+    it('应用矩阵变换', () => {
+      const frame = new Frame();
+
+      frame.applyMatrix({
+        a: 0.9659258262890683,
+        b: 0.25881904510252074,
+        c: -0.25881904510252074,
+        d: 0.9659258262890683,
+        e: 958.787513927271,
+        f: 11.999797857406975,
+      });
+      expect(frame.x).toBe(958.787513927271);
+      expect(frame.y).toBe(11.999797857406975);
+      expect(frame.rotation).toBe(15);
+    });
+  });
   describe('ToSketchJSON', () => {
     it('不传参导出正常', () => {
       const frame = new Frame();

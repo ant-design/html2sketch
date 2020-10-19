@@ -163,7 +163,7 @@ export const optimizeRawSVG = async (svgStr: string): Promise<string> => {
     removeUnusedNS: true,
     cleanupIDs: true,
     cleanupNumericValues: true,
-    moveElemsAttrsToGroup: true,
+    // moveElemsAttrsToGroup: true,
     moveGroupAttrsToElems: true,
     collapseGroups: true,
     removeRasterImages: false,

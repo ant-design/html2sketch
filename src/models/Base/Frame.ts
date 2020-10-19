@@ -1,4 +1,6 @@
+import { applyToPoint, Matrix } from 'transformation-matrix';
 import { FrameInitParams, SketchFormat } from '../../types';
+import { matrixToRotation } from '../../utils/matrix';
 
 /**
  * @class
@@ -95,6 +97,19 @@ class Frame {
   offset(x: number, y: number) {
     this.x += x;
     this.y += y;
+  }
+
+  /**
+   * 应用矩阵
+   * @param matrix
+   */
+  applyMatrix(matrix: Matrix) {
+    const { x, y } = applyToPoint(matrix, { x: this.x, y: this.y });
+    const { a, b, c, d } = matrix;
+    const rotation = matrixToRotation(a, b, c, d);
+    this.x = x;
+    this.y = y;
+    this.rotation = rotation;
   }
 
   /**
