@@ -5,7 +5,10 @@ import { setupTestNode } from '@test-utils';
 
 describe('parseToShape', () => {
   beforeAll(() => {
-    const innerHTML = readFileSync(resolve(__dirname, './shape.html'), 'utf-8');
+    const innerHTML = readFileSync(
+      resolve(__dirname, './html/shape.html'),
+      'utf-8',
+    );
     setupTestNode(innerHTML);
   });
   it('shape 正常解析', async () => {
@@ -119,7 +122,10 @@ describe('parseToShape', () => {
     const borderJSON = (await parseToShape(node)).toSketchJSON();
     expect(borderJSON.style?.borders?.length).toBe(0);
     expect(borderJSON.style?.innerShadows.length).toBe(4);
-    // expect(border.color.blue).toBe(1);
+    const [top] = borderJSON.style?.innerShadows!;
+    expect(top.color.red).toBe(0.8);
+    expect(top.offsetX).toBe(0);
+    expect(top.offsetY).toBe(1);
   });
   it('dashed-border 正常解析', async () => {
     const node = document.getElementById('dashed-border') as HTMLDivElement;

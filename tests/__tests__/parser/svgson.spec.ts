@@ -225,6 +225,78 @@ describe('Svgson 解析器', () => {
       expect(ellipse?.width).toBe(50);
     });
   });
+  describe('parseNodeToRectangle', () => {
+    it('非 rect 不解析', () => {
+      const node = {
+        name: 'x',
+        type: 'element',
+        value: '',
+        attributes: {},
+        children: [],
+      };
+
+      expect(svgson.parseNodeToRectangle(node)).toBeUndefined();
+    });
+    it('解析 rect', () => {
+      const node = {
+        name: 'rect',
+        type: 'element',
+        value: '',
+        attributes: {
+          id: 'Combined-Shape',
+          fill: '#f1232f',
+          x: '100',
+          y: '50',
+          width: '25',
+          height: '25',
+        },
+        children: [],
+      };
+      const rectangle = svgson.parseNodeToRectangle(node)!;
+
+      expect(rectangle.x).toBe(100);
+      expect(rectangle.y).toBe(50);
+      expect(rectangle.width).toBe(25);
+      expect(rectangle.height).toBe(25);
+    });
+  });
+  describe('parseNodeToText', () => {
+    it('非 text 不解析', () => {
+      const node = {
+        name: 'x',
+        type: 'element',
+        value: '',
+        attributes: {},
+        children: [],
+      };
+
+      expect(svgson.parseNodeToText(node)).toBeUndefined();
+    });
+    it('解析文本', () => {
+      const node = {
+        name: 'text',
+        type: 'element',
+        value: '',
+        attributes: {
+          id: 'Combined-Shape',
+          fill: '#f1232f',
+        },
+        children: [
+          {
+            name: 'text',
+            type: 'value',
+            value: '123',
+            attributes: {},
+            children: [],
+          },
+        ],
+      };
+      const text = svgson.parseNodeToText(node)!;
+
+      expect(text.text).toBe('123');
+    });
+  });
+
   describe('parseSvgDefs', () => {
     it('渐变', () => {
       const node = {
