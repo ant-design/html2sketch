@@ -1,13 +1,14 @@
 import Color from 'color';
-import { Style, Bitmap, Group, Rectangle, Shadow, Svg, Frame } from '../model';
-import { defaultNodeStyle } from '../model/utils';
-import { ColorParam } from '../model/Style/Color';
+import { Style, Bitmap, Group, Rectangle, Shadow, Svg, Frame } from '../models';
+import { defaultNodeStyle } from '../models/utils';
+import { ColorParam } from '../models/Style/Color';
 import {
   getActualImageSize,
   parseBackgroundImageType,
 } from '../utils/background';
 import { base64ToSvgString, waitForImageLoaded } from '../utils/image';
-import { getRenderedSvgString } from '../utils/svg';
+import { StrToRenderSVG } from '../utils/svg';
+import { parseURLToSvg } from './svg';
 
 /**
  * 将节点转换为 Shape 对象
@@ -46,8 +47,6 @@ export const parseToShape = async (
   const {
     // 背景颜色
     backgroundColor,
-    // 边框
-    borderWidth,
   } = styles;
 
   // 解析背景颜色
@@ -57,7 +56,7 @@ export const parseToShape = async (
   }
 
   // 解析阴影
-  const { boxShadow } = styles;
+  const { boxShadow, borderWidth } = styles;
   if (boxShadow !== defaultNodeStyle.boxShadow) {
     // 拿到阴影样式
     const shadowStrings = Shadow.splitShadowString(boxShadow);
@@ -78,11 +77,13 @@ export const parseToShape = async (
       }
     });
   }
+  const { borderColor } = styles;
 
+  // 判断是否包含多种描边颜色
+  const hasMultiColor = Array.from(borderColor.matchAll(/rgb/g)).length > 1;
   // 处理描边
-  if (borderWidth.indexOf(' ') === -1) {
+  if (borderWidth.indexOf(' ') === -1 && !hasMultiColor) {
     const {
-      borderColor,
       borderBottomStyle,
       borderLeftStyle,
       borderTopStyle,
@@ -244,7 +245,7 @@ export const parseToShape = async (
 
         // 外联型 svg
         if (url.startsWith('http') && url.endsWith('svg')) {
-          svg = await Svg.initFromUrl(
+          svg = await parseURLToSvg(
             url,
             new Frame({ x: rect.x, y: rect.y, width, height }),
           );
@@ -256,7 +257,7 @@ export const parseToShape = async (
           // 如果是 svg类型的 data image
           const rawString = base64ToSvgString(url);
           if (rawString) {
-            const svgString = await getRenderedSvgString(rawString, {
+            const svgString = await StrToRenderSVG(rawString, {
               width,
               height,
             });

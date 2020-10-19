@@ -7,18 +7,24 @@ import svg from './json/svg.json';
 import svgPath from './json/svg-path.json';
 import behance from './json/behance.json';
 import dropbox from './json/dropbox.json';
+import upCircleParser from './json/parser/up-circle.json';
 import upCircle from './json/up-circle.json';
 import plus from './json/plus.json';
 import text from './json/text.json';
 import shape from './json/shape.json';
+import antdParser from './json/parser/antd.json';
 import antd from './json/antd.json';
+import basic from './json/parser/basic.json';
 import pseudoText from './json/pseudo-text.json';
 
 export const svgJSON = svg;
+export const basicParserJSON = basic;
+export const antdParserJSON = antdParser;
 export const antdJSON = antd;
 export const behanceJSON = behance;
 export const dropboxJSON = dropbox;
 export const upCircleJSON = upCircle;
+export const upCircleParserJSON = upCircleParser;
 export const plusJSON = plus;
 export const svgPathJSON = svgPath;
 export const textJSON = text;
@@ -56,8 +62,20 @@ export const illustrationSvg = readFileSync(
   resolve(__dirname, './svg/illustration.svg'),
   'utf8',
 );
-export const antdSvg = readFileSync(
-  resolve(__dirname, './svg/antd.svg'),
+export const antdRawSvg = readFileSync(
+  resolve(__dirname, './svg/antdRaw.svg'),
+  'utf8',
+);
+export const antdOptSvg = readFileSync(
+  resolve(__dirname, './svg/antdOpt.svg'),
+  'utf8',
+);
+export const bgRawSvg = readFileSync(
+  resolve(__dirname, './svg/bgRaw.svg'),
+  'utf8',
+);
+export const bgOptSvg = readFileSync(
+  resolve(__dirname, './svg/bgOpt.svg'),
   'utf8',
 );
 
@@ -73,5 +91,5 @@ export const isUpdate = process.env.UPDATE === '1';
 export const setupTestNode = (innerHTML: string) => {
   const node = document.createElement('div');
   node.innerHTML = innerHTML;
-  document.body.append(node);
+  document.body.prepend(node);
 };

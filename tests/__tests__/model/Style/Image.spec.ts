@@ -1,4 +1,4 @@
-import Image from 'html2sketch/model/Style/Image';
+import Image from 'html2sketch/models/Style/Image';
 
 describe('Image 类', () => {
   it('创建时地址错误 直接抛出错误', () => {

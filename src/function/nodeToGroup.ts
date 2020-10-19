@@ -3,7 +3,7 @@ import nodeToLayers from './nodeToLayers';
 import { isNodeVisible } from '../utils/visibility';
 import { getChildNodeList } from '../utils/hierarchy';
 import { getName } from '../utils/name';
-import { Group, Style } from '../model';
+import { Group, Style } from '../models';
 import { isExistPseudoText, isExistPseudoShape } from '../utils/pseudo';
 import { AnyLayer } from '..';
 
@@ -32,7 +32,7 @@ const nodeToGroup = async (
 
   console.group('%c处理节点:', consoleGroupStyle, node);
 
-  const layers = (await nodeToLayers(node)) || [];
+  const layers = await nodeToLayers(node);
 
   // ---------- 处理父节点 ------ //
   if (node.nodeName !== 'svg') {
@@ -95,6 +95,7 @@ const nodeToGroup = async (
     // 将父级的图层关系还给子集
     layer.x += group.x;
     layer.y += group.y;
+    layer.rotation += group.rotation;
     return layer as Group;
   }
 

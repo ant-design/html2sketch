@@ -1,4 +1,4 @@
-import Color from 'html2sketch/model/Style/Color';
+import Color from 'html2sketch/models/Style/Color';
 
 describe('Color 类', () => {
   describe('正常创建', () => {

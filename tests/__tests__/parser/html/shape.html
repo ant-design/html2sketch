@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+
+<head>
+  <style>
+    body {
+      margin: 0;
+    }
+
+    .background {
+      background-image: url('https://gw.alipayobjects.com/zos/rmsportal/mZBWtboYbnMkTBaRIuWQ.png');
+    }
+
+    .linear-gradient {
+      background-image: linear-gradient(red, yellow, blue);
+    }
+
+    .radial-gradient {
+      background-image: radial-gradient(red, yellow, blue);
+    }
+  </style>
+</head>
+<body>
+  <div
+    id="radial-gradient"
+    class="radial-gradient"
+    style="width: 200px; height: 200px"
+  ></div>
+
+  <div
+    id="linear-gradient"
+    class="linear-gradient"
+    style="width: 200px; height: 200px"
+  ></div>
+
+  <div
+    id="background-image"
+    class="background"
+    style="width: 200px; height: 200px"
+  ></div>
+
+  <div
+    id="shape"
+    style="width: 200px; background: rgba(124, 14, 53, 0.12)"
+  ></div>
+
+  <div
+    id="clip-background-image"
+    class="background"
+    style="width: 150px; height: 200px"
+  ></div>
+
+  <div id="shadow" style="box-shadow: 0 2px 4px black"></div>
+
+  <div id="border" style="border: 2px solid blue">normal</div>
+
+  <div
+    id="border-color"
+    style="
+      border-top: 1px solid #cc3bff;
+      border-right: 1px solid blue;
+      border-bottom: 1px solid red;
+      border-left: 1px solid green;
+    "
+  >
+    border-color
+  </div>
+
+  <div id="dashed-border" style="border: 2px dashed blue">dashed</div>
+
+  <div id="dotted-border" style="border: 2px dotted blue">dotted</div>
+
+  <div
+    id="single-border"
+    style="
+      border-top: 3px solid red;
+      border-right: 1px solid rgb(0, 255, 0);
+      border-bottom: 3px solid black;
+      border-left: 2px solid blue;
+    "
+  >
+    single
+  </div>
+
+  <div id="inner-shadow" style="box-shadow: 0 1px 2px red inset">
+    inner shadow
+  </div>
+
+  <div
+    id="multi-shadow"
+    style="
+      box-shadow: 0 3px 6px -4px rgba(0, 0, 0, 0.12),
+        0 6px 16px 0 rgba(0, 0, 0, 0.08), 0 9px 28px 8px rgba(0, 0, 0, 0.05);
+    "
+  >
+    multi-shadow
+  </div>
+</body>

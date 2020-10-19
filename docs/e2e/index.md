@@ -2,7 +2,7 @@
 title: 说明
 order: 1
 nav:
-  title: 测试用例
+  title: 解析用例
   order: 10
 ---
 

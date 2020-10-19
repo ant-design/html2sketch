@@ -2,10 +2,9 @@
 import SketchFormat from '@sketch-hq/sketch-file-format-ts';
 import { SVGPathData } from 'svg-pathdata';
 import { Frame, Style, ShapePathType } from 'html2sketch';
-import { defaultExportOptions } from 'html2sketch/model/utils';
-import behanceJSON from './json/behance.json';
-import dropboxJSON from './json/dropbox.json';
-import upCircleJSON from './json/up-circle.json';
+import { defaultExportOptions } from 'html2sketch/models/utils';
+import { upCircleJSON, behanceJSON, dropboxJSON } from './index';
+
 import plusJSON from './json/plus.json';
 import svgPathJSON from './json/svg-path.json';
 

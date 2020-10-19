@@ -1,4 +1,4 @@
-import Text from '../model/Layer/Text';
+import Text from '../models/Layer/Text';
 import { getTextLinesAndRange } from '../utils/text';
 
 /**

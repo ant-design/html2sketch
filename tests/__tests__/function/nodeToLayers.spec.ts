@@ -1,21 +1,17 @@
-import { Bitmap, nodeToLayers, Rectangle } from 'html2sketch';
-import SketchFormat from '@sketch-hq/sketch-file-format-ts';
+import { Bitmap, nodeToLayers, Rectangle, SketchFormat } from 'html2sketch';
 import { readFileSync } from 'fs';
 import { resolve } from 'path';
+import { setupTestNode } from '@test-utils';
 
 describe('nodeToLayers', () => {
   beforeAll(() => {
-    const node = document.createElement('div');
-
-    node.innerHTML = readFileSync(
-      resolve(__dirname, './nodeToLayers.html'),
+    const innerHTML = readFileSync(
+      resolve(__dirname, './html/nodeToLayers.html'),
       'utf-8',
     );
-    document.body.append(node);
+    setupTestNode(innerHTML);
   });
-  afterAll(() => {
-    document.body.innerHTML = '';
-  });
+
   it('default 图层正常解析', async () => {
     const node = document.getElementById('default') as HTMLDivElement;
     const layers = await nodeToLayers(node);

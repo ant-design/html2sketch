@@ -1,5 +1,4 @@
-import { ResizingConstraint } from '../utils/layout';
-import { Group, SymbolMaster, Text } from '../model';
+import { Group, SymbolMaster, Text } from '../models';
 import {
   SymbolAdjustParams,
   TextParam,
@@ -7,7 +6,8 @@ import {
   AnyLayer,
   DefaultSymbolParams,
   LayerSelector,
-} from '../type';
+  ResizingConstraint,
+} from '../types';
 
 /**
  * 调整文本部分
@@ -131,10 +131,10 @@ const adjustSymbolParams = (
   if (!symbolParams) return;
 
   const { symbolLayout, layerParams, symbolName, selector } = symbolParams;
-
-  const selectedSymbol = selectorLayer<SymbolMaster>(symbol, selector);
-
-  if (!selectedSymbol) return;
+  if (selector) {
+    const selectedSymbol = selectorLayer<SymbolMaster>(symbol, selector);
+    if (!selectedSymbol) return;
+  }
   if (symbolName) {
     symbol.name = symbolName;
   }

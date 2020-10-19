@@ -1,4 +1,4 @@
-import { BackgroundImageType } from '../type';
+import { BackgroundImageType } from '../types';
 
 /**
  * 解析线性渐变

@@ -1,42 +1,7 @@
-import FileFormat from '@sketch-hq/sketch-file-format-ts';
-import { GroupLayoutType } from '../type';
+import { GroupLayoutType, SketchFormat, ResizingConstraint } from '../types';
 
 const containsAllItems = (needles: any[], haystack: string | any[]) =>
   needles.every((needle) => haystack.includes(needle));
-
-/**
- * 调整尺寸变量基础参数
- */
-export enum ResizingConstraint {
-  /**
-   * 无
-   */
-  None = 63,
-  /**
-   * 上
-   */
-  Top = 31,
-  /**
-   * 右
-   */
-  Right = 62,
-  /**
-   * 下
-   */
-  Bottom = 55,
-  /**
-   * 左
-   */
-  Left = 59,
-  /**
-   * 定宽度
-   */
-  Width = 61,
-  /**
-   * 定高度
-   */
-  Height = 47,
-}
 
 const noHeight = [
   ResizingConstraint.Top,
@@ -88,59 +53,59 @@ export const GroupLayout = {
  */
 export const getGroupLayout = (
   layoutType?: GroupLayoutType,
-): FileFormat.InferredGroupLayout | FileFormat.FreeformGroupLayout => {
+): SketchFormat.InferredGroupLayout | SketchFormat.FreeformGroupLayout => {
   switch (layoutType) {
     case GroupLayout.LEFT_TO_RIGHT: {
       return {
-        _class: FileFormat.ClassValue.MSImmutableInferredGroupLayout,
-        axis: FileFormat.InferredLayoutAxis.Horizontal,
-        layoutAnchor: FileFormat.InferredLayoutAnchor.Min,
+        _class: SketchFormat.ClassValue.MSImmutableInferredGroupLayout,
+        axis: SketchFormat.InferredLayoutAxis.Horizontal,
+        layoutAnchor: SketchFormat.InferredLayoutAnchor.Min,
       };
     }
 
     case GroupLayout.HORIZONTALLY_CENTER: {
       return {
-        _class: FileFormat.ClassValue.MSImmutableInferredGroupLayout,
-        axis: FileFormat.InferredLayoutAxis.Horizontal,
-        layoutAnchor: FileFormat.InferredLayoutAnchor.Middle,
+        _class: SketchFormat.ClassValue.MSImmutableInferredGroupLayout,
+        axis: SketchFormat.InferredLayoutAxis.Horizontal,
+        layoutAnchor: SketchFormat.InferredLayoutAnchor.Middle,
       };
     }
 
     case GroupLayout.RIGHT_TO_LEFT: {
       return {
-        _class: FileFormat.ClassValue.MSImmutableInferredGroupLayout,
-        axis: FileFormat.InferredLayoutAxis.Horizontal,
-        layoutAnchor: FileFormat.InferredLayoutAnchor.Max,
+        _class: SketchFormat.ClassValue.MSImmutableInferredGroupLayout,
+        axis: SketchFormat.InferredLayoutAxis.Horizontal,
+        layoutAnchor: SketchFormat.InferredLayoutAnchor.Max,
       };
     }
 
     case GroupLayout.TOP_TO_BOTTOM: {
       return {
-        _class: FileFormat.ClassValue.MSImmutableInferredGroupLayout,
-        axis: FileFormat.InferredLayoutAxis.Vertical,
-        layoutAnchor: FileFormat.InferredLayoutAnchor.Min,
+        _class: SketchFormat.ClassValue.MSImmutableInferredGroupLayout,
+        axis: SketchFormat.InferredLayoutAxis.Vertical,
+        layoutAnchor: SketchFormat.InferredLayoutAnchor.Min,
       };
     }
 
     case GroupLayout.VERTICALLY_CENTER: {
       return {
-        _class: FileFormat.ClassValue.MSImmutableInferredGroupLayout,
-        axis: FileFormat.InferredLayoutAxis.Vertical,
-        layoutAnchor: FileFormat.InferredLayoutAnchor.Middle,
+        _class: SketchFormat.ClassValue.MSImmutableInferredGroupLayout,
+        axis: SketchFormat.InferredLayoutAxis.Vertical,
+        layoutAnchor: SketchFormat.InferredLayoutAnchor.Middle,
       };
     }
 
     case GroupLayout.BOTTOM_TO_TOP: {
       return {
-        _class: FileFormat.ClassValue.MSImmutableInferredGroupLayout,
-        axis: FileFormat.InferredLayoutAxis.Vertical,
-        layoutAnchor: FileFormat.InferredLayoutAnchor.Max,
+        _class: SketchFormat.ClassValue.MSImmutableInferredGroupLayout,
+        axis: SketchFormat.InferredLayoutAxis.Vertical,
+        layoutAnchor: SketchFormat.InferredLayoutAnchor.Max,
       };
     }
 
     default:
       return {
-        _class: FileFormat.ClassValue.MSImmutableFreeformGroupLayout,
+        _class: SketchFormat.ClassValue.MSImmutableFreeformGroupLayout,
       };
   }
 };
