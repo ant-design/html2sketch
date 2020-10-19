@@ -1,3 +1,9 @@
+import {
+  fromTransformAttribute,
+  compose,
+  fromDefinition,
+} from 'transformation-matrix';
+
 /*
  * 解析matrix矩阵，0°-360°，返回旋转角度
  * 当a=b||-a=b,0<=deg<=180
@@ -27,4 +33,10 @@ export const matrixToRotation = (
     deg = 360 - cc || 360 - dd;
   }
   return deg >= 360 ? 0 : deg;
+};
+/**
+ * transform 字符变成矩阵
+ */
+export const transformStrToMatrix = (str: string) => {
+  return compose(fromDefinition(fromTransformAttribute(str)));
 };

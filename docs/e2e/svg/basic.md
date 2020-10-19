@@ -59,3 +59,25 @@ SVG 的解析是 `html2sketch` 中最复杂的一个解析模块,原因有三点
 ### 圆形渐变
 
 <code src="./demos/RadialGradient.tsx" />
+
+## 子级需要继承父级 fill 属性
+
+如果 `g` 是 `fill="none"` 那么子级都不会有 fill
+
+```svg
+<g fill="none" fill-rule="evenodd">
+ <g>
+   <g>
+     <circle cx="80" cy="80" r="40" stroke="#60ACFF"/>
+   </g>
+ </g>
+</g>
+```
+
+<code src="./demos/GroupNoFill.tsx" />
+
+## 解析 Transform 属性
+
+使用模块 [transformation-matrix](https://www.npmjs.com/package/transformation-matrix#fromTransformAttribute) 完成相应的解析
+
+<code src="./demos/TransformAttr.tsx" />

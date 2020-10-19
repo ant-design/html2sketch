@@ -1,4 +1,4 @@
-import { SketchFormat, Svgson } from 'html2sketch';
+import { SketchFormat, Svgson, Frame, Gradient } from 'html2sketch';
 import {
   calcFrameScale,
   normalizeWindingRule,
@@ -12,7 +12,6 @@ import {
   unclosedRect,
   plus,
 } from '@test-utils';
-import Gradient from 'html2sketch/models/Style/Gradient';
 
 describe('convertToCubicBezier', () => {
   it('svgPath转换正常', () => {
@@ -63,7 +62,6 @@ describe('convertToCubicBezier', () => {
     );
   });
 });
-
 describe('calcFrameScale', () => {
   it('长宽比相等', () => {
     const originFrame = { x: 0, y: 0, width: 100, height: 100 };
@@ -291,6 +289,184 @@ describe('Svgson 解析器', () => {
       expect(s3.color.hex).toBe('#68FFFF');
       expect(s3.offset).toEqual(1);
       expect(s3.color.alpha).toBe(0.16);
+    });
+  });
+  describe('parseNodeAttrToStyle', () => {
+    describe('解析描边', () => {
+      it('解析描边和透明度', () => {
+        const attr = {
+          stroke: '#60acff',
+          strokeWidth: '2.5',
+          opacity: '.4',
+        };
+        const style = svgson.parseNodeAttrToStyle(attr);
+        expect(style.borders).toHaveLength(1);
+        const border = style.borders[0];
+        expect(border.color.hex).toBe('#60ACFF');
+        expect(border.thickness).toBe(2.5);
+        expect(style.opacity).toBe(0.4);
+      });
+      it('dash类型的描边', () => {
+        const attr = {
+          stroke: '#60acff',
+          strokeDasharray: '1px,1px',
+          opacity: '.3',
+        };
+        const style = svgson.parseNodeAttrToStyle(attr);
+        expect(style.borders).toHaveLength(1);
+        expect(style.sketchBorderOptions.dashPattern).toStrictEqual([1, 1]);
+      });
+    });
+    describe('Fill填色', () => {
+      it('带有填充色', () => {
+        const attr = {
+          fill: '#7f95ff',
+          opacity: '0.1',
+        };
+        const style = svgson.parseNodeAttrToStyle(attr);
+
+        expect(style.fills).toHaveLength(1);
+        expect(style.opacity).toBe(0.1);
+        const fill = style.fills[0];
+        expect(fill.type).toBe(0); // 填色类型
+        expect(fill.color.hex).toBe('#7f95ff'.toUpperCase());
+      });
+      it('无填充色', () => {
+        const attr = { fill: 'none' };
+        const style = svgson.parseNodeAttrToStyle(attr);
+        expect(style.fills).toHaveLength(0);
+      });
+      it('默认黑色', () => {
+        const attr = {};
+        const style = svgson.parseNodeAttrToStyle(attr);
+        expect(style.fills).toHaveLength(1);
+        expect(style.opacity).toBe(1);
+        const fill = style.fills[0];
+        expect(fill.type).toBe(0); // 填色类型
+        expect(fill.color.hex).toBe('#000000');
+      });
+    });
+    describe('渐变', () => {
+      it('径向渐变', () => {
+        const attr = {
+          fill: 'url(#c)',
+        };
+        const grad = Svgson.parseSvgDefs({
+          name: 'radialGradient',
+          type: 'element',
+          value: '',
+          attributes: {
+            id: 'c',
+            cx: '50%',
+            cy: '50%',
+            r: '50%',
+            fx: '50%',
+            fy: '50%',
+            // TODO 解析 gradientTransform
+            gradientTransform: 'matrix(0 1 -.98305 0 .992 0)',
+          },
+          children: [
+            {
+              name: 'stop',
+              type: 'element',
+              value: '',
+              attributes: {
+                offset: '0%',
+                stopColor: '#3187FF',
+              },
+              children: [],
+            },
+            {
+              name: 'stop',
+              type: 'element',
+              value: '',
+              attributes: {
+                offset: '100%',
+                stopColor: '#338FFF',
+                stopOpacity: '0.3',
+              },
+              children: [],
+            },
+          ],
+        });
+        svgson.defs.push(<Gradient>grad);
+
+        const style = svgson.parseNodeAttrToStyle(attr);
+        expect(style.fills).toHaveLength(1);
+
+        const fill = style.fills[0];
+
+        expect(fill.type).toBe(1); // 填充类型是渐变
+
+        const { gradient } = fill;
+        expect(gradient.type).toBe(1); // 渐变类型是径向渐变
+        expect(gradient.from).toStrictEqual({ x: 0.5, y: 0.5 });
+        expect(gradient.to).toStrictEqual({ x: 1, y: 0.5 });
+
+        // TODO 渐变的 Transform 和 ellipseLength 覆盖
+
+        // 渐变梯度
+        expect(gradient.stops).toHaveLength(2);
+        const [s1, s2] = gradient.stops;
+        expect(Math.abs(s1.offset!)).toBe(0);
+        expect(s1.color.hex).toBe('#3187FF');
+        expect(s1.color.alpha).toBe(1);
+        expect(s2.offset).toBe(1);
+        expect(s2.color.hex).toBe('#338FFF');
+        expect(s2.color.alpha).toBe(0.3); // 渐变透明度
+      });
+    });
+  });
+  describe('applyTransformString', () => {
+    it('空 transform,frame 不变', () => {
+      const frame = new Frame();
+      expect(frame.x).toBe(0);
+      expect(frame.y).toBe(0);
+      expect(frame.rotation).toBe(0);
+      svgson.applyTransformString(frame);
+      expect(frame.x).toBe(0);
+      expect(frame.y).toBe(0);
+      expect(frame.rotation).toBe(0);
+    });
+    it('错误的 transform ,frame 不变', () => {
+      const frame = new Frame();
+      expect(frame.x).toBe(0);
+      expect(frame.y).toBe(0);
+      expect(frame.rotation).toBe(0);
+      svgson.applyTransformString(frame, '123');
+      expect(frame.x).toBe(0);
+      expect(frame.y).toBe(0);
+      expect(frame.rotation).toBe(0);
+    });
+    it('正确的 transform', () => {
+      const frame = new Frame();
+
+      svgson.applyTransformString(frame, 'rotate(15 408.32 3453.665)');
+      expect(frame.x).toBe(907.787444013645);
+      expect(frame.y).toBe(11.999788653103678);
+      expect(frame.rotation).toBe(15);
+    });
+  });
+  describe('测试用例', () => {
+    it('子级继承父级 fill 属性', () => {
+      const svg = `
+<svg>
+  <g fill="none" fill-rule="evenodd" >
+    <g>
+      <g>
+        <circle cx="73" cy="73" r="73" stroke="#60ACFF" opacity=".2"/>
+      </g>
+    </g>
+  </g>
+</svg>
+
+`;
+      const result = new Svgson(svg, { width: 100, height: 100 });
+      expect(result.layers).toHaveLength(2);
+      // 取到圆
+      const circle = result.layers[1].layers[0].layers[0].layers[0];
+      expect(circle.class).toBe('ellipse'); // 确保取到的是 ellipse
+      expect(circle.style.fills).toHaveLength(0); // 没有填充
     });
   });
 });

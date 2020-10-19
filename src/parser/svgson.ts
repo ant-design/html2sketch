@@ -15,6 +15,8 @@ import Gradient from '../models/Style/Gradient';
 import Fill from '../models/Style/Fill';
 import Color from '../models/Style/Color';
 
+import { transformStrToMatrix } from '../utils/matrix';
+
 import {
   SketchFormat,
   AnyLayer,
@@ -143,35 +145,47 @@ export class Svgson {
 
     const { children, attributes } = result;
 
-    const { viewBox } = attributes;
-
-    // 解析获得 viewBox 值
-    const [viewX, viewY, viewWidth, viewHeight] = viewBox
-      ?.split(' ')
-      .map(parseFloat);
-    this.viewBox = new Frame({
-      x: viewX || 0,
-      height: viewHeight || height,
-      width: viewWidth || width,
-      y: viewY || 0,
-    });
-    this.aspectRatio = calcFrameScale(this.viewBox.toJSON(), {
-      height: height || viewHeight,
-      width: width || viewWidth,
-      x: 0,
-      y: 0,
-    });
     if (!children) return;
 
+    const { viewBox } = attributes;
+    // 如果有 viewBox 则使用 viewBox 的视野
+    // 否则用默认长宽高
+    if (viewBox) {
+      // 解析获得 viewBox 值
+      const [viewX, viewY, viewWidth, viewHeight] = viewBox
+        .split(' ')
+        .map(parseFloat);
+      this.viewBox = new Frame({
+        x: viewX || 0,
+        height: viewHeight || height,
+        width: viewWidth || width,
+        y: viewY || 0,
+      });
+      this.aspectRatio = calcFrameScale(this.viewBox.toJSON(), {
+        height: height || viewHeight,
+        width: width || viewWidth,
+        x: 0,
+        y: 0,
+      });
+    } else {
+      this.viewBox = new Frame({
+        x: 0,
+        y: 0,
+        height,
+        width,
+      });
+    }
+
+    // 添加 mask
     const background = new Rectangle(this.viewBox.toJSON());
     background.name = '容器';
     background.hasClippingMask = true;
 
-    // ------ 将 Svg 的子节点转换成子图层 ------ //
+    // ------ 将 svgson 的子节点转换成子图层 ------ //
     this.layers = children.map(this.parseSvgson).filter((c) => c) as [];
     this.layers.unshift(background);
 
-    // 根据 viewBox 进行相应的偏移操作
+    // 根据 viewBox 进行相应的偏移
     this.layers.forEach((layer) => {
       layer.frame.offset(-this.viewBox.x, -this.viewBox.y);
     });
@@ -278,17 +292,16 @@ export class Svgson {
 
     const shapeGroupType = pathToShapeGroup(path);
 
-    const isClose = !shapeGroupType.shapes.every((shape) => !shape.isClose);
     const shapePaths = this.shapeGroupDataToLayers(shapeGroupType);
 
     if (shapePaths.length === 1) {
       const shapePath = shapePaths[0];
-      shapePath.style = this.parseNodeAttrToStyle(node.attributes, isClose);
+      shapePath.style = this.parseNodeAttrToStyle(node.attributes);
     }
     const shapeGroup = new ShapeGroup(shapeGroupType.frame);
 
     shapeGroup.addLayers(shapePaths);
-    shapeGroup.style = this.parseNodeAttrToStyle(node.attributes, isClose);
+    shapeGroup.style = this.parseNodeAttrToStyle(node.attributes);
 
     return shapeGroup;
   }
@@ -299,7 +312,6 @@ export class Svgson {
    */
   static parseSvgDefs(defsNode: svgson.INode) {
     const { attributes, name, children } = defsNode;
-    console.log(defsNode);
     switch (name) {
       case 'linearGradient':
         return new Gradient({
@@ -372,15 +384,12 @@ export class Svgson {
   /**
    * 解析 Node 的 Attribute 变成 style
    * @param attributes node 的属性
-   * @param isClose
    */
-  parseNodeAttrToStyle = (
-    attributes: svgson.INode['attributes'],
-    isClose: boolean = true,
-  ) => {
+  parseNodeAttrToStyle = (attributes: svgson.INode['attributes']) => {
     const {
       stroke,
       strokeWidth,
+      strokeDasharray,
       fill: fillStr,
       style: styleString,
       class: className,
@@ -402,12 +411,8 @@ export class Svgson {
       }
     }
 
-    // 如果闭合了的话
-    // 直接使用默认填充
-    if (isClose) {
-      const baseFill = this.getFillByString(fillStr);
-      if (baseFill) style.fills.push(baseFill);
-    }
+    const baseFill = this.getFillByString(fillStr);
+    if (baseFill) style.fills.push(baseFill);
 
     // 如果存在currentColor 则采用 inline Style 的 fill
     if (fillStr === 'currentColor' && styleObj?.fill) {
@@ -420,6 +425,14 @@ export class Svgson {
         color: stroke,
         position: SketchFormat.BorderPosition.Center,
       });
+
+      // 如果存在 dash array
+      if (strokeDasharray) {
+        const dashArr = strokeDasharray.split(',').map(parseFloat);
+        if (dashArr.length > 0) {
+          style.sketchBorderOptions.dashPattern = dashArr;
+        }
+      }
     }
 
     // 设置不透明度
@@ -490,6 +503,10 @@ export class Svgson {
     group.name = isMask ? '蒙版' : '编组';
 
     group.hasClippingMask = isMask;
+
+    const { transform } = node.attributes;
+    this.applyTransformString(group.frame, transform);
+
     // TODO 确认缠绕规则
     // const { fillRule } = node.attributes;
     // group.windingRule = normalizeWindingRule(fillRule);
@@ -503,7 +520,7 @@ export class Svgson {
   parseNodeToEllipse(node: svgson.INode): Ellipse | undefined {
     if (!node || (node && node.name !== 'ellipse')) return;
 
-    const { rx, ry, cx, cy } = node.attributes;
+    const { rx, ry, cx, cy, transform } = node.attributes;
     const style = this.parseNodeAttrToStyle(node.attributes);
 
     const ellipse = new Ellipse({
@@ -515,6 +532,7 @@ export class Svgson {
     ellipse.name = '椭圆';
     ellipse.style = style;
 
+    this.applyTransformString(ellipse.frame, transform);
     return ellipse;
   }
 
@@ -525,7 +543,7 @@ export class Svgson {
   parseNodeToCircle(node: svgson.INode): Ellipse | undefined {
     if (!node || (node && node.name !== 'circle')) return;
 
-    const { r, cx, cy } = node.attributes;
+    const { r, cx, cy, transform } = node.attributes;
     const style = this.parseNodeAttrToStyle(node.attributes);
 
     const ellipse = new Ellipse({
@@ -536,6 +554,8 @@ export class Svgson {
     });
 
     ellipse.style = style;
+
+    this.applyTransformString(ellipse.frame, transform);
 
     return ellipse;
   }
@@ -548,7 +568,7 @@ export class Svgson {
     const { name, attributes } = node;
     if (name !== 'rect') return;
 
-    const { x, y, width, height, rx } = attributes;
+    const { x, y, width, height, rx, transform } = attributes;
     const style = this.parseNodeAttrToStyle(attributes);
 
     const rect = new Rectangle({
@@ -559,6 +579,8 @@ export class Svgson {
       y: parseFloat(y),
     });
     rect.style = style;
+
+    this.applyTransformString(rect.frame, transform);
     return rect;
   }
 
@@ -571,20 +593,19 @@ export class Svgson {
     if (name !== 'text') return;
 
     const { transform } = attributes;
-    const positionStr = /translate\((.*)\)/.exec(transform)?.[1];
-
-    const position = positionStr?.split(' ');
-
     const style = this.parseNodeAttrToTextStyle(attributes);
 
     const text = new Text({
       width: 0,
       height: 0,
-      x: parseFloat(position?.[0] || '0'),
-      y: parseFloat(position?.[1] || '0'),
+      x: 0,
+      y: 0,
       text: children?.[0]?.value,
     });
     text.textStyle = style;
+
+    this.applyTransformString(text.frame, transform);
+
     return text;
   }
 
@@ -660,6 +681,22 @@ export class Svgson {
         type: SketchFormat.FillType.Color,
         color: fill,
       });
+    }
+  };
+
+  /**
+   * 应用变换字符串
+   * @param frame
+   * @param transform
+   */
+  applyTransformString = (frame: Frame, transform?: string) => {
+    if (transform) {
+      try {
+        const matrix = transformStrToMatrix(transform);
+        frame.applyMatrix(matrix);
+      } catch (e) {
+        console.error(e);
+      }
     }
   };
 }

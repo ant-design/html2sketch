@@ -1,69 +1,55 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg viewBox="0 0 1104 110" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <!-- Generator: Sketch 53.2 (72643) - https://sketchapp.com -->
-    <title>Group 17 Copy 3</title>
-    <desc>Created with Sketch.</desc>
-    <defs>
-        <path d="M2,0 L1182,0 C1183.10457,-2.02906125e-16 1184,0.8954305 1184,2 L1184,110 L0,110 L0,2 C-1.3527075e-16,0.8954305 0.8954305,2.02906125e-16 2,0 Z" id="path-1"></path>
-        <radialGradient cx="50%" cy="50%" fx="50%" fy="50%" r="71.3309741%" gradientTransform="translate(0.500000,0.500000),rotate(90.000000),scale(1.000000,0.983049),translate(-0.500000,-0.500000)" id="radialGradient-3">
-            <stop stop-color="#FFFFFF" stop-opacity="0" offset="0%"></stop>
-            <stop stop-color="#EBFFFF" stop-opacity="0.0209638477" offset="36.750585%"></stop>
-            <stop stop-color="#68FFFF" stop-opacity="0.16" offset="100%"></stop>
-        </radialGradient>
-        <radialGradient cx="50%" cy="50%" fx="50%" fy="50%" r="68.3429029%" gradientTransform="translate(0.500000,0.500000),rotate(90.000000),scale(1.000000,0.983049),translate(-0.500000,-0.500000)" id="radialGradient-4">
-            <stop stop-color="#3187FF" offset="0%"></stop>
-            <stop stop-color="#338FFF" offset="100%"></stop>
-        </radialGradient>
-    </defs>
-    <g id="平台-icon&amp;banner" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <g transform="translate(-1622.000000, -462.000000)" id="Group-17-Copy-3">
-            <g transform="translate(1571.000000, 462.000000)">
-                <g id="Group-17-Copy">
-                    <mask id="mask-2" fill="white">
-                        <use xlink:href="#path-1"></use>
-                    </mask>
-                    <g id="Mask"></g>
-                    <path d="M1141,81.599942 L1083.28928,90.1142144" id="Path-6" stroke="#60ACFF" opacity="0.200000003" mask="url(#mask-2)"></path>
-                    <polyline id="Path-3" stroke="#60ACFF" opacity="0.200000003" mask="url(#mask-2)" points="193 108.715515 552.803458 33 677.311088 86 725.684426 51.7357005"></polyline>
-                    <path d="M673,86 L51.2079318,-0.402165057" id="Path-3" stroke="#60ACFF" opacity="0.200000003" mask="url(#mask-2)"></path>
-                    <g id="Group-2" mask="url(#mask-2)">
-                        <g transform="translate(1010.406376, 101.406376) rotate(-345.000000) translate(-1010.406376, -101.406376) translate(937.406376, 28.406376)">
-                            <circle id="Oval" stroke="#60ACFF" stroke-width="1" fill="none" opacity="0.200000003" cx="73" cy="73" r="73"></circle>
-                            <path d="M9,84 C11.4391621,98.0309869 18.2676513,110.531922 28,120" id="Path" stroke="#60ACFF" stroke-width="2.5" fill="none" opacity="0.400000006"></path>
-                            <path d="M121,31 C117.462208,26.8370719 113.430468,23.1374481 109,20" id="Shape" stroke="#60ACFF" stroke-width="2.5" fill="none" opacity="0.2"></path>
-                            <path d="M120,17 C115.171221,13.0260644 109.796612,9.65285036 104,7" id="Path" stroke="#60ACFF" stroke-width="2.5" fill="none" opacity="0.400000006"></path>
-                            <circle id="Oval" stroke="none" fill="url(#radialGradient-3)" fill-rule="evenodd" cx="73" cy="73" r="56"></circle>
-                            <circle id="Oval" stroke="#60ACFF" stroke-width="1" fill="none" opacity="0.400000006" cx="73.5" cy="73.5" r="40.5"></circle>
-                            <path d="M34,45 C30.8950311,49.4968187 28.504668,54.5556832 27,60" id="Path" stroke="#60ACFF" stroke-width="2.5" fill="none" opacity="0.400000006"></path>
-                            <circle id="Oval" stroke="#60ACFF" stroke-width="0.5" fill="none" opacity="0.400000006" cx="73.5" cy="73.5" r="23.5"></circle>
-                            <path d="M74,0 L74,57" id="Line" stroke="#60ACFF" stroke-width="1" fill="none" opacity="0.400000006" stroke-dasharray="1,1"></path>
-                            <path d="M28.5,45 L28.5,102" id="Line-Copy-2" stroke="#60ACFF" stroke-width="1" fill="none" opacity="0.400000006" stroke-dasharray="1,1" transform="translate(28.500000, 73.500000) rotate(-90.000000) translate(-28.500000, -73.500000) "></path>
-                            <path d="M117.5,45 L117.5,102" id="Line-Copy-3" stroke="#60ACFF" stroke-width="1" fill="none" opacity="0.400000006" stroke-dasharray="1,1" transform="translate(117.500000, 73.500000) rotate(-90.000000) translate(-117.500000, -73.500000) "></path>
-                        </g>
-                    </g>
-                    <g id="Group-2-Copy-2" mask="url(#mask-2)">
-                        <g transform="translate(761.285740, 25.942927) rotate(-376.000000) translate(-761.285740, -25.942927) translate(717.285740, -17.557073)">
-                            <circle id="Oval" stroke="#60ACFF" stroke-width="1" fill="none" opacity="0.200000003" cx="43.721379" cy="43.4973544" r="43"></circle>
-                            <path d="M6.68045317,50.4807751 C8.09259967,58.6655174 12.0459355,65.9577294 17.6804532,71.4807751" id="Path" stroke="#60ACFF" stroke-width="2.5" fill="none" opacity="0.200000003"></path>
-                            <path d="M61.4656424,77.893863 C70.5192074,73.1261454 77.4495073,64.8617306 80.4656424,54.893863" id="Path" stroke="#60ACFF" stroke-width="1.5" fill="none" opacity="0.200000003"></path>
-                            <circle id="Oval" stroke="none" fill="url(#radialGradient-3)" fill-rule="evenodd" opacity="0.600000024" cx="43.721379" cy="43.4973544" r="33"></circle>
-                            <circle id="Oval" stroke="#60ACFF" stroke-width="1" fill="none" opacity="0.200000003" cx="44.4070033" cy="44.7342534" r="24"></circle>
-                            <path d="M21.0076813,27.2294682 C19.2334133,29.9275594 17.8674916,32.9628781 17.0076813,36.2294682" id="Path" stroke="#60ACFF" stroke-width="2.5" fill="none" opacity="0.200000003"></path>
-                            <circle id="Oval" stroke="#60ACFF" stroke-width="0.5" fill="none" opacity="0.200000003" cx="44.4070033" cy="44.7342534" r="14"></circle>
-                            <path d="M44.3641119,0.67416918 L44.3641119,34.6741692" id="Line" stroke="#60ACFF" stroke-width="1" fill="none" opacity="0.300000012" stroke-dasharray="1,1"></path>
-                            <path d="M17.9653686,27.4343327 L17.9653686,61.4343327" id="Line-Copy-2" stroke="#60ACFF" stroke-width="1" fill="none" opacity="0.300000012" stroke-dasharray="1,1" transform="translate(17.965369, 44.434333) rotate(-90.000000) translate(-17.965369, -44.434333) "></path>
-                            <path d="M70.1630137,26.7972751 L70.1630137,60.7972751" id="Line-Copy-3" stroke="#60ACFF" stroke-width="1" fill="none" opacity="0.300000012" stroke-dasharray="1,1" transform="translate(70.163014, 43.797275) rotate(-90.000000) translate(-70.163014, -43.797275) "></path>
-                            <path d="M45.0011695,52.8718143 L45.0011695,86.8718143" id="Line-Copy" stroke="#60ACFF" stroke-width="1" fill="none" opacity="0.300000012" stroke-dasharray="1,1"></path>
-                        </g>
-                    </g>
-                    <circle id="Oval" fill="url(#radialGradient-4)" mask="url(#mask-2)" cx="552" cy="33" r="7"></circle>
-                    <circle id="Oval-Copy-7" fill="url(#radialGradient-4)" opacity="0.600000024" mask="url(#mask-2)" cx="1148" cy="80" r="7"></circle>
-                    <circle id="Oval-Copy-5" fill="url(#radialGradient-4)" mask="url(#mask-2)" cx="677" cy="85" r="7"></circle>
-                    <circle id="Oval-Copy-6" fill="url(#radialGradient-4)" mask="url(#mask-2)" cx="192" cy="108" r="7"></circle>
-                    <path d="M633.809311,-1 L528,108.432668" id="Path-4" stroke="#60ACFF" opacity="0.200000003" mask="url(#mask-2)"></path>
-                    <path d="M851.336298,0.144564333 L948.216821,62.2221962" id="Path-5" stroke="#60ACFF" opacity="0.200000003" mask="url(#mask-2)"></path>
-                </g>
-            </g>
-        </g>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1104 110">
+  <defs>
+    <radialGradient id="c" cx="50%" cy="50%" r="71.331%" fx="50%" fy="50%"
+                    gradientTransform="matrix(0 1 -.98305 0 .992 0)">
+      <stop offset="0%" stop-color="#FFF" stop-opacity="0"/>
+      <stop offset="36.751%" stop-color="#EBFFFF" stop-opacity=".021"/>
+      <stop offset="100%" stop-color="#68FFFF" stop-opacity=".16"/>
+    </radialGradient>
+    <radialGradient id="d" cx="50%" cy="50%" r="68.343%" fx="50%" fy="50%"
+                    gradientTransform="matrix(0 1 -.98305 0 .992 0)">
+      <stop offset="0%" stop-color="#3187FF"/>
+      <stop offset="100%" stop-color="#338FFF"/>
+    </radialGradient>
+    <path id="a" d="M2 0h1180a2 2 0 012 2v108H0V2a2 2 0 012-2z"/>
+  </defs>
+  <g fill="none" fill-rule="evenodd" transform="translate(-51)">
+    <mask id="b" fill="#fff">
+      <use xlink:href="#a"/>
+    </mask>
+    <path stroke="#60ACFF"
+          d="M1141 81.6l-57.71 8.514M193 108.716L552.803 33l124.508 53 48.373-34.264M673 86L51.208-.402" mask="url(#b)"
+          opacity=".2"/>
+    <g mask="url(#b)">
+      <g transform="rotate(15 433.82 3647.357)">
+        <circle cx="73" cy="73" r="73" stroke="#60ACFF" opacity=".2"/>
+        <path stroke="#60ACFF" stroke-width="2.5" d="M9 84a65.977 65.977 0 0019 36" opacity=".4"/>
+        <path stroke="#60ACFF" stroke-width="2.5" d="M121 31a65.247 65.247 0 00-12-11" opacity=".2"/>
+        <path stroke="#60ACFF" stroke-width="2.5" d="M120 17a72.962 72.962 0 00-16-10" opacity=".4"/>
+        <circle cx="73" cy="73" r="56" fill="url(#c)"/>
+        <circle cx="73.5" cy="73.5" r="40.5" stroke="#60ACFF" opacity=".4"/>
+        <path stroke="#60ACFF" stroke-width="2.5" d="M34 45a49.69 49.69 0 00-7 15" opacity=".4"/>
+        <circle cx="73.5" cy="73.5" r="23.5" stroke="#60ACFF" stroke-width=".5" opacity=".4"/>
+        <path stroke="#60ACFF" stroke-dasharray="1,1" d="M74 0v57M0 73.5h57M89 73.5h57" opacity=".4"/>
+      </g>
     </g>
+    <g mask="url(#b)">
+      <g transform="rotate(-16 340.18 -2517.155)">
+        <circle cx="43.721" cy="43.497" r="43" stroke="#60ACFF" opacity=".2"/>
+        <path stroke="#60ACFF" stroke-width="2.5" d="M6.68 50.48a38.58 38.58 0 0011 21" opacity=".2"/>
+        <path stroke="#60ACFF" stroke-width="1.5" d="M61.466 77.894c9.053-4.768 15.984-13.032 19-23" opacity=".2"/>
+        <circle cx="43.721" cy="43.497" r="33" fill="url(#c)" opacity=".6"/>
+        <circle cx="44.407" cy="44.734" r="24" stroke="#60ACFF" opacity=".2"/>
+        <path stroke="#60ACFF" stroke-width="2.5" d="M21.008 27.23a30.513 30.513 0 00-4 9" opacity=".2"/>
+        <circle cx="44.407" cy="44.734" r="14" stroke="#60ACFF" stroke-width=".5" opacity=".2"/>
+        <path stroke="#60ACFF" stroke-dasharray="1,1"
+              d="M44.364.674v34M.965 44.434h34M53.163 43.797h34M45.001 52.872v34" opacity=".3"/>
+      </g>
+    </g>
+    <circle cx="552" cy="33" r="7" fill="url(#d)" mask="url(#b)"/>
+    <circle cx="1148" cy="80" r="7" fill="url(#d)" mask="url(#b)" opacity=".6"/>
+    <circle cx="677" cy="85" r="7" fill="url(#d)" mask="url(#b)"/>
+    <circle cx="192" cy="108" r="7" fill="url(#d)" mask="url(#b)"/>
+    <path stroke="#60ACFF" d="M633.81-1L528 108.433M851.336.145l96.88 62.077" mask="url(#b)" opacity=".2"/>
+  </g>
 </svg>
