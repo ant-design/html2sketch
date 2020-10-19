@@ -125,13 +125,7 @@ export const pathToShapeGroup = (svgPath: string): ShapeGroupType => {
 export class Svgson {
   constructor(
     svgString: string,
-    {
-      width,
-      height,
-    }: {
-      width?: number;
-      height?: number;
-    },
+    { width, height }: Partial<Pick<FrameType, 'width' | 'height'>>,
   ) {
     if (!svgString) return;
     // --------- 处理 Svg String 变成 Svg Shape ---------- //
@@ -182,7 +176,12 @@ export class Svgson {
     background.hasClippingMask = true;
 
     // ------ 将 svgson 的子节点转换成子图层 ------ //
-    this.layers = children.map(this.parseSvgson).filter((c) => c) as [];
+    this.layers = children
+      // .map((child) => {
+      //   return this.extendsParentAttr(child, attributes);
+      // })
+      .map(this.parseSvgson)
+      .filter((c) => c) as [];
     this.layers.unshift(background);
 
     // 根据 viewBox 进行相应的偏移
@@ -490,8 +489,14 @@ export class Svgson {
    */
   parseNodeToGroup = (node: svgson.INode, isMask: boolean = false): Group => {
     const group = new Group();
+    const { transform, fill } = node.attributes;
 
-    const layers = node.children.map(this.parseSvgson).filter((c) => c);
+    const layers = node.children
+      .map((child) => {
+        this.extendsParentAttr(child, { fill });
+        return this.parseSvgson(child);
+      })
+      .filter((c) => c);
     if (layers && layers.length > 0) {
       group.addLayers(layers as []);
     }
@@ -504,7 +509,6 @@ export class Svgson {
 
     group.hasClippingMask = isMask;
 
-    const { transform } = node.attributes;
     this.applyTransformString(group.frame, transform);
 
     // TODO 确认缠绕规则
@@ -698,5 +702,25 @@ export class Svgson {
         console.error(e);
       }
     }
+  };
+
+  /**
+   * 继承父级的参数
+   * @param node 需要继承的节点
+   * @param parentAttr
+   */
+  extendsParentAttr = (
+    node: svgson.INode,
+    parentAttr?: svgson.INode['attributes'],
+  ) => {
+    if (!parentAttr) return node;
+
+    // if (node.children.length > 0) {
+    //   node.children.forEach((child) => {
+    //     this.extendsParentAttr(child, node.attributes);
+    //   });
+    // }
+    node.attributes = { ...parentAttr, ...node.attributes };
+    return node;
   };
 }

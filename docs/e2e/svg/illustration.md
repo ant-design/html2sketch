@@ -13,7 +13,9 @@ order: 3
 
 <code src="./demos/SvgSimpleIllustration.tsx" />
 
-## 渐变和 Mask 对象的 svg
+## 径向渐变和填充继承的 svg
+
+目前 mask 没有进行解析
 
 <code src="./demos/SvgBackground.tsx" />
 
