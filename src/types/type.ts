@@ -1,7 +1,3 @@
-import { SketchFormat } from './sketchFormat';
-
-import Color, { ColorParam } from '../models/Style/Color';
-
 /**
  * 获得 CG 点的配置
  */
@@ -10,54 +6,56 @@ export interface CGPoint {
   y: number;
 }
 
-/**
- *  =====渐变定义=====
- */
-
-/**
- * 传入颜色间隔点的参数
- */
-export interface ColorStopParam {
-  color: ColorParam;
-  offset: number;
+export declare enum LayerClassValue {
+  Artboard = 'artboard',
+  Bitmap = 'bitmap',
+  Border = 'border',
+  BorderOptions = 'borderOptions',
+  Color = 'color',
+  Fill = 'fill',
+  Gradient = 'gradient',
+  Group = 'group',
+  InnerShadow = 'innerShadow',
+  Oval = 'oval',
+  Page = 'page',
+  Polygon = 'polygon',
+  Rect = 'rect',
+  Rectangle = 'rectangle',
+  Shadow = 'shadow',
+  ShapeGroup = 'shapeGroup',
+  ShapePath = 'shapePath',
+  Slice = 'slice',
+  Star = 'star',
+  SymbolInstance = 'symbolInstance',
+  SymbolMaster = 'symbolMaster',
+  Text = 'text',
+  Triangle = 'triangle',
+  Svg = 'svg',
 }
 
-export type StopParam = ColorParam | ColorStopParam;
-
-export interface GradientProps {
-  /**
-   * 渐变类型
-   */
-  type?: SketchFormat.GradientType;
-  /**
-   * 终点
-   */
-  to?: CGPoint;
-  /**
-   * 起点
-   */
-  from?: CGPoint;
-  /**
-   * 色彩间隔点
-   */
-  stops?: StopParam[];
-  /**
-   * 渐变名称
-   */
-  name?: string;
-  /**
-   * 如果是圆形渐变 则需要传入 radius 值
-   */
-  radius?: number;
-}
-
-export interface ColorStop {
-  /**
-   * 偏移位置 取值 0-1
-   */
-  offset?: number;
-  /**
-   * 颜色对象
-   */
-  color: Color;
-}
+export type LayerClassType =
+  | 'artboard'
+  | 'bitmap'
+  | 'border'
+  | 'borderOptions'
+  | 'color'
+  | 'fill'
+  | 'gradient'
+  | 'group'
+  | 'innerShadow'
+  | 'ellipse'
+  | 'oval' // sketch 中 用的是 oval
+  | 'page'
+  | 'polygon'
+  | 'rect'
+  | 'rectangle'
+  | 'shadow'
+  | 'shapeGroup'
+  | 'shapePath'
+  | 'slice'
+  | 'star'
+  | 'symbolInstance'
+  | 'symbolMaster'
+  | 'text'
+  | 'triangle'
+  | 'svg';

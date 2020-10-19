@@ -1,5 +1,5 @@
 import { SymbolMaster } from '../models';
-import { defaultSymbolParamsList } from '../utils/sketchSymbolParams';
+import { defaultSymbolParamsList } from '../constraints/symbolParams';
 import nodeToGroup from './nodeToGroup';
 import adjustSymbolParams from './adjustSymbolParams';
 import { AnyLayer, NodeToSketchSymbolOptions } from '../types';
