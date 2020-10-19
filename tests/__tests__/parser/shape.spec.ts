@@ -1,79 +1,11 @@
 import { Bitmap, Group, parseToShape, Rectangle } from 'html2sketch';
+import { readFileSync } from 'fs';
+import { resolve } from 'path';
 import { setupTestNode } from '@test-utils';
 
 describe('parseToShape', () => {
-  beforeEach(() => {
-    document.head.innerHTML = `
-<style>
-.background {
-  background-image: url('https://gw.alipayobjects.com/zos/rmsportal/mZBWtboYbnMkTBaRIuWQ.png');
-}
-
-.linear-gradient {
-  background-image: linear-gradient(red, yellow, blue)
-}
-
-.radial-gradient {
-  background-image: radial-gradient(red, yellow, blue)
-}
-
-</style>
-    `;
-
-    const innerHTML = `
-<div
-  id="radial-gradient"
-  class="radial-gradient"
-  style="width: 200px; height: 200px;"
-/>
-
-
-
-<div
-  id="linear-gradient"
-  class="linear-gradient"
-  style="width: 200px; height: 200px;"
-/>
-
-<div
-  id="background-image"
-  class="background"
-  style="width: 200px; height: 200px;"
-/>
-
-<div id="shape" style="background: rgba(124,14,53,0.12);width:200px" />
-
-
-<div
-  id="clip-background-image"
-  class="background"
-  style="width: 150px; height: 200px;"
-/>
-
-
-<div id="shadow" style="box-shadow: 0 2px 4px black;" />
-
-<div id="border" style="border: 2px solid blue;" />
-
-<div id="dashed-border" style="border: 2px dashed blue;" />
-
-<div id="dotted-border" style="border: 2px dotted blue;" />
-
-<div id="single-border" style="
-  border-top: 3px solid red;
-  border-left: 2px solid blue;
-  border-right: 1px solid rgb(0,255,0);
-  border-bottom: 3px solid black;
-" />
-
-<div id="inner-shadow" style="box-shadow: 0 1px 2px red inset;" />
-
-
-<div id="multi-shadow" style="
-  box-shadow: 0 3px 6px -4px rgba(0, 0, 0, 0.12), 0 6px 16px 0 rgba(0, 0, 0, 0.08), 0 9px 28px 8px rgba(0, 0, 0, 0.05);"
-/>
-`;
-
+  beforeAll(() => {
+    const innerHTML = readFileSync(resolve(__dirname, './shape.html'), 'utf-8');
     setupTestNode(innerHTML);
   });
   it('shape 正常解析', async () => {
@@ -172,7 +104,7 @@ describe('parseToShape', () => {
     expect(shadow3.blurRadius).toBe(28);
     expect(shadow3.spread).toBe(8);
   });
-  it('border 正常解析', async () => {
+  it('普通 border 正常解析', async () => {
     const node = document.getElementById('border') as HTMLDivElement;
 
     const borderJSON = (await parseToShape(node)).toSketchJSON();
@@ -180,6 +112,14 @@ describe('parseToShape', () => {
     const border = borderJSON.style?.borders?.[0]!;
     expect(border.thickness).toBe(2);
     expect(border.color.blue).toBe(1);
+  });
+  it('border color不一致时正常解析', async () => {
+    const node = document.getElementById('border-color') as HTMLDivElement;
+
+    const borderJSON = (await parseToShape(node)).toSketchJSON();
+    expect(borderJSON.style?.borders?.length).toBe(0);
+    expect(borderJSON.style?.innerShadows.length).toBe(4);
+    // expect(border.color.blue).toBe(1);
   });
   it('dashed-border 正常解析', async () => {
     const node = document.getElementById('dashed-border') as HTMLDivElement;

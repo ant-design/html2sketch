@@ -87,6 +87,7 @@
   },
   "devDependencies": {
     "@ant-design/charts": "^0.9.13",
+    "@ant-design/pro-card": "^1.3.1",
     "@ant-design/pro-skeleton": "^1.0.0-beta.7",
     "@ant-design/pro-table": "^2.6.3",
     "@babel/core": "^7.8.3",

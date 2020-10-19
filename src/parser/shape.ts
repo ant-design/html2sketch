@@ -47,8 +47,6 @@ export const parseToShape = async (
   const {
     // 背景颜色
     backgroundColor,
-    // 边框
-    borderWidth,
   } = styles;
 
   // 解析背景颜色
@@ -58,7 +56,7 @@ export const parseToShape = async (
   }
 
   // 解析阴影
-  const { boxShadow } = styles;
+  const { boxShadow, borderWidth } = styles;
   if (boxShadow !== defaultNodeStyle.boxShadow) {
     // 拿到阴影样式
     const shadowStrings = Shadow.splitShadowString(boxShadow);
@@ -79,11 +77,13 @@ export const parseToShape = async (
       }
     });
   }
+  const { borderColor } = styles;
 
+  // 判断是否包含多种描边颜色
+  const hasMultiColor = Array.from(borderColor.matchAll(/rgb/g)).length > 1;
   // 处理描边
-  if (borderWidth.indexOf(' ') === -1) {
+  if (borderWidth.indexOf(' ') === -1 && !hasMultiColor) {
     const {
-      borderColor,
       borderBottomStyle,
       borderLeftStyle,
       borderTopStyle,
