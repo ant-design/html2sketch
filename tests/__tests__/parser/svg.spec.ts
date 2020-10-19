@@ -71,7 +71,9 @@ describe('parseToSvg', () => {
         outputJSONData(json, 'parser/antd');
       }
 
-      expect(json).toStrictEqual(antdParserJSON);
+      const { frame, ...originJSON } = json;
+      const { frame: ff, ...targetJSON } = antdParserJSON;
+      expect(originJSON).toStrictEqual(targetJSON);
     });
   });
 });
