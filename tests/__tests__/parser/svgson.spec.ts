@@ -447,6 +447,7 @@ describe('Svgson 解析器', () => {
       expect(frame.rotation).toBe(15);
     });
   });
+
   describe('测试用例', () => {
     it('子级继承父级 fill 属性', () => {
       const svg = `
@@ -459,7 +460,6 @@ describe('Svgson 解析器', () => {
     </g>
   </g>
 </svg>
-
 `;
       const result = new Svgson(svg, { width: 100, height: 100 });
       expect(result.layers).toHaveLength(2);
@@ -467,6 +467,11 @@ describe('Svgson 解析器', () => {
       const circle = result.layers[1].layers[0].layers[0].layers[0];
       expect(circle.class).toBe('ellipse'); // 确保取到的是 ellipse
       expect(circle.style.fills).toHaveLength(0); // 没有填充
+    });
+    it('svg 循环嵌套', () => {
+      const svg = `<svg><svg><g></g></svg></svg>`;
+      const result = new Svgson(svg, { width: 100, height: 100 });
+      expect(result.layers).toHaveLength(2);
     });
   });
 });
