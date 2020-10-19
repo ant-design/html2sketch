@@ -122,6 +122,7 @@ export interface SvgDefsStyle {
   class: 'classStyle';
   rules: CssStyleRule[];
 }
+
 export type SvgLayerType =
   | Group
   | ShapeGroup
@@ -135,56 +136,3 @@ export interface CssStyleRule {
   className: string;
   styles: { [key: string]: string };
 }
-export declare enum LayerClassValue {
-  Artboard = 'artboard',
-  Bitmap = 'bitmap',
-  Border = 'border',
-  BorderOptions = 'borderOptions',
-  Color = 'color',
-  Fill = 'fill',
-  Gradient = 'gradient',
-  Group = 'group',
-  InnerShadow = 'innerShadow',
-  Oval = 'oval',
-  Page = 'page',
-  Polygon = 'polygon',
-  Rect = 'rect',
-  Rectangle = 'rectangle',
-  Shadow = 'shadow',
-  ShapeGroup = 'shapeGroup',
-  ShapePath = 'shapePath',
-  Slice = 'slice',
-  Star = 'star',
-  SymbolInstance = 'symbolInstance',
-  SymbolMaster = 'symbolMaster',
-  Text = 'text',
-  Triangle = 'triangle',
-  Svg = 'svg',
-}
-
-export type LayerClassType =
-  | 'artboard'
-  | 'bitmap'
-  | 'border'
-  | 'borderOptions'
-  | 'color'
-  | 'fill'
-  | 'gradient'
-  | 'group'
-  | 'innerShadow'
-  | 'ellipse'
-  | 'oval' // sketch 中 用的是 oval
-  | 'page'
-  | 'polygon'
-  | 'rect'
-  | 'rectangle'
-  | 'shadow'
-  | 'shapeGroup'
-  | 'shapePath'
-  | 'slice'
-  | 'star'
-  | 'symbolInstance'
-  | 'symbolMaster'
-  | 'text'
-  | 'triangle'
-  | 'svg';
