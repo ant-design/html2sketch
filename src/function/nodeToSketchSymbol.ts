@@ -79,6 +79,6 @@ export default async (node: Element, options?: NodeToSketchSymbolOptions) => {
     adjustSymbolParams(symbol, paramsList);
   });
 
-  checkNoNull(symbol.toSketchJSON());
+  checkNoNull(symbol.frame);
   return symbol;
 };
