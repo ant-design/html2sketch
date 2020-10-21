@@ -5,6 +5,7 @@ import { getChildNodeList } from '../utils/hierarchy';
 import { getName } from '../utils/name';
 import { Group, Style } from '../models';
 import { isExistPseudoText, isExistPseudoShape } from '../utils/pseudo';
+import { checkNoNull } from '../utils/utils';
 import { AnyLayer } from '..';
 
 export interface Options {
@@ -96,6 +97,8 @@ const nodeToGroup = async (
     layer.x += group.x;
     layer.y += group.y;
     layer.rotation += group.rotation;
+
+    checkNoNull(layer.toSketchJSON());
     return layer as Group;
   }
 
@@ -120,6 +123,8 @@ const nodeToGroup = async (
 
   group.className = node.className;
   console.info('%c输出 Group 为:', 'font-weight:bold;color:#4590f7;', group);
+
+  checkNoNull(group.toSketchJSON());
   return group;
 };
 

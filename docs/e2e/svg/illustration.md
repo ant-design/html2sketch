@@ -19,6 +19,10 @@ order: 3
 
 <code src="./demos/SvgBackground.tsx" />
 
+## 一个奇怪的 svg
+
+<code src="./demos/Layout.tsx" />
+
 ## 超复杂的例子
 
 <code src="./demos/SvgIllustration.tsx" />
