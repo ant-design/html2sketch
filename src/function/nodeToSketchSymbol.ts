@@ -3,6 +3,7 @@ import { defaultSymbolParamsList } from '../constraints/symbolParams';
 import nodeToGroup from './nodeToGroup';
 import adjustSymbolParams from './adjustSymbolParams';
 import { AnyLayer, NodeToSketchSymbolOptions } from '../types';
+import { checkNoNull } from '../utils/utils';
 
 /**
  * 解析为 Symbol
@@ -78,5 +79,6 @@ export default async (node: Element, options?: NodeToSketchSymbolOptions) => {
     adjustSymbolParams(symbol, paramsList);
   });
 
+  checkNoNull(symbol.frame);
   return symbol;
 };

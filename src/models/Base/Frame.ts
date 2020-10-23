@@ -131,8 +131,8 @@ class Frame {
       constrainProportions: false,
       height: this.height,
       width: this.width,
-      x: this.x,
-      y: this.y,
+      x: this.x || 0,
+      y: this.y || 0,
     };
   };
 }

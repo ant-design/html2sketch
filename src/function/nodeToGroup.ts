@@ -1,10 +1,11 @@
 /* eslint-disable no-console */
 import nodeToLayers from './nodeToLayers';
+import { Group, Style } from '../models';
 import { isNodeVisible } from '../utils/visibility';
 import { getChildNodeList } from '../utils/hierarchy';
 import { getName } from '../utils/name';
-import { Group, Style } from '../models';
 import { isExistPseudoText, isExistPseudoShape } from '../utils/pseudo';
+import { checkNoNull } from '../utils/utils';
 import { AnyLayer } from '..';
 
 export interface Options {
@@ -78,6 +79,8 @@ const nodeToGroup = async (
     });
   console.groupEnd();
 
+  checkNoNull(group.frame);
+
   if (
     group.layers.length === 1 &&
     (group.layers[0].class === 'rectangle' ||
@@ -96,6 +99,7 @@ const nodeToGroup = async (
     layer.x += group.x;
     layer.y += group.y;
     layer.rotation += group.rotation;
+
     return layer as Group;
   }
 
@@ -120,6 +124,7 @@ const nodeToGroup = async (
 
   group.className = node.className;
   console.info('%c输出 Group 为:', 'font-weight:bold;color:#4590f7;', group);
+
   return group;
 };
 
