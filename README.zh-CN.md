@@ -1,8 +1,8 @@
-English | [简体中文](./README.zh-CN.md)
+[English](./README.md) | 简体中文
 
 <p align="center">
   <a href="https://github.com/ant-design/html2sketch">
-   <img src="https://gw.alipayobjects.com/zos/antfincdn/9qm%24x99yzk/Logo.png" height="200" width="200" alt="html2sketch"/>
+   <img src="https://gw.alipayobjects.com/zos/antfincdn/Q0VnKtVzuB/Logo.png" height="200" width="200" alt="html2sketch"/>
   </a>
 </p>
 
