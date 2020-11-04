@@ -38,11 +38,23 @@ class Color extends BaseStyle {
 
   constructor(color?: ColorParam) {
     super();
+
     if (!color) {
       this.method = ColorCls();
     }
     if (color instanceof Array) {
       this.method = ColorCls.rgb(color);
+    }
+    // 处理 类似 rgb(242, 242, 242) 25% 这样的颜色串
+    else if (
+      typeof color === 'string' &&
+      color.startsWith('rgb') &&
+      color.endsWith('%')
+    ) {
+      const [rgb, percent] = color.split(')');
+      this.method = ColorCls(
+        `${rgb.replace('rgb', 'rgba')},${parseFloat(percent) / 100})`,
+      );
     } else {
       this.method = ColorCls(color);
     }
