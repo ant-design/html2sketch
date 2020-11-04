@@ -12,6 +12,12 @@ describe('Color 类', () => {
 
       expect(color.rgba).toBe('rgba(20,30,40,1)');
     });
+    it('支持 rgb + 不透明度', () => {
+      const color = new Color('rgb(100,200 ,200) 10%');
+      expect(color.rgba).toBe('rgba(100,200,200,0.1)');
+      const color2 = new Color('rgb(242, 242, 242) 25%');
+      expect(color2.rgba).toBe('rgba(242,242,242,0.25)');
+    });
   });
   describe('调用方法正常', () => {
     const inputColor = 'rgba(50,50,10,0.5)';
