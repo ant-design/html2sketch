@@ -171,9 +171,9 @@ If you want to use the JSON object directly in sketch, you can use the [Sketch J
 
 ## Why?
 
-The main application of this module focus on C2D (Code to Design)。This module mainly refers to [html-sketchapp](https://github.com/html-sketchapp/html-sketchapp) 。
+The main application of this module focus on C2D (Code to Design).This module mainly refers to [html-sketchapp](https://github.com/html-sketchapp/html-sketchapp).
 
-html-sketchapp can directly transforms any HTML page into a Sketch document without framework limit, but there are significant limitations: ：
+html-sketchapp can directly transforms any HTML page into a Sketch document without framework limit, but there are significant limitations:
 
 - **Not supported pseudoelements, overflow,some kind of gradient, transform, and other properties**: As a result, many web pages transformed by html-sketchapp are not visually restored;
 
@@ -181,7 +181,7 @@ html-sketchapp can directly transforms any HTML page into a Sketch document with
 
 - **html-sketchapp developed by JS ,lacking perfect type definition, the project architecture is not reasonable, the secondary development is difficult**
 
-### What html2sketch do？
+### What html2sketch do?
 
 html2sketch makes a lot of optimization on the basis of html-sketchapp, and takes the essence to discard the dross:
 
