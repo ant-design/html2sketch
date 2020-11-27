@@ -23,7 +23,7 @@ yarn add html2sketch
 
 ### 使用
 
-`html2sketch` 包含 3 个主要方法 `nodeToLayer` 、 `nodeToGroup` 和 `nodeToSketchSymbol` 。
+`html2sketch` 包含 3 个主要方法 `nodeToLayer` 、 `nodeToGroup` 和 `nodeToSymbol` 。
 
 #### nodeToLayer
 
@@ -75,19 +75,19 @@ fn().then((json) => {
 });
 ```
 
-#### nodeToSketchSymbol
+#### nodeToSymbol
 
 将 DOM 节点转 Sketch 的 Symbol 对象
 
 ```js
-import { nodeToSketchSymbol } from 'html2sketch';
+import { nodeToSymbol } from 'html2sketch';
 
 const fn = async () => {
   // 1. 获取 DOM 节点
   const node = document.getElementById('id');
 
   // 2. 调用转换方法
-  const symbol = await nodeToSketchSymbol(node);
+  const symbol = await nodeToSymbol(node);
 
   // 3. 生成为 Sketch JSON
   const sketchJSON = symbol.toSketchJSON();
