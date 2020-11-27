@@ -24,7 +24,7 @@ export const parseInputTextToText = (
     pseudoText = placeholder;
   }
 
-  const pseudoNode = node.cloneNode(true);
+  const pseudoNode = document.createElement('text');
 
   const {
     paddingLeft,
@@ -41,6 +41,8 @@ export const parseInputTextToText = (
 
   const { rangeBCR } = getTextLinesAndRange(pseudoNode);
 
+  // 默认情况下的 y 采用 input 节点的 y 值
+  // 特殊情况在下面处理
   let { y } = nodeBCR;
 
   y = y + parseFloat(paddingTop) + parseFloat(borderTopWidth);
@@ -76,9 +78,30 @@ export const parseInputTextToText = (
       });
     });
   }
+
   textStyle.color = textColor;
 
   textStyle.lineHeight = rangeBCR.height;
+
+  // 针对line-height 做单独处理:
+
+  // 如果 input 的 line-height 超过 rangeBCR 的 line-height
+  // 那么意味着 input 节点会被撑开,然后文本应该处于 input 的垂直居中位置
+  // 相关问题: https://github.com/ant-design/html2sketch/issues/50
+  // 问题 demo: https://codesandbox.io/s/optimistic-firefly-f7dy8?file=/src/Demo.tsx
+
+  const { lineHeight } = inputTextStyle;
+
+  // TODO: 还有什么时候需要垂直居中呢?
+  if (parseFloat(lineHeight) > rangeBCR.height) {
+    // 需要垂直居中的地方
+    console.log(y, nodeBCR.y);
+    console.log(nodeBCR.height, rangeBCR.height);
+    // 计算公式:
+    // 偏差值 = (input 的高度 - text 的高度 )/2 - 目前已有的offsetY
+    const offsetY = (nodeBCR.height - rangeBCR.height) / 2 - (y - nodeBCR.y);
+    y += offsetY;
+  }
 
   const text = new Text({
     x: 0,

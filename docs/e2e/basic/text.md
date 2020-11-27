@@ -102,3 +102,11 @@ placeholder 和输入的值都在伪类里
 ### Input 文本居中
 
 <code src="./demos/Text/InputAligin.tsx" />
+
+### Input 文本垂直居中
+
+#### Case1: line-height 超过 input 高度
+
+目前这种垂直居中是因为 `line-height` 值超过了 input 的高度使得文本默认在垂直轴上是居中的
+
+<code src="./demos/Text/InputVerticalAligin.tsx" />
