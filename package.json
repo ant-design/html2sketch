@@ -33,9 +33,9 @@
     "publish": "npm publish",
     "publish:next": "npm publish --tag next",
     "---------    ": "",
-    "site:preview": "PREVIEW=1 dumi build",
-    "site:build": "dumi build",
-    "site:publish": "dumi build && gh-pages -d ./dist",
+    "docs:preview": "PREVIEW=1 dumi build",
+    "docs:build": "dumi build",
+    "docs:publish": "dumi build && gh-pages -d ./dist",
     "--------- ": "",
     "test": "umi-test",
     "test:update": "UPDATE=1 umi-test --update-snapshot",
@@ -57,12 +57,6 @@
     "prepublishOnly": "npm run test && npm run build && np --no-cleanup --yolo --no-publish --any-branch",
     "prettier": "prettier -c --write \"**/**\"",
     "commit": "git-cz"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "npm run lint-staged",
-      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
-    }
   },
   "lint-staged": {
     "**/*.less": "stylelint --syntax less",
@@ -114,8 +108,9 @@
     "babel-loader": "^8.1.0",
     "babel-plugin-import": "^1.12.2",
     "commitizen": "^4.2.1",
-    "commitlint-config-cz": "^0.13.1",
+    "commitlint-config-gitmoji": "^2.1.2",
     "concurrently": "^5.3.0",
+    "conventional-changelog-gitmoji-config": "^1.1.1",
     "copy-to-clipboard": "^3.3.1",
     "cross-env": "^7.0.0",
     "cz-customizable": "^6.2.1",
