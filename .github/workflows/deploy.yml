@@ -13,8 +13,8 @@ jobs:
       - name: Install and Build 🔧
         run: |
           yarn
-          yarn run lint
-          yarn run site:build
+          yarn lint
+          yarn docs:build
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@3.6.1
         with:
