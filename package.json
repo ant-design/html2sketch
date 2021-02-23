@@ -147,7 +147,7 @@
     "umi-plugin-githubpages": "^2.0.0",
     "umi-test": "^1.9.6",
     "umi-types": "^0.5.11",
-    "webpack-cli": "^3.3.12"
+    "webpack-cli": "^4.5.0"
   },
   "engines": {
     "node": ">=8.0.0"
