@@ -70,7 +70,7 @@
     "registry": "https://registry.npmjs.org"
   },
   "dependencies": {
-    "@sketch-hq/sketch-file-format-ts": "5.1.1",
+    "@sketch-hq/sketch-file-format-ts": "5.2.4",
     "color": "^3.1.2",
     "css": "^3.0.0",
     "svg-pathdata": "^5.0.5",
