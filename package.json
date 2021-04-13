@@ -109,7 +109,7 @@
     "babel-plugin-import": "^1.12.2",
     "commitizen": "^4.2.1",
     "commitlint-config-gitmoji": "^2.1.2",
-    "concurrently": "^5.3.0",
+    "concurrently": "^6.0.2",
     "conventional-changelog-gitmoji-config": "^1.1.1",
     "copy-to-clipboard": "^3.3.1",
     "cross-env": "^7.0.0",
