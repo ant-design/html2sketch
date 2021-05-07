@@ -1,0 +1,27 @@
+name: Release CI
+on:
+  push:
+    branches:
+      - master
+      - beta
+
+jobs:
+  release:
+    name: Release
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: c-hive/gha-yarn-cache@v1
+
+      - name: install
+        run: yarn
+
+      - name: Test
+        run: yarn test
+
+      - name: release
+        run: yarn release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
