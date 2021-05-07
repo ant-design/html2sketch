@@ -9,11 +9,6 @@ class ShapeGroup extends BaseLayer {
   }
 
   /**
-   * 旋转角度
-   */
-  rotation: number = 0;
-
-  /**
    * ShapeGroup 的 layers 必须是 AnyShape 类型
    */
   layers: ShapePath[] = [];
