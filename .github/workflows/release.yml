@@ -6,9 +6,9 @@ on:
       - beta
 
 jobs:
-  release:
-    name: Release
-    runs-on: ubuntu-latest
+  test:
+    name: Test
+    runs-on: macos-latest
     steps:
       - uses: actions/checkout@v2
 
@@ -19,6 +19,18 @@ jobs:
 
       - name: Test
         run: yarn test
+
+  release:
+    needs: test
+    name: Release
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: c-hive/gha-yarn-cache@v1
+
+      - name: install
+        run: yarn
 
       - name: release
         run: yarn release
