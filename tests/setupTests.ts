@@ -32,3 +32,5 @@ Object.defineProperty(window, 'localStorage', {
 Object.defineProperty(window, 'cancelAnimationFrame', {
   value: () => null,
 });
+
+jest.setTimeout(20000);
