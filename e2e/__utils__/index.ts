@@ -64,7 +64,7 @@ export const initHtml2Sketch = async (
   };
 
   return {
-    nodeToSketchSymbol: async (
+    nodeToSymbol: async (
       url: string,
       selector: (dom: Document) => Element | Element[],
       options?: NodeToSketchSymbolOptions,
@@ -126,6 +126,8 @@ export const initHtml2Sketch = async (
         throw e;
       }
     },
+    browser,
+    page,
   };
 };
 
