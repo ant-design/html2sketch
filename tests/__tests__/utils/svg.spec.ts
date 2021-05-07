@@ -27,13 +27,13 @@ describe('urlToRawString', () => {
       'https://gw.alipayobjects.com/zos/antfincdn/4%24TO5UyFLS/bgRaw.svg',
     );
     expect(str?.trim()).toBe(bgRawSvg.trim());
-  });
+  }, 10000);
   it('错误解析', async () => {
     const str = await urlToRawSVG(
       'https://gw.alipayobjects.com/zos/antfincdn/4%24TO5UyFLS/123.svg',
     );
     expect(str).toBe(undefined);
-  });
+  }, 10000);
 });
 
 describe('nodeToOptSVG', () => {

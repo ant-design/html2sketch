@@ -13,7 +13,7 @@ describe('测试 Svg Icon', () => {
       return dom.getElementById('icons')!;
     }
 
-    const symbol = await html2Sketch.nodeToSketchSymbol('/svg/icon', selector);
+    const symbol = await html2Sketch.nodeToSymbol('/svg/icon', selector);
     expect(symbol).toBeTruthy();
 
     if (isUpdate) {
@@ -28,7 +28,7 @@ describe('测试 Svg Icon', () => {
       return dom.getElementById('button')!;
     }
 
-    const symbol = await html2Sketch.nodeToSketchSymbol('/svg/icon', selector);
+    const symbol = await html2Sketch.nodeToSymbol('/svg/icon', selector);
     expect(symbol).toBeTruthy();
 
     if (isUpdate) {

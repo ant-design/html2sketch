@@ -46,7 +46,7 @@ export const initHtml2Sketch = async (
   },
 ) => {
   const isOnline = process.env.ONLINE === '1';
-  const httpURL = `http://localhost:${port}/e2e`;
+  const httpURL = `http://localhost:${process.env.PORT || port}/e2e`;
   const fileURL = `file://${resolve(__dirname, '../dist')}`;
   const baseURL = isOnline ? fileURL : httpURL;
 
@@ -64,12 +64,13 @@ export const initHtml2Sketch = async (
   };
 
   return {
-    nodeToSketchSymbol: async (
+    nodeToSymbol: async (
       url: string,
       selector: (dom: Document) => Element | Element[],
       options?: NodeToSketchSymbolOptions,
     ): Promise<SketchFormat.SymbolMaster> => {
       await page.goto(`${baseURL}${url}${isOnline ? '.html' : ''}`);
+      await page.waitForTimeout(1500);
 
       try {
         await page.evaluate(`window.IS_TEST_ENV=true`);
@@ -113,6 +114,7 @@ export const initHtml2Sketch = async (
       await page.addScriptTag({
         path: resolve(__dirname, './dist/html2sketch.js'),
       });
+      await page.waitForTimeout(1500);
 
       try {
         const json = await page.evaluate(
@@ -126,6 +128,8 @@ export const initHtml2Sketch = async (
         throw e;
       }
     },
+    browser,
+    page,
   };
 };
 

@@ -13,10 +13,7 @@ describe('测试图片', () => {
       return dom.getElementById('inline-img')!;
     }
 
-    const image = await html2Sketch.nodeToSketchSymbol(
-      '/basic/image',
-      selector,
-    );
+    const image = await html2Sketch.nodeToSymbol('/basic/image', selector);
     expect(image).toBeTruthy();
 
     if (isUpdate) {
@@ -31,10 +28,7 @@ describe('测试图片', () => {
       return dom.getElementById('png-url')!;
     }
 
-    const image = await html2Sketch.nodeToSketchSymbol(
-      '/basic/image',
-      selector,
-    );
+    const image = await html2Sketch.nodeToSymbol('/basic/image', selector);
     expect(image).toBeTruthy();
 
     if (isUpdate) {
