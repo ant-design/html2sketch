@@ -20,7 +20,7 @@ describe('测试 Svg Icon', () => {
       outputJSONData(symbol, 'svg-icon');
     }
     expect(symbol).toStrictEqual(svgIconJSON);
-  }, 15000);
+  });
 
   test('svg button', async () => {
     const html2Sketch = await initHtml2Sketch();
