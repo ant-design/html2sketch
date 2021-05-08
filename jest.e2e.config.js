@@ -9,7 +9,7 @@ module.exports = {
     html2sketch: '<rootDir>/src',
     '@e2e-utils': '<rootDir>/e2e/__utils__',
   },
-  setupFilesAfterEnv: ['./e2e/setupE2E.ts'],
+  testTimeout: 30000,
   testMatch: ['**/e2e/**/?(*.)+(e2e).ts'],
   testPathIgnorePatterns: ['/node_modules/'],
   moduleFileExtensions: ['js', 'ts'],
