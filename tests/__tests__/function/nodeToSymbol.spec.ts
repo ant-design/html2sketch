@@ -1,4 +1,4 @@
-import { nodeToSketchSymbol, ResizingConstraint } from 'html2sketch';
+import { nodeToSymbol, ResizingConstraint } from 'html2sketch';
 import {
   calcResizingConstraint,
   getGroupLayout,
@@ -19,11 +19,11 @@ beforeAll(() => {
 
   setupTestNode(innerHTML);
 });
-describe('nodeToSketchSymbol', () => {
+describe('nodeToSymbol', () => {
   it('文本正常解析', async () => {
     const node = document.getElementById('group') as HTMLDivElement;
 
-    const symbol = (await nodeToSketchSymbol(node)).toSketchJSON();
+    const symbol = (await nodeToSymbol(node)).toSketchJSON();
 
     expect(symbol._class).toBe('symbolMaster');
     expect(symbol.layers).toHaveLength(2);
@@ -41,7 +41,7 @@ describe('nodeToSketchSymbol', () => {
   it('图片正常解析', async () => {
     const node = document.getElementById('bitmap') as HTMLDivElement;
 
-    const symbol = (await nodeToSketchSymbol(node)).toSketchJSON();
+    const symbol = (await nodeToSymbol(node)).toSketchJSON();
 
     expect(symbol._class).toBe('symbolMaster');
     expect(symbol.layers).toHaveLength(1);
@@ -62,7 +62,7 @@ describe('nodeToSketchSymbol', () => {
     const node = document.getElementById('123') as HTMLDivElement;
 
     try {
-      await nodeToSketchSymbol(node);
+      await nodeToSymbol(node);
     } catch (e) {
       expect(e).toStrictEqual(Error('解析对象不存在 请检查传入对象'));
     }
@@ -72,7 +72,7 @@ describe('nodeToSketchSymbol', () => {
     it('修改 layout', async () => {
       const node = document.getElementById('group') as HTMLDivElement;
 
-      const symbol = await nodeToSketchSymbol(node, {
+      const symbol = await nodeToSymbol(node, {
         symbolLayout: 'LEFT_TO_RIGHT',
       });
       expect(symbol.groupLayout).toStrictEqual(getGroupLayout('LEFT_TO_RIGHT'));
@@ -80,7 +80,7 @@ describe('nodeToSketchSymbol', () => {
     it('修改 symbol 名称', async () => {
       const node = document.getElementById('group') as HTMLDivElement;
 
-      const symbol = await nodeToSketchSymbol(node, {
+      const symbol = await nodeToSymbol(node, {
         handleSymbol: (s) => {
           s.name = 'test-symbol';
         },
@@ -91,7 +91,7 @@ describe('nodeToSketchSymbol', () => {
     it('修改 symbol 参数', async () => {
       const node = document.getElementById('symbol-params') as HTMLDivElement;
 
-      const symbol = await nodeToSketchSymbol(node, {
+      const symbol = await nodeToSymbol(node, {
         layerParams: [
           {
             selector: {

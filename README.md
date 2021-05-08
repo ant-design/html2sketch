@@ -78,7 +78,7 @@ yarn add html2sketch
 
 ### Usage
 
-`html2sketch` includes three methods `nodeToLayer` 、 `nodeToGroup` 和 `nodeToSketchSymbol` 。
+`html2sketch` includes three methods `nodeToLayer` 、 `nodeToGroup` 和 `nodeToSymbol` 。
 
 #### nodeToLayer
 
@@ -130,19 +130,19 @@ fn().then((json) => {
 });
 ```
 
-#### nodeToSketchSymbol
+#### nodeToSymbol
 
 This method transforms a DOM node and its children into a Sketch Symbol Object
 
 ```js
-import { nodeToSketchSymbol } from 'html2sketch';
+import { nodeToSymbol } from 'html2sketch';
 
 const fn = async () => {
   // 1. get DOM node
   const node = document.getElementById('id');
 
-  // 2. run nodeToSketchSymbol method
-  const symbol = await nodeToSketchSymbol(node);
+  // 2. run nodeToSymbol method
+  const symbol = await nodeToSymbol(node);
 
   // 3. generate Sketch JSON
   const sketchJSON = symbol.toSketchJSON();

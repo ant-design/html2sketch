@@ -1,8 +1,8 @@
 import { join, resolve } from 'path';
 import puppeteer from 'puppeteer';
-import SketchFormat from '@sketch-hq/sketch-file-format-ts';
 import { writeFileSync } from 'fs';
-import { NodeToSketchSymbolOptions, SymbolMaster } from 'html2sketch';
+import type SketchFormat from '@sketch-hq/sketch-file-format-ts';
+import type { NodeToSymbolOptions, SymbolMaster } from 'html2sketch';
 
 import defaultModal from './json/default-modal.json';
 import inlineImage from './json/inline-image.json';
@@ -67,7 +67,7 @@ export const initHtml2Sketch = async (
     nodeToSymbol: async (
       url: string,
       selector: (dom: Document) => Element | Element[],
-      options?: NodeToSketchSymbolOptions,
+      options?: NodeToSymbolOptions,
     ): Promise<SketchFormat.SymbolMaster> => {
       await page.goto(`${baseURL}${url}${isOnline ? '.html' : ''}`);
       await page.waitForTimeout(1500);
@@ -95,7 +95,7 @@ export const initHtml2Sketch = async (
             : `,{${symbolOptionsArr.join(',')}}`;
 
         const sketchJSON = (await page.evaluate(
-          `DUMI_HTML2SKETCH.nodeToSketchSymbol(${selector}(document)${symbolOptions}).then(symbol => symbol.toSketchJSON())`,
+          `DUMI_HTML2SKETCH.nodeToSymbol(${selector}(document)${symbolOptions}).then(symbol => symbol.toSketchJSON())`,
         )) as SketchFormat.SymbolMaster;
 
         await closeFn();

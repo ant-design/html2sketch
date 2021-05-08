@@ -67,6 +67,6 @@ describe('parseInputTextToText', () => {
     expect(json._class).toBe('text');
     expect(json.attributedString.string).toBe('123456');
 
-    expect(input.centerX).toBe(53);
+    expect(input.centerX).toBeGreaterThanOrEqual(53);
   });
 });

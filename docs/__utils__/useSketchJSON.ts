@@ -1,13 +1,13 @@
 import { useState } from 'react';
 import SketchFormat from '@sketch-hq/sketch-file-format-ts';
 import copy from 'copy-to-clipboard';
-import { nodeToGroup, nodeToSketchSymbol } from 'html2sketch';
+import { nodeToGroup, nodeToSymbol } from 'html2sketch';
 import { message } from 'antd';
 
 declare global {
   interface Window {
     DUMI_HTML2SKETCH: {
-      nodeToSketchSymbol: any;
+      nodeToSymbol: any;
       nodeToGroup: any;
     };
   }
@@ -15,7 +15,7 @@ declare global {
 
 if (typeof window !== 'undefined') {
   window.DUMI_HTML2SKETCH = {
-    nodeToSketchSymbol,
+    nodeToSymbol,
     nodeToGroup,
   };
 }
@@ -70,7 +70,7 @@ const useSketchJSON = () => {
     sketchJSON,
     generateSymbol: async (elements: Element | Element[]) => {
       await parserFactory(elements, async (el: Element) =>
-        (await nodeToSketchSymbol(el)).toSketchJSON(),
+        (await nodeToSymbol(el)).toSketchJSON(),
       );
     },
     generateGroup: async (elements: Element | Element[]) => {
