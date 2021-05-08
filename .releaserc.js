@@ -23,7 +23,7 @@ module.exports = {
       },
     ],
     '@semantic-release/npm', // 如果是npm包会自动更新版本号并发布
-    ['@semantic-release/github'], // 推送代码回到GitHub
+    '@semantic-release/github', // 推送代码回到GitHub
     [
       '@semantic-release/git', //发布release
       {
