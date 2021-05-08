@@ -47,7 +47,9 @@
     "e2e:local": "jest --config=jest.e2e.config.js",
     "e2e:update": "UPDATE=1 ONLINE=1 jest --config=jest.e2e.config.js --update-snapshot",
     "---------   ": "",
+    "prepublishOnly": "npm run build",
     "release": "semantic-release",
+    "---------     ": "",
     "clean": "rm -rf es lib dist build coverage e2e/dist src/.umi* .eslintcache",
     "lint": "npm run lint-eslint",
     "tsc": "tsc -p tsconfig-check.json",
@@ -55,7 +57,6 @@
     "lint-staged": "lint-staged",
     "lint-staged:js": "eslint --cache --ext .js,.jsx,.ts,.tsx --format=pretty",
     "lint:fix": "eslint --fix --cache --ext .js,.jsx,.ts,.tsx --format=pretty ",
-    "prepublishOnly": "npm run test && npm run build && np --no-cleanup --yolo --no-publish --any-branch",
     "prettier": "prettier -c --write \"**/**\"",
     "commit": "git-cz"
   },
