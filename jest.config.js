@@ -12,7 +12,7 @@ module.exports = {
     html2sketch: '<rootDir>/src',
     '@test-utils': '<rootDir>/tests/__utils__',
   },
-  setupFilesAfterEnv: ['./tests/setupTests.ts'],
+  testTimeout: 30000,
   testMatch: ['**/?(*.)+(spec|test).ts'],
   testPathIgnorePatterns: ['/node_modules/', '/e2e/'],
   moduleFileExtensions: ['js', 'ts', 'tsx', 'json', 'node'],

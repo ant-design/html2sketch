@@ -15,17 +15,17 @@ describe('parseInputTextToText', () => {
     document.body.innerHTML = `
 <div>
 
- 
- 
+
+
   <input id="input" />
-  
+
   <input id="input-placeholder" class="input" placeholder="测试输入框" />
-  
+
   <div>
     <input id="input-value" placeholder="测试输入框" value="这是值" />
   </div>
- 
-  
+
+
   <div>
     <input id="input-center" type="text" value="123456" style="width: 100px;text-align:center;" />
   </div>
@@ -57,7 +57,7 @@ describe('parseInputTextToText', () => {
     const json = input.toSketchJSON();
     expect(json._class).toBe('text');
     expect(json.attributedString.string).toBe('这是值');
-    expect(input.x).toBe(1);
+    expect(input.x).toBeLessThanOrEqual(2);
   });
 
   it('input-center 解析成文本', () => {
