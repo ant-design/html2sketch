@@ -1,5 +1,17 @@
 # html2sketch 更新日志
 
+# [1.0.0-beta.1](https://github.com/ant-design/html2sketch/compare/v0.4.7...v1.0.0-beta.1) (2021-05-08)
+
+
+### ♻ Code Refactoring
+
+* rename the symbol function ([09d0de9](https://github.com/ant-design/html2sketch/commit/09d0de9))
+
+
+### 💥 BREAKING CHANGES
+
+* rename `nodeToSketchSymbol` to nodeToSymbol
+
 ## [0.4.7](https://github.com/ant-design/html2sketch/compare/v0.4.6...v0.4.7) (2021-05-08)
 
 
