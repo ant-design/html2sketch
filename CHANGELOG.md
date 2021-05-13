@@ -1,5 +1,12 @@
 # html2sketch 更新日志
 
+# [1.0.0-beta.2](https://github.com/ant-design/html2sketch/compare/v1.0.0-beta.1...v1.0.0-beta.2) (2021-05-13)
+
+
+### 🐛 Bug Fixes
+
+* fix position bug due to sketch text align parsing error ([1dce98f](https://github.com/ant-design/html2sketch/commit/1dce98f)), closes [#51](https://github.com/ant-design/html2sketch/issues/51)
+
 # [1.0.0-beta.1](https://github.com/ant-design/html2sketch/compare/v0.4.7...v1.0.0-beta.1) (2021-05-08)
 
 ### ♻ Code Refactoring
