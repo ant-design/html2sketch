@@ -1,6 +1,6 @@
 import React from 'react';
 import { useElements, TestLayout } from '@docs-utils';
-import './List.css';
+import './style.css';
 
 /**
  *
@@ -11,7 +11,7 @@ export default () => {
   return (
     <TestLayout elements={elements}>
       <div ref={ref}>
-        <div className="tea-tabs tea-tabs--vertical">
+        <div className="tea-tabs tea-tabs--vertical" id={'text-alignment'}>
           前置对象
           <div className="tea-tabs__tabbar">
             <div className="tea-tabs__scroll-area">

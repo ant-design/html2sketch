@@ -110,3 +110,11 @@ placeholder 和输入的值都在伪类里
 目前这种垂直居中是因为 `line-height` 值超过了 input 的高度使得文本默认在垂直轴上是居中的
 
 <code src="./demos/Text/InputVerticalAligin.tsx" />
+
+### 文本对齐方式
+
+原来在网页中设置了 `text-align: right` 的会得到 Sketch Alignment 为 `SketchFormat.TextHorizontalAlignment.Right`，而这个数据传入到 sketch 中则会导致 sketch 中文本位置的解析出错
+
+[用例来源](https://github.com/ant-design/html2sketch/issues/51)
+
+<code src="./demos/Text/TextAlignment/index.tsx" />

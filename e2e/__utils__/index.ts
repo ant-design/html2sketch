@@ -9,12 +9,14 @@ import inlineImage from './json/inline-image.json';
 import pngURLImage from './json/png-url-image.json';
 import svgButton from './json/svg-button.json';
 import svgIcon from './json/svg-icon.json';
+import textAlignment from './json/text-alignment.json';
 
 export const defaultModalJSON = defaultModal;
 export const inlineImageJSON = inlineImage;
 export const pngURLImageJSON = pngURLImage;
 export const svgButtonJSON = svgButton;
 export const svgIconJSON = svgIcon;
+export const textAlignmentJSON = textAlignment;
 
 export type HandleSymbolFn = (symbol: SymbolMaster) => void;
 
