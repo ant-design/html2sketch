@@ -4,9 +4,9 @@
     "_class": "rect",
     "constrainProportions": false,
     "height": 96,
-    "width": 192,
-    "x": 375,
-    "y": 6744
+    "width": 238,
+    "x": 343,
+    "y": 6613
   },
   "allowsOverrides": true,
   "backgroundColor": {
@@ -1422,8 +1422,8 @@
       "frame": {
         "_class": "rect",
         "constrainProportions": false,
-        "height": 88,
-        "width": 14,
+        "height": 22,
+        "width": 56,
         "x": 150,
         "y": 0
       },
@@ -1498,7 +1498,7 @@
       "automaticallyDrawOnUnderlyingPath": false,
       "dontSynchroniseWithSymbol": false,
       "lineSpacingBehaviour": 2,
-      "textBehaviour": 1,
+      "textBehaviour": 0,
       "glyphBounds": ""
     }
   ],
