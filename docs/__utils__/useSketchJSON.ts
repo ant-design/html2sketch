@@ -7,7 +7,7 @@ import { message } from 'antd';
 declare global {
   interface Window {
     DUMI_HTML2SKETCH: {
-      nodeToSketchSymbol: any;
+      nodeToSymbol: any;
       nodeToGroup: any;
     };
   }
@@ -15,7 +15,7 @@ declare global {
 
 if (typeof window !== 'undefined') {
   window.DUMI_HTML2SKETCH = {
-    nodeToSketchSymbol: nodeToSymbol,
+    nodeToSymbol,
     nodeToGroup,
   };
 }

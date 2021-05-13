@@ -38,11 +38,6 @@ class ShapePath extends BaseLayer {
   }
 
   /**
-   * 旋转
-   */
-  rotation: number = 0;
-
-  /**
    * 内部使用的 贝塞尔曲线 points
    */
   points: BezierPoint[];

@@ -19,7 +19,7 @@ beforeAll(() => {
 
   setupTestNode(innerHTML);
 });
-describe('nodeToSketchSymbol', () => {
+describe('nodeToSymbol', () => {
   it('文本正常解析', async () => {
     const node = document.getElementById('group') as HTMLDivElement;
 

@@ -1,4 +1,3 @@
 module.exports = {
-  extends: ['cz'],
-  rules: {},
+  extends: ['gitmoji'],
 };
