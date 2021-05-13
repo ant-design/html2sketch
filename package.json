@@ -113,7 +113,6 @@
     "commitlint": "^12.1.1",
     "commitlint-config-gitmoji": "^2.2.5",
     "concurrently": "^5.3.0",
-    "conventional-changelog-gitmoji-config": "^1.1.1",
     "copy-to-clipboard": "^3.3.1",
     "cross-env": "^7.0.0",
     "eslint": "^7.7.0",
