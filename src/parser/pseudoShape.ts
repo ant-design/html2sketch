@@ -17,8 +17,8 @@ export const parsePseudoToShape = async (
   let x = left;
   let y = top;
 
-  const pseudoW = parseFloat(pseudoEl.width);
-  const pseudoH = parseFloat(pseudoEl.height);
+  const pseudoW = parseFloat(pseudoEl.width) + parseFloat(pseudoEl.paddingLeft) + parseFloat(pseudoEl.paddingRight);
+  const pseudoH = parseFloat(pseudoEl.height) + parseFloat(pseudoEl.paddingTop) + parseFloat(pseudoEl.paddingBottom);
 
   const rect = await parseToShape(node, pseudoEl);
 
@@ -32,8 +32,8 @@ export const parsePseudoToShape = async (
   }
 
   rect.frame = new Frame({
-    width: pseudoW !== width ? pseudoW : width,
-    height: pseudoH !== height ? pseudoH : height,
+    width: pseudoW,
+    height: pseudoH,
     x,
     y,
   });
