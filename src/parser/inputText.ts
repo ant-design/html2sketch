@@ -19,7 +19,7 @@ export const parseInputTextToText = (
   const { value, placeholder } = node as HTMLInputElement;
   if (!value && !placeholder) return;
   if (value) {
-    pseudoText = value;
+    pseudoText = node.type === 'password' ? value.replace(/./g, '•') : value;
   } else {
     pseudoText = placeholder;
   }
