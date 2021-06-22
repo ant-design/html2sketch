@@ -25,5 +25,5 @@
       "@docs-utils": ["./docs/__utils__"]
     }
   },
-  "include": ["src/"]
+  "include": ["src", "types"]
 }
