@@ -1,5 +1,6 @@
 // @ts-ignore
 import getSvgoInstance from 'svgo-browser/lib/get-svgo-instance';
+import fetch from './fetch';
 
 /**
  * svg 基本样式

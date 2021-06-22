@@ -5,6 +5,7 @@ import {
   initImageURL,
   getBase64ImageString,
 } from '../../utils/image';
+import fetch from '../../utils/fetch';
 
 /**
  * 图片资产

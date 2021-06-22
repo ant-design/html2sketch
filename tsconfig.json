@@ -27,7 +27,7 @@
       "@e2e-utils": ["./e2e/__utils__"]
     }
   },
-  "include": ["**/src/", "**/docs/", "**/e2e/", "**/tests/"],
+  "include": ["**/src/", "**/docs/", "**/e2e/", "**/tests/", "types"],
   "exclude": [
     "node_modules",
     "build",

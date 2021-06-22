@@ -1,6 +1,7 @@
 import BaseLayer from '../Base/BaseLayer';
 import { defaultExportOptions } from '../utils';
 import { uuid } from '../../utils/utils';
+import fetch from '../../utils/fetch';
 
 import {
   blobToBase64,
