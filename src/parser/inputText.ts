@@ -65,6 +65,10 @@ export const parseInputTextToText = (
   if (!value) {
     // 从样式表中拿到相应的 css 规则
     Array.from(document.styleSheets).forEach(({ cssRules }) => {
+      // 修正部分情况下（TODO：确认具体是什么情况）
+      // 没有cssRules 的解析报错
+      if (!cssRules) return;
+
       Array.from(cssRules).forEach((rule) => {
         const { selectorText, style } = rule as CSSStyleRule;
         // 针对每条规则进行一次判断
