@@ -1,5 +1,17 @@
 # html2sketch 更新日志
 
+# [1.0.0-beta.3](https://github.com/ant-design/html2sketch/compare/v1.0.0-beta.2...v1.0.0-beta.3) (2021-06-22)
+
+
+### ✨ Features
+
+* 提供自定义 fetch 方法的能力 ([28ed276](https://github.com/ant-design/html2sketch/commit/28ed276))
+
+
+### 🐛 Bug Fixes
+
+* fix placeholder parsing without css rules ([505a390](https://github.com/ant-design/html2sketch/commit/505a390))
+
 # [1.0.0-beta.2](https://github.com/ant-design/html2sketch/compare/v1.0.0-beta.1...v1.0.0-beta.2) (2021-05-13)
 
 
