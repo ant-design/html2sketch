@@ -29,9 +29,6 @@
   "scripts": {
     "start": "umi dev --dumi",
     "build": "father-build && webpack",
-    "---------": "",
-    "publish": "npm publish",
-    "publish:next": "npm publish --tag next",
     "---------    ": "",
     "docs:preview": "PREVIEW=1 umi build  --dumi",
     "docs:build": "umi build  --dumi",
