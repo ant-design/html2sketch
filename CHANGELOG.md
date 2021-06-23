@@ -1,5 +1,12 @@
 # html2sketch 更新日志
 
+# [1.0.0-beta.4](https://github.com/ant-design/html2sketch/compare/v1.0.0-beta.3...v1.0.0-beta.4) (2021-06-23)
+
+
+### ✨ Features
+
+* 优化抓取 base64 图片方法 ([07dd128](https://github.com/ant-design/html2sketch/commit/07dd128))
+
 # [1.0.0-beta.3](https://github.com/ant-design/html2sketch/compare/v1.0.0-beta.2...v1.0.0-beta.3) (2021-06-22)
 
 
