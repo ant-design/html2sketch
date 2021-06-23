@@ -1,5 +1,12 @@
 # html2sketch 更新日志
 
+# [1.0.0-beta.5](https://github.com/ant-design/html2sketch/compare/v1.0.0-beta.4...v1.0.0-beta.5) (2021-06-23)
+
+
+### 🐛 Bug Fixes
+
+* fix password input text ([c8ff928](https://github.com/ant-design/html2sketch/commit/c8ff928))
+
 # [1.0.0-beta.4](https://github.com/ant-design/html2sketch/compare/v1.0.0-beta.3...v1.0.0-beta.4) (2021-06-23)
 
 
