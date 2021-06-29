@@ -5,7 +5,7 @@ import copy from 'copy-to-clipboard';
 import {
   AnyLayer,
   nodeToGroup,
-  nodeToSketchSymbol,
+  nodeToSymbol,
   GroupLayoutType,
 } from 'html2sketch';
 import Footer, { ActionType } from './Footer';
@@ -82,7 +82,7 @@ const ButtonSymbolDemo: FC = () => {
         transformFunc(async (node) => {
           const symbolLayout = node.getAttribute('layout') as GroupLayoutType;
 
-          const symbol = await nodeToSketchSymbol(node, {
+          const symbol = await nodeToSymbol(node, {
             symbolLayout: symbolLayout || undefined,
             handleSymbol: (symbol) => {
               symbol.name = node.getAttribute('symbol-name') || 'symbol';

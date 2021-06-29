@@ -1,11 +1,61 @@
 # html2sketch 更新日志
 
-## [0.4.7](https://github.com/ant-design/html2sketch/compare/v0.4.6...v0.4.7) (2021-05-08)
+# [1.0.0-beta.6](https://github.com/ant-design/html2sketch/compare/v1.0.0-beta.5...v1.0.0-beta.6) (2021-06-29)
 
 
 ### 🐛 Bug Fixes
 
-* input line-height ([87063af](https://github.com/ant-design/html2sketch/commit/87063af))
+* fix overflow hidden node use clipping mask ([defb941](https://github.com/ant-design/html2sketch/commit/defb941))
+* fix overflow hidden node use clipping mask ([055f25d](https://github.com/ant-design/html2sketch/commit/055f25d))
+
+# [1.0.0-beta.5](https://github.com/ant-design/html2sketch/compare/v1.0.0-beta.4...v1.0.0-beta.5) (2021-06-23)
+
+
+### 🐛 Bug Fixes
+
+* fix password input text ([c8ff928](https://github.com/ant-design/html2sketch/commit/c8ff928))
+
+# [1.0.0-beta.4](https://github.com/ant-design/html2sketch/compare/v1.0.0-beta.3...v1.0.0-beta.4) (2021-06-23)
+
+
+### ✨ Features
+
+* 优化抓取 base64 图片方法 ([07dd128](https://github.com/ant-design/html2sketch/commit/07dd128))
+
+# [1.0.0-beta.3](https://github.com/ant-design/html2sketch/compare/v1.0.0-beta.2...v1.0.0-beta.3) (2021-06-22)
+
+
+### ✨ Features
+
+* 提供自定义 fetch 方法的能力 ([28ed276](https://github.com/ant-design/html2sketch/commit/28ed276))
+
+
+### 🐛 Bug Fixes
+
+* fix placeholder parsing without css rules ([505a390](https://github.com/ant-design/html2sketch/commit/505a390))
+
+# [1.0.0-beta.2](https://github.com/ant-design/html2sketch/compare/v1.0.0-beta.1...v1.0.0-beta.2) (2021-05-13)
+
+
+### 🐛 Bug Fixes
+
+* fix position bug due to sketch text align parsing error ([1dce98f](https://github.com/ant-design/html2sketch/commit/1dce98f)), closes [#51](https://github.com/ant-design/html2sketch/issues/51)
+
+# [1.0.0-beta.1](https://github.com/ant-design/html2sketch/compare/v0.4.7...v1.0.0-beta.1) (2021-05-08)
+
+### ♻ Code Refactoring
+
+- rename the symbol function ([09d0de9](https://github.com/ant-design/html2sketch/commit/09d0de9))
+
+### 💥 BREAKING CHANGES
+
+- rename `nodeToSketchSymbol` to nodeToSymbol
+
+## [0.4.7](https://github.com/ant-design/html2sketch/compare/v0.4.6...v0.4.7) (2021-05-08)
+
+### 🐛 Bug Fixes
+
+- input line-height ([87063af](https://github.com/ant-design/html2sketch/commit/87063af))
 
 ## 0.4.6 (2020-11-04)
 

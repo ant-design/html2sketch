@@ -73,9 +73,9 @@ export interface TextParam {
 }
 
 /**
- * nodeToSketchSymbol 配置项
+ * nodeToSymbol 配置项
  */
-export interface NodeToSketchSymbolOptions {
+export interface NodeToSymbolOptions {
   /**
    * symbol 自己的 layout 类型
    */

@@ -41,3 +41,5 @@ screenshot
 example/.temp/*
 .eslintcache
 techUI*
+
+.env

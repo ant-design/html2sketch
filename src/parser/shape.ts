@@ -44,6 +44,11 @@ export const parseToShape = async (
     styles = getComputedStyle(node);
   }
 
+  const { overflow } = styles;
+  if (overflow === 'hidden') {
+    rect.hasClippingMask = true;
+  }
+
   const {
     // 背景颜色
     backgroundColor,
