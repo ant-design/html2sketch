@@ -54,9 +54,13 @@ export const parseLinearGradient = (value: string) => {
     };
   }
   if (parts.length > 2) {
-    // 如果 parts 的第一个对象 不包含 deg 和 to
+    // 如果 parts 的第一个对象 不包含 deg  to 或者 rad
     // 那就意味着全部都是 stops
-    if (!parts[0].includes('deg') && !parts[0].includes('to')) {
+    if (
+      !parts[0].includes('deg') &&
+      !parts[0].includes('to') &&
+      !parts[0].includes('rad')
+    ) {
       return { angle: '180deg', stops: parts };
     }
 

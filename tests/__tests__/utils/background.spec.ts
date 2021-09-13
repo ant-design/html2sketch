@@ -166,6 +166,13 @@ describe('parseBackgroundImage', () => {
       const result = parseBackgroundImageType(str) as BackgroundImageType;
       expect(result.type).toStrictEqual('LinearGradient');
     });
+    it('解析 angle 三种颜色', () => {
+      const str = 'linear-gradient(1.5708rad, red, yellow, blue)';
+      const result = parseBackgroundImageType(str) as BackgroundImageType;
+      expect(result.type).toStrictEqual('LinearGradient');
+      expect(result.value.angle).toStrictEqual('1.5708rad');
+      expect(result.value.stops.length).toEqual(3);
+    });
   });
 });
 
@@ -192,6 +199,14 @@ describe('parseLinearGradient', () => {
     expect(result).toStrictEqual({
       stops: ['red', 'blue'],
       angle: '90deg',
+    });
+  });
+  it('解析 angle 类型的方向', () => {
+    const str = '1.5708rad, red, blue';
+    const result = parseLinearGradient(str);
+    expect(result).toStrictEqual({
+      stops: ['red', 'blue'],
+      angle: '1.5708rad',
     });
   });
   it('解析三种颜色', () => {

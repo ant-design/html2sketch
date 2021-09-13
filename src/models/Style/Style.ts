@@ -100,6 +100,21 @@ class Style extends BaseStyle {
     const from = { x: 0.5, y: 0 };
     const to = { x: 0.5, y: 1 };
 
+    // 处理带 rad 弧度的对象
+    if (angle.includes('rad')) {
+      const rad = parseFloat(angle.split('rad')[0]);
+      from.x = 0;
+      from.y = 0;
+
+      // 获取自然数 0 (-0 -> 0)
+      const getNaturalZero = (num: number) => (Math.abs(num) === 0 ? 0 : num);
+
+      const x = Math.round(Math.cos(rad) * 100) / 100;
+      const y = Math.round(Math.sin(rad) * 100) / 100;
+
+      to.x = getNaturalZero(x);
+      to.y = getNaturalZero(y);
+    }
     // Learn math or find someone smarter to figure this out correctly
     switch (angle) {
       case 'to top':
