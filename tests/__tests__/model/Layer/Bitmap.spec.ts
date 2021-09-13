@@ -76,7 +76,7 @@ describe('Bitmap 类', () => {
         layerListExpandedType: 0,
         name: 'bitmap',
         nameIsFixed: false,
-        resizingConstraint: 63,
+        resizingConstraint: 27,
         resizingType: 0,
         rotation: 0,
         shouldBreakMaskChain: false,

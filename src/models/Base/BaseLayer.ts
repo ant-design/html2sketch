@@ -19,7 +19,7 @@ abstract class BaseLayer {
     this.class = type;
     this.style = new Style();
 
-    this.setResizingConstraint(ResizingConstraint.None);
+    this.setResizingConstraint(ResizingConstraint.Left, ResizingConstraint.Top);
 
     this.frame = new Frame(params);
 

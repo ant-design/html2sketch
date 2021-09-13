@@ -168,7 +168,7 @@ describe('Rectangle 类', () => {
             point: '{0, 1}',
           },
         ],
-        resizingConstraint: 63,
+        resizingConstraint: 27,
         resizingType: 0,
         rotation: 0,
         shouldBreakMaskChain: false,
