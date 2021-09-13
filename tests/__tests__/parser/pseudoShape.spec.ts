@@ -119,6 +119,41 @@ describe('parsePseudoToShape', () => {
     border: 2px solid #fff;
     border-top: 0;
     border-left: 0;
+}
+
+.with-padding-button-wrapper {
+  background: #fff;
+  border-color: #d9d9d9;
+  border-style: solid;
+  border-width: 1.02px 1px 1px 0;
+  color: rgba(0, 0, 0, 0.85);
+  cursor: pointer;
+  display: inline-block;
+  font-size: 14px;
+  height: 32px;
+  line-height: 30px;
+  margin: 0;
+  padding: 0 15px;
+  position: relative;
+}
+
+.with-padding-button-wrapper:first-child {
+  border-left: 1px solid #d9d9d9;
+  border-radius: 2px 0 0 2px;
+}
+
+.with-padding-button-wrapper:not(:first-child):before {
+  background-color: red;
+  box-sizing: content-box;
+  content: "";
+  display: block;
+  height: 100%;
+  left: -1px;
+  padding: 1px 0;
+  position: absolute;
+  top: -1px;
+  width: 1px;
+}
 </style>
     `;
 
@@ -140,6 +175,11 @@ describe('parsePseudoToShape', () => {
       <input type="checkbox" class="ant-checkbox-input" value="" checked="">
       <span id="checkbox" class="ant-checkbox-inner"/>
     </span>
+
+    <div >
+      <div id="no-padding" class="with-padding-button-wrapper">button</div>
+      <div id="with-padding" class="with-padding-button-wrapper">button</div>
+    </div>
 </div>
 `;
     document.body.append(node);
@@ -176,5 +216,17 @@ describe('parsePseudoToShape', () => {
     const checkbox = shape.toSketchJSON();
 
     expect(checkbox.rotation).toBe(-45);
+  });
+
+  it('带 padding 的伪类宽高解析正常', async () => {
+    const node = document.getElementById('with-padding') as HTMLDivElement;
+    const shape = (await parsePseudoToShape(node, 'before')) as Rectangle;
+    const paddingBtn = shape.toSketchJSON();
+
+    expect(paddingBtn.frame.height).toBe(34);
+
+    const node1 = document.getElementById('no-padding') as HTMLDivElement;
+    const shape1 = await parsePseudoToShape(node1, 'before');
+    expect(shape1).toBeUndefined();
   });
 });
