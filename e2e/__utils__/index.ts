@@ -47,10 +47,10 @@ export const initHtml2Sketch = async (
     debug: false,
   },
 ) => {
-  const isOnline = process.env.ONLINE === '1';
+  const isCi = process.env.CI === '1';
   const httpURL = `http://localhost:${process.env.PORT || port}/e2e`;
   const fileURL = `file://${resolve(__dirname, '../dist')}`;
-  const baseURL = isOnline ? fileURL : httpURL;
+  const baseURL = isCi ? fileURL : httpURL;
 
   const browser = await puppeteer.launch({
     headless: debug ? false : !showWindows,
@@ -71,7 +71,7 @@ export const initHtml2Sketch = async (
       selector: (dom: Document) => Element | Element[],
       options?: NodeToSymbolOptions,
     ): Promise<SketchFormat.SymbolMaster> => {
-      await page.goto(`${baseURL}${url}${isOnline ? '.html' : ''}`);
+      await page.goto(`${baseURL}${url}${isCi ? '.html' : ''}`);
       await page.waitForTimeout(1500);
 
       try {
