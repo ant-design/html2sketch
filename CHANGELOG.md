@@ -1,5 +1,13 @@
 # html2sketch 更新日志
 
+# [1.0.0-beta.7](https://github.com/ant-design/html2sketch/compare/v1.0.0-beta.6...v1.0.0-beta.7) (2021-09-13)
+
+
+### 🐛 Bug Fixes
+
+* fix pseudo elt style issue and add test ([5c727a3](https://github.com/ant-design/html2sketch/commit/5c727a3))
+* set default resizingConstraint to left and top ([f897275](https://github.com/ant-design/html2sketch/commit/f897275))
+
 # [1.0.0-beta.6](https://github.com/ant-design/html2sketch/compare/v1.0.0-beta.5...v1.0.0-beta.6) (2021-06-29)
 
 
