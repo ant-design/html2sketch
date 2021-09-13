@@ -16,9 +16,9 @@ export const parsePseudoToShape = async (
   const { left, top, height, width } = bcr;
   let x = left;
   let y = top;
-
-  const pseudoW = parseFloat(pseudoEl.width);
-  const pseudoH = parseFloat(pseudoEl.height);
+  const isContentBox = pseudoEl.boxSizing === 'content-box'
+  const pseudoW = isContentBox ? parseFloat(pseudoEl.width) + parseFloat(pseudoEl.paddingLeft) + parseFloat(pseudoEl.paddingRight) + parseFloat(pseudoEl.borderLeftWidth) + parseFloat(pseudoEl.borderRightWidth) : parseFloat(pseudoEl.width);
+  const pseudoH = isContentBox ? parseFloat(pseudoEl.height) + parseFloat(pseudoEl.paddingTop) + parseFloat(pseudoEl.paddingBottom) + parseFloat(pseudoEl.borderTopWidth) + parseFloat(pseudoEl.borderBottomWidth) : parseFloat(pseudoEl.height);
 
   const rect = await parseToShape(node, pseudoEl);
 
@@ -32,8 +32,8 @@ export const parsePseudoToShape = async (
   }
 
   rect.frame = new Frame({
-    width: pseudoW !== width ? pseudoW : width,
-    height: pseudoH !== height ? pseudoH : height,
+    width: pseudoW,
+    height: pseudoH,
     x,
     y,
   });
