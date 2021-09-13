@@ -19,6 +19,7 @@ abstract class BaseLayer {
     this.class = type;
     this.style = new Style();
 
+    // 默认锁定左边和顶部
     this.setResizingConstraint(ResizingConstraint.Left, ResizingConstraint.Top);
 
     this.frame = new Frame(params);

@@ -35,6 +35,9 @@ class Svg extends BaseLayer {
     const svgShape = new Svgson(svgString, { width, height });
 
     this.layers = svgShape.layers;
+
+    // 默认锁定长宽
+    this.setFixedWidthAndHeight();
   }
 
   /**
