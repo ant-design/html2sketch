@@ -15,6 +15,7 @@ module.exports = {
     'no-shadow': 'warn',
     'no-console': 0,
     'no-underscore-dangle': 0,
+    '@typescript-eslint/no-non-null-asserted-optional-chain': 0,
   },
   settings: {
     'import/resolver': {
