@@ -1,5 +1,12 @@
 # html2sketch 更新日志
 
+# [1.0.0-beta.9](https://github.com/ant-design/html2sketch/compare/v1.0.0-beta.8...v1.0.0-beta.9) (2021-09-13)
+
+
+### 🐛 Bug Fixes
+
+* adjust text and svg resizing constraint ([9fc8970](https://github.com/ant-design/html2sketch/commit/9fc8970))
+
 # [1.0.0-beta.8](https://github.com/ant-design/html2sketch/compare/v1.0.0-beta.7...v1.0.0-beta.8) (2021-09-13)
 
 
