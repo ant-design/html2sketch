@@ -1,5 +1,12 @@
 # html2sketch 更新日志
 
+# [1.0.0-beta.8](https://github.com/ant-design/html2sketch/compare/v1.0.0-beta.7...v1.0.0-beta.8) (2021-09-13)
+
+
+### ✨ Features
+
+* support rad angle line-gradient ([9860090](https://github.com/ant-design/html2sketch/commit/9860090)), closes [#96](https://github.com/ant-design/html2sketch/issues/96)
+
 # [1.0.0-beta.7](https://github.com/ant-design/html2sketch/compare/v1.0.0-beta.6...v1.0.0-beta.7) (2021-09-13)
 
 
