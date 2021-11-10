@@ -27,13 +27,17 @@ describe('Base图层 类', () => {
 
   test('setResizingConstraint', () => {
     const a = new TestGroup();
-    const { Top, Left } = ResizingConstraint;
+    const { Top, Left, Width, Height } = ResizingConstraint;
     const resizingConstraint = [Top, Left];
 
     a.setResizingConstraint(...resizingConstraint);
 
     // eslint-disable-next-line no-bitwise
-    expect(a.toJSON().resizingConstraint).toBe(Top & Left);
+    expect(a.resizingConstraint).toBe(Top & Left);
+
+    a.setFixedWidthAndHeight();
+    // eslint-disable-next-line no-bitwise
+    expect(a.resizingConstraint).toBe(Top & Left & Width & Height);
   });
 
   test('setIsLocked', () => {

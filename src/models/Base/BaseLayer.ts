@@ -58,6 +58,7 @@ abstract class BaseLayer {
   name: string;
 
   resizingConstraint: ResizingConstraint = ResizingConstraint.None;
+  resizingConstraints: ResizingConstraint[] = [];
 
   /**
    * 上锁状态
@@ -190,7 +191,10 @@ abstract class BaseLayer {
    * @param constraints
    */
   setResizingConstraint(...constraints: ResizingConstraint[]) {
-    this.resizingConstraint = calcResizingConstraint(...constraints);
+    this.resizingConstraints = this.resizingConstraints.concat(constraints);
+    this.resizingConstraint = calcResizingConstraint(
+      ...this.resizingConstraints,
+    );
   }
 
   // scope defines which Sketch plugin will have access to provided data via Settings.setLayerSettingForKey
