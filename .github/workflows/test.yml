@@ -7,15 +7,19 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 6
+
       - name: Setup Node.js environment
         uses: actions/setup-node@v2.1.2
         with:
           node-version: '14'
+          cache: 'pnpm'
 
-      - uses: c-hive/gha-yarn-cache@v1
-
-      - name: install
-        run: pnpm i
+      - name: Install deps
+        run: pnpm install
 
       - name: lint
         run: pnpm run lint && pnpm run tsc
