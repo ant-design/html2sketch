@@ -1,6 +1,5 @@
 ---
 title: 伪类解析
-order: 7
 ---
 
 ## Switch 切换器

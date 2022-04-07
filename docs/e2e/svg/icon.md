@@ -1,9 +1,5 @@
 ---
-title: Icon Svg 解析
-order: 2
-group:
-  order: 4
-  title: Svg
+title: Icon 解析
 ---
 
 ## icon 定义

@@ -16,8 +16,8 @@ e2e 使用到 Puppeteer, 默认情况下会直接安装
 
 国内加速可以在`.npmrc` 中添加
 
-```
-puppeteer_download_host=https://npm.taobao.org/mirrors
+```bash
+puppeteer_download_host=https://npmmirror.com/mirrors
 ```
 
 ### jest-electron
@@ -26,8 +26,8 @@ puppeteer_download_host=https://npm.taobao.org/mirrors
 
 国内加速可以在 `.npmrc` 添加
 
-```
-electron_mirror=https://cdn.npm.taobao.org/dist/electron/
+```bash
+electron_mirror=https://npmmirror.com/mirrors/electron/
 ```
 
 #### Apple M1 安装问题

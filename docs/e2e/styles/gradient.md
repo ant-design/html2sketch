@@ -1,9 +1,5 @@
 ---
 title: 渐变解析
-order: 3
-group:
-  order: 3
-  title: 样式
 ---
 
 ## 线性渐变

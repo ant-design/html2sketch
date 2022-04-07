@@ -1,6 +1,5 @@
 ---
-title: Modal 浮层解析
-order: 50
+title: Modal 浮层
 ---
 
 ## 解析 默认 Modal 浮层

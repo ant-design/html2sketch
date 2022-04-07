@@ -1,12 +1,11 @@
 ---
-title: 说明
-order: 1
+title: 测试用例说明
 nav:
   title: 解析用例
   order: 10
 ---
 
-## 测试说明
+## 测试用例说明
 
 本组页面收集了 html2sketch 需要解析的常见用例, 用于 `html2sketch` 模块的开发测试和端到端测试
 
