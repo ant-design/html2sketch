@@ -179,8 +179,21 @@ abstract class BaseLayer {
     this.frame.rotation = deg;
   }
 
+  /**
+   * 将 resize 设为固定宽高
+   */
   setFixedWidthAndHeight() {
     this.setResizingConstraint(
+      ResizingConstraint.Width,
+      ResizingConstraint.Height,
+    );
+  }
+
+  /**
+   *  resize 添加固定宽高
+   */
+  addFixedWidthAndHeight() {
+    this.addResizingConstraints(
       ResizingConstraint.Width,
       ResizingConstraint.Height,
     );
@@ -191,7 +204,22 @@ abstract class BaseLayer {
    * @param constraints
    */
   setResizingConstraint(...constraints: ResizingConstraint[]) {
-    this.resizingConstraints = this.resizingConstraints.concat(constraints);
+    this.resizingConstraints = constraints;
+    this.resizingConstraint = calcResizingConstraint(...constraints);
+  }
+
+  /**
+   * 添加调整尺寸的相关参数
+   * @param constraints
+   */
+  addResizingConstraints(...constraints: ResizingConstraint[]) {
+    // 判断一下是否包含新变量， 如果不包含则加入数组
+    constraints.forEach((c) => {
+      if (!this.resizingConstraints.includes(c)) {
+        this.resizingConstraints.push(c);
+      }
+    });
+
     this.resizingConstraint = calcResizingConstraint(
       ...this.resizingConstraints,
     );
