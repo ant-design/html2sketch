@@ -78,7 +78,8 @@
     "uuid": "^8.2.0"
   },
   "devDependencies": {
-    "@ant-design/charts": "^0.9.13",
+    "@ant-design/charts": "^1.3.6",
+    "@ant-design/icons": "^4.7.0",
     "@ant-design/pro-card": "^1.3.1",
     "@ant-design/pro-skeleton": "^1.0.0-beta.7",
     "@ant-design/pro-table": "^2.6.3",
@@ -100,10 +101,11 @@
     "@types/react-dom": "^17.0.3",
     "@types/uuid": "^8.3.0",
     "@umijs/fabric": "^2.2.2",
-    "@umijs/preset-dumi": "^1.1.16",
+    "@umijs/preset-dumi": "^1.1.40",
     "@umijs/preset-react": "^1.8.6",
     "@umijs/test": "^3.4.15",
     "@umijs/types": "^3.4.15",
+    "antd": "^4.19.5",
     "babel-loader": "^8.1.0",
     "babel-plugin-import": "^1.12.2",
     "commitlint": "^12.1.1",
@@ -136,7 +138,7 @@
     "ts-jest": "^26.2.0",
     "tslint-config-prettier": "^1.18.0",
     "typescript": "^4.2.4",
-    "umi": "^3.4.15",
+    "umi": "^3.5.21",
     "umi-plugin-githubpages": "^2.0.1",
     "webpack": "^4.46.0",
     "webpack-cli": "^4.7.0"

@@ -13,9 +13,9 @@ jobs:
         uses: actions/checkout@master
       - name: Install and Build 🔧
         run: |
-          yarn
-          yarn lint
-          yarn docs:build
+          pnpm i
+          pnpm run lint
+          pnpm run docs:build
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@4.1.1
         with:

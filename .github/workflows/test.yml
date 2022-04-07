@@ -15,15 +15,15 @@ jobs:
       - uses: c-hive/gha-yarn-cache@v1
 
       - name: install
-        run: yarn
+        run: pnpm i
 
       - name: lint
-        run: yarn lint && yarn tsc
+        run: pnpm run lint && pnpm run tsc
 
       - name: test
-        run: yarn test:coverage
+        run: pnpm run test:coverage
 
       - name: e2e
-        run: yarn e2e
+        run: pnpm run e2e
       - name: Generate coverage
         run: bash <(curl -s https://codecov.io/bash)

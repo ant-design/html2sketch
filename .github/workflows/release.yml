@@ -15,10 +15,10 @@ jobs:
       - uses: c-hive/gha-yarn-cache@v1
 
       - name: install
-        run: yarn
+        run: pnpm i
 
       - name: Test
-        run: yarn test
+        run: pnpm run test
 
   release:
     needs: test
@@ -30,13 +30,13 @@ jobs:
       - uses: c-hive/gha-yarn-cache@v1
 
       - name: install
-        run: yarn
+        run: pnpm i
 
       - name: build
-        run: yarn build
+        run: pnpm run build
 
       - name: release
-        run: yarn release
+        run: pnpm run release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}

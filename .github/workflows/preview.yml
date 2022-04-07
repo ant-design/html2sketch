@@ -18,6 +18,6 @@ jobs:
           surge_token: ${{ secrets.SURGE_TOKEN }}
           github_token: ${{ secrets.GITHUB_TOKEN }}
           build: |
-            yarn
-            yarn docs:preview
+            pnpm i
+            pnpm run docs:preview
           dist: dist
