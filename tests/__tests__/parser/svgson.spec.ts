@@ -516,7 +516,7 @@ describe('Svgson 解析器', () => {
       svgson.applyTransformString(frame, 'rotate(15 408.32 3453.665)');
       expect(frame.x).toBe(907.787444013645);
       expect(frame.y).toBe(11.999788653103678);
-      expect(frame.rotation).toBe(15);
+      expect(Math.round(frame.rotation)).toEqual(15);
     });
   });
 

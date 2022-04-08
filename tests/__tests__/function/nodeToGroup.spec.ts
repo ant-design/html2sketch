@@ -55,13 +55,13 @@ describe('nodeToGroup', () => {
   });
 
   it('继承坐标 旋转', async () => {
-    const node = (document.getElementById('svg') as unknown) as SVGElement;
+    const node = document.getElementById('svg') as unknown as SVGElement;
     const group = await nodeToGroup(node);
     expect(group.class).toBe('svg');
     expect(group.layers.length).toBe(2);
     const [mask, g] = group.layers;
     expect(mask.class).toBe('rectangle');
     expect(g.class).toBe('group');
-    expect(g.rotation).toBe(15);
+    expect(Math.round(g.rotation)).toBe(15);
   });
 });

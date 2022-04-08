@@ -215,7 +215,7 @@ describe('parsePseudoToShape', () => {
     const shape = (await parsePseudoToShape(node, 'after')) as Rectangle;
     const checkbox = shape.toSketchJSON();
 
-    expect(checkbox.rotation).toBe(-45);
+    expect(Math.round(checkbox.rotation)).toEqual(-45);
   });
 
   it('带 padding 的伪类宽高解析正常', async () => {

@@ -1,7 +1,6 @@
 import { Rectangle, Frame } from '../models';
 import { parseToShape } from './shape';
 import { isVisibleShape } from '../utils/visibility';
-import { matrixToRotation } from '../utils/matrix';
 
 /**
  * 解析图形类伪类
@@ -54,6 +53,7 @@ export const parsePseudoToShape = async (
 
   rect.mapBasicInfo(node);
 
+  // 应用 Transform
   const { transform } = pseudoEl;
   if (transform !== 'none') {
     // transform: rotate(45deg) scale(1) translate(-50%, -50%);
@@ -65,14 +65,11 @@ export const parsePseudoToShape = async (
     // 将 transform 转换到对象的 frame 上
     if (params) {
       const [a, b, c, d, e, f] = params.map(parseFloat);
-      // 偏移 X 和 Y
-      rect.x += e;
-      rect.y += f;
-      // 解析旋转角度
-      const rotation = matrixToRotation(a, b, c, d);
+
+      rect.frame.applyMatrix({ a, b, c, d, e, f });
       // TODO 有待研究
       // 很奇怪 这里需要用负才能转成正的值
-      rect.rotation = -rotation;
+      rect.rotation = -rect.rotation;
     }
   }
 

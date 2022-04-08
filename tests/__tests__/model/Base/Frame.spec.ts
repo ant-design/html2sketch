@@ -62,8 +62,8 @@ describe('Frame 类', () => {
     });
   });
 
-  describe('矩阵', () => {
-    it('应用矩阵变换', () => {
+  describe('矩阵变换', () => {
+    it('旋转', () => {
       const frame = new Frame();
 
       frame.applyMatrix({
@@ -76,7 +76,17 @@ describe('Frame 类', () => {
       });
       expect(frame.x).toBe(958.787513927271);
       expect(frame.y).toBe(11.999797857406975);
-      expect(frame.rotation).toBe(15);
+      expect(Math.round(frame.rotation)).toBe(15);
+    });
+    it('缩放', () => {
+      const frame = new Frame({ height: 100, width: 100 });
+
+      frame.applyMatrix({ a: 0.5, b: 0, c: 0, d: 0.5, e: 0, f: 0 });
+
+      expect(frame.x).toEqual(25);
+      expect(frame.y).toEqual(25);
+      expect(frame.width).toEqual(50);
+      expect(frame.height).toEqual(50);
     });
   });
   describe('ToSketchJSON', () => {
