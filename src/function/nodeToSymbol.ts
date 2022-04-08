@@ -2,7 +2,7 @@ import { SymbolMaster } from '../models';
 import { defaultSymbolParamsList } from '../constraints/symbolParams';
 import nodeToGroup from './nodeToGroup';
 import adjustSymbolParams from './adjustSymbolParams';
-import { AnyLayer, NodeToSymbolOptions } from '../types';
+import type { AnyLayer, NodeToSymbolOptions } from '../types';
 import { checkNoNull } from '../utils/utils';
 
 /**

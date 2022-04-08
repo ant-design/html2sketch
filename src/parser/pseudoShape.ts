@@ -1,4 +1,5 @@
-import { Rectangle, Frame } from '../models';
+import type { Rectangle } from '../models';
+import { Frame } from '../models';
 import { parseToShape } from './shape';
 import { isVisibleShape } from '../utils/visibility';
 
@@ -17,6 +18,7 @@ export const parsePseudoToShape = async (
   let y = top;
   const isContentBox = pseudoEl.boxSizing === 'content-box';
 
+  // 解析尺寸
   const pseudoW = isContentBox
     ? parseFloat(pseudoEl.width) +
       parseFloat(pseudoEl.paddingLeft) +
