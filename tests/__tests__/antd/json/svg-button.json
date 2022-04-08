@@ -1,25 +1,19 @@
 {
-  "_class": "symbolMaster",
-  "frame": {
-    "_class": "rect",
-    "constrainProportions": false,
-    "height": 32,
-    "width": 82,
-    "x": 343,
-    "y": 2097
-  },
-  "allowsOverrides": true,
-  "backgroundColor": {
-    "_class": "color",
-    "red": 1,
-    "green": 1,
-    "blue": 1,
-    "alpha": 1
-  },
-  "booleanOperation": -1,
-  "changeIdentifier": 0,
+  "_class": "group",
   "do_objectID": "UUID",
-  "symbolID": "UUID",
+  "booleanOperation": -1,
+  "isFixedToViewport": false,
+  "isFlippedHorizontal": false,
+  "isFlippedVertical": false,
+  "isVisible": true,
+  "isLocked": false,
+  "layerListExpandedType": 0,
+  "name": "按钮",
+  "nameIsFixed": false,
+  "resizingConstraint": 27,
+  "resizingType": 0,
+  "rotation": 0,
+  "shouldBreakMaskChain": false,
   "exportOptions": {
     "_class": "exportOptions",
     "includedLayerIds": [],
@@ -27,40 +21,55 @@
     "shouldTrim": false,
     "exportFormats": []
   },
-  "hasClickThrough": true,
-  "includeInCloudUpload": true,
-  "hasBackgroundColor": false,
-  "includeBackgroundColorInExport": true,
-  "resizesContent": false,
-  "includeBackgroundColorInInstance": false,
-  "nameIsFixed": false,
-  "shouldBreakMaskChain": false,
-  "horizontalRulerData": { "_class": "rulerData", "base": 0, "guides": [] },
-  "verticalRulerData": { "_class": "rulerData", "base": 0, "guides": [] },
-  "resizingConstraint": 1,
-  "resizingType": 1,
-  "groupLayout": { "_class": "MSImmutableFreeformGroupLayout" },
-  "isFixedToViewport": false,
-  "sharedStyleID": "",
-  "isFlippedHorizontal": false,
-  "isFlippedVertical": false,
-  "isLocked": false,
-  "isFlowHome": false,
-  "name": "按钮",
-  "rotation": 0,
-  "layerListExpandedType": 0,
-  "overrideProperties": [
-    {
-      "_class": "MSImmutableOverrideProperty",
-      "canOverride": true,
-      "overrideName": "UUID_stringValue"
+  "frame": {
+    "_class": "rect",
+    "constrainProportions": false,
+    "height": 32,
+    "width": 82,
+    "x": 0,
+    "y": 0
+  },
+  "clippingMaskMode": 0,
+  "hasClippingMask": false,
+  "style": {
+    "_class": "style",
+    "do_objectID": "UUID",
+    "endMarkerType": 0,
+    "miterLimit": 10,
+    "startMarkerType": 0,
+    "windingRule": 1,
+    "borderOptions": {
+      "_class": "borderOptions",
+      "isEnabled": true,
+      "dashPattern": [],
+      "lineCapStyle": 0,
+      "lineJoinStyle": 0
+    },
+    "colorControls": {
+      "_class": "colorControls",
+      "isEnabled": false,
+      "brightness": 0,
+      "contrast": 1,
+      "hue": 0,
+      "saturation": 1
+    },
+    "fills": [],
+    "borders": [],
+    "shadows": [],
+    "innerShadows": [],
+    "contextSettings": {
+      "_class": "graphicsContextSettings",
+      "blendMode": 0,
+      "opacity": 1
     }
-  ],
+  },
+  "hasClickThrough": false,
+  "groupLayout": { "_class": "MSImmutableFreeformGroupLayout" },
   "layers": [
     {
       "_class": "rectangle",
       "name": "ant-btn ant-btn-primary",
-      "resizingConstraint": 63,
+      "resizingConstraint": 27,
       "frame": {
         "_class": "rect",
         "constrainProportions": false,
@@ -262,7 +271,7 @@
       "layerListExpandedType": 0,
       "name": "up-circle",
       "nameIsFixed": false,
-      "resizingConstraint": 63,
+      "resizingConstraint": 45,
       "resizingType": 0,
       "rotation": 0,
       "shouldBreakMaskChain": false,
@@ -321,7 +330,7 @@
         {
           "_class": "rectangle",
           "name": "容器",
-          "resizingConstraint": 63,
+          "resizingConstraint": 27,
           "frame": {
             "_class": "rect",
             "constrainProportions": false,
@@ -525,7 +534,7 @@
               "opacity": 1
             }
           },
-          "resizingConstraint": 63,
+          "resizingConstraint": 27,
           "edited": true,
           "isClosed": true,
           "points": [
@@ -720,7 +729,7 @@
                   "opacity": 1
                 }
               },
-              "resizingConstraint": 63,
+              "resizingConstraint": 27,
               "edited": true,
               "isClosed": true,
               "points": [
@@ -830,7 +839,7 @@
                   "opacity": 1
                 }
               },
-              "resizingConstraint": 63,
+              "resizingConstraint": 27,
               "edited": true,
               "isClosed": true,
               "points": [
@@ -968,7 +977,7 @@
               "opacity": 1
             }
           },
-          "resizingConstraint": 63,
+          "resizingConstraint": 27,
           "hasClickThrough": false,
           "hasClippingMask": false
         }
@@ -986,7 +995,7 @@
       "name": "文本",
       "nameIsFixed": false,
       "layerListExpandedType": 0,
-      "resizingConstraint": 63,
+      "resizingConstraint": 27,
       "resizingType": 0,
       "rotation": 0,
       "shouldBreakMaskChain": false,
@@ -1079,6 +1088,5 @@
       "textBehaviour": 0,
       "glyphBounds": ""
     }
-  ],
-  "isVisible": true
+  ]
 }

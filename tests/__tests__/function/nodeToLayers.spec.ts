@@ -1,4 +1,5 @@
-import { Bitmap, nodeToLayers, Rectangle, SketchFormat } from 'html2sketch';
+import type { Bitmap, Rectangle, SketchFormat } from 'html2sketch';
+import { nodeToLayers } from 'html2sketch';
 import { readFileSync } from 'fs';
 import { resolve } from 'path';
 import { setupTestNode } from '@test-utils';

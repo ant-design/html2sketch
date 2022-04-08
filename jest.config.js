@@ -13,7 +13,7 @@ module.exports = {
     '@test-utils': '<rootDir>/tests/__utils__',
   },
   testTimeout: 30000,
-  testMatch: ['**/?(*.)+(spec|test).ts'],
+  testMatch: ['**/?(*.)+(spec|test).ts', '**/?(*.)+(spec|test).tsx'],
   testPathIgnorePatterns: ['/node_modules/', '/e2e/'],
   moduleFileExtensions: ['js', 'ts', 'tsx', 'json', 'node'],
   globals: {
