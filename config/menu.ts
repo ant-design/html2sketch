@@ -33,7 +33,7 @@ const menus = {
     },
     {
       title: '特殊样式',
-      children: ['e2e/styles/gradient.md'],
+      children: ['e2e/styles/gradient.md', 'e2e/styles/transform.md'],
     },
     {
       title: 'Svg 解析',

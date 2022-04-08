@@ -37,13 +37,20 @@ export const parsePseudoToShape = async (
 
   const rect = await parseToShape(node, pseudoEl);
 
+  // 解析坐标
   // 如果采用绝对定位的话
   if (pseudoEl.position === 'absolute') {
     x += parseFloat(pseudoEl.left);
     y += parseFloat(pseudoEl.top);
+
     const { borderTopWidth, borderLeftWidth } = getComputedStyle(node);
     x += parseFloat(borderLeftWidth);
     y += parseFloat(borderTopWidth);
+
+    // 解析 margin 值
+    const { marginTop, marginLeft } = pseudoEl;
+    x += parseFloat(marginLeft);
+    y += parseFloat(marginTop);
   }
 
   rect.frame = new Frame({
