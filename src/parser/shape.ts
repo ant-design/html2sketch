@@ -1,7 +1,7 @@
 import Color from 'color';
 import { Style, Bitmap, Group, Rectangle, Shadow, Svg, Frame } from '../models';
 import { defaultNodeStyle } from '../models/utils';
-import { ColorParam } from '../models/Style/Color';
+import type { ColorParam } from '../models/Style/Color';
 import {
   getActualImageSize,
   parseBackgroundImageType,
@@ -19,6 +19,7 @@ export const parseToShape = async (
   node: Element,
   styles?: CSSStyleDeclaration,
 ): Promise<Group | Rectangle> => {
+  // 解析布局
   const bcr = node.getBoundingClientRect();
 
   const { left, top } = bcr;
