@@ -27,7 +27,5 @@ jobs:
       - name: test
         run: pnpm run test:coverage
 
-      - name: e2e
-        run: pnpm run e2e
       - name: Generate coverage
         run: bash <(curl -s https://codecov.io/bash)
