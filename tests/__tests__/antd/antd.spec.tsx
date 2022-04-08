@@ -1,25 +1,28 @@
 import React from 'react';
-import { Button, Radio } from 'antd';
+import { Button, Modal, Radio } from 'antd';
 
 import ReactDOM from 'react-dom';
 
-import { nodeToGroup } from 'html2sketch';
+import { nodeToGroup, nodeToSymbol } from 'html2sketch';
 import { isUpdate } from '@test-utils';
 import {
   saveJSONData,
   setupAntdTestEnv,
+  sleep,
   svgIconJSON,
   radioJSON,
   svgButtonJSON,
+  defaultModalJSON,
 } from './utils';
 import { PlusOutlined, UpCircleOutlined } from '@ant-design/icons';
+import type SketchFormat from '@sketch-hq/sketch-file-format-ts';
 
 const render = (App: JSX.Element) => {
   ReactDOM.render(App, document.getElementById('container'));
 };
 
 describe('antd 组件库可正常解析', () => {
-  it('radio', async () => {
+  it('Radio 单选器', async () => {
     await setupAntdTestEnv();
     render(<Radio checked>html2sketch</Radio>);
 
@@ -30,7 +33,7 @@ describe('antd 组件库可正常解析', () => {
     if (isUpdate) {
       saveJSONData(group, 'radio');
     }
-    expect(group).toEqual(radioJSON);
+    expect(JSON.parse(JSON.stringify(group))).toEqual(radioJSON);
   });
   describe('Svg', () => {
     it('svg icon', async () => {
@@ -62,6 +65,53 @@ describe('antd 组件库可正常解析', () => {
         saveJSONData(group, 'svg-button');
       }
       expect(group).toEqual(svgButtonJSON);
+    });
+  });
+
+  it('Modal', async () => {
+    await setupAntdTestEnv();
+    render(
+      <div style={{ position: 'relative', minHeight: 400 }}>
+        <Modal
+          visible
+          title="Modal 测试"
+          mask={false}
+          wrapProps={{ id: 'modal' }}
+          // centered
+          maskClosable
+          getContainer={false}
+        >
+          这是里面的内容
+        </Modal>
+      </div>,
+    );
+
+    // 需要等 2 秒让 Modal 正常跳出来
+    await sleep(2000);
+
+    const node = document.getElementsByClassName(
+      'ant-modal',
+    )[0] as HTMLDivElement;
+
+    const symbol = (await nodeToSymbol(node)).toSketchJSON();
+
+    if (isUpdate) {
+      saveJSONData(symbol, 'default-modal');
+    }
+    expect(symbol).toEqual(defaultModalJSON);
+
+    expect(symbol._class).toBe('symbolMaster');
+    expect(symbol.groupLayout).toStrictEqual({
+      _class: 'MSImmutableFreeformGroupLayout',
+    });
+    expect(symbol.name).toBe('Modal');
+    expect(symbol.layers.length).toBe(5);
+
+    const header = symbol.layers[1] as SketchFormat.Group;
+    expect(header.groupLayout).toStrictEqual({
+      _class: 'MSImmutableInferredGroupLayout',
+      axis: 0,
+      layoutAnchor: 0,
     });
   });
 });

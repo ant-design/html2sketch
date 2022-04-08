@@ -1,15 +1,13 @@
 import { writeFileSync } from 'fs';
 import { join } from 'path';
 
-// import defaultModal from './default-modal.json';
+import defaultModalJSON from './json/default-modal.json';
+import radioJSON from './json/radio.json';
 
 import svgButtonJSON from './json/svg-button.json';
 import svgIconJSON from './json/svg-icon.json';
-import radioJSON from './json/radio.json';
 
-// export const defaultModalJSON = defaultModal;
-
-export { radioJSON, svgButtonJSON, svgIconJSON };
+export { radioJSON, svgButtonJSON, svgIconJSON, defaultModalJSON };
 
 export const saveJSONData = (json: any | any[], name?: string) => {
   writeFileSync(
@@ -17,6 +15,8 @@ export const saveJSONData = (json: any | any[], name?: string) => {
     JSON.stringify(json),
   );
 };
+
+export const sleep = (time: number) => new Promise((r) => setTimeout(r, time));
 
 const loadcss = (src: string, fn: () => void) => {
   const linkElement = document.createElement('link');

@@ -5,8 +5,8 @@
     "constrainProportions": false,
     "height": 178,
     "width": 520,
-    "x": 343,
-    "y": 330
+    "x": 120.5,
+    "y": 108
   },
   "allowsOverrides": true,
   "backgroundColor": {
@@ -380,7 +380,7 @@
         {
           "_class": "rectangle",
           "name": "ant-modal-header",
-          "resizingConstraint": 63,
+          "resizingConstraint": 27,
           "frame": {
             "_class": "rect",
             "constrainProportions": false,
@@ -554,7 +554,7 @@
           "name": "Modal 测试",
           "nameIsFixed": false,
           "layerListExpandedType": 0,
-          "resizingConstraint": 63,
+          "resizingConstraint": 27,
           "resizingType": 0,
           "rotation": 0,
           "shouldBreakMaskChain": false,
@@ -661,7 +661,7 @@
       "name": "这是里面的内容",
       "nameIsFixed": false,
       "layerListExpandedType": 0,
-      "resizingConstraint": 63,
+      "resizingConstraint": 27,
       "resizingType": 0,
       "rotation": 0,
       "shouldBreakMaskChain": false,
@@ -829,7 +829,7 @@
         {
           "_class": "rectangle",
           "name": "ant-modal-footer",
-          "resizingConstraint": 63,
+          "resizingConstraint": 27,
           "frame": {
             "_class": "rect",
             "constrainProportions": false,
@@ -1035,8 +1035,8 @@
           "layers": [
             {
               "_class": "rectangle",
-              "name": "ant-btn",
-              "resizingConstraint": 63,
+              "name": "ant-btn ant-btn-default",
+              "resizingConstraint": 27,
               "frame": {
                 "_class": "rect",
                 "constrainProportions": false,
@@ -1238,7 +1238,7 @@
               "name": "Cancel",
               "nameIsFixed": false,
               "layerListExpandedType": 0,
-              "resizingConstraint": 63,
+              "resizingConstraint": 27,
               "resizingType": 0,
               "rotation": 0,
               "shouldBreakMaskChain": false,
@@ -1411,7 +1411,7 @@
             {
               "_class": "rectangle",
               "name": "ant-btn ant-btn-primary",
-              "resizingConstraint": 63,
+              "resizingConstraint": 27,
               "frame": {
                 "_class": "rect",
                 "constrainProportions": false,
@@ -1613,7 +1613,7 @@
               "name": "OK",
               "nameIsFixed": false,
               "layerListExpandedType": 0,
-              "resizingConstraint": 63,
+              "resizingConstraint": 27,
               "resizingType": 0,
               "rotation": 0,
               "shouldBreakMaskChain": false,
@@ -1784,7 +1784,7 @@
         {
           "_class": "rectangle",
           "name": "容器",
-          "resizingConstraint": 63,
+          "resizingConstraint": 27,
           "frame": {
             "_class": "rect",
             "constrainProportions": false,
@@ -1988,7 +1988,7 @@
               "opacity": 1
             }
           },
-          "resizingConstraint": 63,
+          "resizingConstraint": 27,
           "edited": true,
           "isClosed": true,
           "points": [

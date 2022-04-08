@@ -4,12 +4,10 @@ import { writeFileSync } from 'fs';
 import type SketchFormat from '@sketch-hq/sketch-file-format-ts';
 import type { NodeToSymbolOptions, SymbolMaster } from 'html2sketch';
 
-import defaultModal from './json/default-modal.json';
 import inlineImage from './json/inline-image.json';
 import pngURLImage from './json/png-url-image.json';
 import textAlignment from './json/text-alignment.json';
 
-export const defaultModalJSON = defaultModal;
 export const inlineImageJSON = inlineImage;
 export const pngURLImageJSON = pngURLImage;
 export const textAlignmentJSON = textAlignment;
