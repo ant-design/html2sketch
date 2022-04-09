@@ -6,6 +6,8 @@ module.exports = {
       {
         // 自定义配置，如果不填则是默认的 conventional-changelog-angular
         config: 'conventional-changelog-gitmoji-config',
+        // build 会触发新的构建
+        releaseRules: [{ type: 'build', release: 'patch' }],
       },
     ],
     [
