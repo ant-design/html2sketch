@@ -79,14 +79,14 @@ describe('antd 组件库可正常解析', () => {
       <div style={{ position: 'relative', minHeight: 400 }}>
         <Modal
           visible
-          title="Modal 测试"
+          title="Modal"
           mask={false}
           wrapProps={{ id: 'modal' }}
           // centered
           maskClosable
           getContainer={false}
         >
-          这是里面的内容
+          Content
         </Modal>
       </div>,
     );
@@ -100,9 +100,9 @@ describe('antd 组件库可正常解析', () => {
 
     const symbol = (await nodeToSymbol(node)).toSketchJSON();
 
-    if (isUpdate) {
-      saveJSONData(symbol, 'default-modal');
-    }
+    // if (isUpdate) {
+    saveJSONData(symbol, 'default-modal');
+    // }
     const { frame, ...target } = symbol;
     const { frame: originFrame, ...origin } = defaultModalJSON;
 
