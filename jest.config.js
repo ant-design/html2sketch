@@ -16,6 +16,7 @@ module.exports = {
   testMatch: ['**/?(*.)+(spec|test).ts', '**/?(*.)+(spec|test).tsx'],
   testPathIgnorePatterns: ['/node_modules/', '/e2e/'],
   moduleFileExtensions: ['js', 'ts', 'tsx', 'json', 'node'],
+  coveragePathIgnorePatterns: ['node_modules', '.umi'],
   globals: {
     'ts-jest': {
       diagnostics: false,
