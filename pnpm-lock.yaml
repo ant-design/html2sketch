@@ -21936,7 +21936,7 @@ packages:
     dev: true
 
   /which-pm-runs/1.1.0:
-    resolution: {integrity: sha512-SIqZVnlKPt/s5tOArosKIvGC1bwpoj6w5Q3SmimaVOOU8YFsjuMvvZO1MbKCbO8D6VV0XkROC8jrXJNYa1xBDA==}
+    resolution: {integrity: sha512-SIqZVnlKPt/s5tOArosKIvGC1bwpoj6w5Q3SmimaVOOU8YFsjuMvvZO1MbKCbO8D6VV0XkROC8jrXJNYa1xBDA==, tarball: which-pm-runs/-/which-pm-runs-1.0.0.tgz}
     deprecated: '[WARNING] Use 1.0.0 instead of 1.1.0, reason: https://github.com/zkochan/packages/commit/e7af82f03f1afe6086312d80a0fa47eb8d1c6bff'
     dev: true
 
