@@ -1,5 +1,19 @@
 # html2sketch 更新日志
 
+# [1.0.0-beta.10](https://github.com/ant-design/html2sketch/compare/v1.0.0-beta.9...v1.0.0-beta.10) (2022-04-09)
+
+
+### ✨ Features
+
+* support almost full css transform ([f7bb06d](https://github.com/ant-design/html2sketch/commit/f7bb06d)), closes [#148](https://github.com/ant-design/html2sketch/issues/148)
+* 新增固定宽高的能力 ([f2df2e5](https://github.com/ant-design/html2sketch/commit/f2df2e5))
+
+
+### 🐛 Bug Fixes
+
+* fix absolute position margin parsing ([120ba39](https://github.com/ant-design/html2sketch/commit/120ba39))
+* fix resizingConstraint func and update test ([c39f843](https://github.com/ant-design/html2sketch/commit/c39f843))
+
 # [1.0.0-beta.9](https://github.com/ant-design/html2sketch/compare/v1.0.0-beta.8...v1.0.0-beta.9) (2021-09-13)
 
 
