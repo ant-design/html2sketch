@@ -13,7 +13,7 @@ export const parseCanvasToBitmap = (canvas: HTMLCanvasElement) => {
   try {
     url = canvas.toDataURL();
   } catch (e) {
-    const errMsg = e.toString();
+    const errMsg = (e as Error).toString();
 
     // 存在跨域问题
     if (errMsg.includes('Tainted canvases may not be exported.')) {
