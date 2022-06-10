@@ -134,7 +134,7 @@
     "react": "^16.11.0",
     "react-dom": "^16.11.0",
     "react-json-view": "^1.19.1",
-    "semantic-release": "^17.4.2",
+    "semantic-release": "^19.0.3",
     "semantic-release-config-gitmoji": "^1.2.4",
     "stylelint": "^13.0.0",
     "terser-webpack-plugin": "^4.2.3",
