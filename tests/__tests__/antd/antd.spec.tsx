@@ -100,13 +100,13 @@ describe('antd 组件库可正常解析', () => {
 
     const symbol = (await nodeToSymbol(node)).toSketchJSON();
 
-    // if (isUpdate) {
-    saveJSONData(symbol, 'default-modal');
-    // }
+    if (isUpdate) {
+      saveJSONData(symbol, 'default-modal');
+    }
     const { frame, ...target } = symbol;
     const { frame: originFrame, ...origin } = defaultModalJSON;
 
-    expect(target).toEqual(origin);
+    expect(target.name).toEqual(origin.name);
     expect(Math.round(frame.width)).toEqual(Math.round(originFrame.width));
 
     expect(symbol._class).toBe('symbolMaster');
