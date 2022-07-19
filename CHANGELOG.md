@@ -1,83 +1,78 @@
 # html2sketch 更新日志
 
+# [1.0.0-beta.12](https://github.com/ant-design/html2sketch/compare/v1.0.0-beta.11...v1.0.0-beta.12) (2022-07-19)
+
+### 🐛 Bug Fixes
+
+- try to fix babel problem ([398f825](https://github.com/ant-design/html2sketch/commit/398f825))
+
 # [1.0.0-beta.11](https://github.com/ant-design/html2sketch/compare/v1.0.0-beta.10...v1.0.0-beta.11) (2022-04-09)
 
 # [1.0.0-beta.10](https://github.com/ant-design/html2sketch/compare/v1.0.0-beta.9...v1.0.0-beta.10) (2022-04-09)
 
-
 ### ✨ Features
 
-* support almost full css transform ([f7bb06d](https://github.com/ant-design/html2sketch/commit/f7bb06d)), closes [#148](https://github.com/ant-design/html2sketch/issues/148)
-* 新增固定宽高的能力 ([f2df2e5](https://github.com/ant-design/html2sketch/commit/f2df2e5))
-
+- support almost full css transform ([f7bb06d](https://github.com/ant-design/html2sketch/commit/f7bb06d)), closes [#148](https://github.com/ant-design/html2sketch/issues/148)
+- 新增固定宽高的能力 ([f2df2e5](https://github.com/ant-design/html2sketch/commit/f2df2e5))
 
 ### 🐛 Bug Fixes
 
-* fix absolute position margin parsing ([120ba39](https://github.com/ant-design/html2sketch/commit/120ba39))
-* fix resizingConstraint func and update test ([c39f843](https://github.com/ant-design/html2sketch/commit/c39f843))
+- fix absolute position margin parsing ([120ba39](https://github.com/ant-design/html2sketch/commit/120ba39))
+- fix resizingConstraint func and update test ([c39f843](https://github.com/ant-design/html2sketch/commit/c39f843))
 
 # [1.0.0-beta.9](https://github.com/ant-design/html2sketch/compare/v1.0.0-beta.8...v1.0.0-beta.9) (2021-09-13)
 
-
 ### 🐛 Bug Fixes
 
-* adjust text and svg resizing constraint ([9fc8970](https://github.com/ant-design/html2sketch/commit/9fc8970))
+- adjust text and svg resizing constraint ([9fc8970](https://github.com/ant-design/html2sketch/commit/9fc8970))
 
 # [1.0.0-beta.8](https://github.com/ant-design/html2sketch/compare/v1.0.0-beta.7...v1.0.0-beta.8) (2021-09-13)
 
-
 ### ✨ Features
 
-* support rad angle line-gradient ([9860090](https://github.com/ant-design/html2sketch/commit/9860090)), closes [#96](https://github.com/ant-design/html2sketch/issues/96)
+- support rad angle line-gradient ([9860090](https://github.com/ant-design/html2sketch/commit/9860090)), closes [#96](https://github.com/ant-design/html2sketch/issues/96)
 
 # [1.0.0-beta.7](https://github.com/ant-design/html2sketch/compare/v1.0.0-beta.6...v1.0.0-beta.7) (2021-09-13)
 
-
 ### 🐛 Bug Fixes
 
-* fix pseudo elt style issue and add test ([5c727a3](https://github.com/ant-design/html2sketch/commit/5c727a3))
-* set default resizingConstraint to left and top ([f897275](https://github.com/ant-design/html2sketch/commit/f897275))
+- fix pseudo elt style issue and add test ([5c727a3](https://github.com/ant-design/html2sketch/commit/5c727a3))
+- set default resizingConstraint to left and top ([f897275](https://github.com/ant-design/html2sketch/commit/f897275))
 
 # [1.0.0-beta.6](https://github.com/ant-design/html2sketch/compare/v1.0.0-beta.5...v1.0.0-beta.6) (2021-06-29)
 
-
 ### 🐛 Bug Fixes
 
-* fix overflow hidden node use clipping mask ([defb941](https://github.com/ant-design/html2sketch/commit/defb941))
-* fix overflow hidden node use clipping mask ([055f25d](https://github.com/ant-design/html2sketch/commit/055f25d))
+- fix overflow hidden node use clipping mask ([defb941](https://github.com/ant-design/html2sketch/commit/defb941))
+- fix overflow hidden node use clipping mask ([055f25d](https://github.com/ant-design/html2sketch/commit/055f25d))
 
 # [1.0.0-beta.5](https://github.com/ant-design/html2sketch/compare/v1.0.0-beta.4...v1.0.0-beta.5) (2021-06-23)
 
-
 ### 🐛 Bug Fixes
 
-* fix password input text ([c8ff928](https://github.com/ant-design/html2sketch/commit/c8ff928))
+- fix password input text ([c8ff928](https://github.com/ant-design/html2sketch/commit/c8ff928))
 
 # [1.0.0-beta.4](https://github.com/ant-design/html2sketch/compare/v1.0.0-beta.3...v1.0.0-beta.4) (2021-06-23)
 
-
 ### ✨ Features
 
-* 优化抓取 base64 图片方法 ([07dd128](https://github.com/ant-design/html2sketch/commit/07dd128))
+- 优化抓取 base64 图片方法 ([07dd128](https://github.com/ant-design/html2sketch/commit/07dd128))
 
 # [1.0.0-beta.3](https://github.com/ant-design/html2sketch/compare/v1.0.0-beta.2...v1.0.0-beta.3) (2021-06-22)
 
-
 ### ✨ Features
 
-* 提供自定义 fetch 方法的能力 ([28ed276](https://github.com/ant-design/html2sketch/commit/28ed276))
-
+- 提供自定义 fetch 方法的能力 ([28ed276](https://github.com/ant-design/html2sketch/commit/28ed276))
 
 ### 🐛 Bug Fixes
 
-* fix placeholder parsing without css rules ([505a390](https://github.com/ant-design/html2sketch/commit/505a390))
+- fix placeholder parsing without css rules ([505a390](https://github.com/ant-design/html2sketch/commit/505a390))
 
 # [1.0.0-beta.2](https://github.com/ant-design/html2sketch/compare/v1.0.0-beta.1...v1.0.0-beta.2) (2021-05-13)
 
-
 ### 🐛 Bug Fixes
 
-* fix position bug due to sketch text align parsing error ([1dce98f](https://github.com/ant-design/html2sketch/commit/1dce98f)), closes [#51](https://github.com/ant-design/html2sketch/issues/51)
+- fix position bug due to sketch text align parsing error ([1dce98f](https://github.com/ant-design/html2sketch/commit/1dce98f)), closes [#51](https://github.com/ant-design/html2sketch/issues/51)
 
 # [1.0.0-beta.1](https://github.com/ant-design/html2sketch/compare/v0.4.7...v1.0.0-beta.1) (2021-05-08)
 
