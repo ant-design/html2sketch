@@ -10,15 +10,15 @@ jobs:
     name: Test
     runs-on: macos-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - name: Install pnpm
         uses: pnpm/action-setup@v2
         with:
-          version: 6
+          version: 7
 
       - name: Setup Node.js environment
-        uses: actions/setup-node@v2.1.2
+        uses: actions/setup-node@v3
         with:
           node-version: '14'
           cache: 'pnpm'
