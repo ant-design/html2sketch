@@ -19,7 +19,6 @@ specifiers:
   '@types/fs-extra': ^9.0.1
   '@types/jest': ^26.0.0
   '@types/jsdom': ^16.2.3
-  '@types/puppeteer': ^5.4.3
   '@types/react': ^17.0.5
   '@types/react-dom': ^17.0.3
   '@types/uuid': ^8.3.0
@@ -100,7 +99,6 @@ devDependencies:
   '@types/fs-extra': 9.0.13
   '@types/jest': 26.0.24
   '@types/jsdom': 16.2.14
-  '@types/puppeteer': 5.4.6
   '@types/react': 17.0.47
   '@types/react-dom': 17.0.17
   '@types/uuid': 8.3.4
@@ -5264,12 +5262,6 @@ packages:
 
   /@types/prop-types/15.7.5:
     resolution: {integrity: sha512-JCB8C6SnDoQf0cNycqd/35A7MjcnK+ZTqE7judS6o7utxUCg6imJg3QK2qzHKszlTjcj2cn+NwMB2i96ubpj7w==}
-    dev: true
-
-  /@types/puppeteer/5.4.6:
-    resolution: {integrity: sha512-98Kghehs7+/GD9b56qryhqdqVCXUTbetTv3PlvDnmFRTHQH0j9DIp1f7rkAW3BAj4U3yoeSEQnKgdW8bDq0Y0Q==}
-    dependencies:
-      '@types/node': 18.0.6
     dev: true
 
   /@types/q/1.5.5:
