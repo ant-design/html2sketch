@@ -1,0 +1,89 @@
+.test-tooltip {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  color: #000000d9;
+  font-size: 14px;
+  font-variant: tabular-nums;
+  line-height: 1.5715;
+  list-style: none;
+  font-feature-settings: 'tnum';
+  z-index: 1070;
+  display: block;
+  width: max-content;
+  max-width: 250px;
+  visibility: visible;
+}
+
+.test-tooltip-content {
+  position: relative;
+}
+
+.test-tooltip-inner {
+  min-width: 30px;
+  min-height: 32px;
+  padding: 6px 8px;
+  color: #fff;
+  text-align: left;
+  text-decoration: none;
+  word-wrap: break-word;
+  background-color: #000000bf;
+  border-radius: 2px;
+  box-shadow: 0 3px 6px -4px #0000001f, 0 6px 16px #00000014,
+    0 9px 28px 8px #0000000d;
+}
+
+.test-tooltip-arrow {
+  position: absolute;
+  z-index: 2;
+  display: block;
+  width: 22px;
+  height: 22px;
+  overflow: hidden;
+  background: 0 0;
+  pointer-events: none;
+}
+
+.test-tooltip-arrow-content {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 11.3137085px;
+  height: 11.3137085px;
+  margin: auto;
+  content: '';
+  border-radius: 0 0 2px;
+  pointer-events: none;
+
+  --antd-arrow-background-color: linear-gradient(
+    to right bottom,
+    rgba(0, 0, 0, 0.65),
+    rgba(0, 0, 0, 0.75)
+  );
+}
+
+.test-tooltip-arrow-content::before {
+  position: absolute;
+  top: -11.3137085px;
+  left: -11.3137085px;
+  width: 33.9411255px;
+  height: 33.9411255px;
+  background: var(--antd-arrow-background-color);
+  background-repeat: no-repeat;
+  background-position: -10px -10px;
+  content: '';
+  clip-path: path(
+    'M 9.849242404917499 24.091883092036785 A 5 5 0 0 1 13.384776310850237 22.627416997969522 L 20.627416997969522 22.627416997969522 A 2 2 0 0 0 22.627416997969522 20.627416997969522 L 22.627416997969522 13.384776310850237 A 5 5 0 0 1 24.091883092036785 9.849242404917499 L 23.091883092036785 9.849242404917499 L 9.849242404917499 23.091883092036785 Z'
+  );
+}
+
+.test-tooltip-placement-top .test-tooltip-arrow-content {
+  box-shadow: 3px 3px 7px #00000012;
+  transform: translateY(-11px) rotate(45deg);
+}
+
+.test-tooltip-placement-top .test-tooltip-arrow {
+  bottom: 0;
+  left: 50%;
+  transform: translateY(100%) translate(-50%);
+}

@@ -50,6 +50,7 @@ const menus = {
         'e2e/components/procard.md',
         'e2e/components/radio.md',
         'e2e/components/table.md',
+        'e2e/components/tooltip.md',
         'e2e/components/modal.md',
       ],
     },
