@@ -1,10 +1,8 @@
 import React from 'react';
 import { Button, Modal, Radio } from 'antd';
 
-import ReactDOM from 'react-dom';
-
 import { nodeToGroup, nodeToSymbol } from 'html2sketch';
-import { isUpdate } from '@test-utils';
+import { isUpdate, render } from '@test-utils';
 import {
   saveJSONData,
   setupAntdTestEnv,
@@ -16,10 +14,6 @@ import {
 } from './utils';
 import { PlusOutlined, UpCircleOutlined } from '@ant-design/icons';
 import type SketchFormat from '@sketch-hq/sketch-file-format-ts';
-
-const render = (App: JSX.Element) => {
-  ReactDOM.render(App, document.getElementById('container'));
-};
 
 describe('antd 组件库可正常解析', () => {
   it('Radio 单选器', async () => {
