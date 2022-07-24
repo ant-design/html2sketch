@@ -14,7 +14,7 @@ module.exports = {
   },
   testTimeout: 30000,
   testMatch: ['**/?(*.)+(spec|test).ts', '**/?(*.)+(spec|test).tsx'],
-  testPathIgnorePatterns: ['/node_modules/', '/e2e/'],
+  testPathIgnorePatterns: ['/node_modules/'],
   moduleFileExtensions: ['js', 'ts', 'tsx', 'json', 'node'],
   coveragePathIgnorePatterns: ['node_modules', '.umi'],
   globals: {
