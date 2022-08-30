@@ -15,14 +15,14 @@ jobs:
       - name: Setup Node.js environment
         uses: actions/setup-node@v3
         with:
-          node-version: '14'
+          node-version: '16'
           cache: 'pnpm'
 
       - name: Install deps
         run: pnpm install
 
       - name: lint
-        run: pnpm run lint && pnpm run tsc
+        run: pnpm run ci
 
       - name: test
         run: pnpm run test:coverage

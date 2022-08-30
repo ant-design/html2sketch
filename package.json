@@ -39,6 +39,7 @@
     "test:coverage": "umi test --coverage",
     "---------   ": "",
     "release": "semantic-release",
+    "release:local": "semantic-release  --no-ci",
     "---------     ": "",
     "clean": "rm -rf es lib dist build coverage e2e/dist src/.umi* .eslintcache",
     "ci": "npm run lint && npm run tsc",
