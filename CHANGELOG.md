@@ -1,5 +1,7 @@
 # html2sketch 更新日志
 
+# [1.0.0-beta.14](https://github.com/ant-design/html2sketch/compare/v1.0.0-beta.13...v1.0.0-beta.14) (2022-08-31)
+
 # [1.0.0-beta.13](https://github.com/ant-design/html2sketch/compare/v1.0.0-beta.12...v1.0.0-beta.13) (2022-08-31)
 
 # [1.0.0-beta.12](https://github.com/ant-design/html2sketch/compare/v1.0.0-beta.11...v1.0.0-beta.12) (2022-07-19)
