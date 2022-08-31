@@ -1,4 +1,6 @@
 import React from 'react';
+import { omit } from 'lodash';
+
 import { nodeToSymbol } from 'html2sketch';
 import {
   inlineImageJSON,
@@ -29,7 +31,7 @@ describe('测试图片', () => {
     if (isUpdate) {
       outputJSONData(image, 'inline-image');
     }
-    expect(image).toEqual(inlineImageJSON);
+    expect(omit(image, 'frame')).toEqual(omit(inlineImageJSON, 'frame'));
   }, 30000);
 
   it('PNG图片链接类型正常', async () => {
@@ -50,6 +52,7 @@ describe('测试图片', () => {
     if (isUpdate) {
       outputJSONData(image, 'png-url-image');
     }
-    expect(image).toStrictEqual(pngURLImageJSON);
+
+    expect(omit(image, 'frame')).toStrictEqual(omit(pngURLImageJSON, 'frame'));
   }, 30000);
 });
