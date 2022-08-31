@@ -13,16 +13,6 @@ export default defineConfig({
   // 部署在非根目录时, base 和 publicPath 都需要配置
   base: isProdSite ? '/html2sketch/' : '/',
   publicPath: isProdSite ? '/html2sketch/' : '/',
-  extraBabelPlugins: [
-    [
-      'import',
-      {
-        libraryName: 'antd',
-        libraryDirectory: 'es',
-        style: 'css',
-      },
-    ],
-  ],
   navs: [
     null,
     {
