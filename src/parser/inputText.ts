@@ -17,11 +17,8 @@ export const parseInputTextToText = (
   /// *** 处理 input 的文本值 *** ///
 
   const { value, placeholder } = node;
-  if (!value && !placeholder) {
-    return;
-  }
+  if (!value && !placeholder) return;
   if (value) {
-    console.log(value)
     pseudoText = node.type === 'password' ? value.replace(/./g, '•') : value;
   } else {
     pseudoText = placeholder;
