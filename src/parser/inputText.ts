@@ -5,7 +5,7 @@ import { getTextLinesAndRange } from '../utils/text';
  * 解析输入框文本
  */
 export const parseInputTextToText = (
-  node: HTMLInputElement,
+  node: HTMLInputElement | HTMLTextAreaElement,
 ): Text | undefined => {
   // 判断一下是否有伪类
   const inputTextStyle: CSSStyleDeclaration = getComputedStyle(
@@ -16,7 +16,7 @@ export const parseInputTextToText = (
 
   /// *** 处理 input 的文本值 *** ///
 
-  const { value, placeholder } = node as HTMLInputElement;
+  const { value, placeholder } = node;
   if (!value && !placeholder) return;
   if (value) {
     pseudoText = node.type === 'password' ? value.replace(/./g, '•') : value;
@@ -97,7 +97,7 @@ export const parseInputTextToText = (
   const { lineHeight } = inputTextStyle;
 
   // TODO: 还有什么时候需要垂直居中呢?
-  if (parseFloat(lineHeight) > rangeBCR.height) {
+  if (node.nodeName !== 'TEXTAREA' && parseFloat(lineHeight) > rangeBCR.height) {
     // 需要垂直居中的地方
     console.log(y, nodeBCR.y);
     console.log(nodeBCR.height, rangeBCR.height);
