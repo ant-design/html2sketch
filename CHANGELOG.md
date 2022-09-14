@@ -1,5 +1,11 @@
 # html2sketch 更新日志
 
+# [1.0.0-beta.15](https://github.com/ant-design/html2sketch/compare/v1.0.0-beta.14...v1.0.0-beta.15) (2022-09-14)
+
+### 🐛 Bug Fixes
+
+- should parse textarea value and placeholder ([06d70ac](https://github.com/ant-design/html2sketch/commit/06d70ac)), closes [#161](https://github.com/ant-design/html2sketch/issues/161)
+
 # [1.0.0-beta.14](https://github.com/ant-design/html2sketch/compare/v1.0.0-beta.13...v1.0.0-beta.14) (2022-08-31)
 
 # [1.0.0-beta.13](https://github.com/ant-design/html2sketch/compare/v1.0.0-beta.12...v1.0.0-beta.13) (2022-08-31)
