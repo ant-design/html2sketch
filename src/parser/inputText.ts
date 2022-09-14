@@ -17,8 +17,11 @@ export const parseInputTextToText = (
   /// *** 处理 input 的文本值 *** ///
 
   const { value, placeholder } = node;
-  if (!value && !placeholder) return;
+  if (!value && !placeholder) {
+    return;
+  }
   if (value) {
+    console.log(value)
     pseudoText = node.type === 'password' ? value.replace(/./g, '•') : value;
   } else {
     pseudoText = placeholder;
@@ -97,7 +100,7 @@ export const parseInputTextToText = (
   const { lineHeight } = inputTextStyle;
 
   // TODO: 还有什么时候需要垂直居中呢?
-  if (node.type !== 'textarea' && parseFloat(lineHeight) > rangeBCR.height) {
+  if (node.nodeName !== 'TEXTAREA' && parseFloat(lineHeight) > rangeBCR.height) {
     // 需要垂直居中的地方
     console.log(y, nodeBCR.y);
     console.log(nodeBCR.height, rangeBCR.height);
