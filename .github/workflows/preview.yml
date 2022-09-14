@@ -1,12 +1,6 @@
 name: Surge PR Preview
 
-on:
-  push:
-    branches:
-      - master
-  pull_request_target:
-    branches:
-      - master
+on: [pull_request]
 
 jobs:
   preview:
@@ -27,3 +21,7 @@ jobs:
             pnpm i
             pnpm run docs:preview
           dist: dist
+
+      - name: Get the preview_url
+        run: echo "url => ${{ steps.preview_step.outputs.preview_url }}"
+
