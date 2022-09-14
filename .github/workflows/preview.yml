@@ -7,6 +7,7 @@ on:
   pull_request_target:
     branches:
       - master
+      - beta
 
 jobs:
   preview:
@@ -27,3 +28,7 @@ jobs:
             pnpm i
             pnpm run docs:preview
           dist: dist
+
+      - name: Get the preview_url
+          run: echo "url => ${{ steps.preview_step.outputs.preview_url }}"
+
