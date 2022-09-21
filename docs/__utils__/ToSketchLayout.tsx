@@ -1,5 +1,6 @@
 import React, { FC, useState } from 'react';
 import { Button, Card, Col, Divider, Row, Space } from 'antd';
+import { ConfigProvider } from 'antdV5';
 import ReactJson from 'react-json-view';
 import useSketchJSON from './useSketchJSON';
 
@@ -13,57 +14,59 @@ const ToSketchLayout: FC<FooterProps> = ({ elements, children, buttons }) => {
   const [showJSON, setShowJSON] = useState(false);
 
   return (
-    <div>
-      {children}
-      <Divider dashed />
-      <Row style={{ zIndex: 99999 }}>
-        <Col span={24}>
-          <Row justify="space-between">
-            <Col>
-              <Button
-                disabled={!sketchJSON}
-                onClick={() => {
-                  setShowJSON(!showJSON);
-                }}
-              >
-                {showJSON ? '隐藏' : '显示'} JSON
-              </Button>
-            </Col>
-            <Col>
-              <Space>
-                {buttons?.map((button) => (
-                  <Button key={button.name} onClick={button.onClick}>
-                    {button.name}
-                  </Button>
-                ))}
-                <Button
-                  onClick={() => {
-                    generateGroup(elements);
-                  }}
-                >
-                  转换为 Group
-                </Button>
-                <Button
-                  type="primary"
-                  onClick={() => {
-                    generateSymbol(elements);
-                  }}
-                >
-                  转换为 Symbol
-                </Button>
-              </Space>
-            </Col>
-          </Row>
-        </Col>
-        {showJSON ? (
+    <ConfigProvider prefixCls="html2sketch">
+      <div>
+        {children}
+        <Divider dashed />
+        <Row style={{ zIndex: 99999 }}>
           <Col span={24}>
-            <Card>
-              <ReactJson name="Sketch JSON" src={sketchJSON || {}} />
-            </Card>
+            <Row justify="space-between">
+              <Col>
+                <Button
+                  disabled={!sketchJSON}
+                  onClick={() => {
+                    setShowJSON(!showJSON);
+                  }}
+                >
+                  {showJSON ? '隐藏' : '显示'} JSON
+                </Button>
+              </Col>
+              <Col>
+                <Space>
+                  {buttons?.map((button) => (
+                    <Button key={button.name} onClick={button.onClick}>
+                      {button.name}
+                    </Button>
+                  ))}
+                  <Button
+                    onClick={() => {
+                      generateGroup(elements);
+                    }}
+                  >
+                    转换为 Group
+                  </Button>
+                  <Button
+                    type="primary"
+                    onClick={() => {
+                      generateSymbol(elements);
+                    }}
+                  >
+                    转换为 Symbol
+                  </Button>
+                </Space>
+              </Col>
+            </Row>
           </Col>
-        ) : null}
-      </Row>
-    </div>
+          {showJSON ? (
+            <Col span={24}>
+              <Card>
+                <ReactJson name="Sketch JSON" src={sketchJSON || {}} />
+              </Card>
+            </Col>
+          ) : null}
+        </Row>
+      </div>
+    </ConfigProvider>
   );
 };
 
