@@ -52,6 +52,7 @@ const menus = {
         'e2e/components/table.md',
         'e2e/components/tooltip.md',
         'e2e/components/modal.md',
+        'e2e/components/switch.md',
       ],
     },
   ],
