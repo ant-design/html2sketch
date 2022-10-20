@@ -146,14 +146,13 @@ class SymbolMaster extends BaseLayer {
       allowsOverrides: true,
 
       backgroundColor: this.backgroundColor.toSketchJSON(),
-      booleanOperation: SketchFormat.BooleanOperation.NA,
-      changeIdentifier: 0,
+      booleanOperation: SketchFormat.BooleanOperation.None,
+      isTemplate: false,
       do_objectID: this.id,
       symbolID: this.symbolID,
       exportOptions: defaultExportOptions,
 
       hasClickThrough: true,
-      includeInCloudUpload: true,
       hasBackgroundColor: false,
       includeBackgroundColorInExport: true,
       resizesContent: false,

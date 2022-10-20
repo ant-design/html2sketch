@@ -51,7 +51,7 @@ class ShapePath extends BaseLayer {
    * 单个 ShapePath 的布尔类型
    */
   booleanOperation: SketchFormat.BooleanOperation =
-    SketchFormat.BooleanOperation.NA;
+    SketchFormat.BooleanOperation.None;
 
   /**
    * 转为 Sketch JSON 文件
@@ -60,6 +60,7 @@ class ShapePath extends BaseLayer {
     return {
       _class: 'shapePath',
       booleanOperation: this.booleanOperation,
+      isTemplate: false,
       do_objectID: this.id,
       rotation: this.rotation,
       isVisible: true,
@@ -149,6 +150,7 @@ class ShapePath extends BaseLayer {
       hasCurveFrom,
       hasCurveTo,
       point: `{${point.x}, ${point.y}}`,
+      cornerStyle: SketchFormat.CornerStyle.Rounded,
     };
   };
 

@@ -6,7 +6,7 @@ specifiers:
   '@ant-design/pro-card': ^1.3.1
   '@ant-design/pro-skeleton': ^1.0.0-beta.7
   '@ant-design/pro-table': ^2.6.3
-  '@sketch-hq/sketch-file-format-ts': 5.1.1
+  '@sketch-hq/sketch-file-format-ts': ^6
   '@testing-library/react': ^11.2.6
   '@testing-library/react-hooks': ^5.1.2
   '@types/color': ^3.0.1
@@ -57,7 +57,7 @@ specifiers:
   uuid: ^8.2.0
 
 dependencies:
-  '@sketch-hq/sketch-file-format-ts': 5.1.1
+  '@sketch-hq/sketch-file-format-ts': 6.4.0
   color: 3.2.1
   css: 3.0.0
   svg-pathdata: 5.0.5
@@ -3875,8 +3875,8 @@ packages:
       '@sinonjs/commons': 1.8.3
     dev: true
 
-  /@sketch-hq/sketch-file-format-ts/5.1.1:
-    resolution: {integrity: sha512-VTRCUeggr+fMle7sNtQw+PAe2fRoVL35n+i+Q8etuwJXPPcz9jW08XytlFtQE+qfnNWLrryCGY/SS7Rm9Qz3GA==}
+  /@sketch-hq/sketch-file-format-ts/6.4.0:
+    resolution: {integrity: sha512-Ve+XNtpquYp2faACcYK7LhVGDjhQ3VYWVqqtKd1q/J1nNdjSNpeJfwQyQxLPgB2Jhsjiwx8XhtH+byIAv1v0tw==}
     dev: false
 
   /@stylelint/postcss-css-in-js/0.37.3_j55xdkkcxc32kvnyvx3y7casfm:

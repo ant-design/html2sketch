@@ -63,7 +63,8 @@ class Rectangle extends BaseLayer {
       pointRadiusBehaviour: 1,
       points: this.getSketchPoints(),
       isClosed: true,
-      booleanOperation: SketchFormat.BooleanOperation.NA,
+      booleanOperation: SketchFormat.BooleanOperation.None,
+      isTemplate: false,
       exportOptions: defaultExportOptions,
       isVisible: true,
       isFixedToViewport: false,
@@ -135,6 +136,7 @@ class Rectangle extends BaseLayer {
         hasCurveFrom: false,
         hasCurveTo: false,
         point: '{0, 0}',
+        cornerStyle: SketchFormat.CornerStyle.Rounded,
       },
       {
         _class: 'curvePoint',
@@ -145,6 +147,7 @@ class Rectangle extends BaseLayer {
         hasCurveFrom: false,
         hasCurveTo: false,
         point: '{1, 0}',
+        cornerStyle: SketchFormat.CornerStyle.Rounded,
       },
       {
         _class: 'curvePoint',
@@ -155,6 +158,7 @@ class Rectangle extends BaseLayer {
         hasCurveFrom: false,
         hasCurveTo: false,
         point: '{1, 1}',
+        cornerStyle: SketchFormat.CornerStyle.Rounded,
       },
       {
         _class: 'curvePoint',
@@ -165,6 +169,7 @@ class Rectangle extends BaseLayer {
         hasCurveFrom: false,
         hasCurveTo: false,
         point: '{0, 1}',
+        cornerStyle: SketchFormat.CornerStyle.Rounded,
       },
     ];
   };

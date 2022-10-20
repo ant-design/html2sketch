@@ -66,7 +66,8 @@ class Svg extends BaseLayer {
     return {
       _class: 'group',
       do_objectID: this.id,
-      booleanOperation: SketchFormat.BooleanOperation.NA,
+      booleanOperation: SketchFormat.BooleanOperation.None,
+      isTemplate: false,
       isFixedToViewport: false,
       isFlippedHorizontal: false,
       isFlippedVertical: false,

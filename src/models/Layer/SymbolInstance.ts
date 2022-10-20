@@ -21,7 +21,8 @@ class SymbolInstance extends BaseLayer {
       _class: 'symbolInstance',
       frame: this.frame.toSketchJSON(),
 
-      booleanOperation: SketchFormat.BooleanOperation.NA,
+      booleanOperation: SketchFormat.BooleanOperation.None,
+      isTemplate: false,
       do_objectID: this.id,
       symbolID: this.symbolID,
       exportOptions: defaultExportOptions,
