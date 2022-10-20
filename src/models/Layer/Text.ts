@@ -71,7 +71,10 @@ class Text extends BaseLayer {
       frame: this.frame.toSketchJSON(),
       clippingMaskMode: 0,
       hasClippingMask: this.hasClippingMask,
-      style: this.style.toSketchJSON(),
+      style: {
+        ...this.style.toSketchJSON(),
+        textStyle: this.textStyle.toSketchJSON(),
+      },
       attributedString: this.getSketchAttributedString(),
       automaticallyDrawOnUnderlyingPath: false,
       dontSynchroniseWithSymbol: false,
