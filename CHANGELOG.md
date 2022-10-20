@@ -1,5 +1,11 @@
 # html2sketch 更新日志
 
+# [1.0.0-beta.16](https://github.com/ant-design/html2sketch/compare/v1.0.0-beta.15...v1.0.0-beta.16) (2022-10-20)
+
+### 🐛 Bug Fixes
+
+- 修正 textStyle 缺失导致修改文本造成报错的问题 ([1a44244](https://github.com/ant-design/html2sketch/commit/1a44244))
+
 # [1.0.0-beta.15](https://github.com/ant-design/html2sketch/compare/v1.0.0-beta.14...v1.0.0-beta.15) (2022-09-14)
 
 ### 🐛 Bug Fixes
