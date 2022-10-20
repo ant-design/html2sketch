@@ -131,6 +131,7 @@ class SketchDocument {
         _class: 'swatchContainer',
         objects: this.swatches,
       },
+      perDocumentLibraries: [],
     };
   }
 

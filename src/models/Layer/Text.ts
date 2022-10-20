@@ -53,10 +53,11 @@ class Text extends BaseLayer {
     const textJSON: SketchFormat.Text = {
       _class: 'text',
       do_objectID: this.id,
-      booleanOperation: SketchFormat.BooleanOperation.NA,
+      booleanOperation: SketchFormat.BooleanOperation.None,
       isFixedToViewport: false,
       isFlippedHorizontal: false,
       isFlippedVertical: false,
+      isTemplate: false,
       isLocked: this.locked,
       isVisible: true,
       name: this.name || this.class,

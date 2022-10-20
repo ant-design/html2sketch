@@ -66,12 +66,12 @@ declare global {
 export const setupAntdTestEnv = () =>
   new Promise<void>((res) => {
     // 1. 插入 antd 样式
-    loadcss('https://unpkg.com/antd/dist/antd.min.css', () => res());
+    loadcss('https://unpkg.com/antd@4/dist/antd.min.css', () => res());
 
     const baseJSFile = [
       'https://unpkg.com/react@17.0.2/umd/react.development.js',
       'https://unpkg.com/react-dom@17.0.2/umd/react-dom.development.js',
-      'https://unpkg.com/antd/dist/antd.min.js',
+      'https://unpkg.com/antd@4/dist/antd.min.js',
       'https://cdn.staticfile.org/babel-standalone/6.26.0/babel.min.js',
     ];
 
