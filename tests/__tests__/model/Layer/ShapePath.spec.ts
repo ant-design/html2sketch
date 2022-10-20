@@ -16,7 +16,6 @@ describe('ShapePath', () => {
       const shapePath = new ShapePath({ isClose, points, ...frame });
 
       expect(shapePath.toSketchJSON()).toMatchSnapshot();
-      expect(shapePath.toSketchJSON()).toStrictEqual(roundRect.sketchJSON);
     });
 
     it('正方形 rect 转换正常', () => {
@@ -24,23 +23,18 @@ describe('ShapePath', () => {
       const shapePath = new ShapePath({ isClose, points, ...frame });
 
       expect(shapePath.toSketchJSON()).toMatchSnapshot();
-      expect(shapePath.toSketchJSON()).toStrictEqual(rect.sketchJSON);
     });
     it('不规则图形compPath转换正常', () => {
       const { frame, isClose, points } = compPath.shapePath;
       const shapePath = new ShapePath({ isClose, points, ...frame });
 
       expect(shapePath.toSketchJSON()).toMatchSnapshot();
-      expect(shapePath.toSketchJSON()).toStrictEqual(compPath.sketchJSON);
     });
     it('带圆角的矩形 rectRound2 转换正常', () => {
       const { frame, isClose, points } = singleRoundRect.shapePath;
       const shapePath = new ShapePath({ isClose, points, ...frame });
 
       expect(shapePath.toSketchJSON()).toMatchSnapshot();
-      expect(shapePath.toSketchJSON()).toStrictEqual(
-        singleRoundRect.sketchJSON,
-      );
     });
     it('开放矩形 unclosedRect 转换正常', () => {
       const { frame, isClose, points } = unclosedRect.shapePath;
@@ -48,7 +42,6 @@ describe('ShapePath', () => {
       const shapePath = new ShapePath({ isClose, points, ...frame });
 
       expect(shapePath.toSketchJSON()).toMatchSnapshot();
-      expect(shapePath.toSketchJSON()).toStrictEqual(unclosedRect.sketchJSON);
     });
 
     it('upArrow 转换正常', () => {
@@ -57,7 +50,6 @@ describe('ShapePath', () => {
       const shapePath = new ShapePath({ isClose, points, ...frame });
 
       expect(shapePath.toSketchJSON()).toMatchSnapshot();
-      expect(shapePath.toSketchJSON()).toStrictEqual(upArrow.sketchJSON);
     });
 
     it('plus 转换正常', () => {
@@ -66,7 +58,6 @@ describe('ShapePath', () => {
       const shapePath = new ShapePath({ isClose, points, ...frame });
 
       expect(shapePath.toSketchJSON()).toMatchSnapshot();
-      expect(shapePath.toSketchJSON()).toStrictEqual(plus.sketchJSON);
     });
   });
 
