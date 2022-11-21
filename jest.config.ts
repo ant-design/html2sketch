@@ -17,6 +17,7 @@ export default {
   testPathIgnorePatterns: ['/node_modules/'],
   moduleFileExtensions: ['js', 'ts', 'tsx', 'json', 'node'],
   coveragePathIgnorePatterns: ['node_modules', '.umi'],
+  collectCoverageFrom: ['src/**/*.{ts,tsx}', '!**/node_modules/**', '!**/vendor/**'],
   globals: {
     'ts-jest': {
       diagnostics: false,
