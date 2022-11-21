@@ -27,12 +27,12 @@
     "/dist"
   ],
   "scripts": {
-    "start": "umi dev --dumi",
+    "start": "dumi dev",
     "build": "father build",
     "---------    ": "",
-    "docs:preview": "PREVIEW=1 umi build  --dumi",
-    "docs:build": "umi build  --dumi",
-    "docs:publish": "umi build  --dumi && gh-pages -d ./dist",
+    "docs:preview": "PREVIEW=1 dumi build",
+    "docs:build": "dumi build",
+    "docs:publish": "dumi build && gh-pages -d ./dist",
     "--------- ": "",
     "test": "umi test",
     "test:update": "UPDATE=1 umi test --update-snapshot",
@@ -50,7 +50,8 @@
     "lint-staged:js": "eslint --cache --ext .js,.jsx,.ts,.tsx --format=pretty",
     "lint:fix": "eslint --fix --cache --ext .js,.jsx,.ts,.tsx --format=pretty ",
     "prettier": "prettier -c --write \"**/**\"",
-    "prepare": "husky install"
+    "setup": "dumi setup",
+    "prepare": "husky install && npm run setup"
   },
   "lint-staged": {
     "**/*.less": "stylelint --syntax less",
@@ -90,8 +91,6 @@
     "@types/react-dom": "^17.0.3",
     "@types/uuid": "^8.3.0",
     "@umijs/fabric": "^2.2.2",
-    "@umijs/preset-dumi": "^1.1.40",
-    "@umijs/preset-react": "^1.8.6",
     "@umijs/test": "^3.4.15",
     "antd": "^4.19.5",
     "commitlint": "^17.1.2",
@@ -118,7 +117,7 @@
     "stylelint": "^13.0.0",
     "ts-jest": "^26.2.0",
     "typescript": "^4.8.2",
-    "umi": "^3.5.21",
+    "dumi": "^2",
     "umi-plugin-githubpages": "^2.0.1"
   },
   "engines": {

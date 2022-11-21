@@ -19,6 +19,7 @@
     "declaration": true,
     "skipLibCheck": true,
     "paths": {
+      "@@/*": [".dumi/tmp/*"],
       "html2sketch": ["./src"],
       "html2sketch/*": ["./src/*"],
       "@test-utils": ["./tests/__utils__"],
