@@ -21,7 +21,7 @@ export default defineConfig({
   base: isProdSite ? '/html2sketch/' : '/',
   publicPath: isProdSite ? '/html2sketch/' : '/',
   alias: {
-    '@docs-utils': resolve(__dirname, './docs/__utils__'),
+    '@docs-utils': resolve(__dirname, './.dumi/theme/builtins/ToSketch'),
   },
   hash: true,
 });
