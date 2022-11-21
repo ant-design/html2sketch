@@ -1,7 +1,8 @@
+import type { BaseLayerParams } from '../../types';
+import { SketchFormat } from '../../types';
 import BaseLayer from '../Base/BaseLayer';
 import { defaultExportOptions } from '../utils';
-import ShapePath from './ShapePath';
-import { BaseLayerParams, SketchFormat } from '../../types';
+import type ShapePath from './ShapePath';
 
 class ShapeGroup extends BaseLayer {
   constructor(params?: BaseLayerParams) {

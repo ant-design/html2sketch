@@ -4,11 +4,11 @@ title: Canvas 解析
 
 ## 基本 Canvas 解析
 
-<code src="./demos/CanvasBasic.tsx" />
+<code src="./demos/CanvasBasic.tsx"></code>
 
 ## Canvas 跨域图片解析
 
-<code src="./demos/CanvasCors.tsx" />
+<code src="./demos/CanvasCors.tsx"></code>
 
 ### 跨域问题说明
 

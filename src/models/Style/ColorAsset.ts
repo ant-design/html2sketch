@@ -1,6 +1,6 @@
-import SketchFormat from '@sketch-hq/sketch-file-format-ts';
-import Color from './Color';
+import type SketchFormat from '@sketch-hq/sketch-file-format-ts';
 import BaseStyle from '../Base/BaseStyle';
+import Color from './Color';
 
 /**
  * 颜色资产

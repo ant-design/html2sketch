@@ -1,6 +1,6 @@
 import { Bitmap } from '../models';
-import { isCanvasNode } from '../utils/nodeType';
 import { errorBase64Url } from '../utils/image';
+import { isCanvasNode } from '../utils/nodeType';
 
 /**
  * 将Canvas 解析为图片

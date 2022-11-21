@@ -1,12 +1,12 @@
-import { Group, SymbolMaster, Text } from '../models';
-import {
-  SymbolAdjustParams,
-  TextParam,
-  GroupLayoutType,
+import type { Group, SymbolMaster, Text } from '../models';
+import type {
   AnyLayer,
   DefaultSymbolParams,
+  GroupLayoutType,
   LayerSelector,
   ResizingConstraint,
+  SymbolAdjustParams,
+  TextParam,
 } from '../types';
 
 /**

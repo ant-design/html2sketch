@@ -1,7 +1,7 @@
-import SketchFormat from '@sketch-hq/sketch-file-format-ts';
-import BaseStyle from '../Base/BaseStyle';
-import { initImageURL } from '../../utils/image';
+import type SketchFormat from '@sketch-hq/sketch-file-format-ts';
 import { fetchBase64 } from '../../utils/fetch';
+import { initImageURL } from '../../utils/image';
+import BaseStyle from '../Base/BaseStyle';
 
 /**
  * 图片资产

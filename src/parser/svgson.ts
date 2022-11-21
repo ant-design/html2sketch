@@ -1,30 +1,30 @@
-import * as svgson from 'svgson';
 import { SVGPathData } from 'svg-pathdata';
+import * as svgson from 'svgson';
 
 import Frame from '../models/Base/Frame';
-import ShapePath from '../models/Layer/ShapePath';
-import ShapeGroup from '../models/Layer/ShapeGroup';
 import Ellipse from '../models/Layer/Ellipse';
-import Rectangle from '../models/Layer/Rectangle';
 import Group from '../models/Layer/Group';
+import Rectangle from '../models/Layer/Rectangle';
+import ShapeGroup from '../models/Layer/ShapeGroup';
+import ShapePath from '../models/Layer/ShapePath';
 import Text from '../models/Layer/Text';
 
+import Color from '../models/Style/Color';
+import Fill from '../models/Style/Fill';
+import Gradient from '../models/Style/Gradient';
 import Style from '../models/Style/Style';
 import TextStyle from '../models/Style/TextStyle';
-import Gradient from '../models/Style/Gradient';
-import Fill from '../models/Style/Fill';
-import Color from '../models/Style/Color';
 
 import { transformStrToMatrix } from '../utils/matrix';
 
-import {
-  SketchFormat,
+import type {
   AnyLayer,
   FrameType,
   ShapeGroupType,
   SvgDefsStyle,
   SvgLayerType,
 } from '../types';
+import { SketchFormat } from '../types';
 
 /**
  * 计算 Frame 的缩放比例

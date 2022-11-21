@@ -1,5 +1,5 @@
+import { TestLayout, useElements } from '@docs-utils';
 import React, { FC } from 'react';
-import { useElements, TestLayout } from '@docs-utils';
 // @ts-ignore
 import { ReactComponent as SvgLink } from './svg/symbolLink.svg';
 // @ts-ignore

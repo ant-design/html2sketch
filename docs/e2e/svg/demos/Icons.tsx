@@ -1,18 +1,12 @@
 import React, { FC } from 'react';
-import { useElements, TestLayout } from '@docs-utils';
-import { DropboxOutlined, BehanceOutlined } from '@ant-design/icons';
 
-const SvgIcons: FC = () => {
-  const { elements, ref } = useElements();
+import { BehanceOutlined, DropboxOutlined } from '@ant-design/icons';
 
-  return (
-    <TestLayout elements={elements}>
-      <div ref={ref}>
-        <DropboxOutlined />
-        <BehanceOutlined />
-      </div>
-    </TestLayout>
-  );
-};
+const SvgIcons: FC = () => (
+  <>
+    <DropboxOutlined />
+    <BehanceOutlined />
+  </>
+);
 
 export default SvgIcons;

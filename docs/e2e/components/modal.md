@@ -8,4 +8,4 @@ title: Modal 浮层
 
 生成的 Symbol 默认带有 resizing 的配置项
 
-<code src="./demos/DefaultModal.tsx" />
+<code src="./demos/DefaultModal.tsx"></code>

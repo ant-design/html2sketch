@@ -1,8 +1,10 @@
 import BaseLayer from '../Base/BaseLayer';
 
+import type { BaseLayerParams } from '../../types';
+import { SketchFormat } from '../../types';
+import type { TextStyleParams } from '../Style/TextStyle';
+import TextStyle from '../Style/TextStyle';
 import { defaultExportOptions } from '../utils';
-import TextStyle, { TextStyleParams } from '../Style/TextStyle';
-import { BaseLayerParams, SketchFormat } from '../../types';
 
 interface TextInitParams extends BaseLayerParams {
   text: string;

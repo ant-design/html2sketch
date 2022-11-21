@@ -1,12 +1,12 @@
 /* eslint-disable no-console */
-import nodeToLayers from './nodeToLayers';
+import type { AnyLayer } from '..';
 import { Group, Style } from '../models';
-import { isNodeVisible } from '../utils/visibility';
 import { getChildNodeList } from '../utils/hierarchy';
 import { getName } from '../utils/name';
-import { isExistPseudoText, isExistPseudoShape } from '../utils/pseudo';
+import { isExistPseudoShape, isExistPseudoText } from '../utils/pseudo';
 import { checkNoNull } from '../utils/utils';
-import { AnyLayer } from '..';
+import { isNodeVisible } from '../utils/visibility';
+import nodeToLayers from './nodeToLayers';
 
 export interface Options {
   postTransform?: (group: AnyLayer) => AnyLayer;

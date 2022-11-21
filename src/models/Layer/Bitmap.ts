@@ -1,11 +1,11 @@
+import { fetchBase64 } from '../../utils/fetch';
+import { uuid } from '../../utils/utils';
 import BaseLayer from '../Base/BaseLayer';
 import { defaultExportOptions } from '../utils';
-import { uuid } from '../../utils/utils';
-import { fetchBase64 } from '../../utils/fetch';
 
-import { initImageURL } from '../../utils/image';
 import type { BaseLayerParams } from '../../types';
 import { SketchFormat } from '../../types';
+import { initImageURL } from '../../utils/image';
 
 interface BitmapInitParams extends BaseLayerParams {
   url: string;

@@ -1,17 +1,17 @@
 import { getGroupLayout } from '../../utils/layout';
+import { uuid } from '../../utils/utils';
 import BaseLayer from '../Base/BaseLayer';
 import Color from '../Style/Color';
-import SymbolInstance from './SymbolInstance';
-import { uuid } from '../../utils/utils';
 import { defaultExportOptions, defaultRuleData } from '../utils';
+import SymbolInstance from './SymbolInstance';
 
-import {
-  GroupLayoutType,
+import type {
   AnyLayer,
   BaseLayerParams,
   FrameType,
-  SketchFormat,
+  GroupLayoutType,
 } from '../../types';
+import { SketchFormat } from '../../types';
 
 /**
  * Sketch 的 Symbol 对象

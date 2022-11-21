@@ -1,6 +1,7 @@
-import Color from './Color';
+import type { CGPoint, ColorStop, GradientProps } from '../../types';
+import { SketchFormat } from '../../types';
 import BaseStyle from '../Base/BaseStyle';
-import { CGPoint, ColorStop, GradientProps, SketchFormat } from '../../types';
+import Color from './Color';
 
 /**
  * 渐变对象

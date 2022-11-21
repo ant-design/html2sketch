@@ -1,7 +1,3 @@
----
-title: 基础解析
----
-
 # 基础解析
 
 ## 使用 use Symbol 的 svg
@@ -28,17 +24,17 @@ title: 基础解析
 </svg>
 ```
 
-<code src="./demos/UseSymbol.tsx" />
+<code src="./demos/UseSymbol.tsx"></code>
 
 ## svg 文本元素
 
-<code src="./demos/Text.tsx" />
+<code src="./demos/Text.tsx"></code>
 
 ## 渐变
 
 ### 圆形渐变
 
-<code src="./demos/RadialGradient.tsx" />
+<code src="./demos/RadialGradient.tsx"></code>
 
 ## 子级需要继承父级 fill 属性
 
@@ -54,10 +50,10 @@ title: 基础解析
 </g>
 ```
 
-<code src="./demos/GroupNoFill.tsx" />
+<code src="./demos/GroupNoFill.tsx"></code>
 
 ## 解析 Transform 属性
 
 使用模块 [transformation-matrix](https://www.npmjs.com/package/transformation-matrix#fromTransformAttribute) 完成相应的解析
 
-<code src="./demos/TransformAttr.tsx" />
+<code src="./demos/TransformAttr.tsx"></code>

@@ -1,14 +1,9 @@
-import { uuid } from '../../utils/utils';
-import Frame from './Frame';
-import Style from '../Style/Style';
+import type { AnyLayer, BaseLayerParams, LayerClassType } from '../../types';
+import { ResizingConstraint, SketchFormat } from '../../types';
 import { calcResizingConstraint } from '../../utils/layout';
-import {
-  AnyLayer,
-  LayerClassType,
-  BaseLayerParams,
-  SketchFormat,
-  ResizingConstraint,
-} from '../../types';
+import { uuid } from '../../utils/utils';
+import Style from '../Style/Style';
+import Frame from './Frame';
 
 const DEFAULT_USER_INFO_SCOPE = 'html2sketch';
 

@@ -19,11 +19,11 @@
     "declaration": true,
     "skipLibCheck": true,
     "paths": {
+      "@@/*": [".dumi/tmp/*"],
       "html2sketch": ["./src"],
       "html2sketch/*": ["./src/*"],
       "@test-utils": ["./tests/__utils__"],
-      "@docs-utils": ["./docs/__utils__"],
-      "@e2e-utils": ["./e2e/__utils__"]
+      "@docs-utils": ["./.dumi/theme/builtins/ToSketch"]
     }
   },
   "include": ["**/src/", "**/docs/", "**/tests/"],

@@ -1,15 +1,4 @@
-import React from 'react';
 import { Radio } from 'antd';
-import { useElements, TestLayout } from '@docs-utils';
+import React from 'react';
 
-export default () => {
-  const { elements, ref } = useElements();
-
-  return (
-    <TestLayout elements={elements}>
-      <div ref={ref}>
-        <Radio checked>单选项</Radio>
-      </div>
-    </TestLayout>
-  );
-};
+export default () => <Radio checked>单选项</Radio>;

@@ -1,7 +1,6 @@
-import React from 'react';
-import { Tag } from 'antd';
 import ProTable from '@ant-design/pro-table';
-import { useElements, TestLayout } from '@docs-utils';
+import { Tag } from 'antd';
+import React from 'react';
 
 const dataSource = [
   {
@@ -116,91 +115,82 @@ const dataSource = [
   },
 ];
 
-export default () => {
-  const { elements, ref } = useElements();
-
-  const columns = [
-    {
-      title: '编号',
-      dataIndex: 'MW-xtdg',
-      align: 'left',
-      valueType: 'text',
-      width: 154,
-    },
-    {
-      title: '标题',
-      dataIndex: 'MW-fpex',
-      align: 'left',
-      ellipsis: true,
-      copyable: true,
-      valueType: 'text',
-      width: 228,
-    },
-    {
-      title: '状态',
-      dataIndex: 'MW-qswn',
-      align: 'left',
-      ellipsis: true,
-      valueEnum: {
-        成功: {
-          text: '成功',
-          status: 'Success',
-        },
-        失败: {
-          text: '失败',
-          status: 'Error',
-        },
-        处理中: {
-          text: '处理中',
-          status: 'Processing',
-        },
-        默认: {
-          text: '默认',
-          status: 'Default',
-        },
-        警告: {
-          text: '警告',
-          status: 'Warning',
-        },
+const columns = [
+  {
+    title: '编号',
+    dataIndex: 'MW-xtdg',
+    align: 'left',
+    valueType: 'text',
+    width: 154,
+  },
+  {
+    title: '标题',
+    dataIndex: 'MW-fpex',
+    align: 'left',
+    ellipsis: true,
+    copyable: true,
+    valueType: 'text',
+    width: 228,
+  },
+  {
+    title: '状态',
+    dataIndex: 'MW-qswn',
+    align: 'left',
+    ellipsis: true,
+    valueEnum: {
+      成功: {
+        text: '成功',
+        status: 'Success',
       },
-      width: 113,
+      失败: {
+        text: '失败',
+        status: 'Error',
+      },
+      处理中: {
+        text: '处理中',
+        status: 'Processing',
+      },
+      默认: {
+        text: '默认',
+        status: 'Default',
+      },
+      警告: {
+        text: '警告',
+        status: 'Warning',
+      },
     },
-    {
-      title: '标签',
-      dataIndex: 'MW-sekp',
-      align: 'left',
-      render: (cell: {
-        color: string | (string & {}) | undefined;
-        text: React.ReactNode;
-      }) => <Tag color={cell.color}>{cell.text}</Tag>,
-    },
-    {
-      title: '时间',
-      dataIndex: 'MW-jpae',
-      align: 'left',
-      valueType: 'dateTime',
-      width: 217,
-    },
-    {
-      title: '操作',
-      dataIndex: 'MW-elze',
-      align: 'left',
-      valueType: 'option',
-      render: () => [<a>确认</a>, <a>删除</a>],
-    },
-  ];
+    width: 113,
+  },
+  {
+    title: '标签',
+    dataIndex: 'MW-sekp',
+    align: 'left',
+    render: (cell: { color: any; text: React.ReactNode }) => (
+      <Tag color={cell.color}>{cell.text}</Tag>
+    ),
+  },
+  {
+    title: '时间',
+    dataIndex: 'MW-jpae',
+    align: 'left',
+    valueType: 'dateTime',
+    width: 217,
+  },
+  {
+    title: '操作',
+    dataIndex: 'MW-elze',
+    align: 'left',
+    valueType: 'option',
+    render: () => [<a>确认</a>, <a>删除</a>],
+  },
+];
 
-  return (
-    <TestLayout elements={elements}>
-      <div ref={ref}>
-        <ProTable
-          // @ts-ignore
-          columns={columns}
-          rowKey="key"
-          dataSource={dataSource}
-          pagination={false}
-        />
-      </div>
-    </TestLayout>
-  );
-};
+export default () => (
+  <ProTable
+    // @ts-ignore
+    columns={columns}
+    rowKey="key"
+    dataSource={dataSource}
+    pagination={false}
+  />
+);

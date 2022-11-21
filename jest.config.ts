@@ -1,4 +1,4 @@
-module.exports = {
+export default {
   preset: 'ts-jest',
   runner: 'jest-electron/runner',
   testEnvironment: 'jest-electron/environment',
@@ -17,6 +17,7 @@ module.exports = {
   testPathIgnorePatterns: ['/node_modules/'],
   moduleFileExtensions: ['js', 'ts', 'tsx', 'json', 'node'],
   coveragePathIgnorePatterns: ['node_modules', '.umi'],
+  collectCoverageFrom: ['src/**/*.{ts,tsx}', '!**/node_modules/**', '!**/vendor/**'],
   globals: {
     'ts-jest': {
       diagnostics: false,

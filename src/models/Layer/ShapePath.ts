@@ -1,16 +1,16 @@
 import { SVGPathData } from 'svg-pathdata';
-import { CommandC, CommandL, SVGCommand } from 'svg-pathdata/lib/types';
+import type { CommandC, CommandL, SVGCommand } from 'svg-pathdata/lib/types';
 import BaseLayer from '../Base/BaseLayer';
 import { defaultExportOptions } from '../utils';
 
-import {
+import type {
+  BaseLayerParams,
+  BezierPoint,
   CGPoint,
   ShapePathType,
-  BezierPoint,
   StartPoint,
-  BaseLayerParams,
-  SketchFormat,
 } from '../../types';
+import { SketchFormat } from '../../types';
 
 interface ContextPoints {
   thisPoint: BezierPoint;

@@ -1,9 +1,9 @@
-import React, { useEffect } from 'react';
-import { useElements, TestLayout } from '@docs-utils';
-
 /**
- *
+ * hideSketchLayout: true
  */
+import { TestLayout, useElements } from '@docs-utils';
+import React, { useEffect } from 'react';
+
 export default () => {
   const { elements, ref } = useElements();
 
