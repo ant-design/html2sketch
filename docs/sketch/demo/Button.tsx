@@ -1,6 +1,6 @@
-import React, { FC, Fragment } from 'react';
-import { Button, Divider, Row, Col, Space } from 'antd';
 import { StepForwardOutlined, UpCircleOutlined } from '@ant-design/icons';
+import { Button, Col, Divider, Row, Space } from 'antd';
+import React, { FC, Fragment } from 'react';
 
 import { generateSymbolName } from './utils/symbolName';
 

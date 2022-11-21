@@ -1,17 +1,13 @@
 import { Svgson } from '../../parser';
 
 import BaseLayer from '../Base/BaseLayer';
-import Gradient from '../Style/Gradient';
+import type Gradient from '../Style/Gradient';
 
-import { defaultExportOptions } from '../utils';
 import { getGroupLayout } from '../../utils/layout';
+import { defaultExportOptions } from '../utils';
 
-import {
-  SketchFormat,
-  AnyLayer,
-  BaseLayerParams,
-  SvgDefsStyle,
-} from '../../types';
+import type { AnyLayer, BaseLayerParams, SvgDefsStyle } from '../../types';
+import { SketchFormat } from '../../types';
 
 interface SvgInitParams extends Partial<BaseLayerParams> {
   svgString: string;

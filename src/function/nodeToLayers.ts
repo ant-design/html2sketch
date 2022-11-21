@@ -1,29 +1,29 @@
 /* eslint-disable no-console */
-import { AnyLayer } from '..';
-import { isDefaultStyles } from '../utils/style';
+import type { AnyLayer } from '..';
 import { Text } from '../models';
+import { isDefaultStyles } from '../utils/style';
 
 import {
   parseCanvasToBitmap,
-  parseToBitmap,
-  parseToSvg,
-  parseToText,
-  parseToShape,
+  parseInputTextToText,
   parsePseudoToShape,
   parsePseudoToText,
-  parseInputTextToText,
+  parseToBitmap,
+  parseToShape,
+  parseToSvg,
+  parseToText,
 } from '../parser';
 
-import { isTextVisible } from '../utils/visibility';
-import { isExistPseudoText, isExistPseudoShape } from '../utils/pseudo';
 import {
   isCanvasNode,
   isImageNode,
-  isTextInputNode,
   isSVGChildNode,
   isSvgNode,
+  isTextInputNode,
   isTextNode,
 } from '../utils/nodeType';
+import { isExistPseudoShape, isExistPseudoText } from '../utils/pseudo';
+import { isTextVisible } from '../utils/visibility';
 
 /**
  * 将节点转为 Layer 对象

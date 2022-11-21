@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 
-import { DropboxOutlined, BehanceOutlined } from '@ant-design/icons';
+import { BehanceOutlined, DropboxOutlined } from '@ant-design/icons';
 
 const SvgIcons: FC = () => (
   <>

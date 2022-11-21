@@ -1,5 +1,6 @@
-import Color, { ColorParam } from '../models/Style/Color';
-import { CGPoint, SketchFormat } from '.';
+import type { CGPoint, SketchFormat } from '.';
+import type { ColorParam } from '../models/Style/Color';
+import type Color from '../models/Style/Color';
 
 /**
  * 传入颜色间隔点的参数

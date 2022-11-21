@@ -26,12 +26,8 @@ export const parseInputTextToText = (
 
   const pseudoNode = document.createElement('text');
 
-  const {
-    paddingLeft,
-    paddingRight,
-    paddingTop,
-    borderTopWidth,
-  } = inputTextStyle;
+  const { paddingLeft, paddingRight, paddingTop, borderTopWidth } =
+    inputTextStyle;
 
   const nodeBCR = node.getBoundingClientRect();
 
@@ -97,7 +93,10 @@ export const parseInputTextToText = (
   const { lineHeight } = inputTextStyle;
 
   // TODO: 还有什么时候需要垂直居中呢?
-  if (node.nodeName !== 'TEXTAREA' && parseFloat(lineHeight) > rangeBCR.height) {
+  if (
+    node.nodeName !== 'TEXTAREA' &&
+    parseFloat(lineHeight) > rangeBCR.height
+  ) {
     // 需要垂直居中的地方
     console.log(y, nodeBCR.y);
     console.log(nodeBCR.height, rangeBCR.height);

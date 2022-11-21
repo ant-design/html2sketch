@@ -1,5 +1,5 @@
+import { Button, Card, Col, Divider, Row, Space } from 'antd';
 import React, { FC, useState } from 'react';
-import { Button, Row, Col, Card, Divider, Space } from 'antd';
 import ReactJson from 'react-json-view';
 
 import { ButtonType } from 'antd/es/button';

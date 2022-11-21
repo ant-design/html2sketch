@@ -1,7 +1,7 @@
 import type { Rectangle } from '../models';
 import { Frame } from '../models';
-import { parseToShape } from './shape';
 import { isVisibleShape } from '../utils/visibility';
+import { parseToShape } from './shape';
 
 /**
  * 解析图形类伪类

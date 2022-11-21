@@ -1,8 +1,9 @@
+import type { BaseLayerParams } from '../../types';
+import { SketchFormat } from '../../types';
 import BaseLayer from '../Base/BaseLayer';
-import { defaultRuleData, defaultExportOptions } from '../utils';
-import { BaseLayerParams, SketchFormat } from '../../types';
+import { defaultExportOptions, defaultRuleData } from '../utils';
 
-interface PageInitParams extends Pick<BaseLayerParams, 'height' | 'width'> {}
+type PageInitParams = Pick<BaseLayerParams, 'height' | 'width'>;
 
 class Page extends BaseLayer {
   constructor(params?: PageInitParams) {

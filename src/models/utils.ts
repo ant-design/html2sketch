@@ -1,5 +1,5 @@
-import SketchBorderOptions from './Style/SketchBorderOptions';
 import { SketchFormat } from '../types';
+import SketchBorderOptions from './Style/SketchBorderOptions';
 
 export const defaultExportOptions: SketchFormat.ExportOptions = {
   _class: 'exportOptions',
@@ -12,7 +12,8 @@ export const defaultExportOptions: SketchFormat.ExportOptions = {
 /**
  * SKetch 默认的圆角选项
  * */
-export const defaultBorderOptions: SketchFormat.BorderOptions = new SketchBorderOptions().toSketchJSON();
+export const defaultBorderOptions: SketchFormat.BorderOptions =
+  new SketchBorderOptions().toSketchJSON();
 
 /**
  * SKetch默认的色彩控制

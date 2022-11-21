@@ -1,4 +1,5 @@
-import { BaseLayerParams, SketchFormat } from '../../types';
+import type { BaseLayerParams } from '../../types';
+import { SketchFormat } from '../../types';
 
 import BaseLayer from '../Base/BaseLayer';
 import { defaultExportOptions } from '../utils';

@@ -1,17 +1,19 @@
-import { Declaration, parse as cssParse, Rule } from 'css';
+import type { Declaration, Rule } from 'css';
+import { parse as cssParse } from 'css';
 
 import BaseStyle from '../Base/BaseStyle';
-import { ColorParam } from './Color';
-import Fill from './Fill';
-import Shadow from './Shadow';
-import InnerShadow from './InnerShadow';
 import Border from './Border';
+import type { ColorParam } from './Color';
+import Fill from './Fill';
+import InnerShadow from './InnerShadow';
+import Shadow from './Shadow';
 import SketchBorderOptions from './SketchBorderOptions';
 
 import { uuid } from '../../utils/utils';
 import { defaultColorControls } from '../utils';
 
-import { AnyLayer, SketchFormat } from '../../types';
+import type { AnyLayer } from '../../types';
+import { SketchFormat } from '../../types';
 
 interface ShadowInput {
   color: ColorParam;
@@ -323,7 +325,7 @@ class Style extends BaseStyle {
     const { stylesheet } = cssParse(classStyle);
     const rules: {
       className: string;
-      styles: { [x: string]: string };
+      styles: Record<string, string>;
     }[] = [];
 
     stylesheet?.rules.forEach((rule: Rule) => {

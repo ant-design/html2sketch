@@ -1,10 +1,10 @@
 import Text from '../models/Layer/Text';
-import { parseToGroup } from './group';
 import {
-  getTextLinesAndRange,
-  getTextAbsBCR,
   getLineTextWithWidth,
+  getTextAbsBCR,
+  getTextLinesAndRange,
 } from '../utils/text';
+import { parseToGroup } from './group';
 
 /**
  * 将 Node 转为 Text 对象

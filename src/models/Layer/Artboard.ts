@@ -1,7 +1,8 @@
+import type { BaseLayerParams } from '../../types';
+import { SketchFormat } from '../../types';
 import BaseLayer from '../Base/BaseLayer';
-import { defaultRuleData, defaultExportOptions } from '../utils';
 import Color from '../Style/Color';
-import { BaseLayerParams, SketchFormat } from '../../types';
+import { defaultExportOptions, defaultRuleData } from '../utils';
 
 /**
  * 画板对象

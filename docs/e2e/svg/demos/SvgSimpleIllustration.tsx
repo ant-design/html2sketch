@@ -14,8 +14,8 @@ const IconTest: FC = () => {
             y2="37.8635764%"
             id="linearGradient-1"
           >
-            <stop stop-color="#4285EB" offset="0%"></stop>
-            <stop stop-color="#2EC7FF" offset="100%"></stop>
+            <stop stopColor="#4285EB" offset="0%"></stop>
+            <stop stopColor="#2EC7FF" offset="100%"></stop>
           </linearGradient>
           <linearGradient
             x1="69.644116%"
@@ -24,9 +24,9 @@ const IconTest: FC = () => {
             y2="108.456714%"
             id="linearGradient-2"
           >
-            <stop stop-color="#29CDFF" offset="0%"></stop>
-            <stop stop-color="#148EFF" offset="37.8600687%"></stop>
-            <stop stop-color="#0A60FF" offset="100%"></stop>
+            <stop stopColor="#29CDFF" offset="0%"></stop>
+            <stop stopColor="#148EFF" offset="37.8600687%"></stop>
+            <stop stopColor="#0A60FF" offset="100%"></stop>
           </linearGradient>
           <linearGradient
             x1="69.6908165%"
@@ -35,9 +35,9 @@ const IconTest: FC = () => {
             y2="117.391248%"
             id="linearGradient-3"
           >
-            <stop stop-color="#FA816E" offset="0%"></stop>
-            <stop stop-color="#F74A5C" offset="41.472606%"></stop>
-            <stop stop-color="#F51D2C" offset="100%"></stop>
+            <stop stopColor="#FA816E" offset="0%"></stop>
+            <stop stopColor="#F74A5C" offset="41.472606%"></stop>
+            <stop stopColor="#F51D2C" offset="100%"></stop>
           </linearGradient>
           <linearGradient
             x1="68.1279872%"
@@ -46,22 +46,22 @@ const IconTest: FC = () => {
             y2="114.942679%"
             id="linearGradient-4"
           >
-            <stop stop-color="#FA8E7D" offset="0%"></stop>
-            <stop stop-color="#F74A5C" offset="51.2635191%"></stop>
-            <stop stop-color="#F51D2C" offset="100%"></stop>
+            <stop stopColor="#FA8E7D" offset="0%"></stop>
+            <stop stopColor="#F74A5C" offset="51.2635191%"></stop>
+            <stop stopColor="#F51D2C" offset="100%"></stop>
           </linearGradient>
         </defs>
         <g
           id="Page-1"
           stroke="none"
-          stroke-width="1"
+          strokeWidth="1"
           fill="none"
-          fill-rule="evenodd"
+          fillRule="evenodd"
         >
           <g id="logo" transform="translate(-20.000000, -20.000000)">
             <g id="Group-28-Copy-5" transform="translate(20.000000, 20.000000)">
               <g id="Group-27-Copy-3">
-                <g id="Group-25" fill-rule="nonzero">
+                <g id="Group-25" fillRule="nonzero">
                   <g id="2">
                     <path
                       d="M91.5880863,4.17652823 L4.17996544,91.5127728 C-0.519240605,96.2081146 -0.519240605,103.791885 4.17996544,108.487227 L91.5880863,195.823472 C96.2872923,200.518814 103.877304,200.518814 108.57651,195.823472 L145.225487,159.204632 C149.433969,154.999611 149.433969,148.181924 145.225487,143.976903 C141.017005,139.771881 134.193707,139.771881 129.985225,143.976903 L102.20193,171.737352 C101.032305,172.906015 99.2571609,172.906015 98.0875359,171.737352 L28.285908,101.993122 C27.1162831,100.824459 27.1162831,99.050775 28.285908,97.8821118 L98.0875359,28.1378823 C99.2571609,26.9692191 101.032305,26.9692191 102.20193,28.1378823 L129.985225,55.8983314 C134.193707,60.1033528 141.017005,60.1033528 145.225487,55.8983314 C149.433969,51.69331 149.433969,44.8756232 145.225487,40.6706018 L108.58055,4.05574592 C103.862049,-0.537986846 96.2692618,-0.500797906 91.5880863,4.17652823 Z"

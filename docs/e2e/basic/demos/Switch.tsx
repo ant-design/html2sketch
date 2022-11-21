@@ -1,5 +1,5 @@
+import { Space, Switch } from 'antd';
 import React, { FC } from 'react';
-import { Switch, Space } from 'antd';
 
 const SwitchDemo: FC = () => (
   <Space>

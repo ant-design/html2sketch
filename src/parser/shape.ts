@@ -1,7 +1,7 @@
 import Color from 'color';
-import { Style, Bitmap, Group, Rectangle, Shadow, Svg, Frame } from '../models';
-import { defaultNodeStyle } from '../models/utils';
+import { Bitmap, Frame, Group, Rectangle, Shadow, Style, Svg } from '../models';
 import type { ColorParam } from '../models/Style/Color';
+import { defaultNodeStyle } from '../models/utils';
 import {
   getActualImageSize,
   parseBackgroundImageType,

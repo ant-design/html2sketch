@@ -1,7 +1,7 @@
 import { defineConfig } from 'dumi';
 import { resolve } from 'path';
 
-import { sidebar, nav } from './config/routes';
+import { nav, sidebar } from './config/routes';
 
 const isProdSite =
   // 不是预览模式 同时是生产环境

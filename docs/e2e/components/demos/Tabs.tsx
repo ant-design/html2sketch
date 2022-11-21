@@ -1,6 +1,6 @@
-import React from 'react';
+import { AndroidOutlined, AppleOutlined } from '@ant-design/icons';
 import { Tabs } from 'antd';
-import { AppleOutlined, AndroidOutlined } from '@ant-design/icons';
+import React from 'react';
 
 const { TabPane } = Tabs;
 

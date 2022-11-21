@@ -1,6 +1,6 @@
-import React from 'react';
-import { Tag } from 'antd';
 import ProTable from '@ant-design/pro-table';
+import { Tag } from 'antd';
+import React from 'react';
 
 const dataSource = [
   {
@@ -165,10 +165,9 @@ const columns = [
     title: '标签',
     dataIndex: 'MW-sekp',
     align: 'left',
-    render: (cell: {
-      color: string | (string & {}) | undefined;
-      text: React.ReactNode;
-    }) => <Tag color={cell.color}>{cell.text}</Tag>,
+    render: (cell: { color: any; text: React.ReactNode }) => (
+      <Tag color={cell.color}>{cell.text}</Tag>
+    ),
   },
   {
     title: '时间',

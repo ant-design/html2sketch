@@ -1,5 +1,5 @@
-import React, { FC } from 'react';
 import { Checkbox } from 'antd';
+import React, { FC } from 'react';
 
 const SwitchDemo: FC = () => (
   <>

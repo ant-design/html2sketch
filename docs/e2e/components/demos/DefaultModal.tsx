@@ -1,9 +1,9 @@
 /**
  * hideSketchLayout: true
  */
-import React, { FC, useEffect } from 'react';
+import { TestLayout, useElements } from '@docs-utils';
 import { Modal } from 'antd';
-import { useElements, TestLayout } from '@docs-utils';
+import React, { FC, useEffect } from 'react';
 // @ts-ignore
 import styles from './Modal.less';
 

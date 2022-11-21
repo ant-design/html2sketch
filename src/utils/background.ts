@@ -1,4 +1,4 @@
-import { BackgroundImageType } from '../types';
+import type { BackgroundImageType } from '../types';
 
 /**
  * 解析线性渐变
@@ -184,10 +184,9 @@ export const getActualImageSize = (
   } else {
     // we currently don't support multiple backgrounds
     const [singleBackgroundSize] = backgroundSize.split(',');
-    let [
-      backgroundSizeWidth,
-      backgroundSizeHeight,
-    ] = singleBackgroundSize.trim().split(' ');
+    let [backgroundSizeWidth, backgroundSizeHeight] = singleBackgroundSize
+      .trim()
+      .split(' ');
 
     if (backgroundSizeWidth === 'auto' || backgroundSizeWidth === undefined) {
       backgroundSizeWidth = '';

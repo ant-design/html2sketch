@@ -1,10 +1,10 @@
 /**
  * hideSketchLayout: true
  */
-import React, { useRef } from 'react';
-import { useElements, TestLayout } from '@docs-utils';
-import copy from 'copy-to-clipboard';
+import { TestLayout, useElements } from '@docs-utils';
 import { message } from 'antd';
+import copy from 'copy-to-clipboard';
+import React, { useRef } from 'react';
 
 export default () => {
   const { elements, ref } = useElements();

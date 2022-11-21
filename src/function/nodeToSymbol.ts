@@ -1,9 +1,9 @@
-import { SymbolMaster } from '../models';
 import { defaultSymbolParamsList } from '../constraints/symbolParams';
-import nodeToGroup from './nodeToGroup';
-import adjustSymbolParams from './adjustSymbolParams';
+import { SymbolMaster } from '../models';
 import type { AnyLayer, NodeToSymbolOptions } from '../types';
 import { checkNoNull } from '../utils/utils';
+import adjustSymbolParams from './adjustSymbolParams';
+import nodeToGroup from './nodeToGroup';
 
 /**
  * 解析为 Symbol

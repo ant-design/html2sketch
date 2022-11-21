@@ -67,8 +67,7 @@
 .tea-tabs__tab:hover::after {
   width: 100%;
   border-bottom-color: #006eff;
-  transition: border-color 0.15s ease-in-out, width 0.15s ease-in-out,
-    height 0.15s ease-in-out;
+  transition: border-color 0.15s ease-in-out, width 0.15s ease-in-out, height 0.15s ease-in-out;
 }
 
 .tea-tabs__tab.is-disabled:hover::after {

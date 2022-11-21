@@ -1,7 +1,7 @@
 import {
-  fromTransformAttribute,
   compose,
   fromDefinition,
+  fromTransformAttribute,
 } from 'transformation-matrix';
 
 /*

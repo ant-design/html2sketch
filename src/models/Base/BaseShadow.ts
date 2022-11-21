@@ -1,5 +1,6 @@
 import SketchFormat from '@sketch-hq/sketch-file-format-ts';
-import Color, { ColorParam } from '../Style/Color';
+import type { ColorParam } from '../Style/Color';
+import Color from '../Style/Color';
 import BaseStyle from './BaseStyle';
 
 export interface ShadowParams {
@@ -18,14 +19,8 @@ abstract class BaseShadow extends BaseStyle {
     params: ShadowParams,
   ) {
     super();
-    const {
-      blurRadius,
-      color,
-      offsetX,
-      offsetY,
-      contextSettings,
-      spread,
-    } = params;
+    const { blurRadius, color, offsetX, offsetY, contextSettings, spread } =
+      params;
 
     this.color = new Color(color);
     this.class = type;
