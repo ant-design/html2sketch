@@ -1,21 +1,13 @@
-import React, { FC, useState, Fragment } from 'react';
-import { Button, Divider, Row, Col, message, Space } from 'antd';
+import React, { FC, Fragment } from 'react';
+import { Button, Divider, Row, Col, Space } from 'antd';
 import { StepForwardOutlined, UpCircleOutlined } from '@ant-design/icons';
-import copy from 'copy-to-clipboard';
-import {
-  AnyLayer,
-  nodeToGroup,
-  nodeToSymbol,
-  GroupLayoutType,
-} from 'html2sketch';
-import Footer, { ActionType } from './Footer';
+
 import { generateSymbolName } from './utils/symbolName';
 
 /**
  * Button demo
  */
 const ButtonSymbolDemo: FC = () => {
-  const [json, setJSON] = useState<object>();
   const groupLayout = 'LEFT_TO_RIGHT';
   const typeList = [
     { type: 'default' },
@@ -39,124 +31,55 @@ const ButtonSymbolDemo: FC = () => {
     typeList.map((i) => ({ ...i, size: 'large' })),
   ];
 
-  const transformFunc = async (
-    transferFn: (node: Element) => Promise<Object>,
-  ) => {
-    try {
-      const els = document.getElementsByClassName('button');
-      const buttons: Object[] = [];
-
-      const list = Array.from(els);
-
-      for (let i = 0; i < list.length; i++) {
-        const sketchBtn = await transferFn(list[i]);
-        buttons.push(sketchBtn);
-      }
-
-      console.log('-------转换结束--------');
-      console.log(buttons);
-
-      copy(JSON.stringify(buttons));
-      message.success('转换成功🎉已复制到剪切板');
-      setJSON(buttons);
-    } catch (e) {
-      message.error('解析失败,配置项可能存在错误!');
-      console.error(e);
-    }
-  };
-
-  const actionList: ActionType[] = [
-    {
-      text: '转换为 Group',
-      type: 'default',
-      onClick: () => {
-        transformFunc(async (node) => {
-          return (await nodeToGroup(node)).toSketchJSON();
-        });
-      },
-    },
-    {
-      text: '转换为 Symbol',
-      type: 'primary',
-      onClick: () => {
-        transformFunc(async (node) => {
-          const symbolLayout = node.getAttribute('layout') as GroupLayoutType;
-
-          const symbol = await nodeToSymbol(node, {
-            symbolLayout: symbolLayout || undefined,
-            handleSymbol: (symbol) => {
-              symbol.name = node.getAttribute('symbol-name') || 'symbol';
-              const renameBG = (layer: AnyLayer) => {
-                if (layer.layers) {
-                  layer.layers.forEach(renameBG);
-                }
-
-                if (layer?.name?.includes('ant-btn')) {
-                  layer.name = '背景';
-                }
-              };
-              symbol.layers.forEach(renameBG);
-            },
-          });
-
-          return symbol.toSketchJSON();
-        });
-      },
-    },
-  ];
-
   const group = ['默认', '小', '大'];
   return (
-    <div>
-      <Row>
-        {buttonList.map((list, sizeIndex) => {
-          return (
-            <Fragment key={sizeIndex}>
-              <Col key={sizeIndex}>
-                <Space align="start">
-                  <div style={{ width: 32 }}>{group[sizeIndex]}</div>
-                  <Row gutter={[8, 12]}>
-                    {list.map((button, index) => {
-                      const { type, size, danger, icon } = button;
-                      return (
-                        <Col key={index}>
-                          <Button
-                            className="button"
-                            icon={icon}
-                            symbol-name={generateSymbolName({
-                              type,
-                              size,
-                              typeIndex: index + 1,
-                              sizeIndex: sizeIndex + 1,
-                              component: 'button',
-                              componentIndex: 1,
-                              content: 'general',
-                              contentIndex: 1,
-                              suffix: danger ? '-Danger' : undefined,
-                            })}
-                            layout={groupLayout}
-                            // @ts-ignore
-                            type={type}
-                            danger={danger}
-                            disabled={type === 'disabled'}
-                            // @ts-ignore
-                            size={size}
-                          >
-                            文本
-                          </Button>
-                        </Col>
-                      );
-                    })}
-                  </Row>
-                </Space>
-              </Col>
-              {sizeIndex === buttonList.length - 1 ? null : <Divider dashed />}
-            </Fragment>
-          );
-        })}
-      </Row>
-      <Footer json={json} actions={actionList} />
-    </div>
+    <Row>
+      {buttonList.map((list, sizeIndex) => {
+        return (
+          <Fragment key={sizeIndex}>
+            <Col key={sizeIndex}>
+              <Space align="start">
+                <div style={{ width: 32 }}>{group[sizeIndex]}</div>
+                <Row gutter={[8, 12]}>
+                  {list.map((button, index) => {
+                    const { type, size, danger, icon } = button;
+                    return (
+                      <Col key={index}>
+                        <Button
+                          className="button"
+                          icon={icon}
+                          symbol-name={generateSymbolName({
+                            type,
+                            size,
+                            typeIndex: index + 1,
+                            sizeIndex: sizeIndex + 1,
+                            component: 'button',
+                            componentIndex: 1,
+                            content: 'general',
+                            contentIndex: 1,
+                            suffix: danger ? '-Danger' : undefined,
+                          })}
+                          layout={groupLayout}
+                          // @ts-ignore
+                          type={type}
+                          danger={danger}
+                          disabled={type === 'disabled'}
+                          // @ts-ignore
+                          size={size}
+                        >
+                          文本
+                        </Button>
+                      </Col>
+                    );
+                  })}
+                </Row>
+              </Space>
+            </Col>
+            {sizeIndex === buttonList.length - 1 ? null : <Divider dashed />}
+          </Fragment>
+        );
+      })}
+    </Row>
   );
 };
 

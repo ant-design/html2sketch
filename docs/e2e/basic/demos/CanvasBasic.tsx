@@ -1,6 +1,5 @@
 import React from 'react';
 import { Line } from '@ant-design/charts';
-import { useElements, TestLayout } from '@docs-utils';
 
 const data = [
   {
@@ -257,15 +256,5 @@ const config = {
   responsive: true,
 };
 
-export default () => {
-  const { elements, ref } = useElements();
-
-  return (
-    <TestLayout elements={elements}>
-      <div ref={ref}>
-        {/* @ts-ignore */}
-        <Line {...config} />
-      </div>
-    </TestLayout>
-  );
-};
+// @ts-ignore
+export default () => <Line {...config} />;

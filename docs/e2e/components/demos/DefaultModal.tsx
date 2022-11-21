@@ -1,3 +1,6 @@
+/**
+ * hideSketchLayout: true
+ */
 import React, { FC, useEffect } from 'react';
 import { Modal } from 'antd';
 import { useElements, TestLayout } from '@docs-utils';
