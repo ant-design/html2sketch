@@ -1,8 +1,3 @@
----
-title: 架构说明
-order: 2
----
-
 ## 架构说明
 
 ### 开发框架
@@ -53,3 +48,9 @@ order: 2
 #### types
 
 包含相关类型定义文件
+
+#### 实现思路
+
+DOM -> 解析器 -> DIM -> SketchJSON
+
+![解析流程](https://user-images.githubusercontent.com/28616219/91637898-379b0680-ea3e-11ea-95e6-74694ed72a57.png)
