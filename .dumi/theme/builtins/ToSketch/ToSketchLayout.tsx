@@ -1,11 +1,12 @@
 import { Button, Card, Col, Divider, Row, Space } from 'antd';
-import React, { FC, useState } from 'react';
+import React, { FC, ReactNode, useState } from 'react';
 import ReactJson from 'react-json-view';
 import useSketchJSON from './useSketchJSON';
 
 interface FooterProps {
   elements: Element[] | Element;
   buttons?: { name: string; onClick: () => void }[];
+  children?: ReactNode;
 }
 
 const ToSketchLayout: FC<FooterProps> = ({ elements, children, buttons }) => {
