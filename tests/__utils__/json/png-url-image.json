@@ -9,13 +9,7 @@
     "y": 8
   },
   "allowsOverrides": true,
-  "backgroundColor": {
-    "_class": "color",
-    "red": 1,
-    "green": 1,
-    "blue": 1,
-    "alpha": 1
-  },
+  "backgroundColor": { "_class": "color", "red": 1, "green": 1, "blue": 1, "alpha": 1 },
   "booleanOperation": -1,
   "isTemplate": false,
   "do_objectID": "UUID",
@@ -49,11 +43,7 @@
   "rotation": 0,
   "layerListExpandedType": 0,
   "overrideProperties": [
-    {
-      "_class": "MSImmutableOverrideProperty",
-      "canOverride": true,
-      "overrideName": "UUID_image"
-    }
+    { "_class": "MSImmutableOverrideProperty", "canOverride": true, "overrideName": "UUID_image" }
   ],
   "layers": [
     {
@@ -93,11 +83,7 @@
         "borders": [],
         "shadows": [],
         "innerShadows": [],
-        "contextSettings": {
-          "_class": "graphicsContextSettings",
-          "blendMode": 0,
-          "opacity": 1
-        }
+        "contextSettings": { "_class": "graphicsContextSettings", "blendMode": 0, "opacity": 1 }
       },
       "image": {
         "_class": "MSJSONOriginalDataReference",
