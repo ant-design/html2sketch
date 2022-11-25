@@ -10,52 +10,13 @@ import svgIconJSON from './json/svg-icon.json';
 export { radioJSON, svgButtonJSON, svgIconJSON, defaultModalJSON };
 
 export const saveJSONData = (json: any | any[], name?: string) => {
-  writeFileSync(
-    join(__dirname, `./json/${name || 'json'}.json`),
-    JSON.stringify(json),
-  );
+  writeFileSync(join(__dirname, `./json/${name || 'json'}.json`), JSON.stringify(json));
 };
 
-export const sleep = (time: number) => new Promise((r) => setTimeout(r, time));
-
-const loadcss = (src: string, fn: () => void) => {
-  const linkElement = document.createElement('link');
-  linkElement.rel = 'stylesheet';
-  linkElement.href = src;
-
-  document.head.insertBefore(linkElement, document.head.firstChild);
-
-  //other browser
-  setTimeout(function () {
-    poll(linkElement, fn);
-  }, 0);
-
-  function poll(
-    node: HTMLLinkElement,
-    callback: { (): void; (arg0: null, arg1: any): void },
-  ) {
-    let isLoaded = false;
-
-    //webkit
-    if (/webkit/i.test(navigator.userAgent)) {
-      if (node['sheet']) {
-        isLoaded = true;
-      }
-    }
-
-    if (isLoaded) {
-      setTimeout(function () {
-        callback(null, node);
-      }, 1);
-    } else {
-      setTimeout(function () {
-        poll(node, callback);
-      }, 10);
-    }
-  }
-
-  linkElement.onload = fn;
-};
+export const sleep = (time: number) =>
+  new Promise((r) => {
+    setTimeout(r, time);
+  });
 
 declare global {
   interface Window {
@@ -64,15 +25,12 @@ declare global {
 }
 
 export const setupAntdTestEnv = () =>
-  new Promise<void>((res) => {
-    // 1. 插入 antd 样式
-    loadcss('https://unpkg.com/antd@4/dist/antd.min.css', () => res());
-
+  new Promise<void>((resolve) => {
     const baseJSFile = [
-      'https://unpkg.com/react@17.0.2/umd/react.development.js',
-      'https://unpkg.com/react-dom@17.0.2/umd/react-dom.development.js',
-      'https://unpkg.com/antd@4/dist/antd.min.js',
-      'https://cdn.staticfile.org/babel-standalone/6.26.0/babel.min.js',
+      'https://unpkg.com/react@18/umd/react.development.js',
+      'https://unpkg.com/react-dom@18/umd/react-dom.development.js',
+      'https://unpkg.com/antd@5/dist/antd.min.js',
+      'https://unpkg.com/@babel/standalone@7/babel.min.js',
     ];
 
     // 2. 插入 react 等基础 js 环境
@@ -90,4 +48,6 @@ export const setupAntdTestEnv = () =>
     node.id = 'container';
 
     document.body.prepend(node);
+
+    resolve();
   });
