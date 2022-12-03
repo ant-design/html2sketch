@@ -46,10 +46,10 @@
     "ci": "npm run lint && npm run tsc",
     "lint": "npm run lint-eslint",
     "tsc": "tsc -p tsconfig-check.json",
-    "lint-eslint": "eslint --cache --ext .js,.jsx,.ts,.tsx --format=pretty ./src",
+    "lint-eslint": "eslint --cache --ext .js,.jsx,.ts,.tsx ./src",
+    "lint:fix": "eslint --fix --cache --ext .js,.jsx,.ts,.tsx ",
     "lint-staged": "lint-staged",
-    "lint-staged:js": "eslint --cache --ext .js,.jsx,.ts,.tsx --format=pretty",
-    "lint:fix": "eslint --fix --cache --ext .js,.jsx,.ts,.tsx --format=pretty ",
+    "lint-staged:js": "eslint --cache --ext .js,.jsx,.ts,.tsx",
     "prettier": "prettier -c --write \"**/**\"",
     "setup": "dumi setup",
     "prepare": "husky install && npm run setup"
