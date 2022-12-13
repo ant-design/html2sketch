@@ -1,19 +1,18 @@
-import React from 'react';
 import { Button, Modal, Radio } from 'antd';
+import React from 'react';
 
-import { nodeToGroup, nodeToSymbol } from 'html2sketch';
-import { isUpdate, render } from '@test-utils';
-import {
-  saveJSONData,
-  setupAntdTestEnv,
-  sleep,
-  svgIconJSON,
-  radioJSON,
-  svgButtonJSON,
-  defaultModalJSON,
-} from './utils';
 import { PlusOutlined, UpCircleOutlined } from '@ant-design/icons';
 import type SketchFormat from '@sketch-hq/sketch-file-format-ts';
+import { isUpdate, render } from '@test-utils';
+import { nodeToGroup, nodeToSymbol } from 'html2sketch';
+import {
+  defaultModalJSON,
+  radioJSON,
+  saveJSONData,
+  setupAntdTestEnv,
+  svgButtonJSON,
+  svgIconJSON,
+} from './utils';
 
 describe('antd 组件库可正常解析', () => {
   it('Radio 单选器', async () => {
@@ -71,26 +70,21 @@ describe('antd 组件库可正常解析', () => {
     await setupAntdTestEnv();
     render(
       <div style={{ position: 'relative', minHeight: 400 }}>
-        <Modal
-          visible
+        <Modal._InternalPanelDoNotUseOrYouWillBeFired
           title="Modal"
           mask={false}
           wrapProps={{ id: 'modal' }}
           // centered
           maskClosable
           getContainer={false}
+          width={520}
         >
           Content
-        </Modal>
+        </Modal._InternalPanelDoNotUseOrYouWillBeFired>
       </div>,
     );
 
-    // 需要等 2 秒让 Modal 正常跳出来
-    await sleep(2000);
-
-    const node = document.getElementsByClassName(
-      'ant-modal',
-    )[0] as HTMLDivElement;
+    const node = document.getElementsByClassName('ant-modal')[0] as HTMLDivElement;
 
     const symbol = (await nodeToSymbol(node)).toSketchJSON();
 
