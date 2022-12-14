@@ -90,6 +90,10 @@ const antdComponents: SideBarRoute = {
       link: 'e2e/components/radio',
     },
     {
+      title: 'Checkbox',
+      link: 'e2e/components/checkbox',
+    },
+    {
       title: 'Table',
       link: 'e2e/components/table',
     },
