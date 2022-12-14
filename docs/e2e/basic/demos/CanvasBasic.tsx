@@ -1,4 +1,4 @@
-import { Line } from '@ant-design/charts';
+import { Line } from '@ant-design/plots';
 import React from 'react';
 
 const data = [
@@ -244,8 +244,7 @@ const config = {
   yField: 'value',
   yAxis: {
     label: {
-      formatter: (v: string) =>
-        `${v}`.replace(/\d{1,3}(?=(\d{3})+$)/g, (s) => `${s},`),
+      formatter: (v: string) => `${v}`.replace(/\d{1,3}(?=(\d{3})+$)/g, (s) => `${s},`),
     },
   },
   legend: { position: 'right-top' },

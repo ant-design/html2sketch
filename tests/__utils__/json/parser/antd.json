@@ -58,11 +58,7 @@
     "borders": [],
     "shadows": [],
     "innerShadows": [],
-    "contextSettings": {
-      "_class": "graphicsContextSettings",
-      "blendMode": 0,
-      "opacity": 1
-    }
+    "contextSettings": { "_class": "graphicsContextSettings", "blendMode": 0, "opacity": 1 }
   },
   "hasClickThrough": false,
   "groupLayout": { "_class": "MSImmutableFreeformGroupLayout" },
@@ -109,11 +105,7 @@
         "borders": [],
         "shadows": [],
         "innerShadows": [],
-        "contextSettings": {
-          "_class": "graphicsContextSettings",
-          "blendMode": 0,
-          "opacity": 1
-        }
+        "contextSettings": { "_class": "graphicsContextSettings", "blendMode": 0, "opacity": 1 }
       },
       "edited": false,
       "pointRadiusBehaviour": 1,
@@ -246,11 +238,7 @@
         "borders": [],
         "shadows": [],
         "innerShadows": [],
-        "contextSettings": {
-          "_class": "graphicsContextSettings",
-          "blendMode": 0,
-          "opacity": 1
-        }
+        "contextSettings": { "_class": "graphicsContextSettings", "blendMode": 0, "opacity": 1 }
       },
       "hasClickThrough": false,
       "groupLayout": { "_class": "MSImmutableFreeformGroupLayout" },
@@ -315,11 +303,7 @@
             "borders": [],
             "shadows": [],
             "innerShadows": [],
-            "contextSettings": {
-              "_class": "graphicsContextSettings",
-              "blendMode": 0,
-              "opacity": 1
-            }
+            "contextSettings": { "_class": "graphicsContextSettings", "blendMode": 0, "opacity": 1 }
           },
           "hasClickThrough": false,
           "groupLayout": { "_class": "MSImmutableFreeformGroupLayout" },
@@ -383,13 +367,7 @@
                     "_class": "fill",
                     "isEnabled": true,
                     "fillType": 1,
-                    "color": {
-                      "_class": "color",
-                      "red": 0,
-                      "green": 0,
-                      "blue": 0,
-                      "alpha": 1
-                    },
+                    "color": { "_class": "color", "red": 0, "green": 0, "blue": 0, "alpha": 1 },
                     "contextSettings": {
                       "_class": "graphicsContextSettings",
                       "blendMode": 0,
@@ -738,13 +716,7 @@
                     "_class": "fill",
                     "isEnabled": true,
                     "fillType": 1,
-                    "color": {
-                      "_class": "color",
-                      "red": 0,
-                      "green": 0,
-                      "blue": 0,
-                      "alpha": 1
-                    },
+                    "color": { "_class": "color", "red": 0, "green": 0, "blue": 0, "alpha": 1 },
                     "contextSettings": {
                       "_class": "graphicsContextSettings",
                       "blendMode": 0,
@@ -1082,13 +1054,7 @@
                     "_class": "fill",
                     "isEnabled": true,
                     "fillType": 1,
-                    "color": {
-                      "_class": "color",
-                      "red": 0,
-                      "green": 0,
-                      "blue": 0,
-                      "alpha": 1
-                    },
+                    "color": { "_class": "color", "red": 0, "green": 0, "blue": 0, "alpha": 1 },
                     "contextSettings": {
                       "_class": "graphicsContextSettings",
                       "blendMode": 0,
@@ -1321,13 +1287,7 @@
                 "_class": "fill",
                 "isEnabled": true,
                 "fillType": 1,
-                "color": {
-                  "_class": "color",
-                  "red": 0,
-                  "green": 0,
-                  "blue": 0,
-                  "alpha": 1
-                },
+                "color": { "_class": "color", "red": 0, "green": 0, "blue": 0, "alpha": 1 },
                 "contextSettings": {
                   "_class": "graphicsContextSettings",
                   "blendMode": 0,
@@ -1384,11 +1344,7 @@
             "borders": [],
             "shadows": [],
             "innerShadows": [],
-            "contextSettings": {
-              "_class": "graphicsContextSettings",
-              "blendMode": 0,
-              "opacity": 1
-            }
+            "contextSettings": { "_class": "graphicsContextSettings", "blendMode": 0, "opacity": 1 }
           },
           "edited": false,
           "isVisible": true,

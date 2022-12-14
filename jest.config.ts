@@ -1,4 +1,6 @@
-export default {
+import type { Config } from '@jest/types';
+
+const config: Config.InitialOptions = {
   preset: 'ts-jest',
   runner: 'jest-electron/runner',
   testEnvironment: 'jest-electron/environment',
@@ -6,6 +8,7 @@ export default {
   transform: {
     '^.+\\.(t|j)sx?$': 'ts-jest',
   },
+  setupFiles: ['./tests/setup.ts'],
   moduleNameMapper: {
     '^uuid$': '<rootDir>/test/__mocks__/uuid.ts',
     'html2sketch/(.*)$': '<rootDir>/src/$1',
@@ -24,3 +27,5 @@ export default {
     },
   },
 };
+
+export default config;

@@ -1,21 +1,10 @@
+const config = require('@umijs/max/eslint');
+
 module.exports = {
-  extends: [require.resolve('@umijs/fabric/dist/eslint')],
-  globals: {
-    page: true,
-  },
+  ...config,
   rules: {
-    'import/no-extraneous-dependencies': 0,
-    'import/default': 0,
-    'import/no-named-as-default-member': 0,
-    'import/named': 0,
+    ...config.rules,
     'no-param-reassign': 0,
-    'consistent-return': 0,
-    'no-restricted-globals': 0,
-    'no-continue': 0,
-    'no-shadow': 'warn',
-    'no-console': 0,
-    'no-underscore-dangle': 0,
-    '@typescript-eslint/no-non-null-asserted-optional-chain': 0,
   },
   settings: {
     'import/resolver': {
@@ -24,7 +13,6 @@ module.exports = {
           ['html2sketch', './src/'],
           ['html2sketch/*', './src/*'],
           ['@docs-utils', './docs/__utils__'],
-          ['@e2e-utils', './e2e/__utils__'],
           ['@test-utils', './tests/__utils__'],
         ],
       },
