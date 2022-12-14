@@ -45,7 +45,7 @@ describe('antd 组件库可正常解析', () => {
       if (isUpdate) {
         saveJSONData(group, 'svg-icon');
       }
-      expect(group).toEqual(svgIconJSON);
+      expect(group).toMatchObject(svgIconJSON);
     });
     it('SVG 和按钮', async () => {
       await setupAntdTestEnv();
@@ -62,7 +62,7 @@ describe('antd 组件库可正常解析', () => {
       if (isUpdate) {
         saveJSONData(group, 'svg-button');
       }
-      expect(group).toEqual(svgButtonJSON);
+      expect(group).toMatchObject(svgButtonJSON);
     });
   });
 
