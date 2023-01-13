@@ -1,5 +1,11 @@
 # html2sketch 更新日志
 
+# [1.0.0-beta.17](https://github.com/ant-design/html2sketch/compare/v1.0.0-beta.16...v1.0.0-beta.17) (2023-01-13)
+
+### ✨ Features
+
+- input support overflow ([0ff7b55](https://github.com/ant-design/html2sketch/commit/0ff7b55)), closes [#177](https://github.com/ant-design/html2sketch/issues/177)
+
 # [1.0.0-beta.16](https://github.com/ant-design/html2sketch/compare/v1.0.0-beta.15...v1.0.0-beta.16) (2022-10-20)
 
 ### 🐛 Bug Fixes
