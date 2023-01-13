@@ -12,10 +12,11 @@ export const createOverflowMask = (node: HTMLElement, children: any) => {
     height: height - paddingTop - paddingBottom,
     x: paddingLeft,
     y: paddingTop,
+    name: '蒙层',
   });
   rect.hasClippingMask = true;
 
-  const group = new Group({ x: left, y: top });
+  const group = new Group({ x: left, y: top, name: '子元素' });
   group.layers.push(rect);
   group.addLayer(children);
 

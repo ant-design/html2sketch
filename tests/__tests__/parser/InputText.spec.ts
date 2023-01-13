@@ -1,6 +1,9 @@
 import type { Text } from 'html2sketch';
 import { parseInputTextToText } from 'html2sketch';
 
+const getInputText = (node: HTMLInputElement | HTMLTextAreaElement) =>
+  parseInputTextToText(node)?.layers[1];
+
 describe('parseInputTextToText', () => {
   beforeAll(() => {
     document.head.innerHTML = `
@@ -40,24 +43,22 @@ describe('parseInputTextToText', () => {
 
   it('input 不返回', () => {
     const node = document.getElementById('input') as HTMLInputElement;
-    const input = parseInputTextToText(node);
+    const input = getInputText(node);
 
     expect(input).toBeUndefined();
   });
 
   it('textarea 不返回', () => {
     const node = document.getElementById('pure-textarea') as HTMLTextAreaElement;
-    console.log(node)
-    const input = parseInputTextToText(node);
+    console.log(node);
+    const input = getInputText(node);
 
     expect(input).toBeUndefined();
   });
 
   it('input-placeholder 解析成文本', () => {
-    const node = document.getElementById(
-      'input-placeholder',
-    ) as HTMLInputElement;
-    const input = parseInputTextToText(node) as Text;
+    const node = document.getElementById('input-placeholder') as HTMLInputElement;
+    const input = getInputText(node) as Text;
     expect(input.textStyle.color.red).toBe(255);
     const json = input.toSketchJSON();
     expect(json._class).toBe('text');
@@ -65,10 +66,8 @@ describe('parseInputTextToText', () => {
   });
 
   it('textarea-placeholder 解析成文本', () => {
-    const node = document.getElementById(
-      'textarea-placeholder',
-    ) as HTMLInputElement;
-    const input = parseInputTextToText(node) as Text;
+    const node = document.getElementById('textarea-placeholder') as HTMLInputElement;
+    const input = getInputText(node) as Text;
     expect(input.textStyle.color.red).toBe(255);
     const json = input.toSketchJSON();
     expect(json._class).toBe('text');
@@ -77,7 +76,7 @@ describe('parseInputTextToText', () => {
 
   it('input-value 解析成文本', () => {
     const node = document.getElementById('input-value') as HTMLInputElement;
-    const input = parseInputTextToText(node) as Text;
+    const input = getInputText(node) as Text;
     const json = input.toSketchJSON();
     expect(json._class).toBe('text');
     expect(json.attributedString.string).toBe('这是值');
@@ -86,7 +85,7 @@ describe('parseInputTextToText', () => {
 
   it('textarea-value 解析成文本', () => {
     const node = document.getElementById('textarea-value') as HTMLTextAreaElement;
-    const input = parseInputTextToText(node) as Text;
+    const input = getInputText(node) as Text;
     const json = input.toSketchJSON();
     expect(json._class).toBe('text');
     expect(json.attributedString.string).toBe('这是值');
@@ -94,7 +93,7 @@ describe('parseInputTextToText', () => {
 
   it('input-center 解析成文本', () => {
     const node = document.getElementById('input-center') as HTMLInputElement;
-    const input = parseInputTextToText(node) as Text;
+    const input = getInputText(node) as Text;
     const json = input.toSketchJSON();
     expect(json._class).toBe('text');
     expect(json.attributedString.string).toBe('123456');
