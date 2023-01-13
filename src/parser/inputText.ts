@@ -1,3 +1,5 @@
+import { Group } from 'html2sketch/models';
+import { createOverflowMask } from 'html2sketch/utils/overflow';
 import Text from '../models/Layer/Text';
 import { getTextLinesAndRange } from '../utils/text';
 
@@ -6,12 +8,9 @@ import { getTextLinesAndRange } from '../utils/text';
  */
 export const parseInputTextToText = (
   node: HTMLInputElement | HTMLTextAreaElement,
-): Text | undefined => {
+): Text | Group | undefined => {
   // 判断一下是否有伪类
-  const inputTextStyle: CSSStyleDeclaration = getComputedStyle(
-    node,
-    'placeholder',
-  );
+  const inputTextStyle: CSSStyleDeclaration = getComputedStyle(node, 'placeholder');
   let pseudoText: string;
 
   /// *** 处理 input 的文本值 *** ///
@@ -26,8 +25,7 @@ export const parseInputTextToText = (
 
   const pseudoNode = document.createElement('text');
 
-  const { paddingLeft, paddingRight, paddingTop, borderTopWidth } =
-    inputTextStyle;
+  const { paddingLeft, paddingRight, paddingTop, borderTopWidth } = inputTextStyle;
 
   const nodeBCR = node.getBoundingClientRect();
 
@@ -45,13 +43,9 @@ export const parseInputTextToText = (
 
   document.body.removeChild(pseudoNode); // 处理完成后移除
 
-  const textStyle = Text.getTextStyleFromNode(node, '::placeholder');
-
-  // ***** Placeholder 文本颜色的解法 ***** //
-  // 无法用 js 的方式获取 placeholder 的颜色
-  // 相关资料:
-  // https://stackoverflow.com/questions/52355140/get-the-correct-placeholder-color-with-js
-  // https://css-tricks.com/almanac/selectors/p/placeholder/
+  const textStyle = Text.getTextStyleFromNode(node, value ? undefined : '::placeholder');
+  // Chromium seems cannot get correct color from '::placeholder'
+  // Ref: https://bugs.chromium.org/p/chromium/issues/detail?id=850744
   // -----
   // 最终解法来源:
   // https://stackoverflow.com/questions/28592895/trying-to-get-style-of-placeholder-attribute-of-element
@@ -70,8 +64,8 @@ export const parseInputTextToText = (
         // 针对每条规则进行一次判断
         // 如果包含 placeholder 的样式
         if (
-          selectorText?.includes(node.className) &&
-          selectorText?.includes('::placeholder')
+          selectorText?.includes('::placeholder') &&
+          Array.from(node.classList).some((cls) => selectorText?.includes(cls))
         ) {
           textColor = style.color; // 那么把相应的 style 取出来
         }
@@ -93,10 +87,7 @@ export const parseInputTextToText = (
   const { lineHeight } = inputTextStyle;
 
   // TODO: 还有什么时候需要垂直居中呢?
-  if (
-    node.nodeName !== 'TEXTAREA' &&
-    parseFloat(lineHeight) > rangeBCR.height
-  ) {
+  if (node.nodeName !== 'TEXTAREA' && parseFloat(lineHeight) > rangeBCR.height) {
     // 需要垂直居中的地方
     console.log(y, nodeBCR.y);
     console.log(nodeBCR.height, rangeBCR.height);
@@ -127,5 +118,6 @@ export const parseInputTextToText = (
     case 'right':
       text.right = nodeBCR.right - parseFloat(paddingRight);
   }
-  return text;
+
+  return createOverflowMask(node, text);
 };

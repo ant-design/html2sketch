@@ -20,10 +20,7 @@ const consoleGroupStyle = `font-weight:bold;color:#666;`;
  * @param node
  * @param options
  */
-const nodeToGroup = async (
-  node: Element,
-  options?: Options,
-): Promise<Group> => {
+const nodeToGroup = async (node: Element, options?: Options): Promise<Group> => {
   if (!node) throw Error('解析对象不存在 请检查传入对象');
 
   const bcr = node.getBoundingClientRect();
@@ -91,9 +88,7 @@ const nodeToGroup = async (
   ) {
     console.groupCollapsed('%c清理无效层级', consoleGroupStyle);
     const layer = group.layers[0];
-    console.log(
-      `该 group 只包含一个子级 [${layer.class}]: ${layer.name} ,丢弃...`,
-    );
+    console.log(`该 group 只包含一个子级 [${layer.class}]: ${layer.name} ,丢弃...`);
     console.groupEnd();
     // 将父级的图层关系还给子集
     layer.x += group.x;
@@ -121,6 +116,8 @@ const nodeToGroup = async (
   } else {
     group.name = getName(node.nodeName);
   }
+
+  console.log(group.name, group.frame);
 
   group.className = node.className;
   console.info('%c输出 Group 为:', 'font-weight:bold;color:#4590f7;', group);

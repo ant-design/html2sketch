@@ -105,6 +105,10 @@ const antdComponents: SideBarRoute = {
       title: 'Modal 浮层',
       link: 'e2e/components/modal',
     },
+    {
+      title: 'Input',
+      link: 'e2e/components/Input',
+    },
   ],
 };
 
