@@ -3,6 +3,7 @@ export const defaultNodeStyle: Partial<CSSStyleDeclaration> = {
   backgroundImage: 'none',
   borderWidth: '0px',
   boxShadow: 'none',
+  overflow: 'visible',
   // verticalAlign: 'baseline',
 };
 

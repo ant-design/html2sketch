@@ -109,6 +109,10 @@ const antdComponents: SideBarRoute = {
       title: 'Input',
       link: 'e2e/components/Input',
     },
+    {
+      title: 'Steps',
+      link: 'e2e/components/steps',
+    },
   ],
 };
 
