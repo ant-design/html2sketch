@@ -1,6 +1,6 @@
 import { Group } from 'html2sketch/models';
-import { createOverflowMask } from 'html2sketch/utils/overflow';
 import Text from '../models/Layer/Text';
+import { createOverflowMask } from '../utils/overflow';
 import { getTextLinesAndRange } from '../utils/text';
 
 /**
@@ -119,5 +119,10 @@ export const parseInputTextToText = (
       text.right = nodeBCR.right - parseFloat(paddingRight);
   }
 
-  return createOverflowMask(node, text);
+  const mask = createOverflowMask(node, { isInput: true });
+  const group = new Group({ x: nodeBCR.left, y: nodeBCR.top, name: '子元素' });
+  group.layers.push(mask);
+  group.addLayer(text);
+
+  return group;
 };

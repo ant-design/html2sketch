@@ -35,6 +35,10 @@ const basic: SideBarRoute = {
       title: 'Canvas 解析',
       link: '/e2e/basic/canvas',
     },
+    {
+      title: 'Overflow 解析',
+      link: '/e2e/basic/overflow',
+    },
   ],
 };
 
@@ -108,6 +112,14 @@ const antdComponents: SideBarRoute = {
     {
       title: 'Input',
       link: 'e2e/components/Input',
+    },
+    {
+      title: 'Steps',
+      link: 'e2e/components/steps',
+    },
+    {
+      title: 'Rate',
+      link: 'e2e/components/rate',
     },
   ],
 };

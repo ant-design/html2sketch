@@ -1,0 +1,128 @@
+body {
+  padding: 12px;
+  background: #f1f1f1;
+}
+
+.demo {
+  border: 1px solid #ddd;
+  padding: 24px;
+  background: #fff;
+}
+
+/* add below */
+
+.style {
+  color: salmon;
+}
+
+.tea-switch {
+  position: relative;
+  display: inline-block;
+  vertical-align: middle;
+  width: 35px;
+  height: 20px;
+}
+.tea-switch__input {
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+}
+.tea-switch__toggle {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: inline-block;
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  overflow: hidden;
+  background-color: #8697ad;
+  padding: 0;
+  -webkit-transition-duration: 0.4s;
+  transition-duration: 0.4s;
+  -webkit-transition-property: background-color;
+  transition-property: background-color;
+  font-size: 0;
+  cursor: pointer;
+}
+.tea-switch__toggle:before {
+  content: "";
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 16px;
+  height: 16px;
+  border-radius: 100%;
+  background-color: #fff;
+  pointer-events: none;
+  -webkit-transition-timing-function: cubic-bezier(0.54, 1.85, 0.5, 1);
+  transition-timing-function: cubic-bezier(0.54, 1.85, 0.5, 1);
+  -webkit-transition-duration: 0.4s;
+  transition-duration: 0.4s;
+  -webkit-transition-property: left;
+  transition-property: left;
+  -webkit-box-shadow: 0 3px 6px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.3);
+}
+.tea-switch:hover .tea-switch__toggle:before {
+  background-color: #fff;
+}
+.tea-switch__toggle:after {
+  position: absolute;
+  top: 5px;
+  left: auto;
+  right: 5px;
+  display: none;
+  content: "";
+  width: 10px;
+  height: 10px;
+  background-image: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAiIGhlaWdodD0iMTAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0iTTUgMTBBNSA1IDAgMCAxIDUgMHYyYTMgMyAwIDEgMCAzIDNoMmE1IDUgMCAwIDEtNSA1eiIgZmlsbD0iI0ZGRiIgZmlsbC1ydWxlPSJldmVub2RkIi8+PC9zdmc+);
+  -webkit-animation: spin 0.6s linear infinite;
+  animation: spin 0.6s linear infinite;
+}
+.tea-switch.is-loading .tea-switch__input:disabled + .tea-switch__toggle:after {
+  display: block;
+}
+.tea-switch.is-loading
+.tea-switch__input:checked:disabled
++ .tea-switch__toggle:after {
+  left: 4px;
+}
+.tea-switch.is-checked .tea-switch__toggle:before,
+.tea-switch__input:checked + .tea-switch__toggle:before {
+  left: auto;
+  right: 2px;
+}
+.tea-switch.is-checked .tea-switch__toggle,
+.tea-switch__input:checked + .tea-switch__toggle {
+  background-color: #006eff;
+}
+.tea-switch.is-checked .tea-switch__toggle:hover,
+.tea-switch__input:checked + .tea-switch__toggle:hover {
+  background-color: #2a86ff;
+}
+.tea-switch.is-disabled .tea-switch__toggle,
+.tea-switch__input:disabled + .tea-switch__toggle {
+  background-color: #cfd5de;
+  cursor: not-allowed;
+}
+.tea-switch.is-checked.is-disabled .tea-switch__toggle,
+.tea-switch__input:checked:disabled + .tea-switch__toggle {
+  background-color: rgba(0, 110, 255, 0.5);
+  cursor: not-allowed;
+}
+
+.tea-checkbox,
+input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+  vertical-align: middle;
+  outline: none;
+  -webkit-appearance: none;
+  border: 1px solid #cfd5de;
+  background-color: #fff;
+  border-radius: 0;
+  color: rgba(0, 0, 0, 0.9);
+}
