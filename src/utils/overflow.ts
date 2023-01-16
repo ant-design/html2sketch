@@ -1,4 +1,4 @@
-import { Rectangle } from 'html2sketch';
+import { Rectangle, Style } from '..';
 
 export const createOverflowMask = (node: Element, options?: { isInput?: boolean }) => {
   const { width, height } = node.getBoundingClientRect();
@@ -11,9 +11,12 @@ export const createOverflowMask = (node: Element, options?: { isInput?: boolean 
   rect.name = 'Overflow 蒙层';
 
   const nodeStyles = getComputedStyle(node);
-  if (nodeStyles.borderRadius) {
-    rect.cornerRadius = parseInt(nodeStyles.borderRadius, 10);
-  }
+  rect.cornerRadius = {
+    topLeft: Style.parseBorderRadius(nodeStyles.borderTopLeftRadius, width, height),
+    topRight: Style.parseBorderRadius(nodeStyles.borderTopRightRadius, width, height),
+    bottomLeft: Style.parseBorderRadius(nodeStyles.borderBottomLeftRadius, width, height),
+    bottomRight: Style.parseBorderRadius(nodeStyles.borderBottomRightRadius, width, height),
+  };
 
   if (options?.isInput) {
     // 输入框需要计算 padding
