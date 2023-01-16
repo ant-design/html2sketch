@@ -1,5 +1,11 @@
 # html2sketch 更新日志
 
+# [1.0.0-beta.18](https://github.com/ant-design/html2sketch/compare/v1.0.0-beta.17...v1.0.0-beta.18) (2023-01-16)
+
+### ✨ Features
+
+- support overflow element ([f4b017b](https://github.com/ant-design/html2sketch/commit/f4b017b)), closes [#178](https://github.com/ant-design/html2sketch/issues/178)
+
 # [1.0.0-beta.17](https://github.com/ant-design/html2sketch/compare/v1.0.0-beta.16...v1.0.0-beta.17) (2023-01-13)
 
 ### ✨ Features
