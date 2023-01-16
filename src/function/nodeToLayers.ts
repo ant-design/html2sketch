@@ -58,6 +58,15 @@ const nodeToLayers = async (node: Element): Promise<AnyLayer[]> => {
     return layers;
   }
 
+  // 转换为 SVG
+  if (isSvgNode(node)) {
+    const svg = await parseToSvg(node);
+    console.info('转换为:', svg);
+    layers.push(svg);
+
+    return layers;
+  }
+
   // 图层存在样式(阴影 边框等) 使用 Rect 类
   const hasShape = !isDefaultStyles(styles);
 
@@ -89,15 +98,6 @@ const nodeToLayers = async (node: Element): Promise<AnyLayer[]> => {
     const afterEl = await parsePseudoToShape(node, 'after');
     console.info('转换为:', afterEl);
     layers.push(afterEl);
-  }
-
-  // 转换为 SVG
-  if (isSvgNode(node)) {
-    const svg = await parseToSvg(node);
-    console.info('转换为:', svg);
-    layers.push(svg);
-
-    return layers;
   }
 
   // 输入框节点
