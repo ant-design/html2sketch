@@ -61,7 +61,7 @@ const nodeToGroup = async (node: Element, options?: Options): Promise<Group> => 
   // Now build a group for all these children
 
   const styles = getComputedStyle(node);
-  const { opacity } = styles;
+  const { opacity, transform } = styles;
 
   const group = new Group({ x: left, y: top, width, height });
   const groupStyle = new Style();
@@ -93,7 +93,6 @@ const nodeToGroup = async (node: Element, options?: Options): Promise<Group> => 
     // 将父级的图层关系还给子集
     layer.x += group.x;
     layer.y += group.y;
-    layer.rotation += group.rotation;
 
     return layer as Group;
   }
@@ -109,6 +108,11 @@ const nodeToGroup = async (node: Element, options?: Options): Promise<Group> => 
     // @ts-ignore
     // eslint-disable-next-line consistent-return
     return;
+  }
+
+  if (transform !== 'none') {
+    console.log('hit', transform);
+    group.applyTransformRotate(transform);
   }
 
   if (options && options.getGroupName) {

@@ -127,11 +127,11 @@ class Frame {
     this.scaleByCenter(scale);
 
     // 平移
-    this.x = this.x + translate.tx;
-    this.y = this.y + translate.ty;
+    this.x += translate.tx;
+    this.y += translate.ty;
 
     // 旋转
-    this.rotation = (rotation.angle * 180.0) / Math.PI;
+    this.rotation += (rotation.angle * 180.0) / Math.PI;
   }
 
   /**
