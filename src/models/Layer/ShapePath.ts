@@ -74,6 +74,7 @@ class ShapePath extends BaseLayer {
       edited: true,
       isClosed: this.isClosed,
       points: this.points.map(this.bezierPointToSketchPoint).filter((p) => p),
+      hasClippingMask: this.hasClippingMask,
       /**
        * 默认使用圆角
        */

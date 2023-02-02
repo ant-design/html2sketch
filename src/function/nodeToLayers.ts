@@ -14,7 +14,6 @@ import {
   parseToText,
 } from '../parser';
 
-import { createOverflowMask } from 'html2sketch/utils/overflow';
 import {
   isCanvasNode,
   isImageNode,
@@ -76,15 +75,6 @@ const nodeToLayers = async (node: Element): Promise<AnyLayer[]> => {
     const shape = await parseToShape(node);
     console.info('转换为:', shape);
     layers.push(shape);
-  }
-
-  // 如果 overflow 是 visible 以外的值, 需要添加蒙层来处理
-  if (styles.overflow !== 'visible') {
-    const mask = createOverflowMask(node);
-    const { top, left } = node.getBoundingClientRect();
-    mask.x = left;
-    mask.y = top;
-    layers.push(mask);
   }
 
   if (hasPseudoShape.before) {

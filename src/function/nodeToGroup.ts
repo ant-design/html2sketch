@@ -111,7 +111,6 @@ const nodeToGroup = async (node: Element, options?: Options): Promise<Group> => 
   }
 
   if (transform !== 'none') {
-    console.log('hit', transform);
     group.applyTransformRotate(transform);
   }
 
