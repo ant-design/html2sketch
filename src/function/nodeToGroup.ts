@@ -120,8 +120,6 @@ const nodeToGroup = async (node: Element, options?: Options): Promise<Group> => 
     group.name = getName(node.nodeName);
   }
 
-  console.log(group.name, group.frame);
-
   group.className = node.className;
   console.info('%c输出 Group 为:', 'font-weight:bold;color:#4590f7;', group);
 
