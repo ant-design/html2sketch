@@ -131,7 +131,7 @@ class Frame {
     this.y += translate.ty;
 
     // 旋转
-    this.rotation += (rotation.angle * 180.0) / Math.PI;
+    this.rotation = (rotation.angle * 180.0) / Math.PI;
   }
 
   /**

@@ -1,11 +1,10 @@
 import SketchFormat from '@sketch-hq/sketch-file-format-ts';
-import { getGroupLayout } from '../../utils/layout';
-import BaseLayer from '../Base/BaseLayer';
-import { defaultExportOptions } from '../utils';
-
-import { transformStrToMatrix } from 'html2sketch/utils/matrix';
 import { decomposeTSR } from 'transformation-matrix';
 import type { AnyLayer, BaseLayerParams, GroupLayoutType } from '../../types';
+import { getGroupLayout } from '../../utils/layout';
+import { transformStrToMatrix } from '../../utils/matrix';
+import BaseLayer from '../Base/BaseLayer';
+import { defaultExportOptions } from '../utils';
 
 class Group extends BaseLayer {
   constructor(params?: BaseLayerParams) {

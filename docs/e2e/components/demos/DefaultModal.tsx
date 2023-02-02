@@ -23,11 +23,10 @@ const ModalPage: FC = () => {
     <TestLayout elements={elements}>
       <div ref={ref} style={{ position: 'relative', minHeight: 400 }}>
         <Modal
-          visible
+          open
           title="Modal 测试"
           mask={false}
           // centered
-          maskClosable
           wrapClassName={styles.wrapper}
           getContainer={false}
         >

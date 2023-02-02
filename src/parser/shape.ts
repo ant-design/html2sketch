@@ -329,7 +329,7 @@ export const parseToShape = async (
     if (mask) {
       const group = new Group({ x: left, y: top, width, height });
 
-      group.name = 'Clip-path Group';
+      group.name = '剪切蒙版组';
       group.layers.push(mask);
       group.addLayer(rect);
       return group;
