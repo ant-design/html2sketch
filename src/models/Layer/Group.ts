@@ -108,7 +108,7 @@ class Group extends BaseLayer {
     const { rotation } = decomposeTSR(matrix);
 
     // 旋转
-    this.rotation = (rotation.angle * 180.0) / Math.PI;
+    this.rotation = -(rotation.angle * 180.0) / Math.PI;
   }
 }
 

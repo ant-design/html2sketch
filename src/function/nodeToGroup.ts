@@ -78,8 +78,13 @@ const nodeToGroup = async (node: Element, options?: Options): Promise<Group> => 
 
   checkNoNull(group.frame);
 
+  if (transform !== 'none') {
+    group.applyTransformRotate(transform);
+  }
+
   if (
     group.layers.length === 1 &&
+    group.rotation === 0 &&
     (group.layers[0].class === 'rectangle' ||
       group.layers[0].class === 'text' ||
       group.layers[0].class === 'bitmap' ||
@@ -108,10 +113,6 @@ const nodeToGroup = async (node: Element, options?: Options): Promise<Group> => 
     // @ts-ignore
     // eslint-disable-next-line consistent-return
     return;
-  }
-
-  if (transform !== 'none') {
-    group.applyTransformRotate(transform);
   }
 
   if (options && options.getGroupName) {

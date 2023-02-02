@@ -1,4 +1,4 @@
-import { Button, Modal, Radio } from 'antd';
+import { Button, Modal, Radio, Tooltip } from 'antd';
 import React from 'react';
 
 import { PlusOutlined, UpCircleOutlined } from '@ant-design/icons';
@@ -14,9 +14,14 @@ import {
   svgIconJSON,
 } from './utils';
 
+const { _InternalPanelDoNotUseOrYouWillBeFired: PureTooltip } = Tooltip;
+
 describe('antd 组件库可正常解析', () => {
-  it('Radio 单选器', async () => {
+  beforeEach(async () => {
     await setupAntdTestEnv();
+  });
+
+  it('Radio 单选器', async () => {
     render(<Radio checked>html2sketch</Radio>);
 
     const node = document.getElementById('container') as HTMLDivElement;
@@ -35,7 +40,6 @@ describe('antd 组件库可正常解析', () => {
 
   describe('Svg', () => {
     it('svg icon', async () => {
-      await setupAntdTestEnv();
       render(<PlusOutlined />);
 
       const node = document.getElementById('container') as HTMLDivElement;
@@ -48,7 +52,6 @@ describe('antd 组件库可正常解析', () => {
       expect(group).toMatchObject(svgIconJSON);
     });
     it('SVG 和按钮', async () => {
-      await setupAntdTestEnv();
       render(
         <Button id="button" icon={<UpCircleOutlined />} type="primary">
           文本
@@ -67,7 +70,6 @@ describe('antd 组件库可正常解析', () => {
   });
 
   it('Modal', async () => {
-    await setupAntdTestEnv();
     render(
       <div style={{ position: 'relative', minHeight: 400 }}>
         <Modal._InternalPanelDoNotUseOrYouWillBeFired
@@ -110,5 +112,15 @@ describe('antd 组件库可正常解析', () => {
       axis: 0,
       layoutAnchor: 0,
     });
+  });
+
+  it('Tooltip', async () => {
+    render(<PureTooltip title="text" />);
+
+    const node = document.getElementById('container') as HTMLDivElement;
+
+    const group = (await nodeToGroup(node)).toSketchJSON();
+
+    expect(group).toMatchSnapshot();
   });
 });

@@ -121,6 +121,10 @@ const antdComponents: SideBarRoute = {
       title: 'Rate',
       link: 'e2e/components/rate',
     },
+    {
+      title: 'DatePicker',
+      link: 'e2e/components/DatePicker',
+    },
   ],
 };
 
