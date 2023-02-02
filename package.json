@@ -32,7 +32,7 @@
     "---------    ": "",
     "docs:preview": "PREVIEW=1 dumi build",
     "docs:build": "dumi build",
-    "docs:publish": "dumi build && gh-pages -d ./dist",
+    "docs:publish": "dumi build && gh-pages -d docs-dist",
     "--------- ": "",
     "test": "jest",
     "test:update": "UPDATE=1 jest --update-snapshot",

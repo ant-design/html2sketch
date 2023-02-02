@@ -17,6 +17,7 @@ export default defineConfig({
   theme: {
     '@c-primary': '#ff9800',
   },
+  outputPath: 'docs-dist',
   // 部署在非根目录时, base 和 publicPath 都需要配置
   base: isProdSite ? '/html2sketch/' : '/',
   publicPath: isProdSite ? '/html2sketch/' : '/',
