@@ -12,9 +12,5 @@ export default defineConfig({
     entry: 'src/index.ts',
     output: 'dist',
     name: 'html2sketch',
-    chainWebpack: (memo) => {
-      memo.output.libraryExport('default');
-      return memo;
-    },
   },
 });
