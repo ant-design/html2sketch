@@ -325,13 +325,15 @@ export const parseToShape = async (
 
   // If clip-path in style, should return a group with mask
   if (styles.clipPath !== 'none') {
-    const mask = createClipPathMask(styles.clipPath)!;
-    const group = new Group({ x: left, y: top, width, height });
+    const mask = createClipPathMask(styles.clipPath);
+    if (mask) {
+      const group = new Group({ x: left, y: top, width, height });
 
-    group.name = 'Clip-path Group';
-    group.layers.push(mask);
-    group.addLayer(rect);
-    return group;
+      group.name = 'Clip-path Group';
+      group.layers.push(mask);
+      group.addLayer(rect);
+      return group;
+    }
   }
 
   return rect;

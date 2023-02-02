@@ -293,6 +293,7 @@
               "cornerStyle": 0
             }
           ],
+          "hasClippingMask": false,
           "pointRadiusBehaviour": 1
         },
         {
@@ -448,6 +449,7 @@
               "cornerStyle": 0
             }
           ],
+          "hasClippingMask": false,
           "pointRadiusBehaviour": 1
         },
         {
@@ -603,6 +605,7 @@
               "cornerStyle": 0
             }
           ],
+          "hasClippingMask": false,
           "pointRadiusBehaviour": 1
         },
         {
@@ -714,6 +717,7 @@
               "cornerStyle": 0
             }
           ],
+          "hasClippingMask": false,
           "pointRadiusBehaviour": 1
         }
       ],
