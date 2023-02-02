@@ -1,15 +1,12 @@
 import type { Rectangle } from '../models';
-import { Frame } from '../models';
+import { Frame, Group } from '../models';
 import { isVisibleShape } from '../utils/visibility';
 import { parseToShape } from './shape';
 
 /**
  * 解析图形类伪类
  */
-export const parsePseudoToShape = async (
-  node: Element,
-  pseudoElt: 'before' | 'after',
-) => {
+export const parsePseudoToShape = async (node: Element, pseudoElt: 'before' | 'after') => {
   // 判断一下是否有伪类
   const pseudoEl: CSSStyleDeclaration = getComputedStyle(node, `:${pseudoElt}`);
   const bcr = node.getBoundingClientRect();
@@ -82,5 +79,5 @@ export const parsePseudoToShape = async (
     }
   }
 
-  if (isVisibleShape(<Rectangle>rect)) return rect;
+  if (rect instanceof Group || isVisibleShape(<Rectangle>rect)) return rect;
 };

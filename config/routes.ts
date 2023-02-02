@@ -79,47 +79,19 @@ const styles: SideBarRoute = {
 };
 
 const antdComponents: SideBarRoute = {
-  title: 'Ant Design 组件',
+  title: '组件库测试',
   children: [
     {
-      title: 'Tabs',
-      link: 'e2e/components/tabs',
+      title: 'Ant Design',
+      link: 'e2e/components/ant-design',
     },
     {
-      title: 'ProCard',
-      link: 'e2e/components/procard',
-    },
-    {
-      title: 'Radio 单选器',
-      link: 'e2e/components/radio',
-    },
-    {
-      title: 'Checkbox',
-      link: 'e2e/components/checkbox',
-    },
-    {
-      title: 'Table',
-      link: 'e2e/components/table',
-    },
-    {
-      title: 'Tooltip',
-      link: 'e2e/components/tooltip',
+      title: 'ProComponents',
+      link: 'e2e/components/pro-components',
     },
     {
       title: 'Modal 浮层',
       link: 'e2e/components/modal',
-    },
-    {
-      title: 'Input',
-      link: 'e2e/components/Input',
-    },
-    {
-      title: 'Steps',
-      link: 'e2e/components/steps',
-    },
-    {
-      title: 'Rate',
-      link: 'e2e/components/rate',
     },
   ],
 };

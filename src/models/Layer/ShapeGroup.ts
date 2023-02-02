@@ -57,6 +57,7 @@ class ShapeGroup extends BaseLayer {
       // 下传 style 样式
       layer.style = this.style;
       layer.resizingConstraint = this.resizingConstraint;
+      layer.hasClippingMask = this.hasClippingMask;
       return layer.toSketchJSON();
     }
     return {

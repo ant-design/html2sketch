@@ -1,11 +1,9 @@
 import Color from 'color';
+import { createClipPathMask } from 'html2sketch/utils/clipPath';
 import { Bitmap, Frame, Group, Rectangle, Shadow, Style, Svg } from '../models';
 import type { ColorParam } from '../models/Style/Color';
 import { defaultNodeStyle } from '../models/utils';
-import {
-  getActualImageSize,
-  parseBackgroundImageType,
-} from '../utils/background';
+import { getActualImageSize, parseBackgroundImageType } from '../utils/background';
 import { base64ToSvgString, waitForImageLoaded } from '../utils/image';
 import { StrToRenderSVG } from '../utils/svg';
 import { parseURLToSvg } from './svg';
@@ -89,12 +87,7 @@ export const parseToShape = async (
   const hasMultiColor = Array.from(borderColor.matchAll(/rgb/g)).length > 1;
   // 处理描边
   if (borderWidth.indexOf(' ') === -1 && !hasMultiColor) {
-    const {
-      borderBottomStyle,
-      borderLeftStyle,
-      borderTopStyle,
-      borderRightStyle,
-    } = styles;
+    const { borderBottomStyle, borderLeftStyle, borderTopStyle, borderRightStyle } = styles;
 
     style.addBorder({
       color: borderColor,
@@ -128,12 +121,7 @@ export const parseToShape = async (
     }
   } else {
     // 使用内阴影来模拟单边描边
-    const {
-      borderTopWidth,
-      borderRightWidth,
-      borderBottomWidth,
-      borderLeftWidth,
-    } = styles;
+    const { borderTopWidth, borderRightWidth, borderBottomWidth, borderLeftWidth } = styles;
     // 顶部描边
     const borderTopWidthFloat = parseFloat(borderTopWidth);
     if (borderTopWidthFloat !== 0) {
@@ -178,27 +166,13 @@ export const parseToShape = async (
 
   rect.cornerRadius = {
     topLeft: Style.parseBorderRadius(styles.borderTopLeftRadius, width, height),
-    topRight: Style.parseBorderRadius(
-      styles.borderTopRightRadius,
-      width,
-      height,
-    ),
-    bottomLeft: Style.parseBorderRadius(
-      styles.borderBottomLeftRadius,
-      width,
-      height,
-    ),
-    bottomRight: Style.parseBorderRadius(
-      styles.borderBottomRightRadius,
-      width,
-      height,
-    ),
+    topRight: Style.parseBorderRadius(styles.borderTopRightRadius, width, height),
+    bottomLeft: Style.parseBorderRadius(styles.borderBottomLeftRadius, width, height),
+    bottomRight: Style.parseBorderRadius(styles.borderBottomRightRadius, width, height),
   };
 
   // 解析背景填充
-  const backgroundImageResult = parseBackgroundImageType(
-    styles.backgroundImage,
-  );
+  const backgroundImageResult = parseBackgroundImageType(styles.backgroundImage);
 
   if (backgroundImageResult) {
     switch (backgroundImageResult.type) {
@@ -251,10 +225,7 @@ export const parseToShape = async (
 
         // 外联型 svg
         if (url.startsWith('http') && url.endsWith('svg')) {
-          svg = await parseURLToSvg(
-            url,
-            new Frame({ x: rect.x, y: rect.y, width, height }),
-          );
+          svg = await parseURLToSvg(url, new Frame({ x: rect.x, y: rect.y, width, height }));
           isSvgBackground = true;
         }
 
@@ -351,5 +322,19 @@ export const parseToShape = async (
         break;
     }
   }
+
+  // If clip-path in style, should return a group with mask
+  if (styles.clipPath !== 'none') {
+    const mask = createClipPathMask(styles.clipPath);
+    if (mask) {
+      const group = new Group({ x: left, y: top, width, height });
+
+      group.name = '剪切蒙版组';
+      group.layers.push(mask);
+      group.addLayer(rect);
+      return group;
+    }
+  }
+
   return rect;
 };

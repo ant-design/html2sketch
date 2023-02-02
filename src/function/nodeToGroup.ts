@@ -61,7 +61,7 @@ const nodeToGroup = async (node: Element, options?: Options): Promise<Group> => 
   // Now build a group for all these children
 
   const styles = getComputedStyle(node);
-  const { opacity } = styles;
+  const { opacity, transform } = styles;
 
   const group = new Group({ x: left, y: top, width, height });
   const groupStyle = new Style();
@@ -78,8 +78,13 @@ const nodeToGroup = async (node: Element, options?: Options): Promise<Group> => 
 
   checkNoNull(group.frame);
 
+  if (transform !== 'none') {
+    group.applyTransformRotate(transform);
+  }
+
   if (
     group.layers.length === 1 &&
+    group.rotation === 0 &&
     (group.layers[0].class === 'rectangle' ||
       group.layers[0].class === 'text' ||
       group.layers[0].class === 'bitmap' ||
@@ -93,7 +98,6 @@ const nodeToGroup = async (node: Element, options?: Options): Promise<Group> => 
     // 将父级的图层关系还给子集
     layer.x += group.x;
     layer.y += group.y;
-    layer.rotation += group.rotation;
 
     return layer as Group;
   }
@@ -116,8 +120,6 @@ const nodeToGroup = async (node: Element, options?: Options): Promise<Group> => 
   } else {
     group.name = getName(node.nodeName);
   }
-
-  console.log(group.name, group.frame);
 
   group.className = node.className;
   console.info('%c输出 Group 为:', 'font-weight:bold;color:#4590f7;', group);
