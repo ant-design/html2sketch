@@ -1,5 +1,11 @@
 # html2sketch 更新日志
 
+# [1.0.0-beta.19](https://github.com/ant-design/html2sketch/compare/v1.0.0-beta.18...v1.0.0-beta.19) (2023-02-02)
+
+### ✨ Features
+
+- support rotate & clip-path ([35f6628](https://github.com/ant-design/html2sketch/commit/35f6628)), closes [#180](https://github.com/ant-design/html2sketch/issues/180)
+
 # [1.0.0-beta.18](https://github.com/ant-design/html2sketch/compare/v1.0.0-beta.17...v1.0.0-beta.18) (2023-01-16)
 
 ### ✨ Features
