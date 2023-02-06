@@ -1,5 +1,11 @@
 # html2sketch 更新日志
 
+# [1.0.0-beta.20](https://github.com/ant-design/html2sketch/compare/v1.0.0-beta.19...v1.0.0-beta.20) (2023-02-06)
+
+### 🐛 Bug Fixes
+
+- single child overflow should not be mask ([1acab12](https://github.com/ant-design/html2sketch/commit/1acab12)), closes [#181](https://github.com/ant-design/html2sketch/issues/181)
+
 # [1.0.0-beta.19](https://github.com/ant-design/html2sketch/compare/v1.0.0-beta.18...v1.0.0-beta.19) (2023-02-02)
 
 ### ✨ Features
