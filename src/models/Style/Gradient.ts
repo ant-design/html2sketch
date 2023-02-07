@@ -23,6 +23,7 @@ class Gradient extends BaseStyle {
       this.to = to;
     }
     if (stops) {
+      console.log(stops)
       this.stops = stops.map((stopParam, index) => {
         // 判断是对象类型的 stop 参数
         if (typeof stopParam === 'object' && 'color' in stopParam) {

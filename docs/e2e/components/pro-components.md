@@ -6,4 +6,9 @@ title: Pro Components
 
 ## ProCard
 
-<code src="./demos/ProCard.tsx"></code>
+<code src="./procomponents/ProCard.tsx"></code>
+
+
+## ProTable
+
+<code src="./procomponents/ProTable.tsx"></code>
