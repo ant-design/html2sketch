@@ -28,9 +28,7 @@ class Gradient extends BaseStyle {
         if (typeof stopParam === 'object' && 'color' in stopParam) {
           return {
             color: new Color(stopParam.color),
-            offset: stopParam.offset
-              ? stopParam.offset
-              : index / (this.stops.length - 1),
+            offset: stopParam.offset ? stopParam.offset : index / (this.stops.length - 1),
           };
         }
 
@@ -94,10 +92,7 @@ class Gradient extends BaseStyle {
   /**
    * 将 stop 数组转换为 Sketch 使用的对象
    * */
-  getSketchStop = (
-    colorStop: ColorStop,
-    index: number,
-  ): SketchFormat.GradientStop => ({
+  getSketchStop = (colorStop: ColorStop, index: number): SketchFormat.GradientStop => ({
     _class: 'gradientStop',
     color: colorStop.color.toSketchJSON(),
 

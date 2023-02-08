@@ -226,4 +226,16 @@ describe('parseLinearGradient', () => {
       angle: 'to left',
     });
   });
+
+  it('解析有透明度的渐变色', () => {
+    const str = 'to left, rgba(0,0,0,0.5) 20%, rgba(0,0,0,0.8) 30%';
+    const result = parseLinearGradient(str);
+    expect(result).toStrictEqual({
+      stops: [
+        { color: 'rgba(0,0,0,0.5)', offset: 0.2 },
+        { color: 'rgba(0,0,0,0.8)', offset: 0.3 },
+      ],
+      angle: 'to left',
+    });
+  });
 });

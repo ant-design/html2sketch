@@ -2,36 +2,40 @@
 
 ## Checkbox
 
-<code src="./demos/Checkbox.tsx"></code>
+<code src="./antd/Checkbox.tsx"></code>
 
 ## DatePicker
 
-<code src="./demos/DatePicker.tsx"></code>
+<code src="./antd/DatePicker.tsx"></code>
 
 ## Input
 
-<code src="./demos/Input.tsx"></code>
-
-## ProCard
-
-<code src="./demos/ProCard.tsx"></code>
+<code src="./antd/Input.tsx"></code>
 
 ## Radio 单选器
 
-<code src="./demos/Radio.tsx"></code>
+<code src="./antd/Radio.tsx"></code>
 
 ## Rate
 
-<code src="./demos/Rate.tsx"></code>
+<code src="./antd/Rate.tsx"></code>
+
+## Skeleton
+
+<code src="./antd/Skeleton.tsx"></code>
 
 ## Steps
 
-<code src="./demos/Steps.tsx"></code>
+<code src="./antd/Steps.tsx"></code>
 
 ## Tabs
 
-<code src="./demos/Tabs.tsx"></code>
+<code src="./antd/Tabs.tsx"></code>
 
 ## Tooltip
 
-<code src="./demos/Tooltip.tsx"></code>
+<code src="./antd/Tooltip.tsx"></code>
+
+## Table
+
+<code src="./antd/Table.tsx"></code>

@@ -103,7 +103,7 @@ class Frame {
     this.height *= sy;
     // 3. 计算新的 x 和 y
     this.x = centerX - this.width / 2;
-    this.y = centerY - this.width / 2;
+    this.y = centerY - this.height / 2;
   }
 
   /**
