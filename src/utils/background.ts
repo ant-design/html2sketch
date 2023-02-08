@@ -16,7 +16,7 @@ const stringToStopParam = (str: string): StopParam | StopParam[] => {
     color,
     offset: parseFloat(offset) / 100,
   }));
-}
+};
 
 const pushStopParam = (stopParams: StopParam[], str: string) => {
   const stopParam = stringToStopParam(str);
@@ -25,7 +25,7 @@ const pushStopParam = (stopParams: StopParam[], str: string) => {
   } else {
     stopParams.push(stopParam);
   }
-}
+};
 
 /**
  * 解析线性渐变
@@ -73,24 +73,31 @@ export const parseLinearGradient = (value: string) => {
     i += 1;
   }
 
-  if (length < 2) {
-    console.error('Invalid linear-gradient value: ' + value);
-    return null;
+  if (parts.length < 2) {
+    throw Error('Invalid linear-gradient value: ' + value);
   }
 
-  return parts.reduce<{ angle: string, stops: string[] }>((result, part, index) => {
-    if (index === 0) {
-      // 第一个参数不是角度的话默认 180deg
-      if (part.includes('to') || part.includes('deg') || part.includes('rad') || part.includes('turn')) {
-        result.angle = part;
-      } else {
-        pushStopParam(result.stops, part);
+  return parts.reduce<{ angle: string; stops: string[] }>(
+    (result, part, index) => {
+      if (index === 0) {
+        // 第一个参数不是角度的话默认 180deg
+        if (
+          part.includes('to') ||
+          part.includes('deg') ||
+          part.includes('rad') ||
+          part.includes('turn')
+        ) {
+          result.angle = part;
+        } else {
+          pushStopParam(result.stops, part);
+        }
+        return result;
       }
+      pushStopParam(result.stops, part);
       return result;
-    }
-    pushStopParam(result.stops, part)
-    return result;
-  }, { angle: '180deg', stops: []});
+    },
+    { angle: '180deg', stops: [] },
+  );
 };
 
 /**
@@ -107,9 +114,7 @@ export const parseLinearGradient = (value: string) => {
  * @see: https://www.w3.org/TR/css-backgrounds-3/#the-background-image
  * ---
  */
-export const parseBackgroundImageType = (
-  value: string,
-): BackgroundImageType | void => {
+export const parseBackgroundImageType = (value: string): BackgroundImageType | void => {
   if (value === 'none') {
     return;
   }
@@ -170,12 +175,7 @@ export const getActualImageSize = (
   const { height: imgH, width: imgW } = imageSize;
 
   // sanity check
-  if (
-    imgW === 0 ||
-    imgH === 0 ||
-    containerSize.width === 0 ||
-    containerSize.height === 0
-  ) {
+  if (imgW === 0 || imgH === 0 || containerSize.width === 0 || containerSize.height === 0) {
     width = 0;
     height = 0;
   } else if (backgroundSize === 'cover') {
@@ -200,9 +200,7 @@ export const getActualImageSize = (
   } else {
     // we currently don't support multiple backgrounds
     const [singleBackgroundSize] = backgroundSize.split(',');
-    let [backgroundSizeWidth, backgroundSizeHeight] = singleBackgroundSize
-      .trim()
-      .split(' ');
+    let [backgroundSizeWidth, backgroundSizeHeight] = singleBackgroundSize.trim().split(' ');
 
     if (backgroundSizeWidth === 'auto' || backgroundSizeWidth === undefined) {
       backgroundSizeWidth = '';
