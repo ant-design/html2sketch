@@ -18,8 +18,8 @@ Object {
     "constrainProportions": false,
     "height": 34,
     "width": 40.546875,
-    "x": 8,
-    "y": 8,
+    "x": 0,
+    "y": 0,
   },
   "groupLayout": Object {
     "_class": "MSImmutableFreeformGroupLayout",
