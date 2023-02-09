@@ -2,29 +2,8 @@ import type { BackgroundImageType, StopParam } from '../types';
 
 const stringToStopParam = (str: string): StopParam | StopParam[] => {
   // rgb(0, 0, 0) 20% 需要拆分
-  const splitStyle = str.split(/\s+/);
+  const [color, ...offsets] = str.split(/\s+(?=[^)]*(\(|$))/).filter((item) => item);
 
-  // Combine styles split in brackets, like `calc(1px + 2px)`
-  let temp = '';
-  let brackets = 0;
-  const [color, ...offsets] = splitStyle.reduce<string[]>((list, item) => {
-    if (item.includes('(')) {
-      temp += item;
-      brackets += item.split('(').length - 1;
-    } else if (item.includes(')')) {
-      temp += item;
-      brackets -= item.split(')').length - 1;
-      if (brackets === 0) {
-        list.push(temp);
-        temp = '';
-      }
-    } else if (brackets > 0) {
-      temp += item;
-    } else {
-      list.push(item);
-    }
-    return list;
-  }, []);
   if (offsets.length === 0) {
     return color;
   }
