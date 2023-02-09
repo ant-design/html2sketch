@@ -1,5 +1,11 @@
 # html2sketch 更新日志
 
+# [1.0.0-beta.22](https://github.com/ant-design/html2sketch/compare/v1.0.0-beta.21...v1.0.0-beta.22) (2023-02-09)
+
+### 🐛 Bug Fixes
+
+- gradient parse in safari ([aa374e5](https://github.com/ant-design/html2sketch/commit/aa374e5)), closes [#185](https://github.com/ant-design/html2sketch/issues/185)
+
 # [1.0.0-beta.21](https://github.com/ant-design/html2sketch/compare/v1.0.0-beta.20...v1.0.0-beta.21) (2023-02-09)
 
 ### 🐛 Bug Fixes
