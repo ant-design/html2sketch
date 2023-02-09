@@ -2,7 +2,8 @@ import type { BackgroundImageType, StopParam } from '../types';
 
 const stringToStopParam = (str: string): StopParam | StopParam[] => {
   // rgb(0, 0, 0) 20% 需要拆分
-  const [color, ...offsets] = str.split(/(?<!,)\s/);
+  const [color, ...offsets] = str.split(/\s+(?=[^)]*(\(|$))/).filter((item) => item);
+
   if (offsets.length === 0) {
     return color;
   }

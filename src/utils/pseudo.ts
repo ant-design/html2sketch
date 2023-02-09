@@ -13,8 +13,7 @@ export const isExistPseudoText = (node: Element): HasPseudoType => {
 
     const pseudoText = content.replace(/"/g, '');
 
-    const hasContent =
-      content !== 'none' && content !== '""' && pseudoText.trim() !== ''; // 存在文本内容
+    const hasContent = content !== 'none' && content !== '""' && pseudoText.trim() !== ''; // 存在文本内容
 
     const isDisplayVisible = display !== 'none'; // display 属性可见
 
@@ -54,9 +53,7 @@ interface HasPseudoType {
 /**
  * 判断是否存在图形伪类
  */
-export const isExistPseudoShape: (node: Element) => HasPseudoType = (
-  node: Element,
-) => {
+export const isExistPseudoShape: (node: Element) => HasPseudoType = (node: Element) => {
   const beforePseudoEl: CSSStyleDeclaration = getComputedStyle(node, ':before');
   const afterPseudoEl: CSSStyleDeclaration = getComputedStyle(node, ':after');
 
@@ -67,8 +64,8 @@ export const isExistPseudoShape: (node: Element) => HasPseudoType = (
     const isDisplayVisible = display !== 'none'; // display 属性可见
 
     const isDefaultStyle = isDefaultStyles(style);
-
-    const isOpacityVisible = Number(opacity) !== 0; // 图层不透明不为 0
+    // Safari 下 opacity 默认是空字符串
+    const isOpacityVisible = Number(opacity) !== 0 || opacity === ''; // 图层不透明不为 0
     return (
       // 包含文本 且 不隐藏 且 文本不透明不为 0
       hasContent && isDisplayVisible && isOpacityVisible && !isDefaultStyle
