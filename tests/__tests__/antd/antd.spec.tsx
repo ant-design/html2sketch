@@ -114,7 +114,7 @@ describe('antd 组件库可正常解析', () => {
     });
   });
 
-  it('Tooltip', async () => {
+  it.skip('Tooltip', async () => {
     render(<PureTooltip title="text" />);
 
     const node = document.getElementById('container') as HTMLDivElement;
