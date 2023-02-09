@@ -1,4 +1,5 @@
-import { DefaultSymbolParams, ResizingConstraint } from '../../types';
+import type { DefaultSymbolParams } from '../../types';
+import { ResizingConstraint } from '../../types';
 
 /**
  * TechUI WelcomeHeader

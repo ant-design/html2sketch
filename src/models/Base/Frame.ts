@@ -1,6 +1,6 @@
-import { applyToPoint, Matrix } from 'transformation-matrix';
-import { FrameInitParams, SketchFormat } from '../../types';
-import { matrixToRotation } from '../../utils/matrix';
+import type { Matrix } from 'transformation-matrix';
+import { decomposeTSR } from 'transformation-matrix';
+import type { FrameInitParams, SketchFormat } from '../../types';
 
 /**
  * @class
@@ -90,6 +90,23 @@ class Frame {
   }
 
   /**
+   * 按比例缩放宽高
+   * @param ratio
+   */
+  scaleByCenter({ sx, sy }: { sx: number; sy: number }) {
+    // 1. 先记录中心坐标
+    const centerX = this.centerX;
+    const centerY = this.centerY;
+
+    // 2. 进行值缩放
+    this.width *= sx;
+    this.height *= sy;
+    // 3. 计算新的 x 和 y
+    this.x = centerX - this.width / 2;
+    this.y = centerY - this.height / 2;
+  }
+
+  /**
    * 偏移
    * @param x X坐标
    * @param y Y坐标
@@ -104,12 +121,17 @@ class Frame {
    * @param matrix
    */
   applyMatrix(matrix: Matrix) {
-    const { x, y } = applyToPoint(matrix, { x: this.x, y: this.y });
-    const { a, b, c, d } = matrix;
-    const rotation = matrixToRotation(a, b, c, d);
-    this.x = x;
-    this.y = y;
-    this.rotation = rotation;
+    const { rotation, scale, translate } = decomposeTSR(matrix);
+
+    // 缩放
+    this.scaleByCenter(scale);
+
+    // 平移
+    this.x += translate.tx;
+    this.y += translate.ty;
+
+    // 旋转
+    this.rotation = (rotation.angle * 180.0) / Math.PI;
   }
 
   /**

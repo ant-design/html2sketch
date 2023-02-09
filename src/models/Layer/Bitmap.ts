@@ -1,13 +1,11 @@
+import { fetchBase64 } from '../../utils/fetch';
+import { uuid } from '../../utils/utils';
 import BaseLayer from '../Base/BaseLayer';
 import { defaultExportOptions } from '../utils';
-import { uuid } from '../../utils/utils';
 
-import {
-  blobToBase64,
-  initImageURL,
-  getBase64ImageString,
-} from '../../utils/image';
-import { BaseLayerParams, SketchFormat } from '../../types';
+import type { BaseLayerParams } from '../../types';
+import { SketchFormat } from '../../types';
+import { initImageURL } from '../../utils/image';
 
 interface BitmapInitParams extends BaseLayerParams {
   url: string;
@@ -45,15 +43,13 @@ class Bitmap extends BaseLayer {
     if (!this.url.startsWith('http')) return;
 
     try {
-      const data = await fetch(this.url);
-      const blob = await data.blob();
-      const dataURL = await blobToBase64(blob);
-      const base64 = getBase64ImageString(dataURL);
+      const base64 = await fetchBase64(this.url);
       if (base64) {
         this.base64 = base64;
       }
     } catch (e) {
       console.warn('网络或图片资源可能存在问题...');
+      console.error(e);
     }
   }
 
@@ -66,7 +62,8 @@ class Bitmap extends BaseLayer {
     frame: this.frame.toSketchJSON(),
     style: this.style.toSketchJSON(),
     image: this.toSketchImageJSON(),
-    booleanOperation: SketchFormat.BooleanOperation.NA,
+    booleanOperation: SketchFormat.BooleanOperation.None,
+    isTemplate: false,
     exportOptions: defaultExportOptions,
     clippingMask: '',
     intendedDPI: 32,

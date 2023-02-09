@@ -1,19 +1,19 @@
 /* eslint-disable no-shadow */
-import { SVGPathData } from 'svg-pathdata';
-import Group from '../models/Layer/Group';
-import Svg from '../models/Layer/Svg';
-import ShapePath from '../models/Layer/ShapePath';
-import Text from '../models/Layer/Text';
-import Ellipse from '../models/Layer/Ellipse';
-import Bitmap from '../models/Layer/Bitmap';
-import Rectangle from '../models/Layer/Rectangle';
-import ShapeGroup from '../models/Layer/ShapeGroup';
-import SymbolMaster from '../models/Layer/SymbolMaster';
+import type { SVGPathData } from 'svg-pathdata';
+import type Bitmap from '../models/Layer/Bitmap';
+import type Ellipse from '../models/Layer/Ellipse';
+import type Group from '../models/Layer/Group';
+import type Rectangle from '../models/Layer/Rectangle';
+import type ShapeGroup from '../models/Layer/ShapeGroup';
+import type ShapePath from '../models/Layer/ShapePath';
+import type Svg from '../models/Layer/Svg';
+import type SymbolMaster from '../models/Layer/SymbolMaster';
+import type Text from '../models/Layer/Text';
 
 /**
  * 定界框 Frame 初始化参数
  */
-export interface FrameInitParams extends Partial<FrameType> {}
+export type FrameInitParams = Partial<FrameType>;
 
 /**
  * 节点的背景颜色类型
@@ -134,5 +134,5 @@ export type SvgLayerType =
 
 export interface CssStyleRule {
   className: string;
-  styles: { [key: string]: string };
+  styles: Record<string, string>;
 }

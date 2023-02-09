@@ -1,11 +1,11 @@
+export { parseCanvasToBitmap } from './canvas';
+export { parseToGroup } from './group';
+export { parseToBitmap } from './image';
+export { parseInputTextToText } from './inputText';
 export { parsePseudoToShape } from './pseudoShape';
 export { parsePseudoToText } from './pseudoText';
-export { parseInputTextToText } from './inputText';
-export { parseCanvasToBitmap } from './canvas';
-export { parseToBitmap } from './image';
 export { parseToShape } from './shape';
-export { parseToText } from './text';
-export { parseToSvg } from './svg';
 export { parseToSharedTextStyle } from './sharedTextStyle';
-export { parseToGroup } from './group';
+export { parseToSvg } from './svg';
 export { Svgson } from './svgson';
+export { parseToText } from './text';

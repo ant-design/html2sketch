@@ -1,4 +1,5 @@
-import { DefaultSymbolParams, ResizingConstraint } from '../../types';
+import type { DefaultSymbolParams } from '../../types';
+import { ResizingConstraint } from '../../types';
 
 /**
  * 默认的 Modal 样式

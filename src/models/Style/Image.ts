@@ -1,10 +1,7 @@
-import SketchFormat from '@sketch-hq/sketch-file-format-ts';
+import type SketchFormat from '@sketch-hq/sketch-file-format-ts';
+import { fetchBase64 } from '../../utils/fetch';
+import { initImageURL } from '../../utils/image';
 import BaseStyle from '../Base/BaseStyle';
-import {
-  blobToBase64,
-  initImageURL,
-  getBase64ImageString,
-} from '../../utils/image';
 
 /**
  * 图片资产
@@ -23,10 +20,8 @@ class Image extends BaseStyle {
    */
   async init() {
     if (this.url.startsWith('http')) {
-      const data = await fetch(this.url);
-      const blob = await data.blob();
-      const dataURL = await blobToBase64(blob);
-      const base64 = getBase64ImageString(dataURL);
+      const base64 = await fetchBase64(this.url);
+
       if (base64) {
         this.base64 = base64;
       }

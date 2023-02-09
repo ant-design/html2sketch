@@ -1,6 +1,5 @@
+import { Line } from '@ant-design/plots';
 import React from 'react';
-import { Line } from '@ant-design/charts';
-import { useElements, TestLayout } from '@docs-utils';
 
 const data = [
   {
@@ -245,8 +244,7 @@ const config = {
   yField: 'value',
   yAxis: {
     label: {
-      formatter: (v: string) =>
-        `${v}`.replace(/\d{1,3}(?=(\d{3})+$)/g, (s) => `${s},`),
+      formatter: (v: string) => `${v}`.replace(/\d{1,3}(?=(\d{3})+$)/g, (s) => `${s},`),
     },
   },
   legend: { position: 'right-top' },
@@ -257,15 +255,5 @@ const config = {
   responsive: true,
 };
 
-export default () => {
-  const { elements, ref } = useElements();
-
-  return (
-    <TestLayout elements={elements}>
-      <div ref={ref}>
-        {/* @ts-ignore */}
-        <Line {...config} />
-      </div>
-    </TestLayout>
-  );
-};
+// @ts-ignore
+export default () => <Line {...config} />;

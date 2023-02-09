@@ -27,12 +27,13 @@ Object {
   "isFlippedHorizontal": false,
   "isFlippedVertical": false,
   "isLocked": false,
+  "isTemplate": false,
   "isVisible": true,
   "layerListExpandedType": 0,
   "layers": Array [],
   "name": "shapeGroup",
   "nameIsFixed": false,
-  "resizingConstraint": 63,
+  "resizingConstraint": 27,
   "resizingType": 0,
   "rotation": 0,
   "shouldBreakMaskChain": false,
@@ -78,6 +79,6 @@ Object {
   "layers": Array [],
   "locked": false,
   "name": "",
-  "resizingConstraint": 63,
+  "resizingConstraint": 27,
 }
 `;

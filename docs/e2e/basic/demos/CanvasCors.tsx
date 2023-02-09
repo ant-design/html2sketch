@@ -1,9 +1,9 @@
-import React, { useEffect } from 'react';
-import { useElements, TestLayout } from '@docs-utils';
-
 /**
- *
+ * hideSketchLayout: true
  */
+import { TestLayout, useElements } from '@docs-utils';
+import React, { useEffect } from 'react';
+
 export default () => {
   const { elements, ref } = useElements();
 
@@ -24,7 +24,7 @@ export default () => {
       <div style={{ display: 'none' }}>
         <img
           id="source"
-          src="https://wx2.sinaimg.cn/large/4176adebgy1ge52j9bku3j20dl7pse2q.jpg"
+          src="https://pic2.zhimg.com/80/v2-71bd309a73f00a84cde15cdd1f9a9fda_r.jpg"
           alt={'image'}
         />
       </div>

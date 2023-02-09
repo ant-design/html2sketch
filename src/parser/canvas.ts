@@ -1,6 +1,6 @@
 import { Bitmap } from '../models';
-import { isCanvasNode } from '../utils/nodeType';
 import { errorBase64Url } from '../utils/image';
+import { isCanvasNode } from '../utils/nodeType';
 
 /**
  * 将Canvas 解析为图片
@@ -13,7 +13,7 @@ export const parseCanvasToBitmap = (canvas: HTMLCanvasElement) => {
   try {
     url = canvas.toDataURL();
   } catch (e) {
-    const errMsg = e.toString();
+    const errMsg = (e as Error).toString();
 
     // 存在跨域问题
     if (errMsg.includes('Tainted canvases may not be exported.')) {

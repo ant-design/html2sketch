@@ -1,29 +1,29 @@
 /* eslint-disable no-console */
-import { AnyLayer } from '..';
-import { isDefaultStyles } from '../utils/style';
+import type { AnyLayer } from '..';
 import { Text } from '../models';
+import { isDefaultStyles } from '../utils/style';
 
 import {
   parseCanvasToBitmap,
-  parseToBitmap,
-  parseToSvg,
-  parseToText,
-  parseToShape,
+  parseInputTextToText,
   parsePseudoToShape,
   parsePseudoToText,
-  parseInputTextToText,
+  parseToBitmap,
+  parseToShape,
+  parseToSvg,
+  parseToText,
 } from '../parser';
 
-import { isTextVisible } from '../utils/visibility';
-import { isExistPseudoText, isExistPseudoShape } from '../utils/pseudo';
 import {
   isCanvasNode,
   isImageNode,
-  isTextInputNode,
   isSVGChildNode,
   isSvgNode,
+  isTextInputNode,
   isTextNode,
 } from '../utils/nodeType';
+import { isExistPseudoShape, isExistPseudoText } from '../utils/pseudo';
+import { isTextVisible } from '../utils/visibility';
 
 /**
  * 将节点转为 Layer 对象
@@ -57,29 +57,6 @@ const nodeToLayers = async (node: Element): Promise<AnyLayer[]> => {
     return layers;
   }
 
-  // 图层存在样式(阴影 边框等) 使用 Rect 类
-  const hasShape = !isDefaultStyles(styles);
-
-  const hasPseudoShape = isExistPseudoShape(node);
-
-  if (hasPseudoShape.before) {
-    const beforeEl = await parsePseudoToShape(node, 'before');
-    console.info('转换为:', beforeEl);
-    layers.push(beforeEl);
-  }
-
-  if (hasShape) {
-    const shape = await parseToShape(node);
-    console.info('转换为:', shape);
-    layers.push(shape);
-  }
-  // 如果图层存在样式(阴影 边框等 返回 shape 节点
-  if (hasPseudoShape.after) {
-    const afterEl = await parsePseudoToShape(node, 'after');
-    console.info('转换为:', afterEl);
-    layers.push(afterEl);
-  }
-
   // 转换为 SVG
   if (isSvgNode(node)) {
     const svg = await parseToSvg(node);
@@ -87,6 +64,30 @@ const nodeToLayers = async (node: Element): Promise<AnyLayer[]> => {
     layers.push(svg);
 
     return layers;
+  }
+
+  // 图层存在样式(阴影 边框等) 使用 Rect 类
+  const hasShape = !isDefaultStyles(styles);
+
+  const hasPseudoShape = isExistPseudoShape(node);
+
+  if (hasShape) {
+    const shape = await parseToShape(node);
+    console.info('转换为:', shape);
+    layers.push(shape);
+  }
+
+  if (hasPseudoShape.before) {
+    const beforeEl = await parsePseudoToShape(node, 'before');
+    console.info('转换为:', beforeEl);
+    layers.push(beforeEl);
+  }
+
+  // 如果图层存在样式(阴影 边框等 返回 shape 节点
+  if (hasPseudoShape.after) {
+    const afterEl = await parsePseudoToShape(node, 'after');
+    console.info('转换为:', afterEl);
+    layers.push(afterEl);
   }
 
   // 输入框节点

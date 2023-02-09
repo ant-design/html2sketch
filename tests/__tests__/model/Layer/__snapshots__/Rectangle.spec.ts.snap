@@ -30,6 +30,7 @@ Object {
   "isFlippedHorizontal": false,
   "isFlippedVertical": false,
   "isLocked": false,
+  "isTemplate": false,
   "isVisible": true,
   "layerListExpandedType": 0,
   "name": "Rect",
@@ -40,6 +41,7 @@ Object {
     Object {
       "_class": "curvePoint",
       "cornerRadius": 0,
+      "cornerStyle": 0,
       "curveFrom": "{0, 0}",
       "curveMode": 1,
       "curveTo": "{0, 0}",
@@ -50,6 +52,7 @@ Object {
     Object {
       "_class": "curvePoint",
       "cornerRadius": 0,
+      "cornerStyle": 0,
       "curveFrom": "{1, 0}",
       "curveMode": 1,
       "curveTo": "{1, 0}",
@@ -60,6 +63,7 @@ Object {
     Object {
       "_class": "curvePoint",
       "cornerRadius": 0,
+      "cornerStyle": 0,
       "curveFrom": "{1, 1}",
       "curveMode": 1,
       "curveTo": "{1, 1}",
@@ -70,6 +74,7 @@ Object {
     Object {
       "_class": "curvePoint",
       "cornerRadius": 0,
+      "cornerStyle": 0,
       "curveFrom": "{0, 1}",
       "curveMode": 1,
       "curveTo": "{0, 1}",
@@ -78,7 +83,7 @@ Object {
       "point": "{0, 1}",
     },
   ],
-  "resizingConstraint": 63,
+  "resizingConstraint": 27,
   "resizingType": 0,
   "rotation": 0,
   "shouldBreakMaskChain": false,

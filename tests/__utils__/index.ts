@@ -16,6 +16,10 @@ import antdParser from './json/parser/antd.json';
 import antd from './json/antd.json';
 import basic from './json/parser/basic.json';
 import pseudoText from './json/pseudo-text.json';
+import inlineImage from './json/inline-image.json';
+import pngURLImage from './json/png-url-image.json';
+
+import ReactDOM from 'react-dom';
 
 export const svgJSON = svg;
 export const basicParserJSON = basic;
@@ -30,6 +34,10 @@ export const svgPathJSON = svgPath;
 export const textJSON = text;
 export const shapeJSON = shape;
 export const pseudoTextJSON = pseudoText;
+
+// e2e
+export const inlineImageJSON = inlineImage;
+export const pngURLImageJSON = pngURLImage;
 
 export * from './testSvgData';
 
@@ -49,6 +57,7 @@ export const outputJSONData = (
     | SketchFormat.Text
     | SketchFormat.Rectangle
     | SketchFormat.Bitmap
+    | SketchFormat.SymbolMaster
     | any[],
   name?: string,
 ) => {
@@ -91,5 +100,18 @@ export const isUpdate = process.env.UPDATE === '1';
 export const setupTestNode = (innerHTML: string) => {
   const node = document.createElement('div');
   node.innerHTML = innerHTML;
+  document.body.prepend(node);
+};
+
+export const render = (App: JSX.Element) => {
+  ReactDOM.render(App, document.getElementById('container'));
+};
+
+export const setupTestEnv = () => {
+  // 3. 创建 dom 容器
+  const node = document.createElement('div');
+
+  node.id = 'container';
+
   document.body.prepend(node);
 };

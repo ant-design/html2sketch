@@ -1,14 +1,11 @@
-import { nodeToGroup } from 'html2sketch';
 import { setupTestNode } from '@test-utils';
 import { readFileSync } from 'fs';
+import { nodeToGroup } from 'html2sketch';
 import { resolve } from 'path';
 
 describe('nodeToGroup', () => {
   beforeAll(() => {
-    const innerHTML = readFileSync(
-      resolve(__dirname, './html/nodeToGroup.html'),
-      'utf-8',
-    );
+    const innerHTML = readFileSync(resolve(__dirname, './html/nodeToGroup.html'), 'utf-8');
     setupTestNode(innerHTML);
   });
   it('没有节点则报错', async () => {
@@ -17,6 +14,7 @@ describe('nodeToGroup', () => {
     try {
       await nodeToGroup(node);
     } catch (e) {
+      // eslint-disable-next-line jest/no-conditional-expect
       expect(e).toStrictEqual(Error('解析对象不存在 请检查传入对象'));
     }
   });
@@ -55,13 +53,20 @@ describe('nodeToGroup', () => {
   });
 
   it('继承坐标 旋转', async () => {
-    const node = (document.getElementById('svg') as unknown) as SVGElement;
+    const node = document.getElementById('svg') as unknown as SVGElement;
     const group = await nodeToGroup(node);
     expect(group.class).toBe('svg');
     expect(group.layers.length).toBe(2);
     const [mask, g] = group.layers;
     expect(mask.class).toBe('rectangle');
     expect(g.class).toBe('group');
-    expect(g.rotation).toBe(15);
+    expect(Math.round(g.rotation)).toBe(15);
+  });
+
+  it('单个元素有 overflow 不需要蒙版', async () => {
+    const node = document.getElementById('overflow-only') as HTMLDivElement;
+    const group = await nodeToGroup(node);
+    expect(group.layers.length).toBe(0);
+    expect(group.hasClippingMask).toBeFalsy();
   });
 });

@@ -1,17 +1,17 @@
 import { getGroupLayout } from '../../utils/layout';
+import { uuid } from '../../utils/utils';
 import BaseLayer from '../Base/BaseLayer';
 import Color from '../Style/Color';
-import SymbolInstance from './SymbolInstance';
-import { uuid } from '../../utils/utils';
 import { defaultExportOptions, defaultRuleData } from '../utils';
+import SymbolInstance from './SymbolInstance';
 
-import {
-  GroupLayoutType,
+import type {
   AnyLayer,
   BaseLayerParams,
   FrameType,
-  SketchFormat,
+  GroupLayoutType,
 } from '../../types';
+import { SketchFormat } from '../../types';
 
 /**
  * Sketch 的 Symbol 对象
@@ -146,14 +146,13 @@ class SymbolMaster extends BaseLayer {
       allowsOverrides: true,
 
       backgroundColor: this.backgroundColor.toSketchJSON(),
-      booleanOperation: SketchFormat.BooleanOperation.NA,
-      changeIdentifier: 0,
+      booleanOperation: SketchFormat.BooleanOperation.None,
+      isTemplate: false,
       do_objectID: this.id,
       symbolID: this.symbolID,
       exportOptions: defaultExportOptions,
 
       hasClickThrough: true,
-      includeInCloudUpload: true,
       hasBackgroundColor: false,
       includeBackgroundColorInExport: true,
       resizesContent: false,

@@ -1,7 +1,8 @@
+import type { BaseLayerParams } from '../../types';
+import { SketchFormat } from '../../types';
 import BaseLayer from '../Base/BaseLayer';
 import { defaultExportOptions } from '../utils';
-import ShapePath from './ShapePath';
-import { BaseLayerParams, SketchFormat } from '../../types';
+import type ShapePath from './ShapePath';
 
 class ShapeGroup extends BaseLayer {
   constructor(params?: BaseLayerParams) {
@@ -56,11 +57,13 @@ class ShapeGroup extends BaseLayer {
       // 下传 style 样式
       layer.style = this.style;
       layer.resizingConstraint = this.resizingConstraint;
+      layer.hasClippingMask = this.hasClippingMask;
       return layer.toSketchJSON();
     }
     return {
       _class: 'shapeGroup',
-      booleanOperation: SketchFormat.BooleanOperation.NA,
+      booleanOperation: SketchFormat.BooleanOperation.None,
+      isTemplate: false,
       do_objectID: this.id,
       layers: this.layers.map((l) => l.toSketchJSON()),
       rotation: this.rotation,

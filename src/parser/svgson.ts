@@ -1,38 +1,29 @@
-import * as svgson from 'svgson';
 import { SVGPathData } from 'svg-pathdata';
+import * as svgson from 'svgson';
 
 import Frame from '../models/Base/Frame';
-import ShapePath from '../models/Layer/ShapePath';
-import ShapeGroup from '../models/Layer/ShapeGroup';
 import Ellipse from '../models/Layer/Ellipse';
-import Rectangle from '../models/Layer/Rectangle';
 import Group from '../models/Layer/Group';
+import Rectangle from '../models/Layer/Rectangle';
+import ShapeGroup from '../models/Layer/ShapeGroup';
+import ShapePath from '../models/Layer/ShapePath';
 import Text from '../models/Layer/Text';
 
+import Color from '../models/Style/Color';
+import Fill from '../models/Style/Fill';
+import Gradient from '../models/Style/Gradient';
 import Style from '../models/Style/Style';
 import TextStyle from '../models/Style/TextStyle';
-import Gradient from '../models/Style/Gradient';
-import Fill from '../models/Style/Fill';
-import Color from '../models/Style/Color';
 
 import { transformStrToMatrix } from '../utils/matrix';
 
-import {
-  SketchFormat,
-  AnyLayer,
-  FrameType,
-  ShapeGroupType,
-  SvgDefsStyle,
-  SvgLayerType,
-} from '../types';
+import type { AnyLayer, FrameType, ShapeGroupType, SvgDefsStyle, SvgLayerType } from '../types';
+import { SketchFormat } from '../types';
 
 /**
  * 计算 Frame 的缩放比例
  */
-export const calcFrameScale = (
-  originFrame: FrameType,
-  targetFrame: FrameType,
-) => {
+export const calcFrameScale = (originFrame: FrameType, targetFrame: FrameType) => {
   const targetAspectRatio = targetFrame.width / targetFrame.height;
   const originAspectRatio = originFrame.width / originFrame.height;
   // 确定缩放比例
@@ -85,9 +76,7 @@ export const pathToShapeGroup = (svgPath: string): ShapeGroupType => {
   // 将 多个 svg 通过 M 符号进行分割
   const pathStr = svgPath.split(/([Mm])/).filter((s) => s);
   if (pathStr.length % 2 !== 0) {
-    throw Error(
-      `Error Path!\nData:${svgPath}\nPlease check whether the path is correct.`,
-    );
+    throw Error(`Error Path!\nData:${svgPath}\nPlease check whether the path is correct.`);
   }
   const paths = [];
   for (let i = 0; i < pathStr.length; i += 2) {
@@ -123,10 +112,7 @@ export const pathToShapeGroup = (svgPath: string): ShapeGroupType => {
  * SVG 对象
  */
 export class Svgson {
-  constructor(
-    svgString: string,
-    { width, height }: Partial<Pick<FrameType, 'width' | 'height'>>,
-  ) {
+  constructor(svgString: string, { width, height }: Partial<Pick<FrameType, 'width' | 'height'>>) {
     if (!svgString) return;
     // --------- 处理 Svg String 变成 Svg Shape ---------- //
 
@@ -146,9 +132,7 @@ export class Svgson {
     // 否则用默认长宽高
     if (viewBox) {
       // 解析获得 viewBox 值
-      const [viewX, viewY, viewWidth, viewHeight] = viewBox
-        .split(' ')
-        .map(parseFloat);
+      const [viewX, viewY, viewWidth, viewHeight] = viewBox.split(' ').map(parseFloat);
       this.viewBox = new Frame({
         x: viewX || 0,
         height: viewHeight || height,
@@ -291,7 +275,7 @@ export class Svgson {
 
     const shapeGroupType = pathToShapeGroup(path);
 
-    const shapePaths = this.shapeGroupDataToLayers(shapeGroupType);
+    const shapePaths = Svgson.shapeGroupDataToLayers(shapeGroupType);
 
     if (shapePaths.length === 1) {
       const shapePath = shapePaths[0];
@@ -329,12 +313,7 @@ export class Svgson {
             const color = new Color(stopColor);
 
             return {
-              color: [
-                color.red,
-                color.green,
-                color.blue,
-                Number(stopOpacity) || 1,
-              ],
+              color: [color.red, color.green, color.blue, Number(stopOpacity) || 1],
               offset: parseFloat(offset) / 100,
             };
           }),
@@ -358,12 +337,7 @@ export class Svgson {
             const color = new Color(stopColor);
             const opacity = Number(stopOpacity);
             return {
-              color: [
-                color.red,
-                color.green,
-                color.blue,
-                isNaN(opacity) ? 1 : opacity,
-              ],
+              color: [color.red, color.green, color.blue, isNaN(opacity) ? 1 : opacity],
               offset: parseFloat(offset) / 100,
             };
           }),
@@ -444,12 +418,7 @@ export class Svgson {
    * @param attributes node 的属性
    */
   parseNodeAttrToTextStyle = (attributes: svgson.INode['attributes']) => {
-    const {
-      fontSize,
-      lineHeight,
-      class: className,
-      style: styleString,
-    } = attributes;
+    const { fontSize, lineHeight, class: className, style: styleString } = attributes;
 
     const style = new TextStyle({
       fontSize: parseFloat(fontSize) || 14,
@@ -617,7 +586,7 @@ export class Svgson {
    * ShapeGroup 转子图层方法
    * @param shapeGroup
    */
-  shapeGroupDataToLayers = (shapeGroup: ShapeGroupType) => {
+  static shapeGroupDataToLayers = (shapeGroup: ShapeGroupType) => {
     const { shapes } = shapeGroup;
 
     return shapes.map((shape) => {
@@ -643,9 +612,7 @@ export class Svgson {
   private getCssRuleByClassName = (className: string | undefined) => {
     if (!className) return;
     // 拿到样式表
-    const classStyle = this.defs.find(
-      (d) => d.class === 'classStyle',
-    ) as SvgDefsStyle;
+    const classStyle = this.defs.find((d) => d.class === 'classStyle') as SvgDefsStyle;
 
     // 获得具体的规则
     return classStyle?.rules.find((r) => r.className === `.${className}`);
@@ -667,9 +634,7 @@ export class Svgson {
       // 说明来自 defs
       const id = /url\(#(.*)\)/.exec(fill)?.[1];
       // 从 defs 中拿到相应的配置项
-      const defsFill = this.defs.find(
-        (def) => def?.class === 'gradient' && def.name === id,
-      );
+      const defsFill = this.defs.find((def) => def?.class === 'gradient' && def.name === id);
 
       switch (defsFill?.class) {
         case 'gradient':
@@ -709,10 +674,7 @@ export class Svgson {
    * @param node 需要继承的节点
    * @param parentAttr
    */
-  extendsParentAttr = (
-    node: svgson.INode,
-    parentAttr?: svgson.INode['attributes'],
-  ) => {
+  extendsParentAttr = (node: svgson.INode, parentAttr?: svgson.INode['attributes']) => {
     if (!parentAttr) return node;
 
     // if (node.children.length > 0) {

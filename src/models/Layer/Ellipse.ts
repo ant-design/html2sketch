@@ -1,5 +1,6 @@
+import type { BaseLayerParams } from '../../types';
+import { SketchFormat } from '../../types';
 import BaseLayer from '../Base/BaseLayer';
-import { BaseLayerParams, SketchFormat } from '../../types';
 import { defaultExportOptions } from '../utils';
 
 interface EllipseParams extends BaseLayerParams {
@@ -102,6 +103,7 @@ class Ellipse extends BaseLayer {
       isFixedToViewport: false,
       isFlippedHorizontal: false,
       isFlippedVertical: false,
+      isTemplate: false,
       layerListExpandedType: 0,
       nameIsFixed: false,
       resizingType: 0,
@@ -122,6 +124,7 @@ class Ellipse extends BaseLayer {
           hasCurveFrom: true,
           hasCurveTo: true,
           point: '{0.5, 1}',
+          cornerStyle: SketchFormat.CornerStyle.Rounded,
         },
         {
           _class: 'curvePoint',
@@ -132,6 +135,7 @@ class Ellipse extends BaseLayer {
           hasCurveFrom: true,
           hasCurveTo: true,
           point: '{1, 0.5}',
+          cornerStyle: SketchFormat.CornerStyle.Rounded,
         },
         {
           _class: 'curvePoint',
@@ -142,6 +146,7 @@ class Ellipse extends BaseLayer {
           hasCurveFrom: true,
           hasCurveTo: true,
           point: '{0.5, 0}',
+          cornerStyle: SketchFormat.CornerStyle.Rounded,
         },
         {
           _class: 'curvePoint',
@@ -152,6 +157,7 @@ class Ellipse extends BaseLayer {
           hasCurveFrom: true,
           hasCurveTo: true,
           point: '{0, 0.5}',
+          cornerStyle: SketchFormat.CornerStyle.Rounded,
         },
       ],
       pointRadiusBehaviour: 1,

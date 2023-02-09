@@ -46,7 +46,7 @@ export const isImageNode = (node: Element): node is HTMLImageElement => {
  */
 export const isTextInputNode = (node: Element): node is HTMLInputElement => {
   return (
-    isNodeType(node, 'input') &&
+    isNodeType(node, ['input', 'textarea']) &&
     (node as HTMLInputElement).type !== 'checkbox' &&
     (node as HTMLInputElement).type !== 'radio'
   );

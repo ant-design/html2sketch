@@ -1,12 +1,12 @@
 /* eslint-disable no-console */
-import nodeToLayers from './nodeToLayers';
+import type { AnyLayer } from '..';
 import { Group, Style } from '../models';
-import { isNodeVisible } from '../utils/visibility';
 import { getChildNodeList } from '../utils/hierarchy';
 import { getName } from '../utils/name';
-import { isExistPseudoText, isExistPseudoShape } from '../utils/pseudo';
+import { isExistPseudoShape, isExistPseudoText } from '../utils/pseudo';
 import { checkNoNull } from '../utils/utils';
-import { AnyLayer } from '..';
+import { isNodeVisible } from '../utils/visibility';
+import nodeToLayers from './nodeToLayers';
 
 export interface Options {
   postTransform?: (group: AnyLayer) => AnyLayer;
@@ -20,10 +20,7 @@ const consoleGroupStyle = `font-weight:bold;color:#666;`;
  * @param node
  * @param options
  */
-const nodeToGroup = async (
-  node: Element,
-  options?: Options,
-): Promise<Group> => {
+const nodeToGroup = async (node: Element, options?: Options): Promise<Group> => {
   if (!node) throw Error('解析对象不存在 请检查传入对象');
 
   const bcr = node.getBoundingClientRect();
@@ -64,7 +61,7 @@ const nodeToGroup = async (
   // Now build a group for all these children
 
   const styles = getComputedStyle(node);
-  const { opacity } = styles;
+  const { opacity, transform } = styles;
 
   const group = new Group({ x: left, y: top, width, height });
   const groupStyle = new Style();
@@ -81,8 +78,13 @@ const nodeToGroup = async (
 
   checkNoNull(group.frame);
 
+  if (transform !== 'none') {
+    group.applyTransformRotate(transform);
+  }
+
   if (
     group.layers.length === 1 &&
+    group.rotation === 0 &&
     (group.layers[0].class === 'rectangle' ||
       group.layers[0].class === 'text' ||
       group.layers[0].class === 'bitmap' ||
@@ -91,14 +93,14 @@ const nodeToGroup = async (
   ) {
     console.groupCollapsed('%c清理无效层级', consoleGroupStyle);
     const layer = group.layers[0];
-    console.log(
-      `该 group 只包含一个子级 [${layer.class}]: ${layer.name} ,丢弃...`,
-    );
+    console.log(`该 group 只包含一个子级 [${layer.class}]: ${layer.name} ,丢弃...`);
     console.groupEnd();
     // 将父级的图层关系还给子集
     layer.x += group.x;
     layer.y += group.y;
-    layer.rotation += group.rotation;
+
+    // 只有一个形状时不需要裁剪
+    layer.hasClippingMask = false;
 
     return layer as Group;
   }

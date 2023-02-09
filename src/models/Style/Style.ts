@@ -1,17 +1,19 @@
-import { Declaration, parse as cssParse, Rule } from 'css';
+import type { Declaration, Rule } from 'css';
+import { parse as cssParse } from 'css';
 
 import BaseStyle from '../Base/BaseStyle';
-import { ColorParam } from './Color';
-import Fill from './Fill';
-import Shadow from './Shadow';
-import InnerShadow from './InnerShadow';
 import Border from './Border';
+import type { ColorParam } from './Color';
+import Fill from './Fill';
+import InnerShadow from './InnerShadow';
+import Shadow from './Shadow';
 import SketchBorderOptions from './SketchBorderOptions';
 
 import { uuid } from '../../utils/utils';
 import { defaultColorControls } from '../utils';
 
-import { AnyLayer, SketchFormat } from '../../types';
+import type { AnyLayer } from '../../types';
+import { SketchFormat } from '../../types';
 
 interface ShadowInput {
   color: ColorParam;
@@ -100,6 +102,21 @@ class Style extends BaseStyle {
     const from = { x: 0.5, y: 0 };
     const to = { x: 0.5, y: 1 };
 
+    // 处理带 rad 弧度的对象
+    if (angle.includes('rad')) {
+      const rad = parseFloat(angle.split('rad')[0]);
+      from.x = 0;
+      from.y = 0;
+
+      // 获取自然数 0 (-0 -> 0)
+      const getNaturalZero = (num: number) => (Math.abs(num) === 0 ? 0 : num);
+
+      const x = Math.round(Math.cos(rad) * 100) / 100;
+      const y = Math.round(Math.sin(rad) * 100) / 100;
+
+      to.x = getNaturalZero(x);
+      to.y = getNaturalZero(y);
+    }
     // Learn math or find someone smarter to figure this out correctly
     switch (angle) {
       case 'to top':
@@ -308,7 +325,7 @@ class Style extends BaseStyle {
     const { stylesheet } = cssParse(classStyle);
     const rules: {
       className: string;
-      styles: { [x: string]: string };
+      styles: Record<string, string>;
     }[] = [];
 
     stylesheet?.rules.forEach((rule: Rule) => {

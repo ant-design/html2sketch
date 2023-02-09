@@ -1,16 +1,10 @@
 import { SVGPathData } from 'svg-pathdata';
-import { CommandC, CommandL, SVGCommand } from 'svg-pathdata/lib/types';
+import type { CommandC, CommandL, SVGCommand } from 'svg-pathdata/lib/types';
 import BaseLayer from '../Base/BaseLayer';
 import { defaultExportOptions } from '../utils';
 
-import {
-  CGPoint,
-  ShapePathType,
-  BezierPoint,
-  StartPoint,
-  BaseLayerParams,
-  SketchFormat,
-} from '../../types';
+import type { BaseLayerParams, BezierPoint, CGPoint, ShapePathType, StartPoint } from '../../types';
+import { SketchFormat } from '../../types';
 
 interface ContextPoints {
   thisPoint: BezierPoint;
@@ -50,8 +44,7 @@ class ShapePath extends BaseLayer {
   /**
    * 单个 ShapePath 的布尔类型
    */
-  booleanOperation: SketchFormat.BooleanOperation =
-    SketchFormat.BooleanOperation.NA;
+  booleanOperation: SketchFormat.BooleanOperation = SketchFormat.BooleanOperation.None;
 
   /**
    * 转为 Sketch JSON 文件
@@ -60,6 +53,7 @@ class ShapePath extends BaseLayer {
     return {
       _class: 'shapePath',
       booleanOperation: this.booleanOperation,
+      isTemplate: false,
       do_objectID: this.id,
       rotation: this.rotation,
       isVisible: true,
@@ -80,6 +74,7 @@ class ShapePath extends BaseLayer {
       edited: true,
       isClosed: this.isClosed,
       points: this.points.map(this.bezierPointToSketchPoint).filter((p) => p),
+      hasClippingMask: this.hasClippingMask,
       /**
        * 默认使用圆角
        */
@@ -90,10 +85,7 @@ class ShapePath extends BaseLayer {
   /**
    * 将内部点转为 Sketch Point
    */
-  bezierPointToSketchPoint = (
-    point: BezierPoint,
-    index: number,
-  ): SketchFormat.CurvePoint => {
+  bezierPointToSketchPoint = (point: BezierPoint, index: number): SketchFormat.CurvePoint => {
     const { nextPoint, thisPoint } = this.getContextPoints(index);
 
     let hasCurveFrom = false;
@@ -149,6 +141,7 @@ class ShapePath extends BaseLayer {
       hasCurveFrom,
       hasCurveTo,
       point: `{${point.x}, ${point.y}}`,
+      cornerStyle: SketchFormat.CornerStyle.Rounded,
     };
   };
 
@@ -265,9 +258,7 @@ class ShapePath extends BaseLayer {
     const { minX, minY } = bounds;
 
     // 判断是否闭合
-    const isClose =
-      svgPathData.commands.findIndex((i) => i.type === SVGPathData.CLOSE_PATH) >
-      -1;
+    const isClose = svgPathData.commands.findIndex((i) => i.type === SVGPathData.CLOSE_PATH) > -1;
 
     const shapePath = svgPathData
       .translate(-minX, -minY)
@@ -290,8 +281,8 @@ class ShapePath extends BaseLayer {
         return true;
       })
       .map((i) => {
-        // @ts-ignore
-        const { relative, ...res } = i;
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const { relative: _, ...res } = i;
 
         return res as BezierPoint;
       });

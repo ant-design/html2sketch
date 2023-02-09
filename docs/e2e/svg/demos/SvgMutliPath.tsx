@@ -1,16 +1,9 @@
-import React, { FC } from 'react';
-import { TestLayout, useElements } from '@docs-utils';
 import { PlusOutlined } from '@ant-design/icons';
+import React, { FC } from 'react';
 
-const IconTest: FC = () => {
-  const { elements, ref } = useElements();
-
-  return (
-    <TestLayout elements={elements}>
-      <div id="icons" ref={ref}>
-        <PlusOutlined />
-      </div>
-    </TestLayout>
-  );
-};
+const IconTest: FC = () => (
+  <div id="icons">
+    <PlusOutlined />
+  </div>
+);
 export default IconTest;

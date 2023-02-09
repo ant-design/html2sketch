@@ -1,8 +1,9 @@
+import type { BaseLayerParams } from '../../types';
+import { SketchFormat } from '../../types';
 import BaseLayer from '../Base/BaseLayer';
-import { defaultRuleData, defaultExportOptions } from '../utils';
-import { BaseLayerParams, SketchFormat } from '../../types';
+import { defaultExportOptions, defaultRuleData } from '../utils';
 
-interface PageInitParams extends Pick<BaseLayerParams, 'height' | 'width'> {}
+type PageInitParams = Pick<BaseLayerParams, 'height' | 'width'>;
 
 class Page extends BaseLayer {
   constructor(params?: PageInitParams) {
@@ -14,9 +15,9 @@ class Page extends BaseLayer {
       horizontalRulerData: defaultRuleData,
       verticalRulerData: defaultRuleData,
       hasClickThrough: true,
-      includeInCloudUpload: true,
       _class: 'page',
-      booleanOperation: SketchFormat.BooleanOperation.NA,
+      booleanOperation: SketchFormat.BooleanOperation.None,
+      isTemplate: false,
       frame: this.frame.toSketchJSON(),
       exportOptions: defaultExportOptions,
       style: this.style.toSketchJSON(),

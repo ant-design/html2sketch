@@ -1,7 +1,8 @@
+import type { BaseLayerParams } from '../../types';
+import { SketchFormat } from '../../types';
 import BaseLayer from '../Base/BaseLayer';
-import { defaultRuleData, defaultExportOptions } from '../utils';
 import Color from '../Style/Color';
-import { BaseLayerParams, SketchFormat } from '../../types';
+import { defaultExportOptions, defaultRuleData } from '../utils';
 
 /**
  * 画板对象
@@ -54,7 +55,8 @@ class Artboard extends BaseLayer {
       frame: this.frame.toSketchJSON(),
       style: this.style.toSketchJSON(),
       backgroundColor: this.backgroundColor.toSketchJSON(),
-      booleanOperation: SketchFormat.BooleanOperation.NA,
+      booleanOperation: SketchFormat.BooleanOperation.None,
+      isTemplate: false,
       do_objectID: this.id,
       exportOptions: defaultExportOptions,
       hasBackgroundColor: this.hasBackgroundColor,
@@ -75,7 +77,6 @@ class Artboard extends BaseLayer {
       horizontalRulerData: defaultRuleData,
       verticalRulerData: defaultRuleData,
       hasClickThrough: true,
-      includeInCloudUpload: true,
       resizingConstraint: 1,
       resizingType: 1,
       rotation: 0,

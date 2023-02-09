@@ -6,6 +6,8 @@ module.exports = {
       {
         // 自定义配置，如果不填则是默认的 conventional-changelog-angular
         config: 'conventional-changelog-gitmoji-config',
+        // build 会触发新的构建
+        releaseRules: [{ type: 'build', release: 'patch' }],
       },
     ],
     [
@@ -23,7 +25,7 @@ module.exports = {
       },
     ],
     '@semantic-release/npm', // 如果是npm包会自动更新版本号并发布
-    ['@semantic-release/github'], // 推送代码回到GitHub
+    '@semantic-release/github', // 推送代码回到GitHub
     [
       '@semantic-release/git', //发布release
       {

@@ -1,7 +1,9 @@
-import Color, { ColorParam } from './Color';
+import type { CGPoint } from '../../types';
+import { SketchFormat } from '../../types';
 import BaseStyle from '../Base/BaseStyle';
-import { CGPoint, SketchFormat } from '../../types';
 import { defaultContextSettings } from '../utils';
+import type { ColorParam } from './Color';
+import Color from './Color';
 import Gradient from './Gradient';
 import Image from './Image';
 

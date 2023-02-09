@@ -166,6 +166,13 @@ describe('parseBackgroundImage', () => {
       const result = parseBackgroundImageType(str) as BackgroundImageType;
       expect(result.type).toStrictEqual('LinearGradient');
     });
+    it('解析 angle 三种颜色', () => {
+      const str = 'linear-gradient(1.5708rad, red, yellow, blue)';
+      const result = parseBackgroundImageType(str) as BackgroundImageType;
+      expect(result.type).toStrictEqual('LinearGradient');
+      expect(result.value.angle).toStrictEqual('1.5708rad');
+      expect(result.value.stops.length).toEqual(3);
+    });
   });
 });
 
@@ -194,6 +201,14 @@ describe('parseLinearGradient', () => {
       angle: '90deg',
     });
   });
+  it('解析 angle 类型的方向', () => {
+    const str = '1.5708rad, red, blue';
+    const result = parseLinearGradient(str);
+    expect(result).toStrictEqual({
+      stops: ['red', 'blue'],
+      angle: '1.5708rad',
+    });
+  });
   it('解析三种颜色', () => {
     const str = 'red, yellow, blue';
     const result = parseLinearGradient(str);
@@ -208,6 +223,18 @@ describe('parseLinearGradient', () => {
     const result = parseLinearGradient(str);
     expect(result).toStrictEqual({
       stops: ['red', 'yellow', 'blue', 'green'],
+      angle: 'to left',
+    });
+  });
+
+  it('解析有透明度的渐变色', () => {
+    const str = 'to left, rgba(0,0,0,0.5) 20%, rgba(0,0,0,0.8) 30%';
+    const result = parseLinearGradient(str);
+    expect(result).toStrictEqual({
+      stops: [
+        { color: 'rgba(0,0,0,0.5)', offset: 0.2 },
+        { color: 'rgba(0,0,0,0.8)', offset: 0.3 },
+      ],
       angle: 'to left',
     });
   });

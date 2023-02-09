@@ -225,17 +225,21 @@ class TextStyle {
    * 取得 sketch 下的横向对齐参数
    */
   getSketchHorizontalAlign = () => {
-    switch (this.textAlign) {
-      case 'left':
-      default:
-        return SketchFormat.TextHorizontalAlignment.Left;
-      case 'right':
-        return SketchFormat.TextHorizontalAlignment.Right;
-      case 'center':
-        return SketchFormat.TextHorizontalAlignment.Centered;
-      case 'justify':
-        return SketchFormat.TextHorizontalAlignment.Justified;
-    }
+    // 默认使用左对齐
+    return SketchFormat.TextHorizontalAlignment.Left;
+
+    // 相关 Bug https://github.com/ant-design/html2sketch/issues/51
+    // switch (this.textAlign) {
+    //   case 'left':
+    //   default:
+    //     return SketchFormat.TextHorizontalAlignment.Left;
+    //   case 'right':
+    //     return SketchFormat.TextHorizontalAlignment.Right;
+    //   case 'center':
+    //     return SketchFormat.TextHorizontalAlignment.Centered;
+    //   case 'justify':
+    //     return SketchFormat.TextHorizontalAlignment.Justified;
+    // }
   };
 
   /**

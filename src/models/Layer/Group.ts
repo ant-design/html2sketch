@@ -1,9 +1,10 @@
 import SketchFormat from '@sketch-hq/sketch-file-format-ts';
+import { decomposeTSR } from 'transformation-matrix';
+import type { AnyLayer, BaseLayerParams, GroupLayoutType } from '../../types';
+import { getGroupLayout } from '../../utils/layout';
+import { transformStrToMatrix } from '../../utils/matrix';
 import BaseLayer from '../Base/BaseLayer';
 import { defaultExportOptions } from '../utils';
-import { getGroupLayout } from '../../utils/layout';
-
-import { GroupLayoutType, BaseLayerParams, AnyLayer } from '../../types';
 
 class Group extends BaseLayer {
   constructor(params?: BaseLayerParams) {
@@ -19,7 +20,6 @@ class Group extends BaseLayer {
     // 因此在添加图层的时候需要减掉父级的位置,得到算出相对位置
     layer.x -= this.x;
     layer.y -= this.y;
-    layer.rotation -= this.rotation;
     super.addLayer(layer);
   }
 
@@ -70,7 +70,8 @@ class Group extends BaseLayer {
     const groupJSON: SketchFormat.Group = {
       _class: 'group',
       do_objectID: this.id,
-      booleanOperation: SketchFormat.BooleanOperation.NA,
+      booleanOperation: SketchFormat.BooleanOperation.None,
+      isTemplate: false,
       isFixedToViewport: false,
       isFlippedHorizontal: false,
       isFlippedVertical: false,
@@ -81,7 +82,7 @@ class Group extends BaseLayer {
       nameIsFixed: false,
       resizingConstraint: this.resizingConstraint,
       resizingType: SketchFormat.ResizeType.Stretch,
-      rotation: 0,
+      rotation: this.rotation,
       shouldBreakMaskChain: false,
       exportOptions: defaultExportOptions,
       frame: this.frame.toSketchJSON(),
@@ -98,6 +99,16 @@ class Group extends BaseLayer {
     }
     return groupJSON;
   };
+
+  applyTransformRotate(transformStr: string) {
+    const matrix = transformStrToMatrix(transformStr);
+    matrix.e = 0;
+    matrix.f = 0;
+    const { rotation } = decomposeTSR(matrix);
+
+    // 旋转
+    this.rotation = -(rotation.angle * 180.0) / Math.PI;
+  }
 }
 
 export default Group;

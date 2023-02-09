@@ -1,4 +1,5 @@
-import { GroupLayoutType, SketchFormat, ResizingConstraint } from '../types';
+import type { GroupLayoutType } from '../types';
+import { ResizingConstraint, SketchFormat } from '../types';
 
 const containsAllItems = (needles: any[], haystack: string | any[]) =>
   needles.every((needle) => haystack.includes(needle));

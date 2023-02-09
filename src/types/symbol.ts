@@ -1,10 +1,10 @@
-import { SketchFormat } from './sketchFormat';
-import { SymbolMaster } from '../models';
-import { ResizingConstraint, GroupLayoutType } from './layout';
-import {
+import type { SymbolMaster } from '../models';
+import type {
   TextHorizontalAlign,
   TextVerticalAlign,
 } from '../models/Style/TextStyle';
+import type { GroupLayoutType, ResizingConstraint } from './layout';
+import type { SketchFormat } from './sketchFormat';
 
 /**
  * 对 symbol 进行自定义处理的方法
@@ -73,9 +73,9 @@ export interface TextParam {
 }
 
 /**
- * nodeToSketchSymbol 配置项
+ * nodeToSymbol 配置项
  */
-export interface NodeToSketchSymbolOptions {
+export interface NodeToSymbolOptions {
   /**
    * symbol 自己的 layout 类型
    */

@@ -14,8 +14,6 @@
 
 [![Test CI status][test-ci]][test-ci-url] ![Deploy CI][deploy-ci] [![Coverage][coverage]][codecov-url]
 
-[![david deps][david-image]][david-url] [![david devDeps][david-dev-image]][david-dev-url]
-
 [![ docs by dumi][dumi-url]](https://d.umijs.org/) [![Build With father][father-url]](https://github.com/umijs/father/)
 
 [![Gitpod ready-to-code][gitpod-badge]][gitpod-url]
@@ -49,10 +47,6 @@
 [deploy-ci]: https://github.com/ant-design/html2sketch/workflows/Deploy%20CI/badge.svg
 [test-ci-url]: https://github.com/ant-design/html2sketch/actions?query=workflow%3ATest%20CI
 [deploy-ci-ci]: https://github.com/ant-design/html2sketch/actions?query=workflow%3ADeploy%20CI
-[david-image]: https://img.shields.io/david/ant-design/html2sketch?style=flat-square
-[david-dev-url]: https://david-dm.org/ant-design/html2sketch?type=dev
-[david-dev-image]: https://img.shields.io/david/dev/ant-design/html2sketch?style=flat-square
-[david-url]: https://david-dm.org/ant-design/html2sketch
 [download-image]: https://img.shields.io/npm/dm/html2sketch.svg?style=flat-square
 [download-url]: https://npmjs.org/package/html2sketch
 
@@ -78,7 +72,7 @@ yarn add html2sketch
 
 ### 使用
 
-`html2sketch` 包含 3 个主要方法 `nodeToLayer` 、 `nodeToGroup` 和 `nodeToSketchSymbol` 。
+`html2sketch` 包含 3 个主要方法 `nodeToLayer` 、 `nodeToGroup` 和 `nodeToSymbol` 。
 
 #### nodeToLayer
 
@@ -130,19 +124,19 @@ fn().then((json) => {
 });
 ```
 
-#### nodeToSketchSymbol
+#### nodeToSymbol
 
 将 DOM 节点转 Sketch 的 Symbol 对象
 
 ```js
-import { nodeToSketchSymbol } from 'html2sketch';
+import { nodeToSymbol } from 'html2sketch';
 
 const fn = async () => {
   // 1. 获取 DOM 节点
   const node = document.getElementById('id');
 
   // 2. 调用转换方法
-  const symbol = await nodeToSketchSymbol(node);
+  const symbol = await nodeToSymbol(node);
 
   // 3. 生成为 Sketch JSON
   const sketchJSON = symbol.toSketchJSON();

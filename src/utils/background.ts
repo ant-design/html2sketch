@@ -1,4 +1,32 @@
-import { BackgroundImageType } from '../types';
+import type { BackgroundImageType, StopParam } from '../types';
+
+const stringToStopParam = (str: string): StopParam | StopParam[] => {
+  // rgb(0, 0, 0) 20% 需要拆分
+  const [color, ...offsets] = str.split(/\s+(?=[^)]*(\(|$))/).filter((item) => item);
+
+  if (offsets.length === 0) {
+    return color;
+  }
+  if (offsets.length === 1) {
+    return {
+      color,
+      offset: parseFloat(offsets[0]) / 100,
+    };
+  }
+  return offsets.map((offset) => ({
+    color,
+    offset: parseFloat(offset) / 100,
+  }));
+};
+
+const pushStopParam = (stopParams: StopParam[], str: string) => {
+  const stopParam = stringToStopParam(str);
+  if (Array.isArray(stopParam)) {
+    stopParams.push(...stopParam);
+  } else {
+    stopParams.push(stopParam);
+  }
+};
 
 /**
  * 解析线性渐变
@@ -46,31 +74,31 @@ export const parseLinearGradient = (value: string) => {
     i += 1;
   }
 
-  if (parts.length === 2) {
-    // Assume 2 color stops
-    return {
-      angle: '180deg',
-      stops: [parts[0], parts[1]],
-    };
-  }
-  if (parts.length > 2) {
-    // 如果 parts 的第一个对象 不包含 deg 和 to
-    // 那就意味着全部都是 stops
-    if (!parts[0].includes('deg') && !parts[0].includes('to')) {
-      return { angle: '180deg', stops: parts };
-    }
-
-    // angle + n stops
-    const [angle, ...stops] = parts;
-
-    return {
-      angle,
-      stops,
-    };
+  if (parts.length < 2) {
+    throw Error('Invalid linear-gradient value: ' + value);
   }
 
-  // Syntax is wrong
-  return null;
+  return parts.reduce<{ angle: string; stops: string[] }>(
+    (result, part, index) => {
+      if (index === 0) {
+        // 第一个参数不是角度的话默认 180deg
+        if (
+          part.includes('to') ||
+          part.includes('deg') ||
+          part.includes('rad') ||
+          part.includes('turn')
+        ) {
+          result.angle = part;
+        } else {
+          pushStopParam(result.stops, part);
+        }
+        return result;
+      }
+      pushStopParam(result.stops, part);
+      return result;
+    },
+    { angle: '180deg', stops: [] },
+  );
 };
 
 /**
@@ -87,9 +115,7 @@ export const parseLinearGradient = (value: string) => {
  * @see: https://www.w3.org/TR/css-backgrounds-3/#the-background-image
  * ---
  */
-export const parseBackgroundImageType = (
-  value: string,
-): BackgroundImageType | void => {
+export const parseBackgroundImageType = (value: string): BackgroundImageType | void => {
   if (value === 'none') {
     return;
   }
@@ -150,12 +176,7 @@ export const getActualImageSize = (
   const { height: imgH, width: imgW } = imageSize;
 
   // sanity check
-  if (
-    imgW === 0 ||
-    imgH === 0 ||
-    containerSize.width === 0 ||
-    containerSize.height === 0
-  ) {
+  if (imgW === 0 || imgH === 0 || containerSize.width === 0 || containerSize.height === 0) {
     width = 0;
     height = 0;
   } else if (backgroundSize === 'cover') {
@@ -180,10 +201,7 @@ export const getActualImageSize = (
   } else {
     // we currently don't support multiple backgrounds
     const [singleBackgroundSize] = backgroundSize.split(',');
-    let [
-      backgroundSizeWidth,
-      backgroundSizeHeight,
-    ] = singleBackgroundSize.trim().split(' ');
+    let [backgroundSizeWidth, backgroundSizeHeight] = singleBackgroundSize.trim().split(' ');
 
     if (backgroundSizeWidth === 'auto' || backgroundSizeWidth === undefined) {
       backgroundSizeWidth = '';

@@ -1,8 +1,3 @@
----
-title: 背景图片解析
-order: 6
----
-
 ## 说明
 
 解析图片放在背景中的测试
@@ -19,16 +14,16 @@ order: 6
 
 ## 背景图片为 image 不限制尺寸
 
-<code src="./demos/BackgroundImage/WithoutSize.tsx" />
+<code src="./demos/BackgroundImage/WithoutSize.tsx"></code>
 
 ## 背景图片为 image 限制尺寸
 
-<code src="./demos/BackgroundImage/WithSize.tsx" />
+<code src="./demos/BackgroundImage/WithSize.tsx"></code>
 
 ## 背景内联 Svg
 
-<code src="./demos/BackgroundImage/InlineSvg.tsx" />
+<code src="./demos/BackgroundImage/InlineSvg.tsx"></code>
 
 ## 背景内联 Png
 
-<code src="./demos/BackgroundImage/InlinePng.tsx" />
+<code src="./demos/BackgroundImage/InlinePng.tsx"></code>

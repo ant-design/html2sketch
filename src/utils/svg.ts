@@ -103,24 +103,22 @@ export const nodeToRawSVG = (svgNode: Element): string => {
  * @param url
  */
 export const urlToRawSVG = async (url: string) => {
-  let data;
-  try {
-    data = await fetch(url, {
-      mode: 'cors',
-    });
-  } catch (error) {
+  const data = await fetch(url, {
+    mode: 'cors',
+  }).catch(async (error) => {
     const maybeCorsError = error.toString().includes('Failed to fetch');
+
     if (maybeCorsError) {
       const corsPrefix = `https://cors-anywhere.herokuapp.com/`;
-      data = await fetch(corsPrefix + url, {
-        mode: 'cors',
-      });
       console.warn(
         '该图片存在跨域问题! 请在服务器端设置允许图片跨域,以提升解析速度:',
         url,
       );
+
+      return await fetch(corsPrefix + url, { mode: 'cors' }).catch();
     }
-  }
+  });
+
   // TODO 添加一个报错 SVG string
   if (!data) return;
 

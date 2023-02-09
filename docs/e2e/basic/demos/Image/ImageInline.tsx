@@ -1,11 +1,11 @@
-import React, { useRef } from 'react';
-import { useElements, TestLayout } from '@docs-utils';
-import copy from 'copy-to-clipboard';
-import { message } from 'antd';
-
 /**
- *
+ * hideSketchLayout: true
  */
+import { TestLayout, useElements } from '@docs-utils';
+import { message } from 'antd';
+import copy from 'copy-to-clipboard';
+import React, { useRef } from 'react';
+
 export default () => {
   const { elements, ref } = useElements();
   const imageRef = useRef<HTMLImageElement>(null);
@@ -22,9 +22,8 @@ export default () => {
               return;
             }
             // 1. 创建canvas DOM元素，并设置其宽高和图片一样
-            let canvas: HTMLCanvasElement | null = document.createElement(
-              'canvas',
-            );
+            let canvas: HTMLCanvasElement | null =
+              document.createElement('canvas');
             canvas.width = img.width;
             canvas.height = img.height;
 
