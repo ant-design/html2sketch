@@ -9,6 +9,12 @@ import svgIconJSON from './json/svg-icon.json';
 
 export { radioJSON, svgButtonJSON, svgIconJSON, defaultModalJSON };
 
+declare global {
+  interface Window {
+    loadAntdCSS: boolean;
+  }
+}
+
 export const saveJSONData = (json: any | any[], name?: string) => {
   writeFileSync(join(__dirname, `./json/${name || 'json'}.json`), JSON.stringify(json));
 };
@@ -18,14 +24,51 @@ export const sleep = (time: number) =>
     setTimeout(r, time);
   });
 
-declare global {
-  interface Window {
-    loadAntdCSS: boolean;
-  }
-}
+const loadcss = (src: string) =>
+  new Promise((resolve) => {
+    const linkElement = document.createElement('link');
+    linkElement.rel = 'stylesheet';
+    linkElement.href = src;
 
-export const setupAntdTestEnv = () =>
-  new Promise<void>((resolve) => {
+    document.head.insertBefore(linkElement, document.head.firstChild);
+
+    function poll(node: HTMLLinkElement, callback: { (): void; (arg0: null, arg1: any): void }) {
+      let isLoaded = false;
+
+      //webkit
+      if (/webkit/i.test(navigator.userAgent)) {
+        if (node['sheet']) {
+          isLoaded = true;
+        }
+      }
+
+      if (isLoaded) {
+        setTimeout(function () {
+          callback(null, node);
+        }, 1);
+      } else {
+        setTimeout(function () {
+          poll(node, callback);
+        }, 10);
+      }
+    }
+    //other browser
+    setTimeout(function () {
+      poll(linkElement, () => {
+        resolve(true);
+      });
+    }, 5);
+
+    linkElement.onload = () => {
+      resolve(true);
+    };
+  });
+
+export const setupAntdTestEnv = async () => {
+  // 1. 插入 antd 样式
+  await loadcss('https://unpkg.com/antd@5/dist/reset.css');
+
+  return new Promise<void>((resolve) => {
     const baseJSFile = [
       'https://unpkg.com/react@18/umd/react.development.js',
       'https://unpkg.com/react-dom@18/umd/react-dom.development.js',
@@ -51,3 +94,4 @@ export const setupAntdTestEnv = () =>
 
     resolve();
   });
+};
