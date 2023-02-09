@@ -1,1 +1,0 @@
-(window["webpackJsonp"]=window["webpackJsonp"]||[]).push([[22],{"367t":function(n,o,e){"use strict";e.r(o);var a=e("q1tI"),c=e.n(a),t=e("dEAq");e("Rsk4");o["default"]=()=>(c.a.useEffect((()=>{window.location.hash&&t["AnchorLink"].scrollToAnchor(decodeURIComponent(window.location.hash.slice(1)))}),[]),c.a.createElement(c.a.Fragment,null))}}]);
