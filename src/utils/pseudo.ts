@@ -75,8 +75,6 @@ export const isExistPseudoShape: (node: Element) => HasPseudoType = (node: Eleme
   const hasBefore = hasPseudoShapeStyle(beforePseudoEl);
   const hasAfter = hasPseudoShapeStyle(afterPseudoEl);
 
-  console.log(hasAfter);
-
   return {
     exist: hasAfter || hasBefore,
     before: hasBefore,
