@@ -1,5 +1,11 @@
 # html2sketch 更新日志
 
+## [1.0.1](https://github.com/ant-design/html2sketch/compare/v1.0.0...v1.0.1) (2023-02-16)
+
+### 🐛 Bug Fixes
+
+- cssRules error should not block parse ([2257640](https://github.com/ant-design/html2sketch/commit/2257640))
+
 # [1.0.0](https://github.com/ant-design/html2sketch/compare/v0.4.7...v1.0.0) (2023-02-09)
 
 ### ♻ Code Refactoring
