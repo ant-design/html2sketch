@@ -165,8 +165,4 @@ export const nav: RouteItem[] = [
   { title: '指南', link: '/guide' },
   { title: 'sketch组件', link: '/sketch/button' },
   { title: '解析用例', link: '/e2e' },
-  {
-    title: 'GitHub',
-    link: 'https://github.com/ant-design/html2sketch',
-  },
 ];
