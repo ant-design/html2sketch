@@ -1,5 +1,11 @@
 # html2sketch 更新日志
 
+## [1.0.2](https://github.com/ant-design/html2sketch/compare/v1.0.1...v1.0.2) (2023-05-22)
+
+### 🐛 Bug Fixes
+
+- 调整 engine 到 node 14 ([22bbb44](https://github.com/ant-design/html2sketch/commit/22bbb44))
+
 ## [1.0.1](https://github.com/ant-design/html2sketch/compare/v1.0.0...v1.0.1) (2023-02-16)
 
 ### 🐛 Bug Fixes
